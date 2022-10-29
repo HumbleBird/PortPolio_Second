@@ -38,24 +38,29 @@ public partial class Charater : Base
         Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
         Animator.SetBool(info.m_sAnimName, false);
 
-        //Debug.Log("다음 연속 공격을 할 것을 정하세요.");
-        
-        //while (true)
-        //{
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-        //        Debug.Log("왼쪽 2타");
-        //        break;
-        //    }
-        //    else if (Input.GetMouseButtonDown(1))
-        //    {
-        //        Debug.Log("오른쪽 강한 1타");
-        //        break;
-        //    }
-        //    //_attack.CanNextAttack(() => _attack.BasicAttack, info.m_iNextNum);
-        //    // 플레이어 - 공격 키를 눌렀는가,
-        //    // 메커니즘 - 다음 공격 번호가 있는가, 애니메이션이 끝나지 않았는가
-        //}
+        Debug.Log("다음 연속 공격을 할 것을 정하세요.");
+
+        while (true)
+        {
+            AnimatorStateInfo animInfo = Animator.GetCurrentAnimatorStateInfo(0);
+
+            if (animInfo.normalizedTime > 0.9)
+                return;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("기본 2타");
+                break;
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("강한 1타");
+                break;
+            }
+            //_attack.CanNextAttack(() => _attack.BasicAttack, info.m_iNextNum);
+            // 플레이어 - 공격 키를 눌렀는가,
+            // 메커니즘 - 다음 공격 번호가 있는가, 애니메이션이 끝나지 않았는가
+        }
 
         State = CreatureState.Idle;
     }

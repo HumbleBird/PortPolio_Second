@@ -38,6 +38,17 @@ public partial class MyPlayer : Player
 
 	void GetInputKey()
     {
+		if (Input.anyKeyDown)
+		{
+			foreach (var dic in _attack.keyDictionary)
+			{
+				if (Input.GetKeyDown(dic.Key))
+				{
+					dic.Value();
+				}
+			}
+		}
+
 		GetDirInput();
 		GetInputkeyAttack();
 		GetMoveActionInput();
@@ -69,7 +80,7 @@ public partial class MyPlayer : Player
 	protected void GetMoveActionInput()
 	{
 		// ±¸¸£±â
-		if (Input.GetKey(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.Space))
 			m_stPlayerMove.Roll();
 
 		// ½¯µå

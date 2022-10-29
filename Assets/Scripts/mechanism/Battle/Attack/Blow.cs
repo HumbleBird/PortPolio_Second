@@ -11,7 +11,7 @@ public class Blow : Attack
     // 기본 좌클릭 공격
     public override void BasicAttack(int id = 1)
     {
-        Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
+        info = Managers.Table.m_Attack.Get(id);
 
         if (info == null)
         {
@@ -26,5 +26,16 @@ public class Blow : Attack
     }
 
 
+
     public override void Skill() { }
+
+    public override void CanNextAttack(Action action, int id)
+    {
+        base.CanNextAttack(action, id);
+    }
+
+    public override void StrongAttack(int id = 4)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -17,4 +17,9 @@ public class Range : Attack
     {
         throw new NotImplementedException();
     }
+
+    public override void StrongAttack(int id = 4)
+    {
+        throw new NotImplementedException();
+    }
 }

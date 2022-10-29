@@ -27,11 +27,11 @@ public class AutoBuild : MonoBehaviour
         PlayerSettings.WSA.packageName = "com.Miho.MonsterHunter";
 
         PlayerSettings.companyName = "Miho";
-        PlayerSettings.productName = "MonsterHunter";
+        PlayerSettings.productName = "Miho";
         
         PlayerSettings.Android.keystoreName = Application.dataPath + "/MonsterHunter.keystore";
         PlayerSettings.Android.keystorePass = "nana77";
-        PlayerSettings.Android.keyaliasName = "MonsterHunter";
+        PlayerSettings.Android.keyaliasName = "Miho";
         PlayerSettings.Android.keyaliasPass = "nana77";
 
         PlayerSettings.bundleVersion = Application.version;
