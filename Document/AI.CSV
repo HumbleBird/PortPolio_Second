@@ -1,0 +1,3 @@
+Idx,Type,startWaitTime,timeToRotate,viewRadius,viewAngle
+아이디,타입,시작 대기 시간,시약 밖을 탐지하는 대기 시간,적의 시야 반경(반지름),적의 시야각
+1,0,4,2,15,90

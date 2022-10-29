@@ -1,0 +1,3 @@
+Idx,Name,StageType,Stat,Level,RewardGold,RewardItem,#Prefab_Path,AI
+아이디,이름,스테이지타입,보스 스탯,레벨,보상 골드,보상 아이템,프리팹,AI의 ID
+101,오크,1,11,1,10000,0,Monster/Boss/Orc,1
