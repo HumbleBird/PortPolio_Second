@@ -2,8 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Define
 {
+    public enum UserAction
+    {
+        Attack,
+
+        MoveForward,
+        MoveBackward,
+        MoveLeft,
+        MoveRight,
+
+        Run,
+        Jump,
+
+        // UI
+        UI_Inventory,
+        UI_Status,
+        UI_Skill,
+    }
+
     public enum PlayerActionMoveState
     {
         Start = 0,

@@ -15,12 +15,17 @@ public abstract class Attack : Strategy
         base.Init(go);
 
         // 공격 키 코드 넣기
-        keyDictionary = new Dictionary<KeyCode, Action>
+        keyDictionary = new Dictionary<KeyCode, Action>()
         {
-            { KeyCode.Mouse0, BasicAttack },
-            { KeyCode.Mouse1, StrongAttack},
-            { KeyCode.Z, Kick}
+            //{ KeyCode.Mouse0, BasicAttack},
+            //{ KeyCode.Mouse1, StrongAttack},
+            //{ KeyCode.Z, Kick}
         };
+    }
+
+    public void One()
+    {
+        ;
     }
 
     public abstract void BasicAttack(int id = 1);

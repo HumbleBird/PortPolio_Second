@@ -44,7 +44,7 @@ public partial class MyPlayer : Player
 			{
 				if (Input.GetKeyDown(dic.Key))
 				{
-					dic.Value();
+					//dic.Value();
 				}
 			}
 		}

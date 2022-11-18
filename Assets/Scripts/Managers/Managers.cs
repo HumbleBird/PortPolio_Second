@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Rito.InputBindings;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,12 +15,15 @@ public class Managers : MonoBehaviour
     [SerializeField]
     MainCamera _maincamera;
     ZoneManager _zone = new ZoneManager();
+    [SerializeField]
+    InputBindingManager _input = new InputBindingManager();
 
     public static ObjectManager Object { get { return Instance._object; } }
     public static BattleManager Battle { get { return Instance._battle; } }
     public static UI_BattleManager UIBattle { get { return Instance._uiBattle; } }
     public static MainCamera Camera { get { return Instance._maincamera; } }
     public static ZoneManager Zone { get { return Instance._zone; } }
+    public static InputBindingManager Input { get { return Instance._input; } }
     #endregion
 
     #region Core

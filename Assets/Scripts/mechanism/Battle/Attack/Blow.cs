@@ -23,6 +23,8 @@ public class Blow : Attack
 
         m_cGo._isNextCanAttack = true;
         m_cGo.m_fCoolTime = info.m_fCoolTime;
+
+
     }
 
 

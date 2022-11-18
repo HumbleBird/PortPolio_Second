@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class Strategy
 {
-    public Dictionary<KeyCode, Action> keyDictionary { get; set; }
+    public Dictionary<KeyCode, Action> keyDictionary;
 
     protected GameObject m_Go; // 행동 주체자
     protected Charater m_cGo;
