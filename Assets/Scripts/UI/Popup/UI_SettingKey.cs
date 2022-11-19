@@ -27,8 +27,6 @@ public class UI_SettingKey : UI_Popup
         BindButton(typeof(Buttons));
         BindObject(typeof(GameObjes));
 
-
-
         return true;
     }
 

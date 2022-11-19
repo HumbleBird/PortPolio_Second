@@ -104,6 +104,7 @@ namespace Rito.InputBindings
             Bind(UserAction.UI_Inventory, KeyCode.I);
             Bind(UserAction.UI_Status,    KeyCode.P);
             Bind(UserAction.UI_Skill,     KeyCode.K);
+            Bind(UserAction.UI_Setting,   KeyCode.Escape);
         }
 
         /// <summary> 바인딩 등록 또는 변경

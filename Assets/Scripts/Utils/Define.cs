@@ -10,6 +10,7 @@ public class Define
     {
         Attack,
 
+        // Move
         MoveForward,
         MoveBackward,
         MoveLeft,
@@ -22,6 +23,7 @@ public class Define
         UI_Inventory,
         UI_Status,
         UI_Skill,
+        UI_Setting
     }
 
     public enum PlayerActionMoveState

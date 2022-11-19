@@ -55,4 +55,8 @@ public class UI_BattleManager : IPointerDownHandler, IDragHandler, IPointerUpHan
         UIPlayerInfo.HitEvent();
         // 화면 잠깐 빨갛게 페이드 인, 페이드 아웃하기
     }
+
+    // UI
+    //UI 관리
+    public UI_SettingKey inputSettingKey;
 }

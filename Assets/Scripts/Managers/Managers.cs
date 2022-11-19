@@ -18,6 +18,7 @@ public class Managers : MonoBehaviour
     [SerializeField]
     InputBindingManager _input = new InputBindingManager();
 
+
     public static ObjectManager Object { get { return Instance._object; } }
     public static BattleManager Battle { get { return Instance._battle; } }
     public static UI_BattleManager UIBattle { get { return Instance._uiBattle; } }
