@@ -12,7 +12,7 @@ using static Define;
 
 namespace Rito.InputBindings
 {
-    public class InputBindingManager : MonoBehaviour
+    public class InputBindingManager
     {
         #region Enum Definition
         private enum InputListening
@@ -33,12 +33,13 @@ namespace Rito.InputBindings
             id = "1"
         };
 
-        public Button[] _presetButtons;
-        public Button _saveButton;
+        public Button[]    _presetButtons;
+        public Button      _saveButton;
 
-        public GameObject _waitingInputGo;
-        public Transform _verticalLayoutTr;
-        public GameObject _bindingPairPrefab;
+        public GameObject  _waitingInputGo;
+        public Transform   _verticalLayoutTr;
+
+        public string _bindingPairPrefab = "Resources/Scenes/Include/Binding Pair";
 
         private List<GameObject> _bindingPairGoList;
         private Dictionary<UserAction, BindingPairUI> _bindingPairDict;
@@ -49,16 +50,7 @@ namespace Rito.InputBindings
         #endregion
 
         #region Unity Callbacks
-        private void Start()
-        {
-            Init();
-            InitButtonListeners();
-
-            LoadPreset();
-            LoadInputBindings();
-        }
-
-        private void Update()
+        public void Update()
         {
             if (_isListening)
             {
@@ -96,13 +88,18 @@ namespace Rito.InputBindings
         #endregion
 
         #region Init Methods
-        private void Init()
+        public void Init()
         {
             _isListening = false;
             _waitingInputGo.SetActive(false);
 
             _bindingPairGoList = new List<GameObject>();
             _bindingPairDict = new Dictionary<UserAction, BindingPairUI>();
+
+                        InitButtonListeners();
+
+            LoadPreset();
+            LoadInputBindings();
         }
 
         private void InitButtonListeners()
@@ -152,7 +149,7 @@ namespace Rito.InputBindings
             // 1. Reset
             foreach (var go in _bindingPairGoList)
             {
-                Destroy(go);
+                Managers.Resource.Destroy(go);
             }
             _bindingPairDict.Clear();
             _bindingPairGoList.Clear();
@@ -161,7 +158,9 @@ namespace Rito.InputBindings
             // 2. Load Pairs
             foreach (var pair in _binding.Bindings)
             {
-                var pairGo = Instantiate(_bindingPairPrefab, _verticalLayoutTr);
+                var pairGo = Managers.Resource.Instantiate(_bindingPairPrefab, _verticalLayoutTr);
+
+                //var pairGo = ( Instantiate(_bindingPairPrefab, _verticalLayoutTr);
                 var pairUI = pairGo.GetComponent<BindingPairUI>();
 
                 pairUI.InitLabels($"{pair.Key}", $"{pair.Value}");

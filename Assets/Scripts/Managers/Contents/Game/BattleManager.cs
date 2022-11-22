@@ -58,6 +58,8 @@ public class BattleManager
     #endregion
 
     #region Battle
+
+    // 히트 후 경직 및 무적 시간
     public virtual void HitEvent(GameObject attacker, float dmg, GameObject victim)
     {
         Charater victimCharater = victim.GetComponent<Charater>();
@@ -84,6 +86,8 @@ public class BattleManager
     #endregion
 
     #region Camera
+    
+    // 보스 한 정 카메라 무브
     void EndStage()
     {
         // 스테이지 blur

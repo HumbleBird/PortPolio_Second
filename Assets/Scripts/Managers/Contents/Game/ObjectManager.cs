@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ObjectManager
 {
+	// 추후에 서버 붙으면 자주 이용할 오브젝트 매니저
+
 	Dictionary<int, GameObject> _objects = new Dictionary<int, GameObject>();
 	//List<GameObject> _objects = new List<GameObject>();
 

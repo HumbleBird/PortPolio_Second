@@ -27,6 +27,14 @@ public class UI_SettingKey : UI_Popup
         BindButton(typeof(Buttons));
         BindObject(typeof(GameObjes));
 
+        Managers.InputKey._presetButtons[0] = GetButton((int)Buttons.Preset1_btn);
+        Managers.InputKey._presetButtons[1] = GetButton((int)Buttons.Preset2_btn);
+        Managers.InputKey._presetButtons[2] = GetButton((int)Buttons.Preset3_btn);
+
+        Managers.InputKey._saveButton = GetButton((int)Buttons.Save_btn);
+        Managers.InputKey._waitingInputGo = GetObject((int)GameObjes.VerticalLayout);
+        Managers.InputKey._verticalLayoutTr = GetObject((int)GameObjes.InputWatingImage).transform;
+
         return true;
     }
 
@@ -34,14 +42,5 @@ public class UI_SettingKey : UI_Popup
     {
         if (_init == false)
             return;
-
-        Managers.Input._presetButtons[0] = GetButton((int)Buttons.Preset1_btn);
-        Managers.Input._presetButtons[1] = GetButton((int)Buttons.Preset2_btn);
-        Managers.Input._presetButtons[2] = GetButton((int)Buttons.Preset3_btn);
-
-        Managers.Input._saveButton = GetButton((int)Buttons.Save_btn);
-
-        Managers.Input._waitingInputGo = GetObject((int)GameObjes.VerticalLayout);
-        Managers.Input._verticalLayoutTr = GetObject((int)GameObjes.InputWatingImage).transform;
     }
 }

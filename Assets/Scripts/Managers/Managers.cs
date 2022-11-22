@@ -15,8 +15,7 @@ public class Managers : MonoBehaviour
     [SerializeField]
     MainCamera _maincamera;
     ZoneManager _zone = new ZoneManager();
-    [SerializeField]
-    InputBindingManager _input = new InputBindingManager();
+    InputBindingManager _inputkey = new InputBindingManager();
 
 
     public static ObjectManager Object { get { return Instance._object; } }
@@ -24,7 +23,7 @@ public class Managers : MonoBehaviour
     public static UI_BattleManager UIBattle { get { return Instance._uiBattle; } }
     public static MainCamera Camera { get { return Instance._maincamera; } }
     public static ZoneManager Zone { get { return Instance._zone; } }
-    public static InputBindingManager Input { get { return Instance._input; } }
+    public static InputBindingManager InputKey { get { return Instance._inputkey; } }
     #endregion
 
     #region Core
@@ -48,11 +47,18 @@ public class Managers : MonoBehaviour
     void Start()
     {
         Init();
+        StartCoroutine(C_Update());
 	}
 
-    void Update()
+    IEnumerator C_Update()
     {
+        while (true)
+        {
+            s_instance._inputkey.Update();
 
+            yield return null;
+
+        }
     }
 
     static void Init()
@@ -72,6 +78,7 @@ public class Managers : MonoBehaviour
             s_instance._pool.Init();
             s_instance._sound.Init();
             s_instance._table.Init();
+            s_instance._inputkey.Init();
             //s_instance._photon.Init();
         }		
 	}

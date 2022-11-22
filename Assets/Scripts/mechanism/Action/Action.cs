@@ -64,16 +64,6 @@ public class Action : Strategy
     }
 
     ////UI
-    public void ShowInputKeySetting()
-    {
-        bool _ispopupsetting = false; // 나중에 큐에 넣어서 관리하기
-        if (Input.GetKeyDown(Managers.Input._binding.Bindings[UserAction.UI_Setting]))
-        {
-            UI_Popup popup = null;
-            if (_ispopupsetting == false)
-                popup = Managers.UI.ShowPopupUI<UI_SettingKey>();
-            else
-                Managers.UI.ClosePopupUI(popup);
-        }
-    }
+    // Test
+
 }

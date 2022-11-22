@@ -158,4 +158,24 @@ public partial class MyPlayer : Player
 		//Managers.Sound.Play("Effect/12_Player_Movement_SFX/03_Step_grass_03");
 
 	}
+
+	//Test
+	public void ShowInputKeySetting()
+	{
+		bool _ispopupsetting = false;
+		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.UI_Setting]))
+		{
+			UI_Popup popup = null;
+			if (_ispopupsetting == false)
+            {
+				popup = Managers.UI.ShowPopupUI<UI_SettingKey>();
+				_ispopupsetting = true;
+			}
+			else
+            {
+				Managers.UI.ClosePopupUI(popup);
+				_ispopupsetting = false;
+			}
+		}
+	}
 }

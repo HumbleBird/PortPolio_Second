@@ -10,12 +10,13 @@ public class GameScene : BaseScene
 
         SceneType = Define.Scene.Game;
         Managers.Battle.SpawnCharater(Define.CharaterType.Player);
-        Managers.Battle.SpawnCharater(Define.CharaterType.Boss);
+        //Managers.Battle.SpawnCharater(Define.CharaterType.Boss);
 
         Managers.UIBattle.UIPlayerInfo = Managers.UI.ShowSceneUI<UI_PlayerInfo>();
         Managers.UIBattle.Init();
 
-        Managers.Sound.Play("Bgm/bigbattle_2_FULL", Define.Sound.Bgm);
+        //bgm
+        //Managers.Sound.Play("Bgm/bigbattle_2_FULL", Define.Sound.Bgm);
 
         //Managers.UI.ShowSceneUI<UI_Inven>();
         //gameObject.GetOrAddComponent<CursorController>();
