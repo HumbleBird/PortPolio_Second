@@ -54,7 +54,7 @@ public class Managers : MonoBehaviour
     {
         while (true)
         {
-            s_instance._inputkey.Update();
+            //s_instance._inputkey.Update();
 
             yield return null;
 
@@ -78,7 +78,7 @@ public class Managers : MonoBehaviour
             s_instance._pool.Init();
             s_instance._sound.Init();
             s_instance._table.Init();
-            s_instance._inputkey.Init();
+            //s_instance._inputkey.Init();
             //s_instance._photon.Init();
         }		
 	}
