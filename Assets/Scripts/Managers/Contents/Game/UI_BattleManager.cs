@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_BattleManager 
+public class UI_BattleManager : MonoBehaviour
 {
     public UI_PlayerInfo UIPlayerInfo;
+    public UI_SettingKey UISetting;
 
     public void Init()
     {
@@ -17,10 +18,7 @@ public class UI_BattleManager
     public void HitEvent()
     {
         UIPlayerInfo.HitEvent();
-        // »≠∏È ¿·±Ò ª°∞≤∞‘ ∆‰¿ÃµÂ ¿Œ, ∆‰¿ÃµÂ æ∆øÙ«œ±‚
+        
+        // TODO »≠∏È ª°∞≤∞‘
     }
-
-    // UI
-    //UI ∞¸∏Æ
-    public UI_SettingKey inputSettingKey;
 }

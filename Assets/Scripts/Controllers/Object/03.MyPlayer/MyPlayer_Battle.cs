@@ -22,15 +22,4 @@ public partial class MyPlayer : Player
 			m_fCoolTime -= Time.deltaTime;
 		}
 	}
-
-	bool m_bCheckNextAttackKey = false;
-	void NextCheckAttack()
-    {
-		if (m_bCheckNextAttackKey == false)
-			return;
-
-
-    }
-
-
 }

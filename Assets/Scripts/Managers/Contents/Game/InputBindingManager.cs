@@ -28,12 +28,12 @@ namespace Rito.InputBindings
         public InputBinding _binding = new InputBinding(false)
         {
             localDirectoryPath = @"Resources/Data/Input Binding/Presets",
-            fileName = "BindingPreset",
+            fileName = "InputBindingPreset",
             extName = "txt",
-            id = "1"
+            id = "001"
         };
 
-        public Button[]    _presetButtons;
+        public Button[]    _presetButtons = new Button[3];
         public Button      _saveButton;
 
         public GameObject  _waitingInputGo;
@@ -90,13 +90,16 @@ namespace Rito.InputBindings
         #region Init Methods
         public void Init()
         {
+            if (_waitingInputGo == null)
+                return;
+
             _isListening = false;
             _waitingInputGo.SetActive(false);
 
             _bindingPairGoList = new List<GameObject>();
             _bindingPairDict = new Dictionary<UserAction, BindingPairUI>();
 
-                        InitButtonListeners();
+            InitButtonListeners();
 
             LoadPreset();
             LoadInputBindings();

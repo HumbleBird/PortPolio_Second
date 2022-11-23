@@ -34,21 +34,12 @@ public partial class MyPlayer : Player
 			case CreatureState.Dead:
 				break;
 		}
+
+		ShowInputKeySetting();
 	}
 
 	void GetInputKey()
     {
-		if (Input.anyKeyDown)
-		{
-			foreach (var dic in _attack.keyDictionary)
-			{
-				if (Input.GetKeyDown(dic.Key))
-				{
-					//dic.Value();
-				}
-			}
-		}
-
 		GetDirInput();
 		GetInputkeyAttack();
 		GetMoveActionInput();
@@ -118,8 +109,6 @@ public partial class MyPlayer : Player
 		}
 		else
             m_stPlayerMove.Crounch(PlayerActionMoveState.None);
-
-
 	}
 
 	// 걷기, 달리기 등
@@ -153,19 +142,14 @@ public partial class MyPlayer : Player
 		Animator.SetFloat("Sprint", inputMagnitude, 0.05f, Time.deltaTime);
 	}
 
-	void Step()
-    {
-		//Managers.Sound.Play("Effect/12_Player_Movement_SFX/03_Step_grass_03");
-
-	}
-
 	//Test
+	bool _ispopupsetting = false;
 	public void ShowInputKeySetting()
 	{
-		bool _ispopupsetting = false;
 		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.UI_Setting]))
 		{
-			UI_Popup popup = null;
+			UI_SettingKey popup = Managers.UIBattle.UISetting;
+
 			if (_ispopupsetting == false)
             {
 				popup = Managers.UI.ShowPopupUI<UI_SettingKey>();
@@ -173,9 +157,14 @@ public partial class MyPlayer : Player
 			}
 			else
             {
-				Managers.UI.ClosePopupUI(popup);
+				popup.ClosePopupUI();
 				_ispopupsetting = false;
 			}
 		}
 	}
+
+	public void Step()
+    {
+
+    }
 }

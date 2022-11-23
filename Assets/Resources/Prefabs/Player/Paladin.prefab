@@ -277,8 +277,6 @@ MonoBehaviour:
   m_fCoolTime: 0
   _isNextCanAttack: 1
   _attackItem: {fileID: 9074619578433338133}
-  variableJoystick: {fileID: 3881087803549984439, guid: ec536a7718376554185e4a856d5ae230,
-    type: 3}
   followTransform: {fileID: 6756492207421512747}
 --- !u!54 &5866666020975951808
 Rigidbody:
@@ -2151,6 +2149,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5607268609300114851}
+  - component: {fileID: 4768804673404977386}
   m_Layer: 7
   m_Name: Follw Target
   m_TagString: Untagged
@@ -2173,6 +2172,18 @@ Transform:
   m_Father: {fileID: 1000966418453780646}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4768804673404977386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6756492207421512747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa496bd0576288429840f75b250736a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6864710800523267014
 GameObject:
   m_ObjectHideFlags: 0

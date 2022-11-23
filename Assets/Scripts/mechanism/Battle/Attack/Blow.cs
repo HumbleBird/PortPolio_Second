@@ -23,21 +23,12 @@ public class Blow : Attack
 
         m_cGo._isNextCanAttack = true;
         m_cGo.m_fCoolTime = info.m_fCoolTime;
-
-
     }
-
-
 
     public override void Skill() { }
 
-    public override void CanNextAttack(Action action, int id)
-    {
-        base.CanNextAttack(action, id);
-    }
-
     public override void StrongAttack(int id = 4)
     {
-        throw new NotImplementedException();
+        
     }
 }

@@ -11,7 +11,8 @@ public class Managers : MonoBehaviour
     #region Contents
     ObjectManager _object = new ObjectManager();
     BattleManager _battle = new BattleManager();
-    UI_BattleManager _uiBattle = new UI_BattleManager();
+    [SerializeField]
+    UI_BattleManager _uiBattle;
     [SerializeField]
     MainCamera _maincamera;
     ZoneManager _zone = new ZoneManager();
@@ -54,7 +55,7 @@ public class Managers : MonoBehaviour
     {
         while (true)
         {
-            //s_instance._inputkey.Update();
+            s_instance._inputkey.Update();
 
             yield return null;
 
@@ -78,7 +79,6 @@ public class Managers : MonoBehaviour
             s_instance._pool.Init();
             s_instance._sound.Init();
             s_instance._table.Init();
-            //s_instance._inputkey.Init();
             //s_instance._photon.Init();
         }		
 	}

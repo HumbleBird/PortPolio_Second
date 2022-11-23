@@ -8,12 +8,8 @@ using static Define;
 
 public class Action : Strategy
 {
-    // 구르기
-    // 상호작용 등
-
     public void Roll()
     {
-        
         m_cGo.waiting = true;
 
         if (m_cGo.State == Define.CreatureState.Idle)
