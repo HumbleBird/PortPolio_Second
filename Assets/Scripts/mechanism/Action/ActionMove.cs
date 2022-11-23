@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static Define;
 
-public class Action : Strategy
+public class ActionMove : Strategy
 {
     public void Roll()
     {

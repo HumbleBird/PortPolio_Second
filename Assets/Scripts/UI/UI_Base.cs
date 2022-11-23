@@ -43,6 +43,7 @@ public abstract class UI_Base : MonoBehaviour
 		}
 	}
 
+
 	protected void BindObject(Type type) { Bind<GameObject>(type); }
 	protected void BindImage(Type type) { Bind<Image>(type); }
 	protected void BindText(Type type) { Bind<TextMeshProUGUI>(type); }
@@ -62,7 +63,7 @@ public abstract class UI_Base : MonoBehaviour
 	protected Button GetButton(int idx) { return Get<Button>(idx); }
 	protected Image GetImage(int idx) { return Get<Image>(idx); }
 
-	public static void BindEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
+	public static void BindEvent(GameObject go, Action action, Define.UIEvent type = Define.UIEvent.Click)
 	{
 		UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
 
@@ -72,9 +73,17 @@ public abstract class UI_Base : MonoBehaviour
 				evt.OnClickHandler -= action;
 				evt.OnClickHandler += action;
 				break;
-			case Define.UIEvent.Drag:
-				evt.OnDragHandler -= action;
-				evt.OnDragHandler += action;
+			case Define.UIEvent.Pressed:
+				evt.OnPressedHandler -= action;
+				evt.OnPressedHandler += action;
+				break;
+			case Define.UIEvent.PointerDown:
+				evt.OnPointerDownHandler -= action;
+				evt.OnPointerDownHandler += action;
+				break;
+			case Define.UIEvent.PointerUp:
+				evt.OnPointerUpHandler -= action;
+				evt.OnPointerUpHandler += action;
 				break;
 		}
 	}

@@ -94,6 +94,8 @@ public class Define
     public enum UIEvent
     {
         Click,
-        Drag,
+        Pressed,
+        PointerDown,
+        PointerUp,
     }
 }
