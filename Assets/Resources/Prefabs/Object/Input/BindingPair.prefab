@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 779669411919889424}
   - component: {fileID: 779669411919889427}
   m_Layer: 5
-  m_Name: Binding Pair
+  m_Name: BindingPair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -10,11 +10,29 @@ public partial class MyPlayer : Player
 	public GameObject followTransform;
 	Camera m_tCamera;
 
+	Dictionary<KeyCode, Action> keyDictionary;
+
 	protected override void Start()
 	{
 		base.Start();
 
 		m_tCamera = Camera.main;
+
+		SetKeyMehod();
+	}
+
+	void SetKeyMehod()
+    {
+		keyDictionary = new Dictionary<KeyCode, Action>
+		{
+			// 여기는 한 번만 누르면 되는 것들
+			// 스킬이나 팝업?
+            //{ Managers.InputKey._binding.Bindings[UserAction.Jump],
+			//  m_stPlayerMove.Jump()},
+			
+			//{ KeyCode.B, KeyDown_B },
+			//{ KeyCode.C, KeyDown_C }
+		};
 	}
 
     protected override void UpdateController()
@@ -34,15 +52,21 @@ public partial class MyPlayer : Player
 			case CreatureState.Dead:
 				break;
 		}
-
-		ShowInputKeySetting();
 	}
 
-	void GetInputKey()
+    protected override void Update()
+    {
+        base.Update();
+
+		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.UI_Setting]))
+			m_stPlayerMove.ShowInputKeySetting();
+	}
+
+    void GetInputKey()
     {
 		GetDirInput();
 		GetInputkeyAttack();
-		GetMoveActionInput();
+		SpecialAction();
 	}
 
     bool _moveKeyPressed = false;
@@ -58,57 +82,73 @@ public partial class MyPlayer : Player
 
 	void GetDirInput()
 	{
-		_moveKeyPressed = true;
+        if (Input.anyKeyDown)
+        {
+            foreach (var dic in keyDictionary)
+            {
+                if (Input.GetKeyDown(dic.Key))
+                {
+                    dic.Value();
+                }
+				else if (Input.GetKey(dic.Key))
+				{
+					dic.Value();
+				}
+				else if (Input.GetKeyUp(dic.Key))
+				{
+					dic.Value();
+				}
+			}
+        }
+
+        _moveKeyPressed = true;
 		if (Input.GetKey(KeyCode.W) ||
 		   Input.GetKey(KeyCode.A) ||
 		   Input.GetKey(KeyCode.S) ||
 		   Input.GetKey(KeyCode.D))
 			State = CreatureState.Move;
 		_moveKeyPressed = false;
+
 	}
 
-	// 구르기, 앉기 등등
-	protected void GetMoveActionInput()
+	protected void SpecialAction()
 	{
-		// 구르기
-		if (Input.GetKeyDown(KeyCode.Space))
-			m_stPlayerMove.Roll();
+		if(Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Jump]))
+			m_stPlayerMove.Jump();
 
-		// 쉴드
-		if (Input.GetMouseButtonDown(1))
-		{
-			m_stPlayerMove.Shiled(PlayerActionMoveState.Start);
-
-			if (Input.GetMouseButtonDown(1))
-				m_stPlayerMove.Shiled(PlayerActionMoveState.Idle);
-		}
-		else if (Input.GetMouseButtonUp(1))
-			m_stPlayerMove.Shiled(PlayerActionMoveState.End);
+		SpecialKey(UserAction.Sheild, "Shield");
 
 		// 앉기
-		if (Input.GetKeyDown(KeyCode.LeftControl))
-            m_stPlayerMove.Crounch(PlayerActionMoveState.Start);
-        else if (Input.GetKey(KeyCode.LeftControl))
+		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Crounch]))
+			m_stPlayerMove.PlayerActionMove("Crounch", AnimationBlendState.Start);
+		else if (Input.GetKey(Managers.InputKey._binding.Bindings[UserAction.Crounch]))
         {
-			m_stPlayerMove.Crounch(PlayerActionMoveState.Idle);
+			m_stPlayerMove.PlayerActionMove("Crounch", AnimationBlendState.Idle);
 
-			// 앉은 상태에서 쉴드
-			if (Input.GetMouseButtonDown(1))
-				m_stPlayerMove.CrounchBlock(PlayerActionMoveState.Start);
-			else if (Input.GetMouseButtonDown(1))
-			{
-				m_stPlayerMove.CrounchBlock(PlayerActionMoveState.Idle);
-			}
-			else if (Input.GetMouseButtonUp(1))
-				m_stPlayerMove.CrounchBlock(PlayerActionMoveState.End);
+			// 쉴드
+			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Sheild]))
+				m_stPlayerMove.PlayerActionMove("Crounch Shield", AnimationBlendState.Start);
+			else if (Input.GetKey(Managers.InputKey._binding.Bindings[UserAction.Sheild]))
+				m_stPlayerMove.PlayerActionMove("Crounch Shield", AnimationBlendState.Idle);
+			else if (Input.GetKeyUp(Managers.InputKey._binding.Bindings[UserAction.Sheild]))
+				m_stPlayerMove.PlayerActionMove("Crounch Shield", AnimationBlendState.End);
 		}
-		else if (Input.GetKeyUp(KeyCode.LeftControl))
+		else if (Input.GetKeyUp(Managers.InputKey._binding.Bindings[UserAction.Crounch]))
         {
-			m_stPlayerMove.Crounch(PlayerActionMoveState.End);
-			m_stPlayerMove.CrounchBlock(PlayerActionMoveState.End);
+			m_stPlayerMove.PlayerActionMove("Crounch", AnimationBlendState.End);
+			m_stPlayerMove.PlayerActionMove("Crounch Shield", AnimationBlendState.End);
 		}
-		else
-            m_stPlayerMove.Crounch(PlayerActionMoveState.None);
+	}
+
+	void SpecialKey(UserAction action, string action2)
+    {
+		// 쉴드 ( 쉴드 캐릭터에게만 한정 되는데..)
+		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[action]))
+			m_stPlayerMove.PlayerActionMove(action2, AnimationBlendState.Start);
+		else if (Input.GetKey(Managers.InputKey._binding.Bindings[action]))
+			m_stPlayerMove.PlayerActionMove(action2, AnimationBlendState.Idle);
+		else if (Input.GetKeyUp(Managers.InputKey._binding.Bindings[action]))
+			m_stPlayerMove.PlayerActionMove(action2, AnimationBlendState.End);
 	}
 
 	// 걷기, 달리기 등
@@ -140,27 +180,6 @@ public partial class MyPlayer : Player
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);
 
 		Animator.SetFloat("Sprint", inputMagnitude, 0.05f, Time.deltaTime);
-	}
-
-	//Test
-	bool _ispopupsetting = false;
-	public void ShowInputKeySetting()
-	{
-		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.UI_Setting]))
-		{
-			UI_SettingKey popup = Managers.UIBattle.UISetting;
-
-			if (_ispopupsetting == false)
-            {
-				popup = Managers.UI.ShowPopupUI<UI_SettingKey>();
-				_ispopupsetting = true;
-			}
-			else
-            {
-				popup.ClosePopupUI();
-				_ispopupsetting = false;
-			}
-		}
 	}
 
 	public void Step()

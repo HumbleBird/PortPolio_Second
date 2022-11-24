@@ -30,7 +30,7 @@ namespace Rito.InputBindings
             localDirectoryPath = @"Resources/Data/Input Binding/Presets",
             fileName = "InputBindingPreset",
             extName = "txt",
-            id = "001"
+            id = "1"
         };
 
         public Button[]    _presetButtons = new Button[3];
@@ -39,10 +39,10 @@ namespace Rito.InputBindings
         public GameObject  _waitingInputGo;
         public Transform   _verticalLayoutTr;
 
-        public string _bindingPairPrefab = "Resources/Scenes/Include/Binding Pair";
+        public string _bindingPairPrefab = "Object/Input/BindingPair";
 
-        private List<GameObject> _bindingPairGoList;
-        private Dictionary<UserAction, BindingPairUI> _bindingPairDict;
+        private List<GameObject> _bindingPairGoList                   = new List<GameObject>();
+        private Dictionary<UserAction, BindingPairUI> _bindingPairDict = new Dictionary<UserAction, BindingPairUI>();
 
         private bool _isListening;
         private UserAction _curKeyAction;
@@ -90,14 +90,8 @@ namespace Rito.InputBindings
         #region Init Methods
         public void Init()
         {
-            if (_waitingInputGo == null)
-                return;
-
             _isListening = false;
             _waitingInputGo.SetActive(false);
-
-            _bindingPairGoList = new List<GameObject>();
-            _bindingPairDict = new Dictionary<UserAction, BindingPairUI>();
 
             InitButtonListeners();
 
@@ -163,7 +157,6 @@ namespace Rito.InputBindings
             {
                 var pairGo = Managers.Resource.Instantiate(_bindingPairPrefab, _verticalLayoutTr);
 
-                //var pairGo = ( Instantiate(_bindingPairPrefab, _verticalLayoutTr);
                 var pairUI = pairGo.GetComponent<BindingPairUI>();
 
                 pairUI.InitLabels($"{pair.Key}", $"{pair.Value}");

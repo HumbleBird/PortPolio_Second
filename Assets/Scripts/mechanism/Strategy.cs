@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static Define;
 
 public abstract class Strategy
 {
@@ -12,7 +13,7 @@ public abstract class Strategy
     protected GameObject m_Go; // 행동 주체자
     protected Charater m_cGo;
 
-    protected GameObject m_GOTarget; // 피격자
+    protected GameObject m_GOTarget; // 목표물
 
     protected GameObject m_GOProjectile = null; // 투사체
 

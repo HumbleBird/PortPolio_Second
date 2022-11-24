@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class Define
 {
+    public enum ActionState
+    {
+        None,
+        Shield,
+        Charging,
+        Reload,
+    }
+
     public enum UserAction
     {
-        Attack,
+        BasicAttack,
+        StrongAttack,
+        Sheild,
 
-        // Move
-        MoveForward,
-        MoveBackward,
-        MoveLeft,
-        MoveRight,
-
-        Run,
         Jump,
+        Crounch,
 
         // UI
         UI_Inventory,
@@ -26,13 +28,11 @@ public class Define
         UI_Setting
     }
 
-    public enum PlayerActionMoveState
+    public enum AnimationBlendState
     {
         Start = 0,
         Idle = 1,
-        Hit = 2,
-        End = 3,
-        None = 4
+        End = 2,
     }
 
     public enum CharaterType

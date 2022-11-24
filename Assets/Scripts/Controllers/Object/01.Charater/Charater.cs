@@ -56,6 +56,7 @@ public partial class Charater : Base
     public void ResetAnimation(string animname)
     {
         Animator.SetBool(animname, false);
+
         waiting = false;
     }
 }

@@ -12,6 +12,7 @@ public partial class Charater : Base
     public bool _isNextCanAttack = true;
 
     public GameObject target { get; set; } // 타겟
+    public ActionState _actionState = ActionState.None;
 
     public void ChangeClass(string typeClass)
     {

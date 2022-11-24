@@ -13,6 +13,7 @@ public class UI_BattleManager : MonoBehaviour
         GameObject go = Managers.Object.Find(1);
         Player player = go.GetComponent<Player>();
         UIPlayerInfo.SetInfo(player);
+        UISetting.Init();
     }
 
     public void HitEvent()
