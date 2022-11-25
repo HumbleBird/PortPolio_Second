@@ -57,34 +57,6 @@ public class BattleManager
     }
     #endregion
 
-    #region Battle
-
-    // 히트 후 경직 및 무적 시간
-    public virtual void HitEvent(GameObject attacker, float dmg, GameObject victim)
-    {
-        Charater victimCharater = victim.GetComponent<Charater>();
-
-        int damage = (int)Mathf.Max(0, dmg - victimCharater.Def);
-        victimCharater.Hp -= damage;
-
-        if (victimCharater.CompareTag("Player"))
-        {
-            victimCharater.Stop(0.2f);
-            Managers.UIBattle.HitEvent();
-        }
-
-        victimCharater.Animator.Play("Hit");
-
-        if (victimCharater.Hp <= 0)
-        {
-            victimCharater.Hp = 0;
-            victimCharater.State = Define.CreatureState.Dead;
-        }
-    }
-
-
-    #endregion
-
     #region Camera
     
     // 보스 한 정 카메라 무브

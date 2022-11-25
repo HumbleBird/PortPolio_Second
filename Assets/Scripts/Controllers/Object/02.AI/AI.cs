@@ -7,8 +7,6 @@ using static Define;
 
 public partial class AI : Charater
 {
-    protected Table_AI.Info aiInfo; // 길 찾기를 위한 대기 시간 및 시야 각도 등
-
     protected override void UpdateController()
     {
         base.UpdateController();

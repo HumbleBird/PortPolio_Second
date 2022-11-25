@@ -10,29 +10,12 @@ public partial class MyPlayer : Player
 	public GameObject followTransform;
 	Camera m_tCamera;
 
-	Dictionary<KeyCode, Action> keyDictionary;
-
 	protected override void Start()
 	{
 		base.Start();
 
 		m_tCamera = Camera.main;
-
-		SetKeyMehod();
-	}
-
-	void SetKeyMehod()
-    {
-		keyDictionary = new Dictionary<KeyCode, Action>
-		{
-			// 여기는 한 번만 누르면 되는 것들
-			// 스킬이나 팝업?
-            //{ Managers.InputKey._binding.Bindings[UserAction.Jump],
-			//  m_stPlayerMove.Jump()},
-			
-			//{ KeyCode.B, KeyDown_B },
-			//{ KeyCode.C, KeyDown_C }
-		};
+		m_stPlayerAction.SetKeyMehod();
 	}
 
     protected override void UpdateController()
@@ -54,19 +37,10 @@ public partial class MyPlayer : Player
 		}
 	}
 
-    protected override void Update()
-    {
-        base.Update();
-
-		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.UI_Setting]))
-			m_stPlayerMove.ShowInputKeySetting();
-	}
-
     void GetInputKey()
     {
 		GetDirInput();
 		GetInputkeyAttack();
-		SpecialAction();
 	}
 
     bool _moveKeyPressed = false;
@@ -80,27 +54,15 @@ public partial class MyPlayer : Player
 		}
 	}
 
-	void GetDirInput()
-	{
-        if (Input.anyKeyDown)
-        {
-            foreach (var dic in keyDictionary)
-            {
-                if (Input.GetKeyDown(dic.Key))
-                {
-                    dic.Value();
-                }
-				else if (Input.GetKey(dic.Key))
-				{
-					dic.Value();
-				}
-				else if (Input.GetKeyUp(dic.Key))
-				{
-					dic.Value();
-				}
-			}
-        }
+    protected override void Update()
+    {
+        base.Update();
 
+		m_stPlayerAction.InputKey();
+    }
+
+    void GetDirInput()
+	{
         _moveKeyPressed = true;
 		if (Input.GetKey(KeyCode.W) ||
 		   Input.GetKey(KeyCode.A) ||
@@ -109,46 +71,6 @@ public partial class MyPlayer : Player
 			State = CreatureState.Move;
 		_moveKeyPressed = false;
 
-	}
-
-	protected void SpecialAction()
-	{
-		if(Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Jump]))
-			m_stPlayerMove.Jump();
-
-		SpecialKey(UserAction.Sheild, "Shield");
-
-		// 앉기
-		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Crounch]))
-			m_stPlayerMove.PlayerActionMove("Crounch", AnimationBlendState.Start);
-		else if (Input.GetKey(Managers.InputKey._binding.Bindings[UserAction.Crounch]))
-        {
-			m_stPlayerMove.PlayerActionMove("Crounch", AnimationBlendState.Idle);
-
-			// 쉴드
-			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Sheild]))
-				m_stPlayerMove.PlayerActionMove("Crounch Shield", AnimationBlendState.Start);
-			else if (Input.GetKey(Managers.InputKey._binding.Bindings[UserAction.Sheild]))
-				m_stPlayerMove.PlayerActionMove("Crounch Shield", AnimationBlendState.Idle);
-			else if (Input.GetKeyUp(Managers.InputKey._binding.Bindings[UserAction.Sheild]))
-				m_stPlayerMove.PlayerActionMove("Crounch Shield", AnimationBlendState.End);
-		}
-		else if (Input.GetKeyUp(Managers.InputKey._binding.Bindings[UserAction.Crounch]))
-        {
-			m_stPlayerMove.PlayerActionMove("Crounch", AnimationBlendState.End);
-			m_stPlayerMove.PlayerActionMove("Crounch Shield", AnimationBlendState.End);
-		}
-	}
-
-	void SpecialKey(UserAction action, string action2)
-    {
-		// 쉴드 ( 쉴드 캐릭터에게만 한정 되는데..)
-		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[action]))
-			m_stPlayerMove.PlayerActionMove(action2, AnimationBlendState.Start);
-		else if (Input.GetKey(Managers.InputKey._binding.Bindings[action]))
-			m_stPlayerMove.PlayerActionMove(action2, AnimationBlendState.Idle);
-		else if (Input.GetKeyUp(Managers.InputKey._binding.Bindings[action]))
-			m_stPlayerMove.PlayerActionMove(action2, AnimationBlendState.End);
 	}
 
 	// 걷기, 달리기 등

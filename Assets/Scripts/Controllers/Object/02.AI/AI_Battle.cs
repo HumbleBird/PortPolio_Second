@@ -6,10 +6,18 @@ using static Define;
 
 public partial class AI : Charater
 {
-    public override void HitEvent()
+    public virtual void Attack()
+    {
+
+    }
+
+    public override void HitEvent(GameObject attacker, float dmg)
     {
         m_CaughtPlayer = false;
         if (target != null)
-            Managers.Battle.HitEvent(gameObject, (int)Atk, target);
+        {
+            Charater player = target.GetComponent<Charater>();
+            player.HitEvent(gameObject, (int)Atk);
+        }
     }
 }

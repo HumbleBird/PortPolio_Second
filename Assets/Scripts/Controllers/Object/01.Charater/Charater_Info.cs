@@ -8,9 +8,10 @@ public abstract partial class Charater : Base
 {
     public Table_Stat.Info statInfo { get; set; } = new Table_Stat.Info();
     public Table_Attack.Info attackInfo { get; set; } = new Table_Attack.Info();
+    public ActionState _actionState = ActionState.None;
+
     public abstract void SetInfo(int id);
 
-    // 만약
     #region Stat
     public int Hp { get { return statInfo.m_iHp; } set { statInfo.m_iHp = value; } }
     public int MaxHp { get; set; }

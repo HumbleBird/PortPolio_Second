@@ -76,7 +76,6 @@ public partial class AI : Charater
         m_PlayerNear = false;                       //  Set false that hte player is near beacause the enemy already sees the player
         playerLastPosition = Vector3.zero;          //  Reset the player near position
         float dis = Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
-        //float dis = Vector3.Distance(transform.position, target.transform.position);
 
         if (!m_CaughtPlayer)
         {

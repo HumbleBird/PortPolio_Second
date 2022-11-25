@@ -14,10 +14,12 @@ public class Define
 
     public enum UserAction
     {
+        //Battle
         BasicAttack,
         StrongAttack,
         Sheild,
 
+        //Action
         Jump,
         Crounch,
 

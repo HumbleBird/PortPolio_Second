@@ -17,7 +17,7 @@ public class GameScene : BaseScene
         Managers.UIBattle.UISetting = Managers.UI.ShowPopupUI<UI_SettingKey>();
         Managers.UIBattle.Init();
 
-        Managers.InputKey.Init();
+        
 
         //bgm
         //Managers.Sound.Play("Bgm/bigbattle_2_FULL", Define.Sound.Bgm);

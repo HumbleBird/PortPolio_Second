@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static Define;
 
-public class ActionMove : Strategy
+public partial class PlayerAction : Strategy
 {
+    public override void SetKeyMehod()
+    {
+        keyDictionary = new Dictionary<KeyCode, Action>
+        {
+            //// 액션
+            { Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
+
+            //{ Managers.InputKey._binding.Bindings[UserAction.Crounch], Crounch},
+            
+            // UI
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], ShowInputKeySetting},
+        };
+    }
 
     public void PlayerActionMove(string action, AnimationBlendState State)
     {
@@ -21,10 +34,7 @@ public class ActionMove : Strategy
                     Shield();
                     break;
                 case "Crounch":
-                    Shield();
-                    break;
-                case "CrounchShiled":
-                    Shield();
+                    Crounch();
                     break;
             }
         }
@@ -39,13 +49,9 @@ public class ActionMove : Strategy
         
     }
 
-    public void Crounch(bool shileding = false)
+    public void Crounch()
     {
         m_cGo.MoveSpeed = m_cGo.CrounchSpeed;
-        if(shileding == true)
-        {
-            // 쉴드
-        }
     }
 
     public void CrounchShiled()
@@ -88,25 +94,4 @@ public class ActionMove : Strategy
         }
     }
     #endregion
-
-    ////UI
-    // Test
-    // 디폴트
-    // Input 설정창
-    bool _ispopupsetting = false;
-    public void ShowInputKeySetting()
-    {
-        UI_SettingKey popup = Managers.UIBattle.UISetting;
-
-        if (_ispopupsetting == false)
-        {
-            popup.gameObject.SetActive(true);
-            _ispopupsetting = true;
-        }
-        else
-        {
-            popup.gameObject.SetActive(false);
-            _ispopupsetting = false;
-        }
-    }
 }

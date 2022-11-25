@@ -6,13 +6,12 @@ using static Define;
 
 public partial class Charater : Base
 {
-    // 접근점
-    protected Attack _attack;
+    public GameObject target { get; set; } // 타겟
+
     public float m_fCoolTime = 0f;
     public bool _isNextCanAttack = true;
 
-    public GameObject target { get; set; } // 타겟
-    public ActionState _actionState = ActionState.None;
+    protected Attack _attack;
 
     public void ChangeClass(string typeClass)
     {
@@ -29,13 +28,35 @@ public partial class Charater : Base
         }
     }
 
-    public virtual void HitEvent()
+    public virtual void HitEvent(GameObject attacker, float dmg)
     {
-        
+        // 데미지 계산 및 체력 감소
+        int damage = (int)Mathf.Max(0, dmg - Def);
+        Hp -= damage;
+
+        // 히트 애니메이션
+        Animator.Play("Hit");
+
+        // 정지 및 무적 시간
+        Stop(0.2f);
+
+        // 사망 체크
+        if (Hp <= 0)
+        {
+            Hp = 0;
+            State = Define.CreatureState.Dead;
+        }
     }
 
+    public virtual void Attack()
+    {
+    }
+
+    // 애니메이션 event 활용
+    // TODO 연속기 기반
     public virtual void CanNextAttack(int id)
     {
+        // 애니메이션 자동 해제
         Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
         Animator.SetBool(info.m_sAnimName, false);
 

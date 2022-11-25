@@ -14,6 +14,7 @@ public class UI_BattleManager : MonoBehaviour
         Player player = go.GetComponent<Player>();
         UIPlayerInfo.SetInfo(player);
         UISetting.Init();
+        Managers.InputKey.Init();
     }
 
     public void HitEvent()

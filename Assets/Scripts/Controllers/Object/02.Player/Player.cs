@@ -8,7 +8,7 @@ public partial class Player : Charater
     public Table_Player.Info playerInfo { get; set; }
 
     public GameObject _attackItem;
-    protected ActionMove m_stPlayerMove = new ActionMove();
+    protected Strategy m_stPlayerAction = new PlayerAction();
 
     public override void SetInfo(int id)
     {
@@ -16,7 +16,7 @@ public partial class Player : Charater
         statInfo = Managers.Table.m_Stat.Get(playerInfo.m_iStat);
         ChangeClass(playerInfo.m_sClass);
 
-        m_stPlayerMove.Init(gameObject);
+        m_stPlayerAction.Init(gameObject);
     }
 
 
