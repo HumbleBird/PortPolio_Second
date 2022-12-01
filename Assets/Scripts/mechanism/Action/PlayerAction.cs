@@ -8,45 +8,26 @@ using static Define;
 
 public partial class PlayerAction : Strategy
 {
+
     public override void SetKeyMehod()
     {
         keyDictionary = new Dictionary<KeyCode, Action>
         {
-            //// 액션
+            // 액션
             { Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
 
-            //{ Managers.InputKey._binding.Bindings[UserAction.Crounch], Crounch},
+            { Managers.InputKey._binding.Bindings[UserAction.Crounch], Crounch},
             
             // UI
             { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], ShowInputKeySetting},
         };
     }
 
-    public void PlayerActionMove(string action, AnimationBlendState State)
-    {
-        if (State == AnimationBlendState.Start)
-            m_cGo.Animator.SetBool($"{action} Start", true);
-        else if (State == AnimationBlendState.Idle)
-        {
-            switch(action)
-            {
-                case "Shield":
-                    Shield();
-                    break;
-                case "Crounch":
-                    Crounch();
-                    break;
-            }
-        }
-        else if (State == AnimationBlendState.End)
-            m_cGo.Animator.SetBool($"{action} Start", false);
 
-        m_cGo.Animator.SetFloat($"{action} State", (int)State);
-    }
 
     public void Shield()
     {
-        
+        m_sActionName = "Shield";
     }
 
     public void Crounch()

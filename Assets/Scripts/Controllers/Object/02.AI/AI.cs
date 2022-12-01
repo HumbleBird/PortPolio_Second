@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public partial class AI : Charater
+public partial class AI : Character
 {
     protected override void UpdateController()
     {

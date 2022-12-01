@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public partial class Charater : Base
+public partial class Character : Base
 {
     public GameObject target { get; set; } // 타겟
 
@@ -28,6 +28,19 @@ public partial class Charater : Base
         }
     }
 
+    // 공격
+    public virtual void Attack(GameObject target)
+    {
+        Character ct = target.GetComponent<Character>();
+        if(ct != null)
+        {
+            // 데미지 계산
+            // 크리티컬
+            ct.HitEvent(gameObject, Atk);
+        }
+    }
+
+    // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
     {
         // 데미지 계산 및 체력 감소
@@ -48,12 +61,6 @@ public partial class Charater : Base
         }
     }
 
-    public virtual void Attack()
-    {
-    }
-
-    // 애니메이션 event 활용
-    // TODO 연속기 기반
     public virtual void CanNextAttack(int id)
     {
         // 애니메이션 자동 해제
@@ -61,19 +68,5 @@ public partial class Charater : Base
         Animator.SetBool(info.m_sAnimName, false);
 
         State = CreatureState.Idle;
-    }
-
-    public void Stop(float duration)
-    {
-        if (waiting)
-            return;
-        StartCoroutine(Wait(duration));
-    }
-
-    IEnumerator Wait(float duration)
-    {
-        waiting = true;
-        yield return new WaitForSecondsRealtime(duration);
-        waiting = false;
     }
 }

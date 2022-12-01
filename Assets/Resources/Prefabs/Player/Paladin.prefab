@@ -274,8 +274,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   waiting: 0
+  AttackItem: {fileID: 9074619578433338133}
   m_fCoolTime: 0
   _isNextCanAttack: 1
+  _actionState: 0
   _attackItem: {fileID: 9074619578433338133}
   followTransform: {fileID: 6756492207421512747}
 --- !u!54 &5866666020975951808
@@ -2990,7 +2992,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae42adb2e09204b46a112ec1cb188008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _goPlayer: {fileID: 481873116616196636}
 --- !u!65 &3234748966453461130
 BoxCollider:
   m_ObjectHideFlags: 0

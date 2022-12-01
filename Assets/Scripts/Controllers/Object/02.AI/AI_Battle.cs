@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public partial class AI : Charater
+public partial class AI : Character
 {
     public virtual void Attack()
     {
@@ -16,7 +16,7 @@ public partial class AI : Charater
         m_CaughtPlayer = false;
         if (target != null)
         {
-            Charater player = target.GetComponent<Charater>();
+            Character player = target.GetComponent<Character>();
             player.HitEvent(gameObject, (int)Atk);
         }
     }

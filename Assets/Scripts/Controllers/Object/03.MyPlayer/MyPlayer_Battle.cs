@@ -22,11 +22,4 @@ public partial class MyPlayer : Player
 			m_fCoolTime -= Time.deltaTime;
 		}
 	}
-
-    public override void HitEvent()
-    {
-        base.HitEvent();
-
-		Managers.UIBattle.HitEvent();
-	}
 }

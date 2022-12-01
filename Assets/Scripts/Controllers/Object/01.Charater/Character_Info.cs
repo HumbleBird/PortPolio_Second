@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public abstract partial class Charater : Base
+public abstract partial class Character : Base
 {
     public Table_Stat.Info statInfo { get; set; } = new Table_Stat.Info();
     public Table_Attack.Info attackInfo { get; set; } = new Table_Attack.Info();

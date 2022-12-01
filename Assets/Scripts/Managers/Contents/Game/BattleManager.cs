@@ -19,7 +19,7 @@ public class BattleManager
 
         GameObject go = Managers.Resource.Instantiate(pinfo.m_sPrefabPath);
         Managers.Object.Add(pinfo.m_nID, go);
-        go.GetComponent<Charater>().SetInfo(pinfo.m_nID);
+        go.GetComponent<Character>().SetInfo(pinfo.m_nID);
 
     }
 
@@ -35,7 +35,7 @@ public class BattleManager
 
         GameObject go = Managers.Resource.Instantiate(binfo.m_sPrefabPath);
         Managers.Object.Add(binfo.m_nID, go);
-        go.GetComponent<Charater>().SetInfo(binfo.m_nID);
+        go.GetComponent<Character>().SetInfo(binfo.m_nID);
     }
 
     public void SpawnCharater(CharaterType type)

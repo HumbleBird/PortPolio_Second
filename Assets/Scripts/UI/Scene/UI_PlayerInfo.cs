@@ -20,7 +20,7 @@ public class UI_PlayerInfo : UI_Scene
         Name
     }
 
-    Charater _player;
+    Character _player;
 
     public override bool Init()
     {
@@ -35,7 +35,7 @@ public class UI_PlayerInfo : UI_Scene
         return true;
     }
 
-    public void SetInfo(Charater player)
+    public void SetInfo(Character player)
     {
         _player = player;
 

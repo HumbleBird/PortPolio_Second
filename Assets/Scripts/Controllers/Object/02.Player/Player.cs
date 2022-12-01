@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Player : Charater
+public partial class Player : Character
 {
     public Table_Player.Info playerInfo { get; set; }
 
-    public GameObject _attackItem;
     protected Strategy m_stPlayerAction = new PlayerAction();
 
     public override void SetInfo(int id)
@@ -18,6 +17,4 @@ public partial class Player : Charater
 
         m_stPlayerAction.Init(gameObject);
     }
-
-
 }
