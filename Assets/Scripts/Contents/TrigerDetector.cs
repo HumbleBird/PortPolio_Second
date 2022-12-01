@@ -19,7 +19,8 @@ public class TrigerDetector : MonoBehaviour
     {
         Player pc = m_gPlayer.GetComponent<Player>();
 
-        pc.Attack(other.gameObject);
+        if(other != null)
+            pc.Attack(other.gameObject);
 
         gameObject.SetActive(false);
     }
