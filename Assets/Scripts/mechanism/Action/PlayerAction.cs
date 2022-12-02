@@ -41,7 +41,7 @@ public partial class PlayerAction : Strategy
 
     public void Jump()
     {
-        m_cGo.Animator.SetBool("Action Move Start", true);
+        m_cGo.Animator.SetBool("Action Move", true);
         m_cGo.waiting = true;
 
         // 제자리 점프

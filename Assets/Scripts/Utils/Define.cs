@@ -30,13 +30,6 @@ public class Define
         UI_Setting
     }
 
-    public enum AnimationBlendState
-    {
-        Start = 0,
-        Idle = 1,
-        End = 2,
-    }
-
     public enum CharaterType
     {
         Player,
