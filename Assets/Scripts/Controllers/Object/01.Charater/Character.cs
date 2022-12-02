@@ -7,10 +7,11 @@ using static Define;
 public partial class Character : Base
 {
 	public CreatureState State = CreatureState.Idle;
-    [HideInInspector] public bool waiting = false;
-    
-    [SerializeField]
-    GameObject m_gAttackItem;
+    [HideInInspector] 
+    public bool waiting = false;
+
+    [HideInInspector]
+    public GameObject m_GoAttackItem;
 
     protected virtual void Start()
     {
@@ -20,8 +21,6 @@ public partial class Character : Base
 
         // AttackInfo Init
         _attack.Init(gameObject);
-        if(m_gAttackItem != null)
-            m_gAttackItem.GetComponent<TrigerDetector>().Set();
     }
 
     protected virtual void Update()
@@ -59,10 +58,8 @@ public partial class Character : Base
         Destroy(gameObject, 5);
     }
 
-    public void ResetAnimation(string animname)
+    public void CanMove()
     {
-        Animator.SetBool(animname, false);
-
         waiting = false;
     }
 

@@ -28,11 +28,17 @@ public partial class Character : Base
         }
     }
 
-    // 공격
-    public virtual void Attack(GameObject target)
+    // 무기 이벤트에서 콜라이더를 활성화 시켜주기 위해
+    public virtual void Attack()
+    {
+        m_GoAttackItem.SetActive(true);
+    }
+
+    // 공격 이벤트
+    public virtual void AttackEvent(GameObject target)
     {
         Character ct = target.GetComponent<Character>();
-        if(ct != null)
+        if (ct != null)
         {
             // 데미지 계산
             // 크리티컬

@@ -28,6 +28,7 @@ public partial class PlayerAction : Strategy
     public void Shield()
     {
         m_sActionName = "Shield";
+        Debug.Log("쉴드");
     }
 
     public void Crounch()
@@ -41,7 +42,7 @@ public partial class PlayerAction : Strategy
 
     public void Jump()
     {
-        m_cGo.Animator.SetBool("Action Move", true);
+        m_sActionName = "Action Move";
         m_cGo.waiting = true;
 
         // 제자리 점프

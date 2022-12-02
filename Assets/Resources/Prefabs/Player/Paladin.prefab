@@ -274,11 +274,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   waiting: 0
-  AttackItem: {fileID: 9074619578433338133}
+  m_GoAttackItem: {fileID: 0}
   m_fCoolTime: 0
   _isNextCanAttack: 1
   _actionState: 0
-  _attackItem: {fileID: 9074619578433338133}
   followTransform: {fileID: 6756492207421512747}
 --- !u!54 &5866666020975951808
 Rigidbody:
@@ -2964,7 +2963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7555751848557005202
 Transform:
   m_ObjectHideFlags: 0

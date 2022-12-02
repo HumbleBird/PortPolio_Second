@@ -61,8 +61,8 @@ ModelImporter:
       curves: []
       events:
       - time: 0.83363485
-        functionName: ResetAnimation
-        data: Action Move Start
+        functionName: CanMove
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

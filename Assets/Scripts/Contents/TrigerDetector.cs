@@ -8,19 +8,23 @@ public class TrigerDetector : MonoBehaviour
     // 무기가 타겟과 공격시 피격 함수 호출
     GameObject m_gPlayer;
 
-    public void Set()
+    private void Start()
     {
         // Managers.Camera.Shake(100001);
         m_gPlayer = transform.root.gameObject;
-        gameObject.SetActive(true);
+        Character ch = m_gPlayer.GetComponent<Character>();
+        ch.m_GoAttackItem = gameObject;
+
+        gameObject.SetActive(false);
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Player pc = m_gPlayer.GetComponent<Player>();
 
-        if(other != null)
-            pc.Attack(other.gameObject);
+        if (other != null)
+            pc.AttackEvent(other.gameObject);
 
         gameObject.SetActive(false);
     }
