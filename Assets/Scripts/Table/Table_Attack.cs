@@ -11,7 +11,7 @@ public class Table_Attack : Table_Base
         public float    m_fDmg;
         public float    m_fSpeed;
         public float    m_fCoolTime;
-        public float    m_fRange;
+        public float    m_fAttackRange;
         public int      m_iNextNum;
         public string   m_sAnimName;
     }
@@ -63,7 +63,7 @@ public class Table_Attack : Table_Base
         _reader.get(_nRow, ref _info.m_fDmg);
         _reader.get(_nRow, ref _info.m_fSpeed);
         _reader.get(_nRow, ref _info.m_fCoolTime);
-        _reader.get(_nRow, ref _info.m_fRange);
+        _reader.get(_nRow, ref _info.m_fAttackRange);
         _reader.get(_nRow, ref _info.m_iNextNum);
         _reader.get(_nRow, ref _info.m_sAnimName);
 

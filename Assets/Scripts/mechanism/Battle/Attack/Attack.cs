@@ -8,7 +8,7 @@ using UnityEngine;
 
 public abstract class Attack : Strategy
 {
-    protected Table_Attack.Info info;
+    public Table_Attack.Info info;
 
     public abstract void BasicAttack(int id = 1);
     public abstract void StrongAttack(int id = 4);

@@ -28,15 +28,17 @@ public partial class Character : Base
         }
     }
 
-    // 무기 이벤트에서 콜라이더를 활성화 시켜주기 위해
+    // 공격 시도
     public virtual void Attack()
     {
+        m_goTarget = null; // 타겟 초기화
+
         m_GoAttackItem.AttackcCanOn();
 
         AttackEvent();
     }
 
-    // 공격 이벤트
+    // 공격 판정 체크
     public virtual void AttackEvent()
     {
         if (m_goTarget!= null)
