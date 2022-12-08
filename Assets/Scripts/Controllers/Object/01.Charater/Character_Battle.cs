@@ -6,22 +6,22 @@ using static Define;
 
 public partial class Character : Base
 {
-    public GameObject target { get; set; } // 타겟
+    public GameObject m_goTarget { get; set; } // 타겟
 
     public float m_fCoolTime = 0f;
     public bool _isNextCanAttack = true;
 
-    protected Attack _attack;
+    protected Attack m_strAttack;
 
     public void ChangeClass(string typeClass)
     {
         switch (typeClass)
         {
             case "Blow":
-                _attack = new Blow();
+                m_strAttack = new Blow();
                 break;
             case "Range":
-                _attack = new Range();
+                m_strAttack = new Range();
                 break;
             default:
                 break;
@@ -31,35 +31,69 @@ public partial class Character : Base
     // 무기 이벤트에서 콜라이더를 활성화 시켜주기 위해
     public virtual void Attack()
     {
-        m_GoAttackItem.SetActive(true);
+        m_GoAttackItem.AttackcCanOn();
+
+        AttackEvent();
     }
 
     // 공격 이벤트
-    public virtual void AttackEvent(GameObject target)
+    public virtual void AttackEvent()
     {
-        Character ct = target.GetComponent<Character>();
-        if (ct != null)
+        if (m_goTarget!= null)
         {
-            // 데미지 계산
-            // 크리티컬
-            ct.HitEvent(gameObject, Atk);
+            Debug.Log("Attack : " + m_goTarget.name);
+
+            Character ct = m_goTarget.GetComponent<Character>();
+            if (ct != null)
+            {
+                // 데미지 계산
+                // 크리티컬
+                ct.HitEvent(gameObject, Atk);
+            }
         }
+    }
+
+    private void SetHp(int NewHp)
+    {
+        Hp = NewHp;
+        if (Hp < 0)
+            Hp = 0;
+
+        RefreshUI();
     }
 
     // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
     {
-        // 데미지 계산 및 체력 감소
-        int damage = (int)Mathf.Max(0, dmg - Def);
-        Hp -= damage;
+        if(m_actionState == ActionState.Shield)
+        {
+            int ShiledHitStamina = 10;
+            float shiledHitHpDef = 3.0f; // 체력 피격 데미지 감소율
 
-        // 히트 애니메이션
-        Animator.Play("Hit");
+            Stamina -= ShiledHitStamina;
+            dmg = (float)dmg % shiledHitHpDef;
+        }
+        else
+        {
+            dmg = (int)Mathf.Max(0, dmg - Def);
+        }
 
-        // 정지 및 무적 시간
+        int NewHp = Hp - (int)dmg;
+        SetHp(NewHp);
+
+        if(m_actionState == ActionState.Shield)
+        {
+            Animator.SetTrigger("Hit");
+        }
+        else
+        {
+            Animator.Play("Hit");
+        }
+
         Stop(0.2f);
 
-        // 사망 체크
+        // TODO 무적시간
+
         if (Hp <= 0)
         {
             Hp = 0;
@@ -67,11 +101,17 @@ public partial class Character : Base
         }
     }
 
-    public virtual void CanNextAttack(int id)
+    public virtual void AttackEnd(int id)
     {
-        // 애니메이션 자동 해제
+        // 애니메이션 setbool을 false로
+        // 다음 콤보 공격 번호가 있다면
+        // 콜라이더 해제
+        // Character State를 Idle로
+
         Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
         Animator.SetBool(info.m_sAnimName, false);
+
+        m_GoAttackItem.AttackCanOff();
 
         State = CreatureState.Idle;
     }

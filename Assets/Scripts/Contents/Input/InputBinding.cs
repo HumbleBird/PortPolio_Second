@@ -93,7 +93,7 @@ namespace Rito.InputBindings
         {
             Bind(UserAction.BasicAttack,  KeyCode.Mouse0);
             Bind(UserAction.StrongAttack, KeyCode.Mouse1);
-            Bind(UserAction.Sheild,       KeyCode.Mouse1);
+            Bind(UserAction.Shield,       KeyCode.Mouse1);
 
             Bind(UserAction.Jump,         KeyCode.Space);
             Bind(UserAction.Crounch,      KeyCode.LeftControl);

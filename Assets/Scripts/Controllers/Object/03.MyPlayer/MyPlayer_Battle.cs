@@ -14,7 +14,7 @@ public partial class MyPlayer : Player
 			{
 				_isNextCanAttack = false;
 				State = CreatureState.Skill;
-				_attack.BasicAttack();
+				m_strAttack.BasicAttack();
 			}
 		}
 		else

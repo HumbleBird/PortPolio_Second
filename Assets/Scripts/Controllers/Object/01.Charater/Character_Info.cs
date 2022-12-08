@@ -8,7 +8,7 @@ public abstract partial class Character : Base
 {
     public Table_Stat.Info statInfo { get; set; } = new Table_Stat.Info();
     public Table_Attack.Info attackInfo { get; set; } = new Table_Attack.Info();
-    public ActionState _actionState = ActionState.None;
+    public ActionState m_actionState = ActionState.None;
 
     public abstract void SetInfo(int id);
 
@@ -23,7 +23,6 @@ public abstract partial class Character : Base
     public float WalkSpeed { get { return statInfo.m_fWalkSpeed; } set { statInfo.m_fWalkSpeed = value; } }
     public float RunSpeed { get { return statInfo.m_fRunSpeed; } set { statInfo.m_fRunSpeed = value; } }
     public float CrounchSpeed { get { return statInfo.m_fCrunchSpeed; } set { statInfo.m_fCrunchSpeed = value; } }
-    
     #endregion
 }
 

@@ -11,7 +11,7 @@ public partial class Character : Base
     public bool waiting = false;
 
     [HideInInspector]
-    public GameObject m_GoAttackItem;
+    public TrigerDetector m_GoAttackItem;
 
     protected virtual void Start()
     {
@@ -20,7 +20,7 @@ public partial class Character : Base
         MaxStamina = Stamina;
 
         // AttackInfo Init
-        _attack.Init(gameObject);
+        m_strAttack.Init(gameObject);
     }
 
     protected virtual void Update()
@@ -75,5 +75,10 @@ public partial class Character : Base
         waiting = true;
         yield return new WaitForSecondsRealtime(duration);
         waiting = false;
+    }
+
+    void RefreshUI()
+    {
+
     }
 }

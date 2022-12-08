@@ -5,17 +5,10 @@ using static Define;
 
 public partial class Monster : AI
 {
-    protected override void UpdateSkill()
+    protected override void RandomAttack()
     {
-        base.UpdateSkill();
+        base.RandomAttack();
 
-        if(m_fCoolTime <= 0)
-        {
-            _attack.BasicAttack(101);
-        }
-        else
-        {
-            m_fCoolTime -= Time.deltaTime;
-        }
+        m_strAttack.BasicAttack(101);
     }
 }

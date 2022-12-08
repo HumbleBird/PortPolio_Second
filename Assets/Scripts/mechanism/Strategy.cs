@@ -23,22 +23,34 @@ public abstract class Strategy
         m_cGo = m_Go.GetComponent<Character>();
     }
 
+    bool holdingDown;
     public void InputKey()
     {
         if (Input.anyKeyDown)
         {
             foreach (var dic in keyDictionary)
             {
-                if (Input.GetKey(dic.Key))
+                if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
-                    ActionState(m_sActionName, true);
-                }
-                else if (Input.GetKeyUp(dic.Key))
-                {
-                    ActionState(m_sActionName, false);
+                    ActionStateCheck(m_sActionName, true);
                 }
             }
+            holdingDown = true;
+        }
+        if (!Input.anyKey && holdingDown)
+        {
+            foreach (var dic in keyDictionary)
+            {
+                if (Input.GetKeyUp(dic.Key))
+                {
+                    dic.Value();
+                    ActionStateCheck(m_sActionName, false);
+                    m_cGo.m_actionState = ActionState.None;
+                }
+            }
+
+            holdingDown = false;
         }
     }
 
@@ -47,7 +59,7 @@ public abstract class Strategy
         
     }
 
-    public void ActionState(string action, bool IsStart)
+    public void ActionStateCheck(string action, bool IsStart)
     {
         m_cGo.Animator.SetBool($"{action}", IsStart);
     }

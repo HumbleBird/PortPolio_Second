@@ -6,26 +6,36 @@ public class TrigerDetector : MonoBehaviour
 {
     // 무기에 부착하는 컴포넌트
     // 무기가 타겟과 공격시 피격 함수 호출
-    GameObject m_gPlayer;
+    GameObject m_gAttacker = null;
+    public Collider m_cAttackCollider;
 
     private void Start()
     {
         // Managers.Camera.Shake(100001);
-        m_gPlayer = transform.root.gameObject;
-        Character ch = m_gPlayer.GetComponent<Character>();
-        ch.m_GoAttackItem = gameObject;
+        m_gAttacker = transform.root.gameObject;
+        m_gAttacker.GetComponent<Character>().m_GoAttackItem = gameObject.GetComponent<TrigerDetector>();
 
-        gameObject.SetActive(false);
-
+        m_cAttackCollider = GetComponent<Collider>();
+        m_cAttackCollider.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Player pc = m_gPlayer.GetComponent<Player>();
-
         if (other != null)
-            pc.AttackEvent(other.gameObject);
+        {
+            m_gAttacker.GetComponent<Character>().m_goTarget = other.gameObject;
+        }
+    }
 
-        gameObject.SetActive(false);
+    public void AttackcCanOn()
+    {
+        m_cAttackCollider.enabled = true;
+
+    }
+
+    public void AttackCanOff()
+    {
+        m_cAttackCollider.enabled = false;
+
     }
 }

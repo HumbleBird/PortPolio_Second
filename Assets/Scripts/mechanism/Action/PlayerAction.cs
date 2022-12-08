@@ -14,25 +14,27 @@ public partial class PlayerAction : Strategy
         keyDictionary = new Dictionary<KeyCode, Action>
         {
             // 액션
-            { Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
+            //{ Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
 
             { Managers.InputKey._binding.Bindings[UserAction.Crounch], Crounch},
+            { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
             
             // UI
             { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], ShowInputKeySetting},
         };
     }
 
-
-
     public void Shield()
     {
         m_sActionName = "Shield";
-        Debug.Log("쉴드");
+        m_cGo.m_actionState = ActionState.Shield;
+        // TODO 스테미너 회복 감소
+        // 피격시 스테미너 감소 -> 히트에서
     }
 
     public void Crounch()
     {
+        m_sActionName = "Crounch";
         m_cGo.MoveSpeed = m_cGo.CrounchSpeed;
     }
 

@@ -49,7 +49,7 @@ public partial class AI : Character
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = speedWalk;             //  Set the navemesh speed with the normal speed of the enemy
 
-        navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+        //navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
     }
 
     protected override void UpdateMove()
@@ -130,7 +130,7 @@ public partial class AI : Character
         }
         else
         {
-            m_PlayerNear = false;           //  The player is no near when the enemy is platroling
+            //m_PlayerNear = false;           //  The player is no near when the enemy is platroling
             playerLastPosition = Vector3.zero;
             navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the enemy destination to the next waypoint
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
@@ -147,6 +147,10 @@ public partial class AI : Character
                     Stop();
                     m_WaitTime -= Time.deltaTime;
                 }
+            }
+            else
+            {
+                Move(speedWalk);
             }
         }
     }
@@ -219,7 +223,7 @@ public partial class AI : Character
                 {
                     m_playerInRange = true;             //  The player has been seeing by the enemy and then the nemy starts to chasing the player
                     m_IsPatrol = false;                 //  Change the state to chasing the player
-                    target = player.gameObject;
+                    m_goTarget = player.gameObject;
                 }
                 else
                 {

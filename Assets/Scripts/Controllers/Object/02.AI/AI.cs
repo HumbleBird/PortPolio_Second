@@ -23,7 +23,7 @@ public partial class AI : Character
         }
     }
 
-    float time = 3f;
+    float ChangeNextPatroltime = 3f;
     void NextActionState()
     {
         if (m_playerInRange == true)
@@ -32,11 +32,11 @@ public partial class AI : Character
             return;
         }
 
-        time -= Time.deltaTime;
+        ChangeNextPatroltime -= Time.deltaTime;
 
-        if (time <= 0)
+        if (ChangeNextPatroltime <= 0)
         {
-            time = 3f;
+            ChangeNextPatroltime = 3f;
             State = CreatureState.Move;
         }
     }

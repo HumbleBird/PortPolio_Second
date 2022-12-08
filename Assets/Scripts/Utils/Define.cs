@@ -17,7 +17,7 @@ public class Define
         //Battle
         BasicAttack,
         StrongAttack,
-        Sheild,
+        Shield,
 
         //Action
         Jump,
