@@ -15,62 +15,36 @@ public partial class MyPlayer : Player
 		base.Start();
 
 		m_tCamera = Camera.main;
-		m_stPlayerAction.SetKeyMehod();
+		m_strCharacterAction.SetKeyMehod();
 	}
 
-    protected override void UpdateController()
+	protected override void UpdateController()
     {
         base.UpdateController();
 
-		switch (State)
+		switch (eState)
 		{
 			case CreatureState.Idle:
-				GetInputKey();
+				IdleAndMoveState();
 				break;
 			case CreatureState.Move:
-				GetInputKey();
-				break;
-			case CreatureState.Skill:
-				break;
-			case CreatureState.Dead:
+				IdleAndMoveState();
 				break;
 		}
 	}
 
-    void GetInputKey()
+	void IdleAndMoveState()
     {
-		GetDirInput();
 		GetInputkeyAttack();
+		m_strCharacterAction.InputKey();
+		StaminaGraduallyFillingUp();
 	}
 
-    bool _moveKeyPressed = false;
 	protected override void UpdateIdle()
-    {
-		// 이동 상태로 갈지 확인
-		if (_moveKeyPressed)
-		{
-			State = CreatureState.Move;
-			return;
-		}
-	}
-
-    protected override void Update()
-    {
-        base.Update();
-
-		m_stPlayerAction.InputKey();
-    }
-
-    void GetDirInput()
 	{
-        _moveKeyPressed = true;
-		if (Input.GetKey(KeyCode.W) ||
-		   Input.GetKey(KeyCode.A) ||
-		   Input.GetKey(KeyCode.S) ||
-		   Input.GetKey(KeyCode.D))
-			State = CreatureState.Move;
-		_moveKeyPressed = false;
-
+		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
+		    Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+			eState = CreatureState.Move;
 	}
 
 	// 걷기, 달리기 등
@@ -92,6 +66,7 @@ public partial class MyPlayer : Player
 
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 		{
+			m_strCharacterAction.ActionStateReset();
 			inputMagnitude *= 2;
 			MoveSpeed = RunSpeed;
 		}
@@ -106,6 +81,6 @@ public partial class MyPlayer : Player
 
 	public void Step()
     {
-
+		// TODO Effect Music
     }
 }

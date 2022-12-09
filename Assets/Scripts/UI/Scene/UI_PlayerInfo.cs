@@ -56,15 +56,8 @@ public class UI_PlayerInfo : UI_Scene
         nameText.text = _player.name;
     }
 
-    public void HitEvent()
-    {
-        StartCoroutine(DownHP());
-    }
-
     public IEnumerator DownHP()
     {
-        RefreshUI();
-
         yield return new WaitForSeconds(0.5f);
 
         Image HpBarBGHitiamge = GetImage((int)Images.HPBarBGHit);
@@ -81,6 +74,6 @@ public class UI_PlayerInfo : UI_Scene
             yield return null;
         }
 
-        
+        RefreshUI();
     }
 }

@@ -6,14 +6,16 @@ public class TrigerDetector : MonoBehaviour
 {
     // 무기에 부착하는 컴포넌트
     // 무기가 타겟과 공격시 피격 함수 호출
-    GameObject m_gAttacker = null;
+    GameObject Attacker = null;
+    Character CAttacker = null;
     public Collider m_cAttackCollider;
 
     private void Start()
     {
         // Managers.Camera.Shake(100001);
-        m_gAttacker = transform.root.gameObject;
-        m_gAttacker.GetComponent<Character>().m_GoAttackItem = gameObject.GetComponent<TrigerDetector>();
+        Attacker = transform.root.gameObject;
+        CAttacker = Attacker.GetComponent<Character>();
+        CAttacker.m_GoAttackItem = GetComponent<TrigerDetector>();
 
         m_cAttackCollider = GetComponent<Collider>();
         m_cAttackCollider.enabled = false;
@@ -23,7 +25,8 @@ public class TrigerDetector : MonoBehaviour
     {
         if (other != null)
         {
-            m_gAttacker.GetComponent<Character>().m_goTarget = other.gameObject;
+            CAttacker.m_goTarget = other.gameObject;
+            CAttacker.AttackEvent();
         }
     }
 

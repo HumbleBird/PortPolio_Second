@@ -6,7 +6,7 @@ using static Define;
 
 public partial class Character : Base
 {
-	public CreatureState State = CreatureState.Idle;
+	public CreatureState eState = CreatureState.Idle;
     [HideInInspector] 
     public bool waiting = false;
 
@@ -26,11 +26,12 @@ public partial class Character : Base
     protected virtual void Update()
     {
         UpdateController();
+        m_fCoolTime -= Time.deltaTime;
     }
 
     protected virtual void UpdateController()
     {
-        switch (State)
+        switch (eState)
         {
             case CreatureState.Idle:
                 UpdateIdle();
@@ -75,10 +76,5 @@ public partial class Character : Base
         waiting = true;
         yield return new WaitForSecondsRealtime(duration);
         waiting = false;
-    }
-
-    void RefreshUI()
-    {
-
     }
 }

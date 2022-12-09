@@ -17,10 +17,8 @@ public class UI_BattleManager : MonoBehaviour
         Managers.InputKey.Init();
     }
 
-    public void HitEvent()
+    public void StatUIRefersh()
     {
-        UIPlayerInfo.HitEvent();
-        
-        // TODO È­¸é »¡°²°Ô
+        UIPlayerInfo.RefreshUI();
     }
 }

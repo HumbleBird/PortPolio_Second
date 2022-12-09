@@ -26,15 +26,19 @@ public partial class PlayerAction : Strategy
 
     public void Shield()
     {
-        m_sActionName = "Shield";
-        m_cGo.m_actionState = ActionState.Shield;
+        if(m_cGo.Stamina >= 0)
+        {
+            ActionName = "Shield";
+            //m_cGo.eActionState = ActionState.Shield;
+        }
+
         // TODO 스테미너 회복 감소
         // 피격시 스테미너 감소 -> 히트에서
     }
 
     public void Crounch()
     {
-        m_sActionName = "Crounch";
+        ActionName = "Crounch";
         m_cGo.MoveSpeed = m_cGo.CrounchSpeed;
     }
 
@@ -44,22 +48,22 @@ public partial class PlayerAction : Strategy
 
     public void Jump()
     {
-        m_sActionName = "Action Move";
+        ActionName = "Action Move";
         m_cGo.waiting = true;
 
         // 제자리 점프
-        if (m_cGo.State == CreatureState.Idle)
+        if (m_cGo.eState == CreatureState.Idle)
         {
-            m_cGo.Animator.SetFloat("Action Move State", 0);
+            m_cGo.Animator.SetFloat("Action Move eState", 0);
         }
         // 이동 점프
-        else if (m_cGo.State == CreatureState.Move)
+        else if (m_cGo.eState == CreatureState.Move)
         {
-            m_cGo.Animator.SetFloat("Action Move State", 1);
+            m_cGo.Animator.SetFloat("Action Move eState", 1);
         }
 
         m_cGo.Stop(0.833f); //  애니메이션 길이
-        m_cGo.State = CreatureState.Idle;
+        m_cGo.eState = CreatureState.Idle;
     }
 
     #region 미구현
@@ -68,11 +72,11 @@ public partial class PlayerAction : Strategy
     {
         m_cGo.waiting = true;
 
-        if (m_cGo.State == Define.CreatureState.Idle)
+        if (m_cGo.eState == Define.CreatureState.Idle)
         {
             m_cGo.Animator.SetBool("Stand To Roll", true);
         }
-        else if (m_cGo.State == Define.CreatureState.Move)
+        else if (m_cGo.eState == Define.CreatureState.Move)
         {
             m_cGo.Animator.SetBool("Run To Roll", true);
         }

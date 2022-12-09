@@ -12,11 +12,7 @@ public partial class AI : Character
 
         if (m_fCoolTime <= 0)
         {
-            RandomAttack();
-        }
-        else
-        {
-            m_fCoolTime -= Time.deltaTime;
+            AttackAction();
         }
 
         m_CaughtPlayer = false;
@@ -24,8 +20,8 @@ public partial class AI : Character
         // 타겟과의 거리 조사후 전 상태로 이동할지 말지 결정
     }
 
-    protected virtual void RandomAttack()
+    protected virtual void AttackAction()
     {
-        // 랜덤 어택 및 상태 결정
+        // 어택 함수
     }
 }

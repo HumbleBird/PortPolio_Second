@@ -30,9 +30,9 @@ public partial class AI : Character
     Vector3 playerLastPosition = Vector3.zero;      //  Last position of the player when was near the enemy
     Vector3 m_PlayerPosition = Vector3.zero;        //  Last position of the player when the player is seen by the enemy
 
-    bool m_playerInRange= false;                  //  If the player is in range of vision, state of chasing
-    bool m_PlayerNear  = false;               //  If the player is near, state of hearing
-    bool m_IsPatrol    = true;             //  If the enemy is patrol, state of patroling
+    bool m_playerInRange= false;                  //  If the player is in range of vision, eState of chasing
+    bool m_PlayerNear  = false;               //  If the player is near, eState of hearing
+    bool m_IsPatrol    = true;             //  If the enemy is patrol, eState of patroling
 
     protected bool m_CaughtPlayer= false;                 //  if the enemy has caught the player
     #endregion
@@ -176,7 +176,11 @@ public partial class AI : Character
         if (!m_IsPatrol)
             Animator.Play("Run");
         else
+        {
+            if(eActionState !=ActionState.None)
+                m_strCharacterAction.ActionStateReset();
             Animator.Play("Walk");
+        }
     }
 
     void CaughtPlayer()
@@ -184,7 +188,7 @@ public partial class AI : Character
         Stop();
         LookingPlayer(m_PlayerPosition);
         m_CaughtPlayer = true;
-        State = CreatureState.Skill;
+        eState = CreatureState.Skill;
     }
 
     void LookingPlayer(Vector3 player)
@@ -222,7 +226,7 @@ public partial class AI : Character
                 if (!Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
                 {
                     m_playerInRange = true;             //  The player has been seeing by the enemy and then the nemy starts to chasing the player
-                    m_IsPatrol = false;                 //  Change the state to chasing the player
+                    m_IsPatrol = false;                 //  Change the eState to chasing the player
                     m_goTarget = player.gameObject;
                 }
                 else

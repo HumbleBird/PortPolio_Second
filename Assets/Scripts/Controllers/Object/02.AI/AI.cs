@@ -11,7 +11,7 @@ public partial class AI : Character
     {
         base.UpdateController();
 
-        switch (State)
+        switch (eState)
         {
             case CreatureState.Idle:
                 EnviromentView();
@@ -28,7 +28,7 @@ public partial class AI : Character
     {
         if (m_playerInRange == true)
         {
-            State = CreatureState.Move;
+            eState = CreatureState.Move;
             return;
         }
 
@@ -37,7 +37,7 @@ public partial class AI : Character
         if (ChangeNextPatroltime <= 0)
         {
             ChangeNextPatroltime = 3f;
-            State = CreatureState.Move;
+            eState = CreatureState.Move;
         }
     }
 }

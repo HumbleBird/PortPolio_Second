@@ -34,8 +34,6 @@ public partial class Character : Base
         m_goTarget = null; // 타겟 초기화
 
         m_GoAttackItem.AttackcCanOn();
-
-        AttackEvent();
     }
 
     // 공격 판정 체크
@@ -55,22 +53,15 @@ public partial class Character : Base
         }
     }
 
-    private void SetHp(int NewHp)
-    {
-        Hp = NewHp;
-        if (Hp < 0)
-            Hp = 0;
 
-        RefreshUI();
-    }
 
     // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
     {
-        if(m_actionState == ActionState.Shield)
+        if(eActionState == ActionState.Shield)
         {
             int ShiledHitStamina = 10;
-            float shiledHitHpDef = 3.0f; // 체력 피격 데미지 감소율
+            float shiledHitHpDef = 1.0f; // 체력 피격 데미지 감소율
 
             Stamina -= ShiledHitStamina;
             dmg = (float)dmg % shiledHitHpDef;
@@ -83,7 +74,7 @@ public partial class Character : Base
         int NewHp = Hp - (int)dmg;
         SetHp(NewHp);
 
-        if(m_actionState == ActionState.Shield)
+        if(eActionState == ActionState.Shield)
         {
             Animator.SetTrigger("Hit");
         }
@@ -99,7 +90,7 @@ public partial class Character : Base
         if (Hp <= 0)
         {
             Hp = 0;
-            State = Define.CreatureState.Dead;
+            eState = Define.CreatureState.Dead;
         }
     }
 
@@ -108,13 +99,18 @@ public partial class Character : Base
         // 애니메이션 setbool을 false로
         // 다음 콤보 공격 번호가 있다면
         // 콜라이더 해제
-        // Character State를 Idle로
+        // Character eState를 Idle로
 
         Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
         Animator.SetBool(info.m_sAnimName, false);
 
         m_GoAttackItem.AttackCanOff();
 
-        State = CreatureState.Idle;
+        eState = CreatureState.Idle;
+    }
+
+    void ActionStateChange(string actionName)
+    {
+        m_strCharacterAction.ActionStateChange("actionName");
     }
 }

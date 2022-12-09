@@ -11,11 +11,11 @@ public abstract class Strategy
     public Dictionary<KeyCode, Action> keyDictionary;
 
     protected GameObject m_Go; // 행동 주체자
-    protected Character m_cGo;
+    protected Character  m_cGo;
     protected GameObject m_GoTarget; // 목표물
     protected GameObject m_GoProjectile = null; // 투사체
 
-    protected string m_sActionName;
+    protected string ActionName = null;
 
     public virtual void Init(GameObject go)
     {
@@ -33,20 +33,19 @@ public abstract class Strategy
                 if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
-                    ActionStateCheck(m_sActionName, true);
+                    if(ActionName != null)
+                        ActionStateCheck(ActionName, true);
                 }
             }
             holdingDown = true;
         }
-        if (!Input.anyKey && holdingDown)
+        else if (!Input.anyKey && holdingDown)
         {
             foreach (var dic in keyDictionary)
             {
                 if (Input.GetKeyUp(dic.Key))
                 {
-                    dic.Value();
-                    ActionStateCheck(m_sActionName, false);
-                    m_cGo.m_actionState = ActionState.None;
+                    ActionStateReset();
                 }
             }
 
@@ -62,5 +61,29 @@ public abstract class Strategy
     public void ActionStateCheck(string action, bool IsStart)
     {
         m_cGo.Animator.SetBool($"{action}", IsStart);
+    }
+
+    public void ActionStateReset()
+    {
+        ActionStateCheck(ActionName, false);
+        if(ActionName != null)
+            ActionName = null;
+        m_cGo.eActionState = ActionState.None;
+    }
+
+    public void ActionStateChange(string actionName)
+    {
+        switch (actionName)
+        {
+            case "Shield":
+                m_cGo.eActionState = ActionState.Shield;
+                break;
+            case "Charging":
+                m_cGo.eActionState = ActionState.Charging;
+                break;
+            case "Reload":
+                m_cGo.eActionState = ActionState.Reload;
+                break;
+        }
     }
 }

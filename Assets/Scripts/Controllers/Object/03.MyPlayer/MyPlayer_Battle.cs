@@ -13,13 +13,9 @@ public partial class MyPlayer : Player
 			if (Input.GetMouseButtonDown(0) && _isNextCanAttack)
 			{
 				_isNextCanAttack = false;
-				State = CreatureState.Skill;
+				eState = CreatureState.Skill;
 				m_strAttack.BasicAttack();
 			}
-		}
-		else
-		{
-			m_fCoolTime -= Time.deltaTime;
 		}
 	}
 }
