@@ -21,7 +21,7 @@ public class Define
 
         //Action
         Jump,
-        Crounch,
+        Crouch,
 
         // UI
         UI_Inventory,

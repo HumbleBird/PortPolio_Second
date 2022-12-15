@@ -31,6 +31,8 @@ public partial class MyPlayer : Player
 				IdleAndMoveState();
 				break;
 		}
+
+		
 	}
 
 	void IdleAndMoveState()
@@ -42,6 +44,8 @@ public partial class MyPlayer : Player
 
 	protected override void UpdateIdle()
 	{
+		base.UpdateIdle();
+
 		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
 		    Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
 			eState = CreatureState.Move;

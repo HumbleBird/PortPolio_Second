@@ -111,6 +111,6 @@ public partial class Character : Base
 
     void ActionStateChange(string actionName)
     {
-        m_strCharacterAction.ActionStateChange("actionName");
+        m_strCharacterAction.ActionStateChange(actionName);
     }
 }

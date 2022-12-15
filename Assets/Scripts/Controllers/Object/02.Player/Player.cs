@@ -7,6 +7,10 @@ public partial class Player : Character
 {
     public Table_Player.Info playerInfo { get; set; }
 
+    protected override void UpdateIdle()
+    {
+        base.UpdateIdle();
+    }
 
     public override void SetInfo(int id)
     {

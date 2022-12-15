@@ -27,6 +27,8 @@ public partial class Character : Base
     {
         UpdateController();
         m_fCoolTime -= Time.deltaTime;
+        if (m_fCoolTime < 0)
+            m_fCoolTime = 0;
     }
 
     protected virtual void UpdateController()
@@ -48,7 +50,7 @@ public partial class Character : Base
         }
     }
 
-    protected virtual void UpdateIdle() { }
+    protected virtual void UpdateIdle() { Animator.SetFloat("Sprint", 0); }
     protected virtual void UpdateMove() { }
     protected virtual void UpdateSkill() { }
     protected virtual void UpdateDead() 

@@ -9,13 +9,14 @@ using static Define;
 public abstract class Strategy
 {
     public Dictionary<KeyCode, Action> keyDictionary;
+    Dictionary<KeyCode, string> InputKeyDic = new Dictionary<KeyCode, string>();
 
     protected GameObject m_Go; // 행동 주체자
     protected Character  m_cGo;
     protected GameObject m_GoTarget; // 목표물
     protected GameObject m_GoProjectile = null; // 투사체
 
-    protected string ActionName = null;
+    protected string m_sActionName = null;
 
     public virtual void Init(GameObject go)
     {
@@ -23,7 +24,6 @@ public abstract class Strategy
         m_cGo = m_Go.GetComponent<Character>();
     }
 
-    bool holdingDown;
     public void InputKey()
     {
         if (Input.anyKeyDown)
@@ -33,23 +33,27 @@ public abstract class Strategy
                 if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
-                    if(ActionName != null)
-                        ActionStateCheck(ActionName, true);
+                    
+                    // 입력한 값과 함수 임시 저장
+                    InputKeyDic.Add(dic.Key, m_sActionName);
+                    ActionStateCheck(m_sActionName, true);
+                    Debug.Log("key down : " + m_sActionName);
                 }
             }
-            holdingDown = true;
         }
-        else if (!Input.anyKey && holdingDown)
-        {
-            foreach (var dic in keyDictionary)
-            {
-                if (Input.GetKeyUp(dic.Key))
-                {
-                    ActionStateReset();
-                }
-            }
 
-            holdingDown = false;
+        if (InputKeyDic.Count == 0)
+            return;
+        
+        foreach (var dic in InputKeyDic)
+        {
+            if (Input.GetKeyUp(dic.Key))
+            {
+                ActionStateCheck(dic.Value, false);
+                InputKeyDic.Remove(dic.Key);
+                Debug.Log("key up : " + dic.Value);
+                return;
+            }
         }
     }
 
@@ -58,17 +62,22 @@ public abstract class Strategy
         
     }
 
-    public void ActionStateCheck(string action, bool IsStart)
+    public void ActionStateCheck(string actionName, bool bStart)
     {
-        m_cGo.Animator.SetBool($"{action}", IsStart);
+        if (actionName == null)
+            return;
+
+        m_cGo.Animator.SetBool(actionName, bStart);
     }
 
     public void ActionStateReset()
     {
-        ActionStateCheck(ActionName, false);
-        if(ActionName != null)
-            ActionName = null;
+        foreach (var dic in InputKeyDic)
+            ActionStateCheck(dic.Value, false);
+
+        m_sActionName = null;
         m_cGo.eActionState = ActionState.None;
+        InputKeyDic.Clear();
     }
 
     public void ActionStateChange(string actionName)

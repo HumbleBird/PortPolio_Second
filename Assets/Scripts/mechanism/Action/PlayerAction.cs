@@ -16,7 +16,7 @@ public partial class PlayerAction : Strategy
             // 액션
             //{ Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
 
-            { Managers.InputKey._binding.Bindings[UserAction.Crounch], Crounch},
+            { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
             { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
             
             // UI
@@ -26,29 +26,21 @@ public partial class PlayerAction : Strategy
 
     public void Shield()
     {
-        if(m_cGo.Stamina >= 0)
+        if(m_cGo.Stamina >= 0 && m_cGo.Animator.GetBool("Crouch") == false)
         {
-            ActionName = "Shield";
-            //m_cGo.eActionState = ActionState.Shield;
+            m_sActionName = "Shield";
         }
-
-        // TODO 스테미너 회복 감소
-        // 피격시 스테미너 감소 -> 히트에서
     }
 
-    public void Crounch()
+    public void Crouch()
     {
-        ActionName = "Crounch";
+        m_sActionName = "Crouch";
         m_cGo.MoveSpeed = m_cGo.CrounchSpeed;
-    }
-
-    public void CrounchShiled()
-    {
     }
 
     public void Jump()
     {
-        ActionName = "Action Move";
+        m_sActionName = "Action Move";
         m_cGo.waiting = true;
 
         // 제자리 점프
