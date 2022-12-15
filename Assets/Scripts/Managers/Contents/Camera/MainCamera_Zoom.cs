@@ -31,7 +31,7 @@ public partial class MainCamera : MonoBehaviour
     }
 
     cZoomInfo m_ZoomInfo = new cZoomInfo();
-    bool m_IsEndStage = false;
+    bool m_IsEndStage;// = false;
 
     protected void ResetZoom()
     {

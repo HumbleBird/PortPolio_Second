@@ -103,6 +103,7 @@ public partial class Character : Base
 
         Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
         Animator.SetBool(info.m_sAnimName, false);
+        Atk -= info.m_fDmg;
 
         m_GoAttackItem.AttackCanOff();
 

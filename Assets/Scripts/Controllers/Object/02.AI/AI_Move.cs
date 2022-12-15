@@ -174,7 +174,9 @@ public partial class AI : Character
         navMeshAgent.speed = speed;
 
         if (!m_IsPatrol)
+        {
             Animator.Play("Run");
+        }
         else
         {
             if(eActionState !=ActionState.None)

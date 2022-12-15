@@ -21,6 +21,7 @@ public abstract partial class Character : Base
     public int Stamina { get { return m_tStatInfo.m_iStemina; } set { m_tStatInfo.m_iStemina = value; } }
     public int MaxStamina { get; set; }
     public float Atk { get { return m_tStatInfo.m_fAtk; } set { m_tStatInfo.m_fAtk = value; } }
+    public float OriginalAtk { get; set; }
     public float Def { get { return m_tStatInfo.m_fDef; } set { m_tStatInfo.m_fDef = value; } }
     public float MoveSpeed { get; set; }
     public float WalkSpeed { get { return m_tStatInfo.m_fWalkSpeed; } set { m_tStatInfo.m_fWalkSpeed = value; } }

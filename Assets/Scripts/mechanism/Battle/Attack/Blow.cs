@@ -11,6 +11,8 @@ public class Blow : Attack
     // 기본 좌클릭 공격
     public override void BasicAttack(int id = 1)
     {
+        base.BasicAttack();
+
         info = Managers.Table.m_Attack.Get(id);
 
         if (info == null)
@@ -23,6 +25,7 @@ public class Blow : Attack
 
         m_cGo._isNextCanAttack = true;
         m_cGo.m_fCoolTime = info.m_fCoolTime;
+        m_cGo.Atk += info.m_fDmg;
     }
 
     public override void Skill() { }

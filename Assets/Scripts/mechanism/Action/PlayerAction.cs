@@ -14,7 +14,7 @@ public partial class PlayerAction : Strategy
         keyDictionary = new Dictionary<KeyCode, Action>
         {
             // 액션
-            //{ Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
+            { Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
 
             { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
             { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
@@ -26,7 +26,7 @@ public partial class PlayerAction : Strategy
 
     public void Shield()
     {
-        if(m_cGo.Stamina >= 0 && m_cGo.Animator.GetBool("Crouch") == false)
+        if(m_cGo.Stamina >= 0)
         {
             m_sActionName = "Shield";
         }

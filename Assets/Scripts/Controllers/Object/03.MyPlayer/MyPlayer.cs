@@ -80,7 +80,7 @@ public partial class MyPlayer : Player
 		if (move != Vector3.zero)
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);
 
-		Animator.SetFloat("Sprint", inputMagnitude, 0.05f, Time.deltaTime);
+			Animator.SetFloat("Sprint", inputMagnitude, 0.05f, Time.deltaTime);
 	}
 
 	public void Step()

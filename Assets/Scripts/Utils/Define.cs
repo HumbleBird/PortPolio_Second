@@ -17,6 +17,7 @@ public class Define
         //Battle
         BasicAttack,
         StrongAttack,
+        Kick,
         Shield,
 
         //Action

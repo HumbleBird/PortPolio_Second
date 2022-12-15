@@ -8,14 +8,11 @@ public partial class MyPlayer : Player
 {
 	void GetInputkeyAttack()
 	{
-		if (m_fCoolTime <= 0)
+		if (Input.GetMouseButtonDown(0) && _isNextCanAttack)
 		{
-			if (Input.GetMouseButtonDown(0) && _isNextCanAttack)
-			{
-				_isNextCanAttack = false;
-				eState = CreatureState.Skill;
-				m_strAttack.BasicAttack();
-			}
+			_isNextCanAttack = false;
+			eState = CreatureState.Skill;
+			m_strAttack.BasicAttack();
 		}
 	}
 }

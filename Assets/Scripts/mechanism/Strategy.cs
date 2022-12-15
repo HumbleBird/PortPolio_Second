@@ -37,7 +37,6 @@ public abstract class Strategy
                     // 입력한 값과 함수 임시 저장
                     InputKeyDic.Add(dic.Key, m_sActionName);
                     ActionStateCheck(m_sActionName, true);
-                    Debug.Log("key down : " + m_sActionName);
                 }
             }
         }
@@ -51,7 +50,6 @@ public abstract class Strategy
             {
                 ActionStateCheck(dic.Value, false);
                 InputKeyDic.Remove(dic.Key);
-                Debug.Log("key up : " + dic.Value);
                 return;
             }
         }
