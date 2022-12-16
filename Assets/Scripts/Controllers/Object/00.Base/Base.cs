@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Base : MonoBehaviour
 {
-    protected Rigidbody Rigid { get; set; }
+    public Rigidbody Rigid { get; set; }
     protected Collider Coller { get; set; }
     public Animator Animator { get; set; }
 

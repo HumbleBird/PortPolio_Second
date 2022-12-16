@@ -9,6 +9,6 @@ public partial class Monster : AI
     protected override void AttackAction()
     {
         base.AttackAction();
-        m_strAttack.BasicAttack(AttackNum);
+        m_strAttack.AttackInfoCal(AttackNum);
     }
 }

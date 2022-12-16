@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Define
 {
+    public enum AttackCollider
+    {
+        None,
+        Weapon,
+        CharacterFront,
+    }
+
     public enum ActionState
     {
         None,

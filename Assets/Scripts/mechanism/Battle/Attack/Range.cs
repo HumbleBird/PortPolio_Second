@@ -8,18 +8,5 @@ using UnityEngine;
 
 public class Range : Attack
 {
-    public override void BasicAttack(int id = 1)
-    {
-        throw new NotImplementedException();
-    }
 
-    public override void Skill()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void StrongAttack(int id = 4)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -8,30 +8,5 @@ using UnityEngine;
 
 public class Blow : Attack
 {
-    // 기본 좌클릭 공격
-    public override void BasicAttack(int id = 1)
-    {
-        base.BasicAttack();
 
-        info = Managers.Table.m_Attack.Get(id);
-
-        if (info == null)
-        {
-            Debug.LogError($"해당하는 {id}의 스킬이 없습니다.");
-            return;
-        }
-
-        m_cGo.Animator.SetBool(info.m_sAnimName, true);
-
-        m_cGo._isNextCanAttack = true;
-        m_cGo.m_fCoolTime = info.m_fCoolTime;
-        m_cGo.Atk += info.m_fDmg;
-    }
-
-    public override void Skill() { }
-
-    public override void StrongAttack(int id = 4)
-    {
-        
-    }
 }

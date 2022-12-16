@@ -11,7 +11,7 @@ public partial class Character : Base
     public bool waiting = false;
 
     [HideInInspector]
-    public TrigerDetector m_GoAttackItem;
+    public List<TrigerDetector> m_GoAttackItem;
 
     protected virtual void Start()
     {

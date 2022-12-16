@@ -11,7 +11,7 @@ public partial class Character : Base
     public float m_fCoolTime = 0f;
     public bool _isNextCanAttack = true;
 
-    protected Attack m_strAttack;
+    protected Attack m_strAttack = new Attack();
 
     public void ChangeClass(string typeClass)
     {
@@ -29,11 +29,31 @@ public partial class Character : Base
     }
 
     // 공격 시도
-    public virtual void Attack()
+    public virtual void Attack(string Special = null)
     {
         m_goTarget = null; // 타겟 초기화
+        AttackCollider tempAttackCollider = AttackCollider.None;
 
-        m_GoAttackItem.AttackcCanOn();
+        // 무기로 공격했는지, 발차기를 했는지 구분
+        if (Special == "Weapon")
+            tempAttackCollider = AttackCollider.Weapon;
+        else if (Special == "CharacterFront")
+            tempAttackCollider = AttackCollider.CharacterFront;
+        else
+        {
+            tempAttackCollider = AttackCollider.None;
+            Debug.Log("공격 유형에 맞는 AttackCollider 파라미터 값을 넘겨 주십시오");
+        }
+
+        // 해당하는 영역의 콜라이더 활성화
+        foreach (var DetectorCollider in m_GoAttackItem)
+        {
+            if (DetectorCollider.eAttackCollider == tempAttackCollider)
+            {
+                DetectorCollider.AttackCanOn();
+                return;
+            }
+        }
     }
 
     // 공격 판정 체크
@@ -52,8 +72,6 @@ public partial class Character : Base
             }
         }
     }
-
-
 
     // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
@@ -96,16 +114,12 @@ public partial class Character : Base
 
     public virtual void AttackEnd(int id)
     {
-        // 애니메이션 setbool을 false로
-        // 다음 콤보 공격 번호가 있다면
-        // 콜라이더 해제
-        // Character eState를 Idle로
-
         Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
         Animator.SetBool(info.m_sAnimName, false);
         Atk -= info.m_fDmg;
 
-        m_GoAttackItem.AttackCanOff();
+        foreach (var DetectorCollider in m_GoAttackItem)
+            DetectorCollider.AttackCanOff();
 
         eState = CreatureState.Idle;
     }

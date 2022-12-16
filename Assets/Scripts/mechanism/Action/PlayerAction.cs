@@ -46,12 +46,12 @@ public partial class PlayerAction : Strategy
         // 제자리 점프
         if (m_cGo.eState == CreatureState.Idle)
         {
-            m_cGo.Animator.SetFloat("Action Move eState", 0);
+            m_cGo.Animator.SetFloat("Action Move State", 0);
         }
         // 이동 점프
         else if (m_cGo.eState == CreatureState.Move)
         {
-            m_cGo.Animator.SetFloat("Action Move eState", 1);
+            m_cGo.Animator.SetFloat("Action Move State", 1);
         }
 
         m_cGo.Stop(0.833f); //  애니메이션 길이

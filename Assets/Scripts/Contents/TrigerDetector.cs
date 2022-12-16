@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class TrigerDetector : MonoBehaviour
 {
@@ -9,13 +10,14 @@ public class TrigerDetector : MonoBehaviour
     GameObject Attacker = null;
     Character CAttacker = null;
     public Collider m_cAttackCollider;
+    public AttackCollider eAttackCollider = AttackCollider.None;
 
     private void Start()
     {
         // Managers.Camera.Shake(100001);
         Attacker = transform.root.gameObject;
         CAttacker = Attacker.GetComponent<Character>();
-        CAttacker.m_GoAttackItem = GetComponent<TrigerDetector>();
+        CAttacker.m_GoAttackItem.Add(GetComponent<TrigerDetector>());
 
         m_cAttackCollider = GetComponent<Collider>();
         m_cAttackCollider.enabled = false;
@@ -30,7 +32,7 @@ public class TrigerDetector : MonoBehaviour
         }
     }
 
-    public void AttackcCanOn()
+    public void AttackCanOn()
     {
         m_cAttackCollider.enabled = true;
 
@@ -39,6 +41,5 @@ public class TrigerDetector : MonoBehaviour
     public void AttackCanOff()
     {
         m_cAttackCollider.enabled = false;
-
     }
 }

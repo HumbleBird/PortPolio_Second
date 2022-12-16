@@ -14,6 +14,7 @@ public abstract class Strategy
     protected GameObject m_Go; // 행동 주체자
     protected Character  m_cGo;
     protected GameObject m_GoTarget; // 목표물
+    protected Base m_cTarget; // 목표물 스크립트
     protected GameObject m_GoProjectile = null; // 투사체
 
     protected string m_sActionName = null;
