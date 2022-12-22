@@ -19,9 +19,9 @@ public class Base : MonoBehaviour
 
     protected virtual void Init()
     {
-        Animator = GetComponent<Animator>();
-        Rigid = GetComponent<Rigidbody>();
-        Coller = GetComponent<Collider>();
+        Animator = Util.GetOrAddComponent<Animator>(gameObject);
+        Rigid = Util.GetOrAddComponent<Rigidbody>(gameObject);
+        Coller = Util.GetOrAddComponent<Collider>(gameObject);
     }
 
 

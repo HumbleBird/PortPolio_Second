@@ -17,6 +17,8 @@ public class Define
         Shield,
         Charging,
         Reload,
+        Invincible,
+
     }
 
     public enum UserAction
@@ -29,6 +31,7 @@ public class Define
 
         //Action
         Jump,
+        Roll,
         Crouch,
 
         // UI

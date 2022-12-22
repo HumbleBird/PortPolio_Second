@@ -15,4 +15,13 @@ public partial class Player : Character
 
         m_strCharacterAction.Init(gameObject);
     }
+
+    protected override void UpdateDead()
+    {
+        Rigid.isKinematic = true;
+        int deadId = UnityEngine.Random.Range(0, 2);
+        Animator.Play($"Dead{deadId}");
+        Managers.Object.Remove(ID);
+        Destroy(gameObject, 5);
+    }
 }

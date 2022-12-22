@@ -10,6 +10,7 @@ using static Define;
 public class Attack : Strategy
 {
     public Table_Attack.Info info;
+    int m_iAttackId;
     int kickId = 51;
 
     public void AttackInfoCal(int id)
@@ -29,24 +30,21 @@ public class Attack : Strategy
 
         m_cGo.Animator.SetBool(info.m_sAnimName, true);
 
-        SpecialAddAttackInfo(id);
+        m_iAttackId = id;
 
         m_cGo._isNextCanAttack = true;
         m_cGo.m_fCoolTime = info.m_fCoolTime;
         m_cGo.Atk += info.m_fDmg;
-
-
     }
 
-    protected void SpecialAddAttackInfo(int id)
+    public void SpecialAddAttackInfo()
     {
-        if (id == kickId)
+        RefreshTargetSet();
+
+        if (m_iAttackId == kickId)
             Kick();
 
-        // TODO
-        // 각 직업에 맞는 개별화된 공격의 함수는 여기서
-        // 궁수라면 화살을 날리는 것은 여기
-        // 킥으로 넉백 효과를 준다면 여기를
+        m_iAttackId = -1;
     }
 
     void CheckCooltime()
@@ -58,8 +56,6 @@ public class Attack : Strategy
     // 넉백 효과
     void Kick()
     {
-        RefreshTargetSet();
-
         Vector3 moveDirection = m_cGo.transform.position - m_GoTarget.transform.position;
         m_cTarget.Rigid.AddForce(moveDirection.normalized * -100f);
     }

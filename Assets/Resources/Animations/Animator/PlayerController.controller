@@ -210,13 +210,16 @@ AnimatorStateMachine:
     m_Position: {x: 80, y: -80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6724087912605853591}
-    m_Position: {x: -310, y: -90, z: 0}
+    m_Position: {x: -20, y: -170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5234673905328854104}
     m_Position: {x: 80, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3086777349093224245}
     m_Position: {x: -130, y: 300, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -109019467899743644}
+    m_Position: {x: -270, y: -160, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -5613252965450362128}
@@ -1335,6 +1338,33 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &-109019467899743644
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Dead1
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -203655887218126122, guid: e8bf5b4e2edebba44a3ad6562f172ab0,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!206 &-22557392305432654
 BlendTree:
   m_ObjectHideFlags: 1
@@ -1361,10 +1391,28 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Sprint
     m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: e14cc5d43c3bd4749b51a9f18c3a8a09,
+      type: 3}
+    m_Threshold: 2
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Sprint
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 88e1b3ba811e1e94ebc4dd5d3c84452b,
+      type: 3}
+    m_Threshold: 3
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Sprint
+    m_Mirror: 0
   m_BlendParameter: Action Move State
   m_BlendParameterY: Sprint
   m_MinThreshold: 0
-  m_MaxThreshold: 1
+  m_MaxThreshold: 3
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
@@ -2074,10 +2122,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: Action Move
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5234673905328854104}
   m_Solo: 0

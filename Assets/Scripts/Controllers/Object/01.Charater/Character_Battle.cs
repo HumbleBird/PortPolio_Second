@@ -29,13 +29,13 @@ public partial class Character : Base
     }
 
     // 공격 시도
-    public virtual void Attack(string Special = null)
+    public virtual void Attack(string Special = "")
     {
         m_goTarget = null; // 타겟 초기화
         AttackCollider tempAttackCollider = AttackCollider.None;
 
-        // 무기로 공격했는지, 발차기를 했는지 구분
-        if (Special == "Weapon")
+        // 기본은 무기
+        if (Special == "")
             tempAttackCollider = AttackCollider.Weapon;
         else if (Special == "CharacterFront")
             tempAttackCollider = AttackCollider.CharacterFront;
@@ -63,11 +63,12 @@ public partial class Character : Base
         {
             Debug.Log("Attack : " + m_goTarget.name);
 
+            m_strAttack.SpecialAddAttackInfo();
+
             Character ct = m_goTarget.GetComponent<Character>();
             if (ct != null)
             {
-                // 데미지 계산
-                // 크리티컬
+                // TODO 크리티컬
                 ct.HitEvent(gameObject, Atk);
             }
         }
@@ -76,7 +77,7 @@ public partial class Character : Base
     // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
     {
-        if(eActionState == ActionState.Shield)
+        if (eActionState == ActionState.Shield)
         {
             int ShiledHitStamina = 10;
             float shiledHitHpDef = 1.0f; // 체력 피격 데미지 감소율
@@ -84,13 +85,12 @@ public partial class Character : Base
             Stamina -= ShiledHitStamina;
             dmg = (float)dmg % shiledHitHpDef;
         }
+        else if (eActionState == ActionState.Invincible)
+            return;
         else
         {
             dmg = (int)Mathf.Max(0, dmg - Def);
         }
-
-        int NewHp = Hp - (int)dmg;
-        SetHp(NewHp);
 
         if(eActionState == ActionState.Shield)
         {
@@ -103,7 +103,8 @@ public partial class Character : Base
 
         Stop(0.2f);
 
-        // TODO 무적시간
+        int NewHp = Hp - (int)dmg;
+        SetHp(NewHp);
 
         if (Hp <= 0)
         {
@@ -112,6 +113,7 @@ public partial class Character : Base
         }
     }
 
+    // 공격 끝
     public virtual void AttackEnd(int id)
     {
         Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
@@ -121,11 +123,19 @@ public partial class Character : Base
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
 
+        // 여기서 콤보 공격 체크?
+        
+
         eState = CreatureState.Idle;
     }
 
     void ActionStateChange(string actionName)
     {
         m_strCharacterAction.ActionStateChange(actionName);
+    }
+
+    protected void ActionStateEnd()
+    {
+        m_strCharacterAction.ActionStateReset();
     }
 }

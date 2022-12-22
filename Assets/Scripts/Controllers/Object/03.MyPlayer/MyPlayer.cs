@@ -38,7 +38,8 @@ public partial class MyPlayer : Player
 	void IdleAndMoveState()
     {
 		GetInputkeyAttack();
-		m_strCharacterAction.InputKey();
+		m_strCharacterAction.InputMaintainKey();
+		m_strCharacterAction.InputOnekey();
 		StaminaGraduallyFillingUp();
 	}
 
@@ -70,7 +71,7 @@ public partial class MyPlayer : Player
 
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 		{
-			m_strCharacterAction.ActionStateReset();
+			ActionStateEnd();
 			inputMagnitude *= 2;
 			MoveSpeed = RunSpeed;
 		}

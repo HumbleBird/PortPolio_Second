@@ -8,7 +8,8 @@ using static Define;
 
 public abstract class Strategy
 {
-    public Dictionary<KeyCode, Action> keyDictionary;
+    public Dictionary<KeyCode, Action> MaintainkeyDictionary; // 연속성
+    public Dictionary<KeyCode, Action> OnekeyDictionary; // 단발성
     Dictionary<KeyCode, string> InputKeyDic = new Dictionary<KeyCode, string>();
 
     protected GameObject m_Go; // 행동 주체자
@@ -25,11 +26,12 @@ public abstract class Strategy
         m_cGo = m_Go.GetComponent<Character>();
     }
 
-    public void InputKey()
+    // 연속성 (쉴드, 앉기, 장전 등)
+    public void InputMaintainKey()
     {
         if (Input.anyKeyDown)
         {
-            foreach (var dic in keyDictionary)
+            foreach (var dic in MaintainkeyDictionary)
             {
                 if (Input.GetKeyDown(dic.Key))
                 {
@@ -56,6 +58,24 @@ public abstract class Strategy
         }
     }
 
+    // 단발성(점프, 구르기 등)
+    public void InputOnekey()
+    {
+        if (Input.anyKeyDown)
+        {
+            foreach (var dic in OnekeyDictionary)
+            {
+                if (Input.GetKeyDown(dic.Key))
+                {
+                    dic.Value();
+
+                    // 입력한 값과 함수 임시 저장
+                    ActionStateCheck(m_sActionName, true);
+                }
+            }
+        }
+    }
+
     public virtual void SetKeyMehod()
     {
         
@@ -67,6 +87,13 @@ public abstract class Strategy
             return;
 
         m_cGo.Animator.SetBool(actionName, bStart);
+
+        if (bStart == false)
+        {
+            m_cGo.eActionState = ActionState.None;
+            m_sActionName = null;
+        }
+
     }
 
     public void ActionStateReset()
@@ -74,9 +101,10 @@ public abstract class Strategy
         foreach (var dic in InputKeyDic)
             ActionStateCheck(dic.Value, false);
 
-        m_sActionName = null;
-        m_cGo.eActionState = ActionState.None;
         InputKeyDic.Clear();
+        m_cGo.waiting = false;
+
+        ActionStateCheck(m_sActionName, false);
     }
 
     public void ActionStateChange(string actionName)
@@ -91,6 +119,9 @@ public abstract class Strategy
                 break;
             case "Reload":
                 m_cGo.eActionState = ActionState.Reload;
+                break;
+            case "Invincible":
+                m_cGo.eActionState = ActionState.Invincible;
                 break;
         }
     }

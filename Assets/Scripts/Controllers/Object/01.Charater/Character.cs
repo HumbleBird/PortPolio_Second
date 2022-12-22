@@ -65,11 +65,6 @@ public partial class Character : Base
         Destroy(gameObject, 5);
     }
 
-    public void CanMove()
-    {
-        waiting = false;
-    }
-
     public void Stop(float duration)
     {
         if (waiting)

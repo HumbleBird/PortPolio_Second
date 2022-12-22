@@ -11,16 +11,20 @@ public partial class PlayerAction : Strategy
 
     public override void SetKeyMehod()
     {
-        keyDictionary = new Dictionary<KeyCode, Action>
+        MaintainkeyDictionary = new Dictionary<KeyCode, Action>
         {
-            // 액션
-            { Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
-
             { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
             { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
             
             // UI
             { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], ShowInputKeySetting},
+        };
+
+        OnekeyDictionary = new Dictionary<KeyCode, Action>
+        {
+            // 액션
+            //Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
+            { Managers.InputKey._binding.Bindings[UserAction.Roll], Roll},
         };
     }
 
@@ -58,20 +62,23 @@ public partial class PlayerAction : Strategy
         m_cGo.eState = CreatureState.Idle;
     }
 
-    #region 미구현
-    // 나중에 쓸지는 몰?루
     public void Roll()
     {
+        m_sActionName = "Action Move";
         m_cGo.waiting = true;
 
-        if (m_cGo.eState == Define.CreatureState.Idle)
+        // 제자리 점프
+        if (m_cGo.eState == CreatureState.Idle)
         {
-            m_cGo.Animator.SetBool("Stand To Roll", true);
+            m_cGo.Animator.SetFloat("Action Move State", 2);
         }
-        else if (m_cGo.eState == Define.CreatureState.Move)
+        // 이동 점프
+        else if (m_cGo.eState == CreatureState.Move)
         {
-            m_cGo.Animator.SetBool("Run To Roll", true);
+            m_cGo.Animator.SetFloat("Action Move State", 3);
         }
+
+        //m_cGo.Stop(0.6f); //  애니메이션 길이
+        m_cGo.eState = CreatureState.Idle;
     }
-    #endregion
 }
