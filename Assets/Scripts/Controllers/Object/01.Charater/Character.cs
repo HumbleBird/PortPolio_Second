@@ -27,6 +27,7 @@ public partial class Character : Base
     protected virtual void Update()
     {
         UpdateController();
+        UpdateAnim();
         m_fCoolTime -= Time.deltaTime;
         if (m_fCoolTime < 0)
             m_fCoolTime = 0;

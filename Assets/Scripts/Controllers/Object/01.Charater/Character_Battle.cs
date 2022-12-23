@@ -29,23 +29,17 @@ public partial class Character : Base
     }
 
     // 공격 시도
-    public virtual void Attack(string Special = "")
+    public virtual void Attack(int id)
     {
-        m_goTarget = null; // 타겟 초기화
+        m_goTarget = null;
         AttackCollider tempAttackCollider = AttackCollider.None;
 
-        // 기본은 무기
-        if (Special == "")
-            tempAttackCollider = AttackCollider.Weapon;
-        else if (Special == "CharacterFront")
+        // 콜라이더 활성화
+        if (id == 501) // TODO
             tempAttackCollider = AttackCollider.CharacterFront;
         else
-        {
-            tempAttackCollider = AttackCollider.None;
-            Debug.Log("공격 유형에 맞는 AttackCollider 파라미터 값을 넘겨 주십시오");
-        }
+            tempAttackCollider = AttackCollider.Weapon;
 
-        // 해당하는 영역의 콜라이더 활성화
         foreach (var DetectorCollider in m_GoAttackItem)
         {
             if (DetectorCollider.eAttackCollider == tempAttackCollider)
@@ -54,6 +48,8 @@ public partial class Character : Base
                 return;
             }
         }
+
+        m_strAttack.AttackInfoCal(id);
     }
 
     // 공격 판정 체크
@@ -114,17 +110,12 @@ public partial class Character : Base
     }
 
     // 공격 끝
-    public virtual void AttackEnd(int id)
+    public virtual void AttackEnd()
     {
-        Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
-        Animator.SetBool(info.m_sAnimName, false);
-        Atk -= info.m_fDmg;
+        _isNextCanAttack = true;
 
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
-
-        // 여기서 콤보 공격 체크?
-        
 
         eState = CreatureState.Idle;
     }

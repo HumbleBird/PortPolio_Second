@@ -16,7 +16,16 @@ public partial class MyPlayer : Player
 
 		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.BasicAttack]))
 		{
-			m_strAttack.AttackInfoCal(m_iBasicAttackNum);
+            Animator.SetTrigger("BasicAttack");
+			eState = CreatureState.Skill;
+		}
+		else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
+		{
+			// 어택 정보
+			//m_strAttack.AttackInfoCal(m_iBasicAttackNum);
+			// 어택 애니메이션
+            Animator.SetTrigger("StrongAttack");
+			eState = CreatureState.Skill;
 		}
 		else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Kick]))
 		{

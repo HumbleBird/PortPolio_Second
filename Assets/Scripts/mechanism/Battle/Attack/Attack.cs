@@ -36,6 +36,25 @@ public class Attack : Strategy
         m_cGo.m_fCoolTime = info.m_fCoolTime;
         m_cGo.Atk += info.m_fDmg;
     }
+    public void AttackSystem(int id)
+    {
+        //CheckCooltime();
+
+        info = Managers.Table.m_Attack.Get(id);
+
+        if (info == null)
+        {
+            Debug.LogError($"해당하는 {id}의 스킬이 없습니다.");
+            return;
+        }
+
+        m_cGo._isNextCanAttack = false;
+
+        m_iAttackId = id;
+
+        m_cGo.m_fCoolTime = info.m_fCoolTime;
+        m_cGo.Atk += info.m_fDmg;
+    }
 
     public void SpecialAddAttackInfo()
     {
@@ -64,5 +83,10 @@ public class Attack : Strategy
     {
         m_GoTarget = m_cGo.m_goTarget;
         m_cTarget = m_GoTarget.GetComponent<Base>();
+    }
+
+    void AttackAtkReset()
+    {
+        m_cGo.Atk -= info.m_fDmg;
     }
 }

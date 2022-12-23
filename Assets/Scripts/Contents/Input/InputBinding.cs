@@ -92,9 +92,9 @@ namespace Rito.InputBindings
         public void ResetAll()
         {
             Bind(UserAction.BasicAttack,  KeyCode.Mouse0);
-            //Bind(UserAction.StrongAttack, KeyCode.Mouse1);
+            Bind(UserAction.StrongAttack, KeyCode.Mouse1);
             Bind(UserAction.Kick,         KeyCode.V);
-            Bind(UserAction.Shield,       KeyCode.Mouse1);
+            Bind(UserAction.Shield,       KeyCode.C);
 
             Bind(UserAction.Jump,         KeyCode.Space);
             Bind(UserAction.Roll,         KeyCode.Space);

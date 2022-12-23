@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class Define
 {
+    public enum AttackKeyboardKey
+    {
+        None,
+        W,
+        S,
+        A,
+        D,
+    }
+
+    public enum AttackMouseKey
+    {
+        None,
+        MouseLeftClick,
+        MouseRightClick,
+    }
+
     public enum AttackCollider
     {
         None,
