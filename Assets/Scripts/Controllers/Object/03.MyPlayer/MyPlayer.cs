@@ -66,13 +66,13 @@ public partial class MyPlayer : Player
 		Vector3 move = new Vector3(horizontal, 0, vertical);
 		move = Quaternion.AngleAxis(m_tCamera.transform.rotation.eulerAngles.y, Vector3.up) * move;
 
-		float inputMagnitude = Mathf.Clamp01(move.magnitude);
-		inputMagnitude /= 2;
+		sprint = Mathf.Clamp01(move.magnitude);
+		sprint /= 2;
 
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 		{
 			ActionStateEnd();
-			inputMagnitude *= 2;
+			sprint *= 2;
 			MoveSpeed = RunSpeed;
 		}
 
@@ -81,7 +81,7 @@ public partial class MyPlayer : Player
 		if (move != Vector3.zero)
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);
 
-			Animator.SetFloat("Sprint", inputMagnitude, 0.05f, Time.deltaTime);
+		//Animator.SetFloat("Sprint", sprint, 0.05f, Time.deltaTime);
 	}
 
 	public void Step()

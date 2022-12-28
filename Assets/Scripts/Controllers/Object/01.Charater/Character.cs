@@ -7,6 +7,10 @@ using static Define;
 public partial class Character : Base
 {
 	public CreatureState eState = CreatureState.Idle;
+    CreatureState eLastState
+    {
+
+    }
     [HideInInspector] 
     public bool waiting = false;
 
