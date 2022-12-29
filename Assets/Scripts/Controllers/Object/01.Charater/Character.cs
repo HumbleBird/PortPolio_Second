@@ -6,6 +6,7 @@ using static Define;
 
 public partial class Character : Base
 {
+<<<<<<< HEAD
     CreatureMoveState moveState = CreatureMoveState.None;
     public virtual CreatureMoveState eMoveState
     {
@@ -52,6 +53,9 @@ public partial class Character : Base
         }
     }
 
+=======
+	public CreatureState eState = CreatureState.Idle;
+>>>>>>> parent of 6f677e5 (애니메이션 재조정)
     [HideInInspector] 
     public bool waiting = false;
 

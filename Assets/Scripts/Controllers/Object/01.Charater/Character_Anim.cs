@@ -6,6 +6,7 @@ using static Define;
 
 public partial class Character : Base
 {
+<<<<<<< HEAD
     float m_fNormalizeTransitionTime = 0.1f;
     protected int BaseLayer = 0;
     protected int UpperLayer = 1;
@@ -19,6 +20,22 @@ public partial class Character : Base
                 break;
             case CreatureMoveState.Crouch:
                 CrouchAnimation();
+=======
+    void UpdateAnim()
+    {
+        switch (eState)
+        {
+            case CreatureState.Idle:
+                Animator.Play()
+                break;
+            case CreatureState.Move:
+                break;
+            case CreatureState.Skill:
+                break;
+            case CreatureState.Dead:
+                break;
+            default:
+>>>>>>> parent of 6f677e5 (애니메이션 재조정)
                 break;
         }
     }
