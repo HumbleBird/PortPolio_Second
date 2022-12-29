@@ -7,10 +7,7 @@ using static Define;
 public partial class Character : Base
 {
 	public CreatureState eState = CreatureState.Idle;
-    CreatureState eLastState
-    {
 
-    }
     [HideInInspector] 
     public bool waiting = false;
 
@@ -31,7 +28,6 @@ public partial class Character : Base
     protected virtual void Update()
     {
         UpdateController();
-        UpdateAnim();
         m_fCoolTime -= Time.deltaTime;
         if (m_fCoolTime < 0)
             m_fCoolTime = 0;
@@ -60,6 +56,7 @@ public partial class Character : Base
     { 
         Animator.SetFloat("Sprint", 0);
     }
+
     protected virtual void UpdateMove() { }
     protected virtual void UpdateSkill() { }
     protected virtual void UpdateDead() 

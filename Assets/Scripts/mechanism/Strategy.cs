@@ -39,7 +39,8 @@ public abstract class Strategy
                     
                     // 입력한 값과 함수 임시 저장
                     InputKeyDic.Add(dic.Key, m_sActionName);
-                    ActionStateCheck(m_sActionName, true);
+                    //ActionStateCheck(m_sActionName, true);
+                    AnimationPlayTest(m_sActionName);
                 }
             }
         }
@@ -51,7 +52,9 @@ public abstract class Strategy
         {
             if (Input.GetKeyUp(dic.Key))
             {
-                ActionStateCheck(dic.Value, false);
+                //ActionStateCheck(dic.Value, false);
+                AnimationPlayTest(m_sActionName);
+
                 InputKeyDic.Remove(dic.Key);
                 return;
             }
@@ -70,7 +73,8 @@ public abstract class Strategy
                     dic.Value();
 
                     // 입력한 값과 함수 임시 저장
-                    ActionStateCheck(m_sActionName, true);
+                    //ActionStateCheck(m_sActionName, true);
+                    AnimationPlayTest(m_sActionName);
                 }
             }
         }
@@ -93,7 +97,14 @@ public abstract class Strategy
             m_cGo.eActionState = ActionState.None;
             m_sActionName = null;
         }
+    }
 
+    public void AnimationPlayTest(string actionName)
+    {
+        if (actionName == null)
+            return;
+
+        m_cGo.Animator.CrossFade(actionName, 0.1f);
     }
 
     public void ActionStateReset()

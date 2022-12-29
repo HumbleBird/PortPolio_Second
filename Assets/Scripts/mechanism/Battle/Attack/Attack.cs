@@ -13,6 +13,14 @@ public class Attack : Strategy
     int m_iAttackId;
     int kickId = 51;
 
+    public override void SetKeyMehod()
+    {
+        OnekeyDictionary = new Dictionary<KeyCode, Action>
+        {
+            { Managers.InputKey._binding.Bindings[UserAction.Kick], Kick},
+        };
+    }
+
     public void AttackInfoCal(int id)
     {
         CheckCooltime();
