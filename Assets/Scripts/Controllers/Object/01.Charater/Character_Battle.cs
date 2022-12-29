@@ -29,17 +29,23 @@ public partial class Character : Base
     }
 
     // 공격 시도
-    public virtual void Attack(int id)
+    public virtual void Attack(string Special = "")
     {
-        m_goTarget = null;
+        m_goTarget = null; // 타겟 초기화
         AttackCollider tempAttackCollider = AttackCollider.None;
 
-        // 콜라이더 활성화
-        if (id == 501) // TODO
+        // 기본은 무기
+        if (Special == "")
+            tempAttackCollider = AttackCollider.Weapon;
+        else if (Special == "CharacterFront")
             tempAttackCollider = AttackCollider.CharacterFront;
         else
-            tempAttackCollider = AttackCollider.Weapon;
+        {
+            tempAttackCollider = AttackCollider.None;
+            Debug.Log("공격 유형에 맞는 AttackCollider 파라미터 값을 넘겨 주십시오");
+        }
 
+        // 해당하는 영역의 콜라이더 활성화
         foreach (var DetectorCollider in m_GoAttackItem)
         {
             if (DetectorCollider.eAttackCollider == tempAttackCollider)
@@ -48,8 +54,6 @@ public partial class Character : Base
                 return;
             }
         }
-
-        m_strAttack.AttackInfoCal(id);
     }
 
     // 공격 판정 체크
@@ -88,13 +92,13 @@ public partial class Character : Base
             dmg = (int)Mathf.Max(0, dmg - Def);
         }
 
-        if(eActionState == ActionState.Shield)
+        if(eActionState == ActionState.Shield || eMoveState == CreatureMoveState.Crouch)
         {
             Animator.SetTrigger("Hit");
         }
         else
         {
-            Animator.Play("Hit");
+            Animator.CrossFade("Hit", m_fNormalizeTransitionTime);
         }
 
         Stop(0.2f);
@@ -110,12 +114,17 @@ public partial class Character : Base
     }
 
     // 공격 끝
-    public virtual void AttackEnd()
+    public virtual void AttackEnd(int id)
     {
-        _isNextCanAttack = true;
+        Table_Attack.Info info = Managers.Table.m_Attack.Get(id);
+        Animator.SetBool(info.m_sAnimName, false);
+        Atk -= info.m_fDmg;
 
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
+
+        // 여기서 콤보 공격 체크?
+        
 
         eState = CreatureState.Idle;
     }

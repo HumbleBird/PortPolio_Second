@@ -40,6 +40,7 @@ public partial class PlayerAction : Strategy
     {
         m_sActionName = "Crouch";
         m_cGo.MoveSpeed = m_cGo.CrounchSpeed;
+        m_cGo.eMoveState = CreatureMoveState.Crouch;
     }
 
     public void Jump()

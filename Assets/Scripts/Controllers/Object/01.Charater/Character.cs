@@ -6,11 +6,52 @@ using static Define;
 
 public partial class Character : Base
 {
-	public CreatureState eState = CreatureState.Idle;
-    CreatureState eLastState
+    CreatureMoveState moveState = CreatureMoveState.None;
+    public virtual CreatureMoveState eMoveState
     {
+        get { return moveState; }
+        set
+        {
+            if (moveState == value)
+                return;
 
+            moveState = value;
+            UpdateAnimation();
+        }
     }
+
+    CreatureState _state = CreatureState.Idle;
+    public virtual CreatureState eState
+    {
+        get { return _state; }
+        set
+        {
+            if (_state == value)
+                return;
+
+            _state = value;
+            UpdateAnimation();
+        }
+    }
+
+    protected float WalkSprint = 0.5f;
+    protected float RunSprint = 1f;
+
+    float sprint;
+    public float Sprint
+    {
+        get { return sprint; }
+        set
+        {
+            if (sprint == value)
+                return;
+
+            sprint = value;
+
+            UpdateAnimation();
+        }
+    }
+
     [HideInInspector] 
     public bool waiting = false;
 
@@ -31,7 +72,6 @@ public partial class Character : Base
     protected virtual void Update()
     {
         UpdateController();
-        UpdateAnim();
         m_fCoolTime -= Time.deltaTime;
         if (m_fCoolTime < 0)
             m_fCoolTime = 0;

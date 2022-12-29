@@ -91,6 +91,7 @@ public abstract class Strategy
         if (bStart == false)
         {
             m_cGo.eActionState = ActionState.None;
+            m_cGo.eMoveState = CreatureMoveState.None;
             m_sActionName = null;
         }
 

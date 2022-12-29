@@ -273,7 +273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af946b2a33ca18d49894ab630546090c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eState: 0
   waiting: 0
   m_GoAttackItem: []
   m_fCoolTime: 0

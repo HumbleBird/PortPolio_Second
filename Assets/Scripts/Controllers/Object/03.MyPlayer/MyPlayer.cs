@@ -25,31 +25,31 @@ public partial class MyPlayer : Player
 		switch (eState)
 		{
 			case CreatureState.Idle:
-				IdleAndMoveState();
+				GetInputKey();
+				StaminaGraduallyFillingUp();
 				break;
 			case CreatureState.Move:
-				IdleAndMoveState();
+				GetInputKey();
+				StaminaGraduallyFillingUp();
 				break;
 		}
-
-		
 	}
 
-	void IdleAndMoveState()
+	void GetInputKey()
     {
+		GetDirInput();
 		GetInputkeyAttack();
 		m_strCharacterAction.InputMaintainKey();
 		m_strCharacterAction.InputOnekey();
-		StaminaGraduallyFillingUp();
 	}
 
-	protected override void UpdateIdle()
-	{
-		base.UpdateIdle();
-
+	void GetDirInput()
+    {
 		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
-		    Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+			Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
 			eState = CreatureState.Move;
+		else
+			eState = CreatureState.Idle;
 	}
 
 	// 걷기, 달리기 등
@@ -61,27 +61,25 @@ public partial class MyPlayer : Player
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
 
-		MoveSpeed = WalkSpeed;
-
 		Vector3 move = new Vector3(horizontal, 0, vertical);
 		move = Quaternion.AngleAxis(m_tCamera.transform.rotation.eulerAngles.y, Vector3.up) * move;
 
-		sprint = Mathf.Clamp01(move.magnitude);
-		sprint /= 2;
-
-		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+		if (Input.GetKey(KeyCode.LeftShift))
 		{
 			ActionStateEnd();
-			sprint *= 2;
+			Sprint = RunSprint;
 			MoveSpeed = RunSpeed;
+		}
+        else
+        {
+			Sprint = WalkSprint;
+			MoveSpeed = WalkSpeed;
 		}
 
 		transform.position += move * MoveSpeed * Time.deltaTime;
 
 		if (move != Vector3.zero)
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);
-
-		//Animator.SetFloat("Sprint", sprint, 0.05f, Time.deltaTime);
 	}
 
 	public void Step()

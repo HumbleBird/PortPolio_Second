@@ -6,33 +6,54 @@ using static Define;
 
 public partial class Character : Base
 {
-    float m_fTime = 0.1f;
-    int BaseLayer = 0;
-    int UpperLayer = 1;
-    protected float sprint;
+    float m_fNormalizeTransitionTime = 0.1f;
+    protected int BaseLayer = 0;
+    protected int UpperLayer = 1;
 
-    void UpdateAnim()
+    protected void UpdateAnimation()
     {
-        if()
-
-        switch (eState)
+        switch (eMoveState)
         {
-            case CreatureState.Idle:
-                Animator.Play("Idle", BaseLayer, m_fTime);
+            case CreatureMoveState.None:
+                StandStateAnimation();
                 break;
-            case CreatureState.Move:
-                if(sprint == 0.5)
-                    Animator.Play("Walk", BaseLayer, m_fTime);
-                else
-                    Animator.Play("Run", BaseLayer, m_fTime);
-                break;
-            case CreatureState.Skill:
-                break;
-            case CreatureState.Dead:
-                break;
-            default:
+            case CreatureMoveState.Crouch:
+                CrouchAnimation();
                 break;
         }
     }
 
+    void StandStateAnimation()
+    {
+        switch (eState)
+        {
+            case CreatureState.Idle:
+                Animator.CrossFade("Idle", m_fNormalizeTransitionTime);
+                break;
+            case CreatureState.Move:
+                if (Sprint == WalkSprint)
+                    Animator.CrossFade("Walk", m_fNormalizeTransitionTime);
+                else if (Sprint == RunSprint)
+                    Animator.CrossFade("Run", m_fNormalizeTransitionTime);
+                break;
+            case CreatureState.Skill:
+                break;
+            case CreatureState.Dead:
+                Animator.CrossFade("Dead", m_fNormalizeTransitionTime);
+                break;
+        }
+    }
+
+    void CrouchAnimation()
+    {
+        switch (eState)
+        {
+            case CreatureState.Idle:
+                Animator.CrossFade("Crouch Idle", m_fNormalizeTransitionTime);
+                break;
+            case CreatureState.Move:
+                Animator.CrossFade("Crouch Walk Forward", m_fNormalizeTransitionTime);
+                break;
+        }
+    }
 }

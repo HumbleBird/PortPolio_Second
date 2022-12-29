@@ -4,22 +4,6 @@ using UnityEngine;
 
 public class Define
 {
-    public enum AttackKeyboardKey
-    {
-        None,
-        W,
-        S,
-        A,
-        D,
-    }
-
-    public enum AttackMouseKey
-    {
-        None,
-        MouseLeftClick,
-        MouseRightClick,
-    }
-
     public enum AttackCollider
     {
         None,
@@ -34,7 +18,6 @@ public class Define
         Charging,
         Reload,
         Invincible,
-
     }
 
     public enum UserAction
@@ -71,18 +54,10 @@ public class Define
         Player2
     }
 
-    public enum WorldObject
+    public enum CreatureMoveState
     {
-        Unknown,
-        Player,
-        Monster,
-    }
-
-    public enum Layer
-    {
-        Monster = 8,
-        Ground = 9,
-        Block = 10,
+        None,
+        Crouch,
     }
 
     public enum CreatureState
