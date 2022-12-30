@@ -11,14 +11,20 @@ public class Attack : Strategy
 {
     public Table_Attack.Info info;
     int m_iAttackId;
-    int kickId = 51;
 
-    public override void SetKeyMehod()
+    public override void InputOnekey()
     {
-        OnekeyDictionary = new Dictionary<KeyCode, Action>
+        if (Input.anyKeyDown)
         {
-            { Managers.InputKey._binding.Bindings[UserAction.Kick], Kick},
-        };
+            foreach (var dic in OnekeyDictionary)
+            {
+                if (Input.GetKeyDown(dic.Key))
+                {
+                    dic.Value();
+                    AttackInfoCal(m_iAttackId);
+                }
+            }
+        }
     }
 
     public void AttackInfoCal(int id)
@@ -36,7 +42,7 @@ public class Attack : Strategy
         m_cGo._isNextCanAttack = false;
         m_cGo.eState = CreatureState.Skill;
 
-        m_cGo.Animator.SetBool(info.m_sAnimName, true);
+        m_cGo.Animator.CrossFade(info.m_sAnimName, m_cGo.m_fNormalizeTransitionDuration);
 
         m_iAttackId = id;
 
@@ -44,47 +50,38 @@ public class Attack : Strategy
         m_cGo.m_fCoolTime = info.m_fCoolTime;
         m_cGo.Atk += info.m_fDmg;
     }
-    public void AttackSystem(int id)
-    {
-        //CheckCooltime();
 
-        info = Managers.Table.m_Attack.Get(id);
-
-        if (info == null)
-        {
-            Debug.LogError($"해당하는 {id}의 스킬이 없습니다.");
-            return;
-        }
-
-        m_cGo._isNextCanAttack = false;
-
-        m_iAttackId = id;
-
-        m_cGo.m_fCoolTime = info.m_fCoolTime;
-        m_cGo.Atk += info.m_fDmg;
-    }
-
-    public void SpecialAddAttackInfo()
-    {
-        RefreshTargetSet();
-
-        if (m_iAttackId == kickId)
-            Kick();
-
-        m_iAttackId = -1;
-    }
-
-    void CheckCooltime()
-    {
-        if (m_cGo.m_fCoolTime > 0)
-            return;
-    }
+    protected virtual void BasicAttack() { }
+    protected virtual void StrongAttack() { }
 
     // 넉백 효과
     void Kick()
     {
         Vector3 moveDirection = m_cGo.transform.position - m_GoTarget.transform.position;
         m_cTarget.Rigid.AddForce(moveDirection.normalized * -100f);
+    }
+
+    public void SpecialAddAttackInfo()
+    {
+        RefreshTargetSet();
+
+        if (m_iAttackId == m_cGo.m_iKickNum)
+            Kick();
+        //else if (m_iAttackId == m_cGo.m_iBasicAttackNum || m_iAttackId == m_cGo.m_iStrongAttackNum)
+            //IsNextAttack();
+
+        m_iAttackId = -1;
+    }
+
+    void IsNextAttack()
+    {
+        AttackInfoCal(info.m_iNextNum);
+    }
+
+    void CheckCooltime()
+    {
+        if (m_cGo.m_fCoolTime > 0)
+            return;
     }
 
     void RefreshTargetSet()
