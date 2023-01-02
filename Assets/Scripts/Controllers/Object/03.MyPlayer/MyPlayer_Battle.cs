@@ -7,7 +7,7 @@ using static Define;
 public partial class MyPlayer : Player
 {
 
-	void GetInputkeyAttack()
+	void GetInputAttack()
 	{
 		if (_isNextCanAttack == false)
 			return;

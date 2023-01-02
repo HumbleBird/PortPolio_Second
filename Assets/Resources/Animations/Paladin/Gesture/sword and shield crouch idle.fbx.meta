@@ -61,8 +61,8 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: 
-        data: 
+        functionName: ActionStateChange
+        data: Crouch
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

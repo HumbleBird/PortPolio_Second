@@ -61,8 +61,6 @@ public partial class Character : Base
     {
         if (m_goTarget!= null)
         {
-            Debug.Log("Attack : " + m_goTarget.name);
-
             m_strAttack.SpecialAddAttackInfo();
 
             Character ct = m_goTarget.GetComponent<Character>();
@@ -77,7 +75,9 @@ public partial class Character : Base
     // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
     {
-        if (eActionState == ActionState.Shield)
+        if (eActionState == ActionState.Invincible)
+            return;
+        else if (eActionState == ActionState.Shield)
         {
             int ShiledHitStamina = 10;
             float shiledHitHpDef = 1.0f; // 체력 피격 데미지 감소율
@@ -85,32 +85,15 @@ public partial class Character : Base
             Stamina -= ShiledHitStamina;
             dmg = (float)dmg % shiledHitHpDef;
         }
-        else if (eActionState == ActionState.Invincible)
-            return;
         else
-        {
             dmg = (int)Mathf.Max(0, dmg - Def);
-        }
 
-        if(eActionState == ActionState.Shield)
-        {
-            Animator.SetTrigger("Hit");
-        }
-        else
-        {
-            Animator.Play("Hit");
-        }
+        HitAnimation();
 
         Stop(0.2f);
 
         int NewHp = Hp - (int)dmg;
         SetHp(NewHp);
-
-        if (Hp <= 0)
-        {
-            Hp = 0;
-            eState = Define.CreatureState.Dead;
-        }
     }
 
     // 공격 끝
@@ -121,9 +104,11 @@ public partial class Character : Base
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
 
+        m_strAttack.AttackAtkReset();
         eState = CreatureState.Idle;
     }
 
+    // 애니메이션 이벤트에서 실행
     void ActionStateChange(string actionName)
     {
         m_strCharacterAction.ActionStateChange(actionName);

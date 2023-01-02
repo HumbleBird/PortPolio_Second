@@ -19,8 +19,6 @@ public partial class Player : Character
     protected override void UpdateDead()
     {
         Rigid.isKinematic = true;
-        int deadId = UnityEngine.Random.Range(0, 2);
-        Animator.Play($"Dead{deadId}");
         Managers.Object.Remove(ID);
         Destroy(gameObject, 5);
     }

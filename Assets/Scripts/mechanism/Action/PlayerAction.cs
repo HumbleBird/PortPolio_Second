@@ -16,8 +16,6 @@ public partial class PlayerAction : Strategy
             { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
             { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
             
-            // UI
-            { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], ShowInputKeySetting},
         };
 
         OnekeyDictionary = new Dictionary<KeyCode, Action>
@@ -25,6 +23,9 @@ public partial class PlayerAction : Strategy
             // 액션
             //Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
             { Managers.InputKey._binding.Bindings[UserAction.Roll], Roll},
+        
+            // UI
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], ShowInputKeySetting},
         };
     }
 
@@ -32,40 +33,31 @@ public partial class PlayerAction : Strategy
     {
         if(m_cGo.Stamina >= 0)
         {
-            m_sActionName = "Shield";
+            m_sAnimationName = "Shield";
         }
     }
 
     public void Crouch()
     {
-        m_sActionName = "Crouch";
-        m_cGo.MoveSpeed = m_cGo.CrounchSpeed;
+        m_sAnimationName = "Crouch";
+        m_cGo.SetMoveState(MoveState.Crouch);
+        m_cGo.m_bWaiting = true;
     }
 
     public void Jump()
     {
-        m_sActionName = "Action Move";
-        m_cGo.waiting = true;
+        m_cGo.m_bWaiting = true;
 
-        // 제자리 점프
         if (m_cGo.eState == CreatureState.Idle)
-        {
-            m_cGo.Animator.CrossFade("Stand To Roll", 0.1f);
-        }
-        // 이동 점프
+            m_sAnimationName = "Stand To Roll";
         else if (m_cGo.eState == CreatureState.Move)
-        {
-            m_cGo.Animator.CrossFade("Run To Roll", 0.1f);
-        }
-
-        m_cGo.Stop(0.833f); //  애니메이션 길이
-        m_cGo.eState = CreatureState.Idle;
+            m_sAnimationName = "Run To Roll";
     }
 
     public void Roll()
     {
-        m_sActionName = "Action Move";
-        m_cGo.waiting = true;
+        m_sAnimationName = "Action Move";
+        m_cGo.m_bWaiting = true;
 
         // 제자리 점프
         if (m_cGo.eState == CreatureState.Idle)

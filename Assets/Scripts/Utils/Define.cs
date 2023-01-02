@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class Define
 {
-    public enum AttackKeyboardKey
+    public enum Layers
     {
-        None,
-        W,
-        S,
-        A,
-        D,
+        BaseLayer = 0,
+        UpperLayer = 1,
     }
 
-    public enum AttackMouseKey
+    public enum HitMotion
+    {
+        NormalHit,
+        ShieldHit,
+        CrouchingHit,
+        CrouchShieldHit,
+    }
+
+    public enum MoveState
     {
         None,
-        MouseLeftClick,
-        MouseRightClick,
+        Walk,
+        Run,
+        Crouch,
+
     }
 
     public enum AttackCollider
@@ -34,7 +41,6 @@ public class Define
         Charging,
         Reload,
         Invincible,
-
     }
 
     public enum UserAction

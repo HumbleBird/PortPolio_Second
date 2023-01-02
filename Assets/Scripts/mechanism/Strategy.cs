@@ -10,7 +10,7 @@ public abstract class Strategy
 {
     public Dictionary<KeyCode, Action> MaintainkeyDictionary; // 연속성
     public Dictionary<KeyCode, Action> OnekeyDictionary; // 단발성
-    Dictionary<KeyCode, string> InputKeyDic = new Dictionary<KeyCode, string>();
+    public Dictionary<KeyCode, string> InputKeyDic = new Dictionary<KeyCode, string>(); // 키 값 저장
 
     protected GameObject m_Go; // 행동 주체자
     protected Character  m_cGo;
@@ -18,13 +18,15 @@ public abstract class Strategy
     protected Base m_cTarget; // 목표물 스크립트
     protected GameObject m_GoProjectile = null; // 투사체
 
-    protected string m_sActionName = null;
+    public string m_sAnimationName = null;
 
     public virtual void Init(GameObject go)
     {
         m_Go = go.gameObject;
         m_cGo = m_Go.GetComponent<Character>();
     }
+
+    public virtual void SetKeyMehod() { }
 
     // 연속성 (쉴드, 앉기, 장전 등)
     public void InputMaintainKey()
@@ -33,13 +35,16 @@ public abstract class Strategy
         {
             foreach (var dic in MaintainkeyDictionary)
             {
-                if (Input.GetKeyDown(dic.Key))
+                if (Input.GetKey(dic.Key))
                 {
                     dic.Value();
+
+                    if (InputKeyDic.ContainsKey(dic.Key))
+                        return;
                     
                     // 입력한 값과 함수 임시 저장
-                    InputKeyDic.Add(dic.Key, m_sActionName);
-                    //ActionStateCheck(m_sActionName, true);
+                    InputKeyDic.Add(dic.Key, m_sAnimationName);
+                    m_cGo.StrAnimation(m_sAnimationName);
                 }
             }
         }
@@ -51,8 +56,8 @@ public abstract class Strategy
         {
             if (Input.GetKeyUp(dic.Key))
             {
-                //ActionStateCheck(dic.Value, false);
-
+                m_cGo.StrAnimation(dic.Value, false);
+                ActionStateReset();
                 InputKeyDic.Remove(dic.Key);
                 return;
             }
@@ -69,60 +74,30 @@ public abstract class Strategy
                 if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
-
-                    // 입력한 값과 함수 임시 저장
-                    //ActionStateCheck(m_sActionName, true);
+                    m_cGo.StrAnimation(m_sAnimationName);
                 }
             }
         }
     }
 
-    public virtual void SetKeyMehod()
-    {
-        
-    }
-
-    public void ActionStateCheck(string actionName, bool bStart)
-    {
-        if (actionName == null)
-            return;
-
-        m_cGo.Animator.SetBool(actionName, bStart);
-
-        if (bStart == false)
-        {
-            m_cGo.eActionState = ActionState.None;
-            m_sActionName = null;
-        }
-    }
-
     public void ActionStateReset()
     {
-        foreach (var dic in InputKeyDic)
-            ActionStateCheck(dic.Value, false);
-
         InputKeyDic.Clear();
-        m_cGo.waiting = false;
+        m_cGo.m_bWaiting = false;
 
-        ActionStateCheck(m_sActionName, false);
+        m_cGo.eActionState = ActionState.None;
+        m_sAnimationName = null;
     }
 
     public void ActionStateChange(string actionName)
     {
-        switch (actionName)
+        foreach (ActionState state in Enum.GetValues(typeof(ActionState)))
         {
-            case "Shield":
-                m_cGo.eActionState = ActionState.Shield;
-                break;
-            case "Charging":
-                m_cGo.eActionState = ActionState.Charging;
-                break;
-            case "Reload":
-                m_cGo.eActionState = ActionState.Reload;
-                break;
-            case "Invincible":
-                m_cGo.eActionState = ActionState.Invincible;
-                break;
+            if(actionName == state.ToString())
+                m_cGo.eActionState = state;
         }
+
+        if (actionName == "Crouch")
+            m_cGo.m_bWaiting = false;
     }
 }

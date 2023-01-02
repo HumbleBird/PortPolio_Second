@@ -6,31 +6,36 @@ using static Define;
 
 public partial class Character : Base
 {
-	public CreatureState eState = CreatureState.Idle;
+    public MoveState eMoveState = MoveState.None;
+	CreatureState state = CreatureState.Idle;
+    public virtual CreatureState eState
+    {
+        get { return state; }
+        set
+        {
+            if (state == value)
+                return;
+
+            state = value;
+            UpdateAnimation();
+        }
+    }
+
 
     [HideInInspector] 
-    public bool waiting = false;
+    public bool m_bWaiting = false;
 
     [HideInInspector]
     public List<TrigerDetector> m_GoAttackItem;
 
     protected virtual void Start()
     {
-        // Stat Init
-        MaxHp = Hp;
-        MaxStamina = Stamina;
-        OriginalAtk = Atk;  
-
-        // AttackInfo Init
-        m_strAttack.Init(gameObject);
+        SetStartStat();
     }
 
     protected virtual void Update()
     {
         UpdateController();
-        m_fCoolTime -= Time.deltaTime;
-        if (m_fCoolTime < 0)
-            m_fCoolTime = 0;
     }
 
     protected virtual void UpdateController()
@@ -52,32 +57,27 @@ public partial class Character : Base
         }
     }
 
-    protected virtual void UpdateIdle() 
-    { 
-        Animator.SetFloat("Sprint", 0);
-    }
-
+    protected virtual void UpdateIdle() { }
     protected virtual void UpdateMove() { }
     protected virtual void UpdateSkill() { }
     protected virtual void UpdateDead() 
     {
         Rigid.isKinematic = true;
-        Animator.Play("Dead");
         Managers.Object.Remove(ID);
         Destroy(gameObject, 5);
     }
 
     public void Stop(float duration)
     {
-        if (waiting)
+        if (m_bWaiting)
             return;
         StartCoroutine(Wait(duration));
     }
 
     IEnumerator Wait(float duration)
     {
-        waiting = true;
+        m_bWaiting = true;
         yield return new WaitForSecondsRealtime(duration);
-        waiting = false;
+        m_bWaiting = false;
     }
 }

@@ -10,22 +10,6 @@ using static Define;
 public class Attack : Strategy
 {
     public Table_Attack.Info info;
-    int m_iAttackId;
-
-    public override void InputOnekey()
-    {
-        if (Input.anyKeyDown)
-        {
-            foreach (var dic in OnekeyDictionary)
-            {
-                if (Input.GetKeyDown(dic.Key))
-                {
-                    dic.Value();
-                    AttackInfoCal(m_iAttackId);
-                }
-            }
-        }
-    }
 
     public void AttackInfoCal(int id)
     {
@@ -42,11 +26,9 @@ public class Attack : Strategy
         m_cGo._isNextCanAttack = false;
         m_cGo.eState = CreatureState.Skill;
 
-        m_cGo.Animator.CrossFade(info.m_sAnimName, m_cGo.m_fNormalizeTransitionDuration);
+        m_cGo.SetStaminaGraduallyFillingUp(false);
+        m_cGo.AttackAnimation();
 
-        m_iAttackId = id;
-
-        m_cGo._isNextCanAttack = true;
         m_cGo.m_fCoolTime = info.m_fCoolTime;
         m_cGo.Atk += info.m_fDmg;
     }
@@ -65,17 +47,14 @@ public class Attack : Strategy
     {
         RefreshTargetSet();
 
-        if (m_iAttackId == m_cGo.m_iKickNum)
+        int id = info.m_nID;
+
+        if (id == m_cGo.m_iKickNum)
             Kick();
-        //else if (m_iAttackId == m_cGo.m_iBasicAttackNum || m_iAttackId == m_cGo.m_iStrongAttackNum)
-            //IsNextAttack();
-
-        m_iAttackId = -1;
-    }
-
-    void IsNextAttack()
-    {
-        AttackInfoCal(info.m_iNextNum);
+        else if (id == m_cGo.m_iBasicAttackNum)
+            BasicAttack();
+        else if (id == m_cGo.m_iStrongAttackNum)
+            StrongAttack();
     }
 
     void CheckCooltime()
@@ -90,8 +69,9 @@ public class Attack : Strategy
         m_cTarget = m_GoTarget.GetComponent<Base>();
     }
 
-    void AttackAtkReset()
+    public void AttackAtkReset()
     {
         m_cGo.Atk -= info.m_fDmg;
+        m_cGo.SetStaminaGraduallyFillingUp(true);
     }
 }
