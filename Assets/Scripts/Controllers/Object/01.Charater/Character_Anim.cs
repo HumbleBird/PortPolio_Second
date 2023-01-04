@@ -69,15 +69,6 @@ public partial class Character : Base
         Animator.CrossFade(hitAnimName, m_fNormalizeTransitionDuration);
     }
 
-    // 공격 애니메이션
-    public void AttackAnimation()
-    {
-        if (Stamina == 0)
-            return;
-
-        StrAnimation(m_strAttack.info.m_sAnimName);
-    }
-
     // 공격 및 특수 액션 애니메이션
     public void StrAnimation(string animName, bool bStart = true, Layers animLayer = Layers.BaseLayer)
     {

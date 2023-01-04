@@ -24,7 +24,6 @@ public class Define
         Walk,
         Run,
         Crouch,
-
     }
 
     public enum AttackCollider

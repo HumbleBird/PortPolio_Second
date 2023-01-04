@@ -35,25 +35,40 @@ public partial class MyPlayer : Player
 
 	void IdleAndMoveState()
     {
+		GetMoveInput();
 		GetInputAttack();
 		m_strCharacterAction.InputMaintainKey();
 		m_strCharacterAction.InputOnekey();
 	}
 
-	protected override void UpdateIdle()
-	{
-		base.UpdateIdle();
-
+	bool m_bMoveInput = false;
+	void GetMoveInput()
+    {
 		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
-		    Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-        {
-			eState = CreatureState.Move;
+			Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+		{
+			m_bMoveInput = true;
 		}
-
+		else
+			m_bMoveInput = false;
 	}
 
-	// 걷기, 달리기 등
-	protected override void UpdateMove()
+	protected override void UpdateIdle()
+    {
+        base.UpdateIdle();
+
+		if (m_bMoveInput == true)
+        {
+			if (m_bWaiting)
+				return;
+
+			eState = CreatureState.Move;
+			return;
+		}
+	}
+
+    // 걷기, 달리기 등
+    protected override void UpdateMove()
     {
 		if (m_bWaiting)
 			return;
@@ -65,10 +80,7 @@ public partial class MyPlayer : Player
 		move = Quaternion.AngleAxis(m_tCamera.transform.rotation.eulerAngles.y, Vector3.up) * move;
 
 		if (Input.GetKey(KeyCode.LeftShift))
-		{
-			ActionStateEnd();
 			SetMoveState(MoveState.Run);
-		}
 		else if (eMoveState != MoveState.Crouch)
 			SetMoveState(MoveState.Walk);
 
@@ -76,5 +88,8 @@ public partial class MyPlayer : Player
 
 		if (move != Vector3.zero)
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);
+		
+		if(m_bMoveInput == false && eMoveState != MoveState.Crouch)
+			eState = CreatureState.Idle;
 	}
 }

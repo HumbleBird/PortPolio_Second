@@ -19,6 +19,7 @@ public abstract class Strategy
     protected GameObject m_GoProjectile = null; // 투사체
 
     public string m_sAnimationName = null;
+    public Layers m_eAnimLayers = Layers.BaseLayer;
 
     public virtual void Init(GameObject go)
     {
@@ -31,37 +32,49 @@ public abstract class Strategy
     // 연속성 (쉴드, 앉기, 장전 등)
     public void InputMaintainKey()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKey)
         {
             foreach (var dic in MaintainkeyDictionary)
             {
                 if (Input.GetKey(dic.Key))
                 {
-                    dic.Value();
-
-                    if (InputKeyDic.ContainsKey(dic.Key))
-                        return;
-                    
-                    // 입력한 값과 함수 임시 저장
-                    InputKeyDic.Add(dic.Key, m_sAnimationName);
-                    m_cGo.StrAnimation(m_sAnimationName);
+                    if (!InputKeyDic.ContainsKey(dic.Key))
+                    {
+                        dic.Value();
+                        // 입력한 값과 함수 임시 저장
+                        InputKeyDic.Add(dic.Key, m_sAnimationName);
+                        PlayAnimation(m_sAnimationName, true);
+                    }
                 }
             }
         }
 
         if (InputKeyDic.Count == 0)
             return;
-        
-        foreach (var dic in InputKeyDic)
+
+        var RemoveKey = InputKeyDic.ToArray();
+
+        foreach (var dic in RemoveKey)
         {
             if (Input.GetKeyUp(dic.Key))
             {
-                m_cGo.StrAnimation(dic.Value, false);
-                ActionStateReset();
+                PlayAnimation(dic.Value, false);
                 InputKeyDic.Remove(dic.Key);
-                return;
             }
         }
+    }
+
+    void PlayAnimation(string AnimName, bool bStart)
+    {
+        m_eAnimLayers = Layers.BaseLayer;
+
+        if(AnimName == "Shield")
+        {
+            m_eAnimLayers = Layers.UpperLayer;
+
+        }
+
+        m_cGo.StrAnimation(AnimName, bStart, m_eAnimLayers);
     }
 
     // 단발성(점프, 구르기 등)
@@ -74,30 +87,51 @@ public abstract class Strategy
                 if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
+                    m_cGo.m_bWaiting = true;
                     m_cGo.StrAnimation(m_sAnimationName);
                 }
             }
         }
     }
 
-    public void ActionStateReset()
+    public void ActionStateReset(string ActionKinds = "")
     {
-        InputKeyDic.Clear();
-        m_cGo.m_bWaiting = false;
+        if (ActionKinds == "")
+        {
+            InputKeyDic.Clear();
+        }
+        else if(ActionKinds == "eAction")
+        {
+            InputKeyDic.Remove(Managers.InputKey._binding.Bindings[UserAction.Shield]);
+        }
+        else if(ActionKinds == "eMove")
+        {
+            m_cGo.eMoveState = MoveState.None;
+        }
 
         m_cGo.eActionState = ActionState.None;
+        m_cGo.m_bWaiting = false;
         m_sAnimationName = null;
     }
 
+    public void StateAllClear()
+    {
+
+    }
+
+
     public void ActionStateChange(string actionName)
     {
+        if (actionName == "Crouch")
+        {
+            m_cGo.m_bWaiting = false;
+        }
+
+        // 생각보다 시간을 꽤 잡아먹은 0.5초?
         foreach (ActionState state in Enum.GetValues(typeof(ActionState)))
         {
             if(actionName == state.ToString())
                 m_cGo.eActionState = state;
         }
-
-        if (actionName == "Crouch")
-            m_cGo.m_bWaiting = false;
     }
 }

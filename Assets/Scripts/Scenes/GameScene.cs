@@ -12,12 +12,9 @@ public class GameScene : BaseScene
         Managers.Battle.SpawnCharater(Define.CharaterType.Player);
         //Managers.Battle.SpawnCharater(Define.CharaterType.Boss);
 
-        // UI 로드
-        Managers.UIBattle.UIPlayerInfo = Managers.UI.ShowSceneUI<UI_PlayerInfo>();
-        Managers.UIBattle.UISetting = Managers.UI.ShowPopupUI<UI_SettingKey>();
         Managers.UIBattle.Init();
+        Managers.InputKey.Init();
 
-        
 
         //bgm
         //Managers.Sound.Play("Bgm/bigbattle_2_FULL", Define.Sound.Bgm);

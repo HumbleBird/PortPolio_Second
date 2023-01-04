@@ -27,7 +27,7 @@ public class Attack : Strategy
         m_cGo.eState = CreatureState.Skill;
 
         m_cGo.SetStaminaGraduallyFillingUp(false);
-        m_cGo.AttackAnimation();
+        m_cGo.StrAnimation(info.m_sAnimName);
 
         m_cGo.m_fCoolTime = info.m_fCoolTime;
         m_cGo.Atk += info.m_fDmg;
@@ -72,6 +72,5 @@ public class Attack : Strategy
     public void AttackAtkReset()
     {
         m_cGo.Atk -= info.m_fDmg;
-        m_cGo.SetStaminaGraduallyFillingUp(true);
     }
 }

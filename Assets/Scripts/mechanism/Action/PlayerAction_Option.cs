@@ -8,20 +8,19 @@ using static Define;
 
 public partial class PlayerAction : Strategy
 {
-    bool _ispopupsetting = false;
     void ShowInputKeySetting()
     {
-        UI_SettingKey popup = Managers.UIBattle.UISetting;
+        ShowAndClose(Managers.UIBattle.UISetting);
+    }
 
-        if (_ispopupsetting == false)
-        {
-            popup.gameObject.SetActive(true);
-            _ispopupsetting = true;
-        }
-        else
-        {
-            popup.gameObject.SetActive(false);
-            _ispopupsetting = false;
-        }
+    void ShowInventory()
+    {
+        ShowAndClose(Managers.UIBattle.UIInven);
+    }
+
+    void ShowAndClose(UI_Popup popup)
+    {
+        bool B = popup.gameObject.activeSelf;
+        popup.gameObject.SetActive(!B);
     }
 }

@@ -15,6 +15,7 @@ public partial class Character : Base
 
     public int m_iBasicAttackNum = 1;
     public int m_iStrongAttackNum = 4;
+    //public int m_iCrouchAttackNum = 7;
     public int m_iKickNum = 501;
 
     public void ChangeClass(string typeClass)
@@ -104,6 +105,9 @@ public partial class Character : Base
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
 
+        m_bWaiting = false;
+        SetStaminaGraduallyFillingUp(true);
+
         m_strAttack.AttackAtkReset();
         eState = CreatureState.Idle;
     }
@@ -114,8 +118,13 @@ public partial class Character : Base
         m_strCharacterAction.ActionStateChange(actionName);
     }
 
-    protected void ActionStateEnd()
+    protected void ActionStateEnd(string eState)
     {
-        m_strCharacterAction.ActionStateReset();
+        m_strCharacterAction.ActionStateReset(eState);
     }
+
+    //protected void ActionStateEnd(string eState)
+    //{
+    //    m_strCharacterAction.ActionStateReset();
+    //}
 }

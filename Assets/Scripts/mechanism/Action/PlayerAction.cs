@@ -8,7 +8,6 @@ using static Define;
 
 public partial class PlayerAction : Strategy
 {
-
     public override void SetKeyMehod()
     {
         MaintainkeyDictionary = new Dictionary<KeyCode, Action>
@@ -26,51 +25,48 @@ public partial class PlayerAction : Strategy
         
             // UI
             { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], ShowInputKeySetting},
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], ShowInventory},
         };
     }
 
+
     public void Shield()
     {
-        if(m_cGo.Stamina >= 0)
+        if (m_cGo.Stamina == 0)
+            return;
+
+        if (m_cGo.eMoveState == MoveState.Crouch)
+            m_sAnimationName = "Crouch Shield";
+        else if (m_cGo.eMoveState == MoveState.Run)
         {
+            m_cGo.SetMoveState(MoveState.Walk);
             m_sAnimationName = "Shield";
         }
+        else
+            m_sAnimationName = "Shield";
+
+        m_eAnimLayers = Layers.UpperLayer;
     }
 
     public void Crouch()
     {
+        m_cGo.m_bWaiting = true;
         m_sAnimationName = "Crouch";
         m_cGo.SetMoveState(MoveState.Crouch);
-        m_cGo.m_bWaiting = true;
     }
 
     public void Jump()
     {
-        m_cGo.m_bWaiting = true;
+        
+    }
+
+    public void Roll()
+    {
+        m_cGo.eActionState = ActionState.Invincible;
 
         if (m_cGo.eState == CreatureState.Idle)
             m_sAnimationName = "Stand To Roll";
         else if (m_cGo.eState == CreatureState.Move)
             m_sAnimationName = "Run To Roll";
-    }
-
-    public void Roll()
-    {
-        m_sAnimationName = "Action Move";
-        m_cGo.m_bWaiting = true;
-
-        // 제자리 점프
-        if (m_cGo.eState == CreatureState.Idle)
-        {
-            m_cGo.Animator.SetFloat("Action Move State", 2);
-        }
-        // 이동 점프
-        else if (m_cGo.eState == CreatureState.Move)
-        {
-            m_cGo.Animator.SetFloat("Action Move State", 3);
-        }
-
-        //m_cGo.Stop(0.6f); //  애니메이션 길이
-        m_cGo.eState = CreatureState.Idle;
     }
 }

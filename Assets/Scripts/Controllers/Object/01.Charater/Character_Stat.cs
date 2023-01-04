@@ -72,7 +72,6 @@ public partial class Character : Base
 
             yield return null;
         }
-
     }
 
     public void SetMoveState(MoveState state)
