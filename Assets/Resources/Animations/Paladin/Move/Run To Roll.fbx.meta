@@ -61,7 +61,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.9546715
-        functionName: ActionStateEnd
+        functionName: MoveEnable
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

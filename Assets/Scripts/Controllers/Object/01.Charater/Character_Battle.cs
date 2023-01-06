@@ -123,8 +123,22 @@ public partial class Character : Base
         m_strCharacterAction.ActionStateReset(eState);
     }
 
-    //protected void ActionStateEnd(string eState)
-    //{
-    //    m_strCharacterAction.ActionStateReset();
-    //}
+    void MoveEnable()
+    {
+        eState = CreatureState.Idle;
+        m_bWaiting = false;
+        m_strCharacterAction.ActionStateReset();
+    }
+
+    void CoStartAttack(int id)
+    {
+        StartCoroutine(AttackCal(id));
+    }
+
+    IEnumerator AttackCal(int id)
+    {
+
+
+        yield return null;
+    }
 }

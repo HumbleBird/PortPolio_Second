@@ -22,5 +22,7 @@ public partial class PlayerAction : Strategy
     {
         bool B = popup.gameObject.activeSelf;
         popup.gameObject.SetActive(!B);
+        if (B == true)
+            m_cGo.m_bWaiting = false;
     }
 }

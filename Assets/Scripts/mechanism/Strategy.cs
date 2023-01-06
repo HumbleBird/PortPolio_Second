@@ -86,9 +86,14 @@ public abstract class Strategy
             {
                 if (Input.GetKeyDown(dic.Key))
                 {
-                    dic.Value();
-                    m_cGo.m_bWaiting = true;
-                    m_cGo.StrAnimation(m_sAnimationName);
+                    if (!InputKeyDic.ContainsKey(dic.Key))
+                    {
+                        InputKeyDic.Add(dic.Key, m_sAnimationName);
+
+                        m_cGo.m_bWaiting = true;
+                        dic.Value();
+                        m_cGo.StrAnimation(m_sAnimationName);
+                    }
                 }
             }
         }

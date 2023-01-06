@@ -20,8 +20,8 @@ public class UI_Inven_Item : UI_Base
         if (base.Init() == false)
             return false;
 
-        BindObject(typeof(Texts));
-        BindObject(typeof(Images));
+        BindText(typeof(Texts));
+        BindImage(typeof(Images));
 
         GetText((int)Texts.ItemCountText).gameObject.SetActive(false);
         GetImage((int)Images.UsingItemCheckIcon).gameObject.SetActive(false);
