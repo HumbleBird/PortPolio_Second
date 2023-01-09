@@ -11,27 +11,10 @@ public class Attack : Strategy
 {
     public Table_Attack.Info info;
 
-    public void AttackInfoCal(int id)
-    {
-        CheckCooltime();
-
-        info = Managers.Table.m_Attack.Get(id);
-
-        if (info == null)
-        {
-            Debug.LogError($"해당하는 {id}의 스킬이 없습니다.");
-            return;
-        }
-
-        m_cGo._isNextCanAttack = false;
-        m_cGo.eState = CreatureState.Skill;
-
-        m_cGo.SetStaminaGraduallyFillingUp(false);
-        m_cGo.StrAnimation(info.m_sAnimName);
-
-        m_cGo.m_fCoolTime = info.m_fCoolTime;
-        m_cGo.Atk += info.m_fDmg;
-    }
+    public int m_iBasicAttackNum = 1;
+    public int m_iStrongAttackNum = 4;
+    //public int m_iCrouchAttackNum = 7;
+    public int m_iKickNum = 501;
 
     protected virtual void BasicAttack() { }
     protected virtual void StrongAttack() { }
@@ -49,15 +32,15 @@ public class Attack : Strategy
 
         int id = info.m_nID;
 
-        if (id == m_cGo.m_iKickNum)
+        if (id == m_iKickNum)
             Kick();
-        else if (id == m_cGo.m_iBasicAttackNum)
+        else if (id == m_iBasicAttackNum)
             BasicAttack();
-        else if (id == m_cGo.m_iStrongAttackNum)
+        else if (id == m_iStrongAttackNum)
             StrongAttack();
     }
 
-    void CheckCooltime()
+    public void CheckCooltime()
     {
         if (m_cGo.m_fCoolTime > 0)
             return;

@@ -7,6 +7,21 @@ using static Define;
 
 public partial class AI : Character
 {
+    enum AIPatrolMode
+    {
+        Random,
+        WayPoint
+    }
+
+    AIPatrolMode eAIPatrolMode = AIPatrolMode.Random;
+
+
+    protected override void Init()
+    {
+        base.Init();
+
+    }
+
     protected override void UpdateController()
     {
         base.UpdateController();

@@ -39,6 +39,7 @@ public partial class Character : Base
         switch (eMoveState)
         {
             case MoveState.None:
+                Animator.CrossFade("Idle", m_fNormalizeTransitionDuration);
                 break;
             case MoveState.Walk:
                 Animator.CrossFade("Walk", m_fNormalizeTransitionDuration);

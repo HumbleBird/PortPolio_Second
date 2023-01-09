@@ -74,7 +74,7 @@ public partial class Character : Base
         }
     }
 
-    public void SetMoveState(MoveState state)
+    public virtual void SetMoveState(MoveState state)
     {
         if (eMoveState == state)
             return;
@@ -82,6 +82,8 @@ public partial class Character : Base
         switch (state)
         {
             case MoveState.None:
+                eMoveState = MoveState.None;
+                MoveSpeed = 0;
                 break;
             case MoveState.Walk:
                 eMoveState = MoveState.Walk;

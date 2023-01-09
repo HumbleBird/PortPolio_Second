@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static Define;
+using Random = UnityEngine.Random;
 
 public partial class AI : Character
 {
@@ -15,8 +16,9 @@ public partial class AI : Character
     public float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
     float m_WaitTime;                               //  딜레이 대기 시간
     float m_TimeToRotate;                           //  플레이어가 근처에 있을 때 딜레이 대기 시간
-    public float speedWalk = 1;                     //  Walking speed, speed in the nav mesh agent
-    public float speedRun = 3;                      //  Running speed
+
+    public float Range;
+    public float radius;
 
     public float viewRadius = 5;                   //  Radius of the enemy view
     public float viewAngle = 90;                    //  Angle of the enemy view
@@ -47,19 +49,17 @@ public partial class AI : Character
         navMeshAgent = gameObject.GetOrAddComponent<NavMeshAgent>();
 
         navMeshAgent.isStopped = false;
-        navMeshAgent.speed = speedWalk;             //  Set the navemesh speed with the normal speed of the enemy
-
-        //navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+        navMeshAgent.speed = MoveSpeed;             //  Set the navemesh speed with the normal speed of the enemy
     }
 
     protected override void UpdateMove()
     {
         base.UpdateMove();
 
-        StartCoroutine(WayPointMove());
+        StartCoroutine(Move());
     }
 
-    IEnumerator WayPointMove()
+    IEnumerator Move()
     {
         if (!m_IsPatrol)
             Chasing();
@@ -79,7 +79,7 @@ public partial class AI : Character
 
         if (!m_CaughtPlayer)
         {
-            Move(speedRun);
+            Move(MoveState.Run);
             navMeshAgent.SetDestination(m_PlayerPosition);          //  set the destination of the enemy to the player location
         }
 
@@ -95,7 +95,7 @@ public partial class AI : Character
                 //  Check if the enemy is not near to the player, returns to patrol after the wait time delay
                 m_IsPatrol = true;
                 m_PlayerNear = false;
-                Move(speedWalk);
+                Move(MoveState.Walk);
                 m_TimeToRotate = timeToRotate;
                 m_WaitTime = startWaitTime;
                 navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
@@ -118,7 +118,7 @@ public partial class AI : Character
             //  Check if the enemy detect near the player, so the enemy will move to that position
             if (m_TimeToRotate <= 0)
             {
-                Move(speedWalk);
+                Move(MoveState.Walk);
                 LookingPlayer(playerLastPosition);
             }
             else
@@ -139,7 +139,7 @@ public partial class AI : Character
                 if (m_WaitTime <= 0)
                 {
                     NextPoint();
-                    Move(speedWalk);
+                    Move(MoveState.Walk);
                     m_WaitTime = startWaitTime;
                 }
                 else
@@ -150,38 +150,48 @@ public partial class AI : Character
             }
             else
             {
-                Move(speedWalk);
+                Move(MoveState.Walk);
             }
         }
     }
 
+    #region ExtraFunction
     public void NextPoint()
     {
-        m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % waypoints.Length;
-        navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+        Vector3 randomVector = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
+
+        if(eAIPatrolMode == AIPatrolMode.WayPoint)
+        {
+            m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % waypoints.Length;
+            navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+        }
+        else if (eAIPatrolMode == AIPatrolMode.Random)
+        {
+            navMeshAgent.SetDestination(randomVector);
+        }
+
     }
 
     void Stop()
     {
         navMeshAgent.isStopped = true;
         navMeshAgent.speed = 0;
-        Animator.Play("Idle");
+        SetMoveState(MoveState.None);
     }
     
-    void Move(float speed)
+    void Move(MoveState state)
     {
         navMeshAgent.isStopped = false;
-        navMeshAgent.speed = speed;
 
         if (!m_IsPatrol)
         {
-            Animator.Play("Run");
+            SetMoveState(MoveState.Run);
         }
         else
         {
             if(eActionState !=ActionState.None)
                 m_strCharacterAction.ActionStateReset();
-            Animator.Play("Walk");
+            SetMoveState(MoveState.Walk);
         }
     }
 
@@ -201,7 +211,7 @@ public partial class AI : Character
             if (m_WaitTime <= 0)
             {
                 m_PlayerNear = false;
-                Move(speedWalk);
+                Move(MoveState.Walk);
                 navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
                 m_WaitTime = startWaitTime;
                 m_TimeToRotate = timeToRotate;
@@ -256,4 +266,67 @@ public partial class AI : Character
             }
         }
     }
+
+    bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomPoint = center + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+
+        result = Vector3.zero;
+
+        return false;
+    }
+
+    public Vector3 GetRandomPoint(Transform point = null, float radius = 0)
+    {
+        Vector3 _point;
+
+        if (RandomPoint(point == null ? transform.position : point.position, radius == 0 ? Range : radius, out _point))
+        {
+            Debug.DrawRay(_point, Vector3.up, Color.black, 1);
+
+            return _point;
+        }
+
+        return point == null ? Vector3.zero : point.position;
+    }
+
+    public override void SetMoveState(MoveState state)
+    {
+        if (eMoveState == state)
+            return;
+
+        switch (state)
+        {
+            case MoveState.None:
+                eMoveState = MoveState.None;
+                navMeshAgent.speed = 0;
+                break;
+            case MoveState.Walk:
+                eMoveState = MoveState.Walk;
+                navMeshAgent.speed = WalkSpeed;
+                break;
+            case MoveState.Run:
+                eMoveState = MoveState.Run;
+                navMeshAgent.speed = RunSpeed;
+                break;
+            case MoveState.Crouch:
+                eMoveState = MoveState.Crouch;
+                navMeshAgent.speed = CrouchSpeed;
+                break;
+            default:
+                break;
+        }
+
+        UpdateAnimation();
+    }
+    #endregion
 }

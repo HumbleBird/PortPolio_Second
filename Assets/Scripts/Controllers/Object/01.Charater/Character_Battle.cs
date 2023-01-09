@@ -9,14 +9,10 @@ public partial class Character : Base
     public GameObject m_goTarget { get; set; } // 타겟
 
     public float m_fCoolTime = 0f;
-    public bool _isNextCanAttack = true;
+    public bool m_bCanAttack = true;
+    public bool m_bNextAttack = false;
 
     protected Attack m_strAttack = new Attack();
-
-    public int m_iBasicAttackNum = 1;
-    public int m_iStrongAttackNum = 4;
-    //public int m_iCrouchAttackNum = 7;
-    public int m_iKickNum = 501;
 
     public void ChangeClass(string typeClass)
     {
@@ -33,14 +29,48 @@ public partial class Character : Base
         }
     }
 
-    // 공격 시도
-    public virtual void Attack(int id)
+    public void AttackEvent(int id)
     {
+        m_strAttack.CheckCooltime();
+
+        m_strAttack.info = Managers.Table.m_Attack.Get(id);
+
+        if (m_strAttack.info == null)
+        {
+            Debug.LogError($"해당하는 {id}의 스킬이 없습니다.");
+            return;
+        }
+
+        m_bCanAttack = false;
+        eState = CreatureState.Skill;
+
+        // 스테미너 일시 정지
+        SetStaminaGraduallyFillingUp(false);
+
+        // 애니메이션 실행
+        StrAnimation(m_strAttack.info.m_sAnimName);
+        
+
+        // 공격 데미지 더해주기
+        m_fCoolTime = m_strAttack.info.m_fCoolTime;
+        Atk += m_strAttack.info.m_fDmg;
+    }
+
+    void Attack()
+    {
+
+        WeaponColliderOn();
+    }
+
+    void WeaponColliderOn()
+    {
+        int id = m_strAttack.info.m_nID;
+
         m_goTarget = null;
         AttackCollider tempAttackCollider = AttackCollider.None;
 
         // 콜라이더 활성화
-        if (id == 501) // TODO
+        if (id == m_strAttack.m_iKickNum) // TODO
             tempAttackCollider = AttackCollider.CharacterFront;
         else
             tempAttackCollider = AttackCollider.Weapon;
@@ -53,29 +83,17 @@ public partial class Character : Base
                 return;
             }
         }
-
-        m_strAttack.AttackInfoCal(id);
-    }
-
-    // 공격 판정 체크
-    public virtual void AttackEvent()
-    {
-        if (m_goTarget!= null)
-        {
-            m_strAttack.SpecialAddAttackInfo();
-
-            Character ct = m_goTarget.GetComponent<Character>();
-            if (ct != null)
-            {
-                // TODO 크리티컬
-                ct.HitEvent(gameObject, Atk);
-            }
-        }
     }
 
     // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
     {
+        Character ct = m_goTarget.GetComponent<Character>();
+        if (ct == null)
+            return;
+
+        m_strAttack.SpecialAddAttackInfo();
+
         if (eActionState == ActionState.Invincible)
             return;
         else if (eActionState == ActionState.Shield)
@@ -100,7 +118,7 @@ public partial class Character : Base
     // 공격 끝
     public virtual void AttackEnd()
     {
-        _isNextCanAttack = true;
+        m_bCanAttack = true;
 
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
@@ -128,17 +146,5 @@ public partial class Character : Base
         eState = CreatureState.Idle;
         m_bWaiting = false;
         m_strCharacterAction.ActionStateReset();
-    }
-
-    void CoStartAttack(int id)
-    {
-        StartCoroutine(AttackCal(id));
-    }
-
-    IEnumerator AttackCal(int id)
-    {
-
-
-        yield return null;
     }
 }
