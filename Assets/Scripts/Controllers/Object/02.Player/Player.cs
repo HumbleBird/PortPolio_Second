@@ -5,21 +5,11 @@ using UnityEngine;
 
 public partial class Player : Character
 {
-    public Table_Player.Info playerInfo { get; set; }
-
-    public override void SetInfo(int id)
+    protected override void Init()
     {
-        playerInfo = Managers.Table.m_Player.Get(id);
-        m_tStatInfo = Managers.Table.m_Stat.Get(playerInfo.m_iStat);
-        ChangeClass(playerInfo.m_sClass);
+        base.Init();
 
-        m_strCharacterAction.Init(gameObject);
-    }
-
-    protected override void UpdateDead()
-    {
-        Rigid.isKinematic = true;
-        Managers.Object.Remove(ID);
-        Destroy(gameObject, 5);
+        StartCoroutine(UpdateCoolTime());
+        StartCoroutine(StaminaGraduallyFillingUp());
     }
 }

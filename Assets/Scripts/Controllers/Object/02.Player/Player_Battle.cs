@@ -13,11 +13,22 @@ public partial class Player : Character
 		StartCoroutine(CheckNextAttack());
 	}
 
-	public override void AttackEnd()
+	protected override void AttackEvent(int id)
+    {
+        base.AttackEvent(id);
+
+		// 스테미너 일시 정지
+		StartCoroutine(StaminaGraduallyFillingUp(false));
+	}
+
+
+    public override void AttackEnd()
 	{
 		base.AttackEnd();
 
 		StopCoroutine(CheckNextAttack());
+		StartCoroutine(StaminaGraduallyFillingUp());
+
 	}
 
 	protected virtual IEnumerator CheckNextAttack()
@@ -36,4 +47,6 @@ public partial class Player : Character
 
 		yield return null;
 	}
+
+
 }

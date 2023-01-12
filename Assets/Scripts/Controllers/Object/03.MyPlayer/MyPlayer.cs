@@ -8,14 +8,16 @@ using static Define;
 public partial class MyPlayer : Player
 {
 	public GameObject followTransform;
+	Option m_cOption = new Option();
 	Camera m_tCamera;
 
-	protected override void Start()
+	protected override void Init()
 	{
-		base.Start();
+		base.Init();
 
 		m_tCamera = Camera.main;
-		m_strCharacterAction.SetKeyMehod();
+		m_strAttack.SetKeyMehod();
+		m_cOption.SetKey();
 	}
 
 	protected override void UpdateController()
@@ -31,14 +33,17 @@ public partial class MyPlayer : Player
 				IdleAndMoveState();
 				break;
 		}
+
+		//TODO temp
+		m_cOption.InputOptionKey();
 	}
 
 	void IdleAndMoveState()
     {
 		GetMoveInput();
 		GetInputAttack();
-		m_strCharacterAction.InputMaintainKey();
-		m_strCharacterAction.InputOnekey();
+		m_strAttack.InputMaintainKey();
+		m_strAttack.InputOnekey();
 	}
 
 	bool m_bMoveInput = false;
@@ -84,7 +89,7 @@ public partial class MyPlayer : Player
 		else if (eMoveState != MoveState.Crouch)
 			SetMoveState(MoveState.Walk);
 
-		transform.position += move * MoveSpeed * Time.deltaTime;
+		transform.position += move * m_strStat.m_fMoveSpeed * Time.deltaTime;
 
 		if (move != Vector3.zero)
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);

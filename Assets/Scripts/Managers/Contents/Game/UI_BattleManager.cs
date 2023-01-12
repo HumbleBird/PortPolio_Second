@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_BattleManager : MonoBehaviour
+public class UI_BattleManager
 {
     public UI_PlayerInfo UIPlayerInfo;
     public UI_Inven      UIInven;
     public UI_SettingKey UISetting;
 
-    public void Init()
-    {
-        UIInit();
-    }
+    //public void Start()
+    //{
+    //    Init()
+    //}
 
-    public void UIInit()
+    public void Init()
     {
         GameObject go = Managers.Object.Find(1);
         Player player = go.GetComponent<Player>();

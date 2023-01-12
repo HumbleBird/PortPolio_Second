@@ -40,20 +40,69 @@ public class Attack : Strategy
             StrongAttack();
     }
 
-    public void CheckCooltime()
-    {
-        if (m_cGo.m_fCoolTime > 0)
-            return;
-    }
-
     void RefreshTargetSet()
     {
         m_GoTarget = m_cGo.m_goTarget;
         m_cTarget = m_GoTarget.GetComponent<Base>();
     }
 
-    public void AttackAtkReset()
+    //Action
+    public virtual void SetKeyMehod()
     {
-        m_cGo.Atk -= info.m_fDmg;
+        MaintainkeyDictionary = new Dictionary<KeyCode, Action>
+        {
+            { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
+            { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
+
+        };
+
+        OnekeyDictionary = new Dictionary<KeyCode, Action>
+        {
+            // 액션
+            //Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
+            { Managers.InputKey._binding.Bindings[UserAction.Roll], Roll},
+        };
+    }
+
+
+
+    public void Shield()
+    {
+        if (m_cGo.m_strStat.m_fStemina == 0)
+            return;
+
+        if (m_cGo.eMoveState == MoveState.Crouch)
+            m_sAnimationName = "Crouch Shield";
+        else if (m_cGo.eMoveState == MoveState.Run)
+        {
+            m_cGo.SetMoveState(MoveState.Walk);
+            m_sAnimationName = "Shield";
+        }
+        else
+            m_sAnimationName = "Shield";
+
+        m_eAnimLayers = Layers.UpperLayer;
+    }
+
+    public void Crouch()
+    {
+        m_cGo.m_bWaiting = true;
+        m_sAnimationName = "Crouch";
+        m_cGo.SetMoveState(MoveState.Crouch);
+    }
+
+    public void Jump()
+    {
+
+    }
+
+    public void Roll()
+    {
+        m_cGo.eActionState = ActionState.Invincible;
+
+        if (m_cGo.eState == CreatureState.Idle)
+            m_sAnimationName = "Stand To Roll";
+        else if (m_cGo.eState == CreatureState.Move)
+            m_sAnimationName = "Run To Roll";
     }
 }

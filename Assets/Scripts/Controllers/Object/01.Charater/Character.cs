@@ -6,8 +6,9 @@ using static Define;
 
 public partial class Character : Base
 {
+    public ActionState eActionState = ActionState.None;
     public MoveState eMoveState = MoveState.None;
-	CreatureState state = CreatureState.Idle;
+    private CreatureState state = CreatureState.Idle;
     public virtual CreatureState eState
     {
         get { return state; }
@@ -21,19 +22,21 @@ public partial class Character : Base
         }
     }
 
+    public List<TrigerDetector> m_GoAttackItem { get; set; } = new List<TrigerDetector>();
+    public Table_Attack.Info m_tAttackInfo { get; set; } = new Table_Attack.Info();
+    public Stat m_strStat { get; set; } = new Stat();
 
     [HideInInspector] 
     public bool m_bWaiting = false;
 
-    [HideInInspector]
-    public List<TrigerDetector> m_GoAttackItem;
-
-    protected virtual void Start()
+    protected override void Init()
     {
-        SetStartStat();
+        base.Init();
+
+        m_strAttack.SetInfo(gameObject);
     }
 
-    protected virtual void Update()
+    void Update()
     {
         UpdateController();
     }
@@ -71,6 +74,7 @@ public partial class Character : Base
     {
         if (m_bWaiting)
             return;
+
         StartCoroutine(Wait(duration));
     }
 

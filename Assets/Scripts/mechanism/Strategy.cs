@@ -21,13 +21,23 @@ public abstract class Strategy
     public string m_sAnimationName = null;
     public Layers m_eAnimLayers = Layers.BaseLayer;
 
-    public virtual void Init(GameObject go)
+    public void SetInfo(GameObject go)
     {
         m_Go = go.gameObject;
         m_cGo = m_Go.GetComponent<Character>();
     }
 
-    public virtual void SetKeyMehod() { }
+    protected void PlayAnimation(string AnimName, bool bStart)
+    {
+        m_eAnimLayers = Layers.BaseLayer;
+
+        if(AnimName == "Shield")
+        {
+            m_eAnimLayers = Layers.UpperLayer;
+        }
+
+        m_cGo.StrAnimation(AnimName, bStart, m_eAnimLayers);
+    }
 
     // 연속성 (쉴드, 앉기, 장전 등)
     public void InputMaintainKey()
@@ -62,19 +72,6 @@ public abstract class Strategy
                 InputKeyDic.Remove(dic.Key);
             }
         }
-    }
-
-    void PlayAnimation(string AnimName, bool bStart)
-    {
-        m_eAnimLayers = Layers.BaseLayer;
-
-        if(AnimName == "Shield")
-        {
-            m_eAnimLayers = Layers.UpperLayer;
-
-        }
-
-        m_cGo.StrAnimation(AnimName, bStart, m_eAnimLayers);
     }
 
     // 단발성(점프, 구르기 등)

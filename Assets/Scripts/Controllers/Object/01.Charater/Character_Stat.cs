@@ -6,40 +6,22 @@ using static Define;
 
 public partial class Character : Base
 {
-    // 스탯 변화
-
-    void SetStartStat()
+    protected virtual void SetHp(float NewHp)
     {
-        MaxHp = Hp;
-        MaxStamina = Stamina;
-        OriginalAtk = Atk;
-
-        m_strAttack.Init(gameObject);
-
-        StartCoroutine(UpdateCoolTime());
-        StartCoroutine(StaminaGraduallyFillingUp());
-    }
-
-    private void SetHp(int NewHp)
-    {
-        Hp = NewHp;
-        if (Hp < 0)
+        m_strStat.m_fHp = NewHp;
+        if (m_strStat.m_fHp < 0)
         {
-            Hp = 0;
+            m_strStat.m_fHp = 0;
             eState = Define.CreatureState.Dead;
         }
-
-        Managers.UIBattle.StatUIRefersh();
-        StartCoroutine(Managers.UIBattle.UIPlayerInfo.DownHP());
     }
 
-    private void SetStamina(float NewSetStamina)
+    protected virtual void SetStemina(float NewSetStamina)
     {
-        Stamina = Mathf.Clamp(NewSetStamina, 0, MaxStamina);
-        Managers.UIBattle.StatUIRefersh();
+        m_strStat.m_fStemina= Mathf.Clamp(NewSetStamina, 0, m_strStat.m_fMaxStemina );
     }
 
-    IEnumerator UpdateCoolTime()
+    protected IEnumerator UpdateCoolTime()
     {
         while (true)
         {
@@ -51,23 +33,15 @@ public partial class Character : Base
         }
     }
 
-    public void SetStaminaGraduallyFillingUp(bool b)
-    {
-        if(b == true)
-            StartCoroutine(StaminaGraduallyFillingUp());
-        else
-            StartCoroutine(StaminaGraduallyFillingUp(false));
-    }
-
-    IEnumerator StaminaGraduallyFillingUp(bool bStart = true)
+    protected IEnumerator StaminaGraduallyFillingUp(bool bStart = true)
     {
         if (bStart == false)
             yield return null;
 
         while (true)
         {
-            Stamina += Time.deltaTime;
-            SetStamina(Stamina);
+            m_strStat.m_fStemina += Time.deltaTime;
+            SetStemina(m_strStat.m_fStemina);
             Managers.UIBattle.StatUIRefersh();
 
             yield return null;
@@ -83,24 +57,23 @@ public partial class Character : Base
         {
             case MoveState.None:
                 eMoveState = MoveState.None;
-                MoveSpeed = 0;
+                m_strStat.m_fMoveSpeed = 0;
                 break;
             case MoveState.Walk:
                 eMoveState = MoveState.Walk;
-                MoveSpeed = WalkSpeed;
+                m_strStat.m_fMoveSpeed = m_strStat.m_fWalkSpeed;
                 break;
             case MoveState.Run:
                 eMoveState = MoveState.Run;
-                MoveSpeed = RunSpeed;
+                m_strStat.m_fMoveSpeed = m_strStat.m_fRunSpeed;
                 break;
             case MoveState.Crouch:
                 eMoveState = MoveState.Crouch;
-                MoveSpeed = CrouchSpeed;
+                m_strStat.m_fMoveSpeed = m_strStat.m_fCrouchSpeed;
                 break;
             default:
                 break;
         }
-
         UpdateAnimation();
     }
 

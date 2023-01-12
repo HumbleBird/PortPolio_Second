@@ -17,13 +17,47 @@ public class BattleManager
             return;
         }
 
+        // 소환
         GameObject go = Managers.Resource.Instantiate(pinfo.m_sPrefabPath);
         Managers.Object.Add(pinfo.m_nID, go);
-        go.GetComponent<Character>().SetInfo(pinfo.m_nID);
 
+        // 스탯
+        Player pc = Util.GetOrAddComponent<Player>(go);
+        pc.ID = id;
+        pc.eCreatureType = CreatureType.Player;
+        pc.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(pinfo.m_iStat);
+        pc.m_strStat.Init();
+
+        // 클래스
+        pc.ChangeClass(pinfo.m_sClass);
     }
 
     void CreateMonster(int id)
+    {
+        Table_Monster.Info minfo = Managers.Table.m_Monster.Get(id);
+
+        if (minfo == null)
+        {
+            Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
+            return;
+        }
+
+        // 소환
+        GameObject go = Managers.Resource.Instantiate(minfo.m_sPrefabPath);
+        Managers.Object.Add(minfo.m_nID, go);
+
+        // 스탯
+        Monster monster = Util.GetOrAddComponent<Monster>(go);
+        monster.ID = id;
+        monster.eCreatureType = CreatureType.Player;
+        monster.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(minfo.m_iStat);
+        monster.m_strStat.Init();
+
+        // 클래스
+        monster.ChangeClass(minfo.m_sClass);
+    }
+
+    void CreateBossMonster(int id)
     {
         Table_Boss.Info binfo = Managers.Table.m_Boss.Get(id);
 
@@ -33,9 +67,19 @@ public class BattleManager
             return;
         }
 
+        // 소환
         GameObject go = Managers.Resource.Instantiate(binfo.m_sPrefabPath);
         Managers.Object.Add(binfo.m_nID, go);
-        go.GetComponent<Character>().SetInfo(binfo.m_nID);
+
+        // 스탯
+        Monster boss = go.GetComponent<Monster>();
+        boss.ID = id;
+        boss.eCreatureType = CreatureType.Player;
+        boss.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(binfo.m_iStat);
+        boss.m_strStat.Init();
+
+        // 클래스
+        boss.ChangeClass(binfo.m_sClass);
     }
 
     public void SpawnCharater(CharaterType type)
@@ -46,10 +90,10 @@ public class BattleManager
                 CreatePlayer(1);
                 break;
             case CharaterType.Monster:
-
+                CreateMonster(201);
                 break;
             case CharaterType.Boss:
-                CreateMonster(101);
+                CreateBossMonster(101);
                 break;
             default:
                 break;

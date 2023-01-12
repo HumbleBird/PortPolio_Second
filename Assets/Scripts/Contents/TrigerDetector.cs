@@ -28,7 +28,7 @@ public class TrigerDetector : MonoBehaviour
         if (other != null)
         {
             CAttacker.m_goTarget = other.gameObject;
-            CAttacker.HitEvent(Attacker, CAttacker.Atk);
+            CAttacker.m_goTarget.GetComponent<Character>().HitEvent(Attacker, CAttacker.m_strStat.m_fAtk);
         }
     }
 

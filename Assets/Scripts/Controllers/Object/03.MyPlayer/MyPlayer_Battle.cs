@@ -36,4 +36,19 @@ public partial class MyPlayer : Player
 
 		yield return null;
 	}
+
+	protected override void SetHp(float NewHp)
+	{
+		base.SetHp(NewHp);
+
+		Managers.UIBattle.StatUIRefersh();
+		StartCoroutine(Managers.UIBattle.UIPlayerInfo.DownHP());
+	}
+
+	protected override void SetStemina(float NewSetStamina)
+	{
+		base.SetStemina(NewSetStamina);
+
+		Managers.UIBattle.StatUIRefersh();
+	}
 }

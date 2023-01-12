@@ -3,25 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
+using Random = UnityEngine.Random;
 
 public partial class AI : Character
 {
+    int[] AttackNum = { };
     protected override void UpdateSkill()
     {
         base.UpdateSkill();
 
-        if (m_fCoolTime <= 0)
-        {
-            AttackAction();
-        }
-
-        m_CaughtPlayer = false;
-
-        // 타겟과의 거리 조사후 전 상태로 이동할지 말지 결정
+        DecideAttackNum();
     }
 
-    protected virtual void AttackAction()
+   void DecideAttackNum()
     {
-        // 어택 함수
+
+
+        int[] RandomAttackNum = { 1001, 1002, 1003 };
+        int RandomNum = Random.Range(0, RandomAttackNum.Length);
+        AttackEvent(RandomAttackNum[RandomNum]);
     }
 }

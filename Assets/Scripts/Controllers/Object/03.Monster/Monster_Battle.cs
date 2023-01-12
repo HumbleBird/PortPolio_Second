@@ -5,9 +5,4 @@ using static Define;
 
 public partial class Monster : AI
 {
-    //int AttackNum = 101;
-    protected override void AttackAction()
-    {
-        
-    }
 }

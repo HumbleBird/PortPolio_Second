@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class Define
 {
+    public enum CharacterClass
+    {
+        None,
+        Blow,
+        Range
+    }
+
+    public enum CreatureType
+    {
+        None,
+        Player,
+        Monster,
+    }
+
     public enum Layers
     {
         BaseLayer = 0,

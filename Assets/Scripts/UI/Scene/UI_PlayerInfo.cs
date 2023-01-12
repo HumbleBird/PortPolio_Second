@@ -48,9 +48,9 @@ public class UI_PlayerInfo : UI_Scene
             return;
 
         Image HpBariamge = GetImage((int)Images.HPBar);
-        HpBariamge.fillAmount = (float)_player.Hp / _player.MaxHp;
+        HpBariamge.fillAmount = _player.m_strStat.m_fHp / _player.m_strStat.m_fMaxHp;
         Image StaminaBariamge = GetImage((int)Images.STAMINABar);
-        StaminaBariamge.fillAmount = (float)_player.Stamina / _player.MaxStamina;
+        StaminaBariamge.fillAmount = _player.m_strStat.m_fStemina / _player.m_strStat.m_fMaxStemina;
 
         TextMeshProUGUI nameText = GetText((int)Texts.Name);
         nameText.text = _player.name;
@@ -65,9 +65,9 @@ public class UI_PlayerInfo : UI_Scene
         while (true)
         {
             HpBarBGHitiamge.fillAmount -= Time.deltaTime;
-            if (HpBarBGHitiamge.fillAmount <= (float)_player.Hp / _player.MaxHp)
+            if (HpBarBGHitiamge.fillAmount <= _player.m_strStat.m_fHp / _player.m_strStat.m_fMaxHp)
             {
-                HpBarBGHitiamge.fillAmount = (float)_player.Hp / _player.MaxHp;
+                HpBarBGHitiamge.fillAmount = _player.m_strStat.m_fHp / _player.m_strStat.m_fMaxHp;
                 break;
             }
 

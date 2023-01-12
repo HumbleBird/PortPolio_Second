@@ -11,6 +11,7 @@ public class TableManager
     public Table_Player m_Player = new Table_Player();
     public Table_Boss m_Boss = new Table_Boss();
     public Table_AI m_AI = new Table_AI();
+    public Table_Monster m_Monster = new Table_Monster();
 
 
     public void Init()
@@ -22,6 +23,7 @@ public class TableManager
         m_Player.Init_CSV("Player", 2, 0);
         m_Boss.Init_CSV("Boss", 2, 0);
         m_AI.Init_CSV("AI", 2, 0);
+        m_Monster.Init_CSV("Monster", 2, 0);
         
 #else
         m_Camera.Init_Binary("Camera");
@@ -36,6 +38,7 @@ public class TableManager
         m_Player.Save_Binary("Player");
         m_Boss.Save_Binary("Boss");
         m_AI.Save_Binary("AI");
+        m_Monster.Save_Binary("Monster");
 
 #if UNITY_EDITOR
         AssetDatabase.Refresh();

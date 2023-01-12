@@ -10,7 +10,7 @@ public class GameScene : BaseScene
 
         SceneType = Define.Scene.Game;
         Managers.Battle.SpawnCharater(Define.CharaterType.Player);
-        //Managers.Battle.SpawnCharater(Define.CharaterType.Boss);
+        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
 
         Managers.UIBattle.Init();
         Managers.InputKey.Init();

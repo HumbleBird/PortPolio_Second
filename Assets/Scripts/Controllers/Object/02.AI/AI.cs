@@ -15,13 +15,6 @@ public partial class AI : Character
 
     AIPatrolMode eAIPatrolMode = AIPatrolMode.Random;
 
-
-    protected override void Init()
-    {
-        base.Init();
-
-    }
-
     protected override void UpdateController()
     {
         base.UpdateController();

@@ -6,13 +6,12 @@ using static Define;
 
 public partial class Character : Base
 {
+    public Attack m_strAttack;
     public GameObject m_goTarget { get; set; } // 타겟
 
-    public float m_fCoolTime = 0f;
-    public bool m_bCanAttack = true;
-    public bool m_bNextAttack = false;
-
-    protected Attack m_strAttack = new Attack();
+    protected float m_fCoolTime = 0f;
+    protected bool  m_bCanAttack = true;
+    protected bool  m_bNextAttack = false;
 
     public void ChangeClass(string typeClass)
     {
@@ -29,9 +28,10 @@ public partial class Character : Base
         }
     }
 
-    public void AttackEvent(int id)
+    protected virtual void AttackEvent(int id)
     {
-        m_strAttack.CheckCooltime();
+        if (CheckCooltime() == false)
+            return;
 
         m_strAttack.info = Managers.Table.m_Attack.Get(id);
 
@@ -44,33 +44,22 @@ public partial class Character : Base
         m_bCanAttack = false;
         eState = CreatureState.Skill;
 
-        // 스테미너 일시 정지
-        SetStaminaGraduallyFillingUp(false);
-
         // 애니메이션 실행
         StrAnimation(m_strAttack.info.m_sAnimName);
-        
 
         // 공격 데미지 더해주기
-        m_fCoolTime = m_strAttack.info.m_fCoolTime;
-        Atk += m_strAttack.info.m_fDmg;
+        m_fCoolTime += m_strAttack.info.m_fCoolTime;
+        m_strStat.m_fAtk += m_strAttack.info.m_fDmg;
     }
 
     void Attack()
     {
-
-        WeaponColliderOn();
-    }
-
-    void WeaponColliderOn()
-    {
-        int id = m_strAttack.info.m_nID;
-
         m_goTarget = null;
-        AttackCollider tempAttackCollider = AttackCollider.None;
 
         // 콜라이더 활성화
-        if (id == m_strAttack.m_iKickNum) // TODO
+        AttackCollider tempAttackCollider = AttackCollider.None;
+
+        if (m_strAttack.info.m_nID == m_strAttack.m_iKickNum || gameObject.tag == "Monster") // TODO
             tempAttackCollider = AttackCollider.CharacterFront;
         else
             tempAttackCollider = AttackCollider.Weapon;
@@ -88,63 +77,68 @@ public partial class Character : Base
     // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
     {
-        Character ct = m_goTarget.GetComponent<Character>();
-        if (ct == null)
-            return;
-
-        m_strAttack.SpecialAddAttackInfo();
-
         if (eActionState == ActionState.Invincible)
             return;
         else if (eActionState == ActionState.Shield)
         {
             int ShiledHitStamina = 10;
-            float shiledHitHpDef = 1.0f; // 체력 피격 데미지 감소율
+            float shiledHitHpDef = 1.0f;
 
-            Stamina -= ShiledHitStamina;
-            dmg = (float)dmg % shiledHitHpDef;
+            float NewStemina = m_strStat.m_fStemina - ShiledHitStamina;
+            SetStemina(NewStemina);
+            dmg -= shiledHitHpDef + m_strStat.m_fDef;
         }
         else
-            dmg = (int)Mathf.Max(0, dmg - Def);
+            dmg -= m_strStat.m_fDef;
+
+        dmg = Mathf.Max(0, dmg);
+
+        attacker.GetComponent<Character>().m_strAttack.SpecialAddAttackInfo();
 
         HitAnimation();
 
         Stop(0.2f);
 
-        int NewHp = Hp - (int)dmg;
+        float NewHp = m_strStat.m_fHp - dmg;
         SetHp(NewHp);
     }
 
     // 공격 끝
     public virtual void AttackEnd()
     {
-        m_bCanAttack = true;
-
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
 
+        m_bCanAttack = true;
         m_bWaiting = false;
-        SetStaminaGraduallyFillingUp(true);
 
-        m_strAttack.AttackAtkReset();
+        m_strStat.m_fAtk = m_strStat.m_fOriginalAtk;
         eState = CreatureState.Idle;
     }
 
     // 애니메이션 이벤트에서 실행
     void ActionStateChange(string actionName)
     {
-        m_strCharacterAction.ActionStateChange(actionName);
+        m_strAttack.ActionStateChange(actionName);
     }
 
     protected void ActionStateEnd(string eState)
     {
-        m_strCharacterAction.ActionStateReset(eState);
+        m_strAttack.ActionStateReset(eState);
     }
 
     void MoveEnable()
     {
         eState = CreatureState.Idle;
         m_bWaiting = false;
-        m_strCharacterAction.ActionStateReset();
+        m_strAttack.ActionStateReset();
+    }
+
+    public bool CheckCooltime()
+    {
+        if (m_fCoolTime == 0)
+            return true;
+
+        return false;
     }
 }
