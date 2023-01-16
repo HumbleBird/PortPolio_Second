@@ -25,6 +25,8 @@ public partial class AI : Character
 
     public LayerMask playerMask;                    //  To detect the player with the raycast
     public LayerMask obstacleMask;                  //  To detect the obstacules with the raycast
+    int m_iPlayerLayer = 7;
+    int m_iObstacleLayer = 11;
 
     Vector3 playerLastPosition = Vector3.zero;      //  Last position of the player when was near the enemy
     Vector3 m_PlayerPosition = Vector3.zero;        //  Last position of the player when the player is seen by the enemy
@@ -34,29 +36,19 @@ public partial class AI : Character
     bool m_IsPatrol    = true;             //  If the enemy is patrol, eState of patroling
 
     protected bool m_CaughtPlayer= false;                 //  if the enemy has caught the player
+
+    public Vector3 centrePoint = new Vector3(0, 1, 0);
+    public float range = 10f;
     #endregion
-
-    protected override void Init()
-    {
-        base.Init();
-
-        m_WaitTime = startWaitTime;                 //  Set the wait time variable that will change
-        m_TimeToRotate = timeToRotate;
-
-        navMeshAgent = gameObject.GetOrAddComponent<NavMeshAgent>();
-
-        navMeshAgent.isStopped = false;
-        navMeshAgent.speed = m_strStat.m_fMoveSpeed;             //  Set the navemesh speed with the normal speed of the enemy
-    }
 
     protected override void UpdateMove()
     {
         base.UpdateMove();
 
-        StartCoroutine(Move());
+        StartCoroutine(AIMoveStart());
     }
 
-    IEnumerator Move()
+    IEnumerator AIMoveStart()
     {
         if (!m_IsPatrol)
             Chasing();
@@ -66,23 +58,26 @@ public partial class AI : Character
         yield return null;
     }
 
-
     private void Chasing()
     {
         //  The enemy is chasing the player
         m_PlayerNear = false;                       //  Set false that hte player is near beacause the enemy already sees the player
         playerLastPosition = Vector3.zero;          //  Reset the player near position
-        float dis = Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+        float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
 
         if (!m_CaughtPlayer)
         {
-            Move(MoveState.Run);
+            Move();
             navMeshAgent.SetDestination(m_PlayerPosition);          //  set the destination of the enemy to the player location
         }
 
         // 적이 사정거리에 들면 공격
+        // TODO
         if (dis < 2)
+        {
             CaughtPlayer();
+            return;
+        }
 
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    //  Control if the enemy arrive to the player location
         {
@@ -92,17 +87,19 @@ public partial class AI : Character
                 //  Check if the enemy is not near to the player, returns to patrol after the wait time delay
                 m_IsPatrol = true;
                 m_PlayerNear = false;
-                Move(MoveState.Walk);
+                Move();
                 m_TimeToRotate = timeToRotate;
                 m_WaitTime = startWaitTime;
-                navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+                if (eAIPatrolMode == AIPatrolMode.WayPoint)
+                    navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+                else if (eAIPatrolMode == AIPatrolMode.Random)
+                    Patroling_RandomMove();
             }
             else
             {
+                //  Wait if the current position is not the player position
                 if (dis >= 2.5f)
-                {
                     Stop();
-                }
                 m_WaitTime -= Time.deltaTime;
             }
         }
@@ -110,12 +107,13 @@ public partial class AI : Character
 
     private void Patroling()
     {
+        //m_PlayerNear 가 true인 경우는 hearing 함수를 만들었을 때
         if (m_PlayerNear)
         {
             //  Check if the enemy detect near the player, so the enemy will move to that position
             if (m_TimeToRotate <= 0)
             {
-                Move(MoveState.Walk);
+                Move();
                 LookingPlayer(playerLastPosition);
             }
             else
@@ -127,17 +125,25 @@ public partial class AI : Character
         }
         else
         {
-            //m_PlayerNear = false;           //  The player is no near when the enemy is platroling
+            m_PlayerNear = false;           //  The player is no near when the enemy is platroling
             playerLastPosition = Vector3.zero;
-            if(eAIPatrolMode == AIPatrolMode.WayPoint)
+
+            if (eAIPatrolMode == AIPatrolMode.WayPoint)
                 navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the enemy destination to the next waypoint
+            //else if (eAIPatrolMode == AIPatrolMode.Random)
+                //Patroling_RandomMove();
+
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
             {
                 //  If the enemy arrives to the waypoint position then wait for a moment and go to the next
                 if (m_WaitTime <= 0)
                 {
-                    NextPoint();
-                    Move(MoveState.Walk);
+                    if (eAIPatrolMode == AIPatrolMode.WayPoint)
+                        NextPoint();
+                    else if (eAIPatrolMode == AIPatrolMode.Random)
+                        Patroling_RandomMove();
+
+                    Move();
                     m_WaitTime = startWaitTime;
                 }
                 else
@@ -148,36 +154,35 @@ public partial class AI : Character
             }
             else
             {
-                Move(MoveState.Walk);
+                Move();
             }
         }
     }
 
+    void Patroling_RandomMove()
+    {
+        Vector3 point;
+        if (RandomPoint(centrePoint, range, out point)) //pass in our centre point and radius of area
+        {
+            navMeshAgent.SetDestination(point);
+        }
+    }
+
     #region ExtraFunction
+
     public void NextPoint()
     {
-        Vector3 randomVector = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
-
-        if(eAIPatrolMode == AIPatrolMode.WayPoint)
-        {
-            m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % waypoints.Length;
-            navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
-        }
-        else if (eAIPatrolMode == AIPatrolMode.Random)
-        {
-            navMeshAgent.SetDestination(AIMoveRandomRange.Instance.GetRandomPoint(transform, radius));
-        }
-
+        m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % waypoints.Length;
+        navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
     }
 
     void Stop()
     {
         navMeshAgent.isStopped = true;
-        navMeshAgent.speed = 0;
         SetMoveState(MoveState.None);
     }
     
-    void Move(MoveState state)
+    void Move()
     {
         navMeshAgent.isStopped = false;
 
@@ -209,7 +214,7 @@ public partial class AI : Character
             if (m_WaitTime <= 0)
             {
                 m_PlayerNear = false;
-                Move(MoveState.Walk);
+                Move();
                 navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
                 m_WaitTime = startWaitTime;
                 m_TimeToRotate = timeToRotate;
@@ -270,6 +275,22 @@ public partial class AI : Character
         base.SetMoveState(state);
 
         navMeshAgent.speed = m_strStat.m_fMoveSpeed;
+    }
+
+    bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas)) //documentation: https://docs.unity3d.com/ScriptReference/AI.NavMesh.SamplePosition.html
+        {
+            //the 1.0f is the max distance from the random point to a point on the navmesh, might want to increase if range is big
+            //or add a for loop like in the documentation
+            result = hit.position;
+            return true;
+        }
+
+        result = Vector3.zero;
+        return false;
     }
     #endregion
 }

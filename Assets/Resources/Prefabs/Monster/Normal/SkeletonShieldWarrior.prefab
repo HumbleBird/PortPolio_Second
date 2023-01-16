@@ -3023,6 +3023,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7459566865668181928}
   - component: {fileID: 3559418610857334226}
+  - component: {fileID: 3600539063304237693}
   m_Layer: 0
   m_Name: SkeletonShieldWarrior
   m_TagString: Untagged
@@ -3038,7 +3039,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7840314116422849810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.697, y: 0, z: 0}
+  m_LocalPosition: {x: 9.246995, y: 0.9280291, z: 2.457038}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3067,6 +3068,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &3600539063304237693
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840314116422849810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 2.15
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.81, z: 0}
 --- !u!1 &8106643011711580281
 GameObject:
   m_ObjectHideFlags: 0

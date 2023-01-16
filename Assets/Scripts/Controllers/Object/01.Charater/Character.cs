@@ -34,6 +34,7 @@ public partial class Character : Base
         base.Init();
 
         m_strAttack.SetInfo(gameObject);
+        m_strStat.Init();
     }
 
     void Update()
@@ -62,12 +63,19 @@ public partial class Character : Base
 
     protected virtual void UpdateIdle() { }
     protected virtual void UpdateMove() { }
-    protected virtual void UpdateSkill() { }
+
+    protected virtual void UpdateSkill() 
+    {
+		Coroutine co = StartCoroutine(AttackEndCheck());
+    }
+
     protected virtual void UpdateDead() 
     {
         Rigid.isKinematic = true;
         Managers.Object.Remove(ID);
         Destroy(gameObject, 5);
+
+        // TODO Regdoll
     }
 
     public void Stop(float duration)

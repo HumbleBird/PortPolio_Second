@@ -21,32 +21,18 @@ public partial class Player : Character
 		StartCoroutine(StaminaGraduallyFillingUp(false));
 	}
 
-
-    public override void AttackEnd()
+	protected override void SetHp(float NewHp)
 	{
-		base.AttackEnd();
+		base.SetHp(NewHp);
 
-		StopCoroutine(CheckNextAttack());
-		StartCoroutine(StaminaGraduallyFillingUp());
-
+		Managers.UIBattle.StatUIRefersh();
 	}
 
-	protected virtual IEnumerator CheckNextAttack()
+	protected override void SetStemina(float NewSetStamina)
 	{
-		AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)Layers.BaseLayer);
+		base.SetStemina(NewSetStamina);
 
-		if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
-		{
-			if (stateInfo.normalizedTime >= 0.6)
-			{
-				// 어떤 공격 키를 눌렀는지에 따라서
-				if (m_bNextAttack == true)
-					AttackEvent(m_strAttack.info.m_iNextNum);
-			}
-		}
-
-		yield return null;
+		Managers.UIBattle.StatUIRefersh();
 	}
-
 
 }

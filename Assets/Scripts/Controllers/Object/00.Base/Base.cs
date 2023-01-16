@@ -11,7 +11,7 @@ public class Base : MonoBehaviour
 
     public int ID { get; set; }
     public CreatureType eCreatureType { get; set; }
-    protected Vector3 Pos { get; set; } = Vector3.zero;
+    protected Vector3 Pos { get; set; }
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class Base : MonoBehaviour
         Rigid = Util.GetOrAddComponent<Rigidbody>(gameObject);
         Coller = Util.GetOrAddComponent<Collider>(gameObject);
 
-        transform.position = Pos;
+        Rigid.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
 

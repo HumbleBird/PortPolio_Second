@@ -10,12 +10,6 @@ public partial class Character : Base
 
 	public virtual void UpdateAnimation()
     {
-        CharacterStateAnimation();
-    }
-
-    #region CharacterStandAnim
-    void CharacterStateAnimation()
-    {
         switch (eState)
         {
             case CreatureState.Idle:
@@ -34,6 +28,7 @@ public partial class Character : Base
         }
     }
 
+    #region CharacterStandAnim
     void MoveAnim()
     {
         switch (eMoveState)

@@ -50,6 +50,10 @@ public partial class Character : Base
         // 공격 데미지 더해주기
         m_fCoolTime += m_strAttack.info.m_fCoolTime;
         m_strStat.m_fAtk += m_strAttack.info.m_fDmg;
+
+        // 스테미너 감소
+        m_strStat.m_fStemina -= 10f;
+        SetStemina(m_strStat.m_fStemina);
     }
 
     void Attack()
@@ -104,7 +108,7 @@ public partial class Character : Base
     }
 
     // 공격 끝
-    public virtual void AttackEnd()
+    void AttackEnd()
     {
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
@@ -113,7 +117,24 @@ public partial class Character : Base
         m_bWaiting = false;
 
         m_strStat.m_fAtk = m_strStat.m_fOriginalAtk;
+        StopCoroutine(CheckNextAttack());
+        StartCoroutine(StaminaGraduallyFillingUp());
         eState = CreatureState.Idle;
+    }
+
+    IEnumerator AttackEndCheck()
+    {
+        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)Layers.BaseLayer);
+
+        if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
+        {
+            if (stateInfo.normalizedTime >= 0.9)
+            {
+                AttackEnd();
+            }
+        }
+
+        yield return null;
     }
 
     // 애니메이션 이벤트에서 실행
@@ -140,5 +161,22 @@ public partial class Character : Base
             return true;
 
         return false;
+    }
+
+    protected virtual IEnumerator CheckNextAttack()
+    {
+        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)Layers.BaseLayer);
+
+        if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
+        {
+            if (stateInfo.normalizedTime >= 0.6)
+            {
+                // 어떤 공격 키를 눌렀는지에 따라서
+                if (m_bNextAttack == true)
+                    AttackEvent(m_strAttack.info.m_iNextNum);
+            }
+        }
+
+        yield return null;
     }
 }

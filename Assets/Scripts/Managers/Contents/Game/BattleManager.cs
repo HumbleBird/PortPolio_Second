@@ -24,9 +24,7 @@ public class BattleManager
         // 스탯
         Player pc = Util.GetOrAddComponent<Player>(go);
         pc.ID = id;
-        pc.eCreatureType = CreatureType.Player;
         pc.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(pinfo.m_iStat);
-        pc.m_strStat.Init();
 
         // 클래스
         pc.ChangeClass(pinfo.m_sClass);
@@ -49,9 +47,7 @@ public class BattleManager
         // 스탯
         Monster monster = Util.GetOrAddComponent<Monster>(go);
         monster.ID = id;
-        monster.eCreatureType = CreatureType.Player;
         monster.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(minfo.m_iStat);
-        monster.m_strStat.Init();
 
         // 클래스
         monster.ChangeClass(minfo.m_sClass);
@@ -74,9 +70,7 @@ public class BattleManager
         // 스탯
         Monster boss = go.GetComponent<Monster>();
         boss.ID = id;
-        boss.eCreatureType = CreatureType.Player;
         boss.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(binfo.m_iStat);
-        boss.m_strStat.Init();
 
         // 클래스
         boss.ChangeClass(binfo.m_sClass);

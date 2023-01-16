@@ -7,13 +7,29 @@ using static Define;
 
 public partial class AI : Character
 {
-    enum AIPatrolMode
+    public enum AIPatrolMode
     {
         Random,
         WayPoint
     }
 
-    AIPatrolMode eAIPatrolMode = AIPatrolMode.Random;
+    public AIPatrolMode eAIPatrolMode = AIPatrolMode.Random;
+
+    protected override void Init()
+    {
+        base.Init();
+
+        m_WaitTime = startWaitTime;                 //  Set the wait time variable that will change
+        m_TimeToRotate = timeToRotate;
+
+        navMeshAgent = gameObject.GetOrAddComponent<NavMeshAgent>();
+
+        navMeshAgent.isStopped = false;
+        navMeshAgent.speed = m_strStat.m_fMoveSpeed;             //  Set the navemesh speed with the normal speed of the enemy
+
+        playerMask = (1 << m_iPlayerLayer);
+        obstacleMask = (1 << m_iObstacleLayer);
+    }
 
     protected override void UpdateController()
     {

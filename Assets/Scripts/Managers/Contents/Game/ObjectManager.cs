@@ -29,18 +29,18 @@ public class ObjectManager
 		return obj;
     }
 
-	//public GameObject Find(Func<GameObject, bool> condition)
-	//{
-	//	foreach (GameObject obj in _objects)
-	//	{
-	//		if (condition.Invoke(obj))
-	//			return obj;
-	//	}
+    public GameObject Find(Func<GameObject, bool> condition)
+    {
+        foreach (GameObject obj in _objects.Values)
+        {
+            if (condition.Invoke(obj))
+                return obj;
+        }
 
-	//	return null;
-	//}
+        return null;
+    }
 
-	public void Clear()
+    public void Clear()
 	{
 		_objects.Clear();
 	}
