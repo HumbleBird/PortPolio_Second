@@ -14,6 +14,7 @@ public partial class Character : Base
     protected bool  m_bNextAttack = false;
 
     Coroutine cAttackCheck;
+    protected Coroutine cCheckNextAttack;
 
     public void ChangeClass(string typeClass)
     {
@@ -58,8 +59,6 @@ public partial class Character : Base
 
     void Attack()
     {
-        m_goTarget = null;
-
         // 콜라이더 활성화
         AttackCollider tempAttackCollider = AttackCollider.None;
 
@@ -136,7 +135,6 @@ public partial class Character : Base
 
         m_strStat.m_fAtk = m_strStat.m_fOriginalAtk;
 
-        StopCoroutine(CheckNextAttack());
         StopCoroutine(cAttackCheck);
 
         eState = CreatureState.Idle;

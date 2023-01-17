@@ -66,4 +66,15 @@ public partial class AI : Character
             eState = CreatureState.Move;
         }
     }
+
+    protected override void UpdateMove()
+    {
+        base.UpdateMove();
+
+
+        if (!m_IsPatrol)
+            Chasing();
+        else
+            Patroling();
+    }
 }

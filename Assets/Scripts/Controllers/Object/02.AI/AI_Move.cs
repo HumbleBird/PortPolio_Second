@@ -39,23 +39,6 @@ public partial class AI : Character
     float range = 10f;
     #endregion
 
-    protected override void UpdateMove()
-    {
-        base.UpdateMove();
-
-        Coroutine co = StartCoroutine(AIMoveStart());
-    }
-
-    IEnumerator AIMoveStart()
-    {
-        if (!m_IsPatrol)
-            Chasing();
-        else
-            Patroling();
-
-        yield return null;
-    }
-
     private void Chasing()
     {
         //  The enemy is chasing the player
@@ -89,6 +72,7 @@ public partial class AI : Character
                 //  Check if the enemy is not near to the player, returns to patrol after the wait time delay
                 m_IsPatrol = true;
                 m_PlayerNear = false;
+                m_goTarget = null;
                 Move();
                 m_TimeToRotate = timeToRotate;
                 m_WaitTime = startWaitTime;

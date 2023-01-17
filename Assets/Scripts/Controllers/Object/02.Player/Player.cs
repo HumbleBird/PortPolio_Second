@@ -20,6 +20,6 @@ public partial class Player : Character
     {
         base.UpdateSkill();
 
-        StartCoroutine(CheckNextAttack());
+        cCheckNextAttack = StartCoroutine(CheckNextAttack());
     }
 }
