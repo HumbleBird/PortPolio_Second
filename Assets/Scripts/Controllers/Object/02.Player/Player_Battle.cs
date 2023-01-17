@@ -6,16 +6,14 @@ using static Define;
 
 public partial class Player : Character
 {
-	protected override void UpdateSkill()
-	{
-		base.UpdateSkill();
-
-		StartCoroutine(CheckNextAttack());
-	}
-
 	protected override void AttackEvent(int id)
     {
         base.AttackEvent(id);
+		eState = CreatureState.Skill;
+
+		// 스테미너 감소
+		m_strStat.m_fStemina -= 10f;
+		SetStemina(m_strStat.m_fStemina);
 
 		// 스테미너 일시 정지
 		StartCoroutine(StaminaGraduallyFillingUp(false));
@@ -35,4 +33,10 @@ public partial class Player : Character
 		Managers.UIBattle.StatUIRefersh();
 	}
 
+	protected override void AttackEnd()
+    {
+		base.AttackEnd();
+
+		StartCoroutine(StaminaGraduallyFillingUp());
+	}
 }

@@ -904,6 +904,51 @@ Transform:
   m_Father: {fileID: 5138515701090986461}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1789187378628224969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2050568614496653586}
+  - component: {fileID: 7282238472944748297}
+  m_Layer: 0
+  m_Name: WeaponAttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2050568614496653586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789187378628224969}
+  m_LocalRotation: {x: 0.6520857, y: 0.058069553, z: -0.23358272, w: 0.71892375}
+  m_LocalPosition: {x: 0.552, y: -0.469, z: 1.08}
+  m_LocalScale: {x: 0.07125, y: 0.033589993, z: 0.68752974}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5488472943923670583}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 74.737, y: -57.143, z: -81.162}
+--- !u!65 &7282238472944748297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789187378628224969}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1909488141024029137
 GameObject:
   m_ObjectHideFlags: 0
@@ -2890,7 +2935,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2050568614496653586}
   m_Father: {fileID: 4368959950759406112}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

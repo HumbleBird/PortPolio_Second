@@ -13,6 +13,8 @@ public partial class Character : Base
     protected bool  m_bCanAttack = true;
     protected bool  m_bNextAttack = false;
 
+    Coroutine cAttackCheck;
+
     public void ChangeClass(string typeClass)
     {
         switch (typeClass)
@@ -42,7 +44,6 @@ public partial class Character : Base
         }
 
         m_bCanAttack = false;
-        eState = CreatureState.Skill;
 
         // 애니메이션 실행
         StrAnimation(m_strAttack.info.m_sAnimName);
@@ -51,9 +52,8 @@ public partial class Character : Base
         m_fCoolTime += m_strAttack.info.m_fCoolTime;
         m_strStat.m_fAtk += m_strAttack.info.m_fDmg;
 
-        // 스테미너 감소
-        m_strStat.m_fStemina -= 10f;
-        SetStemina(m_strStat.m_fStemina);
+        // 공격 종료 체크
+        cAttackCheck = StartCoroutine(AttackEndCheck());
     }
 
     void Attack()
@@ -63,7 +63,7 @@ public partial class Character : Base
         // 콜라이더 활성화
         AttackCollider tempAttackCollider = AttackCollider.None;
 
-        if (m_strAttack.info.m_nID == m_strAttack.m_iKickNum || gameObject.tag == "Monster") // TODO
+        if (m_strAttack.info.m_nID == m_strAttack.m_iKickNum)
             tempAttackCollider = AttackCollider.CharacterFront;
         else
             tempAttackCollider = AttackCollider.Weapon;
@@ -96,19 +96,37 @@ public partial class Character : Base
             dmg -= m_strStat.m_fDef;
 
         dmg = Mathf.Max(0, dmg);
+        float NewHp = m_strStat.m_fHp - dmg;
+        SetHp(NewHp);
 
+        // 공격 별 특수 효과
         attacker.GetComponent<Character>().m_strAttack.SpecialAddAttackInfo();
 
         HitAnimation();
 
         Stop(0.2f);
+    }
 
-        float NewHp = m_strStat.m_fHp - dmg;
-        SetHp(NewHp);
+    IEnumerator AttackEndCheck()
+    {
+        while (true)
+        {
+            AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)Layers.BaseLayer);
+
+            if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
+            {
+                if (stateInfo.normalizedTime >= 0.9)
+                {
+                    AttackEnd();
+                }
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     // 공격 끝
-    void AttackEnd()
+    protected virtual void AttackEnd()
     {
         foreach (var DetectorCollider in m_GoAttackItem)
             DetectorCollider.AttackCanOff();
@@ -117,24 +135,11 @@ public partial class Character : Base
         m_bWaiting = false;
 
         m_strStat.m_fAtk = m_strStat.m_fOriginalAtk;
+
         StopCoroutine(CheckNextAttack());
-        StartCoroutine(StaminaGraduallyFillingUp());
+        StopCoroutine(cAttackCheck);
+
         eState = CreatureState.Idle;
-    }
-
-    IEnumerator AttackEndCheck()
-    {
-        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)Layers.BaseLayer);
-
-        if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
-        {
-            if (stateInfo.normalizedTime >= 0.9)
-            {
-                AttackEnd();
-            }
-        }
-
-        yield return null;
     }
 
     // 애니메이션 이벤트에서 실행

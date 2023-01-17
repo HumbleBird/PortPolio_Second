@@ -13,8 +13,13 @@ public partial class Player : Character
         eCreatureType = CreatureType.Player;
         tag = "Player";
 
-
-        StartCoroutine(UpdateCoolTime());
         StartCoroutine(StaminaGraduallyFillingUp());
+    }
+
+    protected override void UpdateSkill()
+    {
+        base.UpdateSkill();
+
+        StartCoroutine(CheckNextAttack());
     }
 }

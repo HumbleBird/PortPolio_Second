@@ -10,21 +10,19 @@ public partial class AI : Character
 {
     #region 변수
     NavMeshAgent navMeshAgent;                      //  Nav mesh agent component
-    public float startWaitTime = 4;                 //  Wait time of every action
-    public float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
+    float startWaitTime = 4;                 //  Wait time of every action
+    float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
     float m_WaitTime;                               //  딜레이 대기 시간
     float m_TimeToRotate;                           //  플레이어가 근처에 있을 때 딜레이 대기 시간
 
-    public float radius = 0.3f;
-
-    public float viewRadius = 5;                   //  Radius of the enemy view
-    public float viewAngle = 90;                    //  Angle of the enemy view
+    float viewRadius = 5;                   //  Radius of the enemy view
+    float viewAngle = 90;                    //  Angle of the enemy view
 
     public Transform[] waypoints;                   //  All the waypoints where the enemy patrols
     int m_CurrentWaypointIndex = 0;                     //  Current waypoint where the enemy is going to
 
-    public LayerMask playerMask;                    //  To detect the player with the raycast
-    public LayerMask obstacleMask;                  //  To detect the obstacules with the raycast
+    LayerMask playerMask;                    //  To detect the player with the raycast
+    LayerMask obstacleMask;                  //  To detect the obstacules with the raycast
     int m_iPlayerLayer = 7;
     int m_iObstacleLayer = 11;
 
@@ -37,15 +35,15 @@ public partial class AI : Character
 
     protected bool m_CaughtPlayer= false;                 //  if the enemy has caught the player
 
-    public Vector3 centrePoint = new Vector3(0, 1, 0);
-    public float range = 10f;
+    Vector3 centrePoint = new Vector3(0, 1, 0);
+    float range = 10f;
     #endregion
 
     protected override void UpdateMove()
     {
         base.UpdateMove();
 
-        StartCoroutine(AIMoveStart());
+        Coroutine co = StartCoroutine(AIMoveStart());
     }
 
     IEnumerator AIMoveStart()
@@ -77,6 +75,10 @@ public partial class AI : Character
         {
             CaughtPlayer();
             return;
+        }
+        else
+        {
+            m_CaughtPlayer = false;
         }
 
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    //  Control if the enemy arrive to the player location

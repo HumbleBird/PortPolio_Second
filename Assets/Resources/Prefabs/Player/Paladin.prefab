@@ -2571,7 +2571,7 @@ GameObject:
   - component: {fileID: 7875659860275600885}
   - component: {fileID: 2564137569980423296}
   m_Layer: 7
-  m_Name: KickAttackCollider
+  m_Name: FrontAttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3017,7 +3017,7 @@ GameObject:
   - component: {fileID: 2056428751166852154}
   - component: {fileID: 3234748966453461130}
   m_Layer: 7
-  m_Name: SwordCollider
+  m_Name: WeaponAttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

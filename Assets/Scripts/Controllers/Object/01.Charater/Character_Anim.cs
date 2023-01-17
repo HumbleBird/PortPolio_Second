@@ -6,7 +6,7 @@ using static Define;
 
 public partial class Character : Base
 {
-	public float m_fNormalizeTransitionDuration = 0.14f;
+	float m_fNormalizeTransitionDuration = 0.14f;
 
 	public virtual void UpdateAnimation()
     {

@@ -9,6 +9,7 @@ public partial class Character : Base
     public ActionState eActionState = ActionState.None;
     public MoveState eMoveState = MoveState.None;
     private CreatureState state = CreatureState.Idle;
+    
     public virtual CreatureState eState
     {
         get { return state; }
@@ -35,6 +36,10 @@ public partial class Character : Base
 
         m_strAttack.SetInfo(gameObject);
         m_strStat.Init();
+
+        AttackColliderInit();
+
+        StartCoroutine(UpdateCoolTime());
     }
 
     void Update()
@@ -64,10 +69,7 @@ public partial class Character : Base
     protected virtual void UpdateIdle() { }
     protected virtual void UpdateMove() { }
 
-    protected virtual void UpdateSkill() 
-    {
-		Coroutine co = StartCoroutine(AttackEndCheck());
-    }
+    protected virtual void UpdateSkill() { }
 
     protected virtual void UpdateDead() 
     {
@@ -91,5 +93,26 @@ public partial class Character : Base
         m_bWaiting = true;
         yield return new WaitForSecondsRealtime(duration);
         m_bWaiting = false;
+    }
+
+    void AttackColliderInit()
+    {
+        GameObject weapon = Util.FindChild(gameObject, "WeaponAttackCollider", true);
+        if (weapon != null)
+        {
+            TrigerDetector weaponTD = Util.GetOrAddComponent<TrigerDetector>(weapon);
+            weaponTD.eAttackCollider = AttackCollider.Weapon;
+            weaponTD.Init();
+        }
+
+        GameObject front = Util.FindChild(gameObject, "FrontAttackCollider");
+        if (front != null)
+        {
+            TrigerDetector frontTD = Util.GetOrAddComponent<TrigerDetector>(front);
+            frontTD.eAttackCollider = AttackCollider.CharacterFront;
+            frontTD.Init();
+        }
+
+
     }
 }

@@ -12,7 +12,7 @@ public class TrigerDetector : MonoBehaviour
     public Collider m_cAttackCollider;
     public AttackCollider eAttackCollider = AttackCollider.None;
 
-    private void Start()
+    public void Init()
     {
         // Managers.Camera.Shake(100001);
         Attacker = transform.root.gameObject;

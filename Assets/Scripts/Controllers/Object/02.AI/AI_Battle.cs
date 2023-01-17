@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public partial class AI : Character
 {
     int[] AttackNum = { };
+
     protected override void UpdateSkill()
     {
         base.UpdateSkill();
@@ -15,10 +16,11 @@ public partial class AI : Character
         DecideAttackNum();
     }
 
-   void DecideAttackNum()
+    void DecideAttackNum()
     {
+        // TODO
         // int[] RandomAttackNum = { 1001, 1002, 1003 }; // 오크
-        int[] RandomAttackNum = { 1011, 1012, 1013 }; //스켈레톤
+        int[] RandomAttackNum = { 1011, 1012 }; //스켈레톤
         int RandomNum = Random.Range(0, RandomAttackNum.Length);
         AttackEvent(RandomAttackNum[RandomNum]);
     }

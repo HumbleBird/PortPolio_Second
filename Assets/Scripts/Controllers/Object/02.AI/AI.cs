@@ -13,6 +13,7 @@ public partial class AI : Character
         WayPoint
     }
 
+    [HideInInspector]
     public AIPatrolMode eAIPatrolMode = AIPatrolMode.Random;
 
     protected override void Init()
@@ -39,7 +40,6 @@ public partial class AI : Character
         {
             case CreatureState.Idle:
                 EnviromentView();
-                NextActionState();
                 break;
             case CreatureState.Move:
                 EnviromentView();
@@ -48,8 +48,10 @@ public partial class AI : Character
     }
 
     float ChangeNextPatroltime = 3f;
-    void NextActionState()
+    protected override void UpdateIdle()
     {
+        base.UpdateIdle();
+
         if (m_playerInRange == true)
         {
             eState = CreatureState.Move;
