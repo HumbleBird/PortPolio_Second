@@ -1,0 +1,4 @@
+Idx,Name,WeaponType,Damage,AttackSpeed
+아이디,이름,무기 타입,데미지,공격 속도
+1,LongSword,1,10,1
+2,LongBow,2,15,0.8

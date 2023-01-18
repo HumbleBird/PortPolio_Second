@@ -9,7 +9,8 @@ public partial class Character : Base
     public ActionState eActionState = ActionState.None;
     public MoveState eMoveState = MoveState.None;
     private CreatureState state = CreatureState.Idle;
-    
+    public CharacterJob eCharacterJob = CharacterJob.None;
+
     public virtual CreatureState eState
     {
         get { return state; }
@@ -103,6 +104,8 @@ public partial class Character : Base
             TrigerDetector weaponTD = Util.GetOrAddComponent<TrigerDetector>(weapon);
             weaponTD.eAttackCollider = AttackCollider.Weapon;
             weaponTD.Init();
+
+            weapon.GetComponent<Collider>().isTrigger = true;
         }
 
         GameObject front = Util.FindChild(gameObject, "FrontAttackCollider");
@@ -111,8 +114,8 @@ public partial class Character : Base
             TrigerDetector frontTD = Util.GetOrAddComponent<TrigerDetector>(front);
             frontTD.eAttackCollider = AttackCollider.CharacterFront;
             frontTD.Init();
+
+            front.GetComponent<Collider>().isTrigger = true;
         }
-
-
     }
 }

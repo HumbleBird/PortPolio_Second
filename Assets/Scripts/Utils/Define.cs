@@ -4,6 +4,44 @@ using UnityEngine;
 
 public class Define
 {
+    public enum CharacterJob
+    {
+        None,
+        Warior,
+        Archor,
+        Wizard
+    }
+
+    public enum ConsumableType
+    {
+        None,
+        Consumable
+    }
+
+    public enum ArmorType
+    {
+        None,
+        Helmet,
+        Armor,
+        Boots,
+        Gloves
+    }
+
+    public enum WeaponType
+    {
+        None,
+        Sword,
+        Bow,
+    }
+
+    public enum ItemType
+    {
+        None = 0,
+        Weapon = 1,
+        Armor = 2,
+        Consumable = 3
+    }
+
     public enum CharacterClass
     {
         None,

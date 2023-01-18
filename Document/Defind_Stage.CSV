@@ -1,0 +1,5 @@
+Idx,nexIdx,Type,Monster_1,Monster_2,Monster_3,Boss,RewardIdx,Clear,#보스얼굴여부,#Name,#Dialogue,#배경 프리팹,#Repeat 프리팹,#Iclein
+아이디,다음아이디,타입,몬스터,몬스터,몬스터,보스출현,보상,몹사냥수,보스얼굴여부,이름,Dialogue,,,
+1,2,1,1001,,,,,,,2001,,,,
+,,2,1900,,,,,,,,,,,
+,,3,,,,,,,,,,,,

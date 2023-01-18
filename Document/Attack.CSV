@@ -1,21 +1,20 @@
-Idx,Name,Dmg,Speed,CoolTime,Range,NextNum,AnimName,,,,,,
-아이디,기술 이름,공격력,공격 속도,후딜,사정거리,다음 연속기 번호,애니메이션 이름,,,,,,
-1,기본 공격 1 (우횡베기),1,1,0.2,1,2,sword and shield slash1,,,,,,
-2,기본 공격 2 (대각선 올려치기),1,1,0.2,1,3,sword and shield slash2,,,,,,
-3,기본 공격 3 (점프해서 내려 치기),2,1,0.3,1,0,sword and shield slash3,,,,,,
-4,회전 참격,2,1,0.3,1,5,sword and shield Spin Slash,,,,,,
-5,무거운 회전 참격,3,1,0.3,1,6,sword and shield Spin Slash 2 Hand,,,,,,
-6,머리 찍기,1,1,0.1,1,0,sword and shield Light Head Hit,,,,,,
-7,앉아서 베기,1,1,0.3,1,0,Crouch Slash,,,,,,
-8,올려치기,3,1,0.5,1,0,Standing Melee Attack Backhand (2),,,,,,
-9,육참골단,5,1,3,1,0,sword and shield Light Head Hit,,,,,,
-31,기본 공격 1 (내려찍기),3,1,0.4,2.5,0,Attack,,,,,,
-32,기본 공격 1 (궁수의 활 쏘기),0.8,1.2,0.3,4,0,Attack,,,,,,
-501,킥 (모든 캐릭터가 가지는 공용),1,1,0.5,1,0,Kick,,,,,,
-1001,오크 펀치,5,1,2,1,0,Punch,,,,,,
-1002,오크의 강화된 펀치,7,1.4,3,1,0,Reinforced Right Punch,,,,,,
-1003,오크 내려찍기,20,0.5,10,1,0,Jump Attack ,,,,,,
-1011,스켈레톤의 횡베기,0,0,5,1,0,Attack1,,,,,,
-1012,스켈레톤의 대각선 베기,0,0,5,1,0,Attack2,,,,,,monster
-1013,스켈레톤 방패병의 방패 들기,0,0,0,1,0,Shiled,,,,,,Orc
-,,,,,,,,,,,,,101
+Idx,Name,Dmg,Speed,CoolTime,Range,NextNum,AnimName
+아이디,기술 이름,공격력,공격 속도,후딜,사정거리,다음 연속기 번호,애니메이션 이름
+1,기본 공격 1 (우횡베기),1,1,0.2,1,2,sword and shield slash1
+2,기본 공격 2 (대각선 올려치기),1,1,0.2,1,3,sword and shield slash2
+3,기본 공격 3 (점프해서 내려 치기),2,1,0.3,1,0,sword and shield slash3
+4,회전 참격,2,1,0.3,1,5,sword and shield Spin Slash
+5,무거운 회전 참격,3,1,0.3,1,6,sword and shield Spin Slash 2 Hand
+6,머리 찍기,1,1,0.1,1,0,sword and shield Light Head Hit
+7,앉아서 베기,1,1,0.3,1,0,Crouch Slash
+8,올려치기,3,1,0.5,1,0,Standing Melee Attack Backhand (2)
+9,육참골단,5,1,3,1,0,sword and shield Light Head Hit
+31,기본 공격 1 (내려찍기),3,1,0.4,2.5,0,Attack
+32,기본 공격 1 (궁수의 활 쏘기),0.8,1.2,0.3,4,0,Attack
+501,킥 (모든 캐릭터가 가지는 공용),1,1,0.5,1,0,Kick
+1001,오크 펀치,5,1,2,1,0,Punch
+1002,오크의 강화된 펀치,7,1.4,3,1,0,Reinforced Right Punch
+1003,오크 내려찍기,20,0.5,10,1,0,Jump Attack 
+1011,스켈레톤의 횡베기,0,0,5,1,0,Attack1
+1012,스켈레톤의 대각선 베기,0,0,5,1,0,Attack2
+1013,스켈레톤 방패병의 방패 들기,0,0,0,1,0,Shiled
