@@ -11,12 +11,15 @@ public class GameScene : BaseScene
         SceneType = Define.Scene.Game;
         Managers.Battle.SpawnCharater(Define.CharaterType.Player);
         Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
+
+        UI_GameScene UIGameScene = Managers.UI.ShowSceneUI<UI_GameScene>();
+
+
         //Managers.Battle.SpawnCharater(Define.CharaterType.Boss);
 
         // After the player is summoned,
-        Managers.UIBattle.Init();
-        Managers.InputKey.Init();
-
+        //Managers.UIBattle.Init();
+        //Managers.InputKey.Init();
 
         //bgm
         //Managers.Sound.Play("Bgm/bigbattle_2_FULL", Define.Sound.Bgm);

@@ -1,10 +1,10 @@
-Idx,Name,ItemType,ItemEquip,EquipHerotype,#Icon,#Prefab,#Dec
-아이디,이름,타입,장착부위,장착 가능 영웅 타입,아이콘,프리팹,설명
-1,LongSword,1,1,0,,,가장 기본적인 론델검
-2,LongBow,1,1,1,,,
-101,IonHelemt,2,2,1,,,
-102,IonArmor,2,3,1,,,
-103,IonBoots,2,4,1,,,
-104,IonGloves,2,5,1,,,
-201,HPPotion,3,1,0,,,
-202,MPPotion,3,1,0,,,
+Idx,Name,ItemType,EquipHerotype,#Icon,#Prefab,#Dec
+아이디,이름,타입,장착 가능 영웅 타입,아이콘,프리팹,설명
+1,LongSword,1,0,,,가장 기본적인 론델검
+2,LongBow,1,1,,,
+101,IonHelemt,2,1,,,
+102,IonArmor,2,1,,,
+103,IonBoots,2,1,,,
+104,IonGloves,2,1,,,
+201,HPPotion,3,0,,,
+202,MPPotion,3,0,,,

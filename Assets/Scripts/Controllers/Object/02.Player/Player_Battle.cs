@@ -16,21 +16,21 @@ public partial class Player : Character
 		SetStemina(m_strStat.m_fStemina);
 
 		// 스테미너 일시 정지
-		StartCoroutine(StaminaGraduallyFillingUp(false));
+		StopCoroutine(cStaminaGraduallyFillingUp);
 	}
 
 	protected override void SetHp(float NewHp)
 	{
 		base.SetHp(NewHp);
 
-		Managers.UIBattle.StatUIRefersh();
+		//Managers.UIBattle.StatUIRefersh();
 	}
 
 	protected override void SetStemina(float NewSetStamina)
 	{
 		base.SetStemina(NewSetStamina);
 
-		Managers.UIBattle.StatUIRefersh();
+		//Managers.UIBattle.StatUIRefersh();
 	}
 
 	protected override void AttackEnd()

@@ -14,27 +14,20 @@ public class Item
 
     public int Id { get; set; }
     public string Name { get; set; }
+    public ItemType eItemType { get; set; }
+    public CharacterClass eCharacterClass { get; set; }
+
     public int Count { get; set; }
     public int Slot { get; set; }
-    
-    public ItemType eItemType { get; set; }
 
     public bool m_bStackable { get; protected set; }
-
-    //public int m_iItemEquip { get; set; }
-    //public int m_iEquipHerotype { get; set; }
-    //public int m_iItemEquip { get; set; }
-    //public int m_iItemEquip { get; set; }
-
-    //// DB
-    //public int? OwnerId { get; set; }
-    //public Player Owner { get; set; }
 }
 
 public class Weapon : Item
 {
     public WeaponType eWeaponType { get; private set; }
-    public int Damage;
+    public int Damage { get; private set; }
+    public float AttackSpeed { get; private set; }
 
     public Weapon(int id) : base(ItemType.Weapon)
     {
@@ -44,30 +37,33 @@ public class Weapon : Item
         if (item.m_iItemType != (int)ItemType.Weapon)
             return;
 
-        Table_Item_Weapon.Info weapon = null;
-        weapon = Managers.Table.m_Item_Weapon.Get(item.m_nID);
+        Table_Item_Weapon.Info data = null;
+        data = Managers.Table.m_Item_Weapon.Get(item.m_nID);
 
-        if (weapon == null)
+        if (data == null)
             return;
 
         {
             Id = id;
-            Name = weapon.m_sName;
-            eItemType = ItemType.Weapon;
+            Name = data.m_sName;
+            eItemType = (ItemType)item.m_iItemType;
+            eCharacterClass = (CharacterClass)item.m_iCharacterClass;
+
             Count = 1;
-            eWeaponType = (WeaponType)weapon.m_iWeaponType;
-            Damage = weapon.m_fDamage;
             m_bStackable = false;
+
+            eWeaponType = (WeaponType)data.m_iWeaponType;
+            Damage = data.m_fDamage;
+            AttackSpeed = data.m_fAttackSpeed;
         }
     }
-
-
 }
 
 public class Armor : Item
 {
     public ArmorType eArmorType { get; private set; }
-    public int Defence;
+    public int Defence { get; set; }
+    public float MoveSpeed { get; set; }
 
     public Armor(int id) : base(ItemType.Armor)
     {
@@ -77,20 +73,24 @@ public class Armor : Item
         if (item.m_iItemType != (int)ItemType.Armor)
             return;
 
-        Table_Item_Armor.Info armor = null;
-        armor = Managers.Table.m_Item_Armor.Get(item.m_nID);
+        Table_Item_Armor.Info data = null;
+        data = Managers.Table.m_Item_Armor.Get(item.m_nID);
 
-        if (armor == null)
+        if (data == null)
             return;
 
         {
             Id = id;
-            Name = armor.m_sName;
-            eItemType = ItemType.Weapon;
+            Name = data.m_sName;
+            eItemType = (ItemType)item.m_iItemType;
+            eCharacterClass = (CharacterClass)item.m_iCharacterClass;
+
             Count = 1;
-            eArmorType = (ArmorType)armor.m_iArmorType;
-            Defence = armor.m_fDefense;
             m_bStackable = false;
+
+            eArmorType = (ArmorType)data.m_iArmorType;
+            Defence = data.m_fDefense;
+            MoveSpeed = data.m_fMoveSpeed;
         }
     }
 
@@ -100,7 +100,8 @@ public class Armor : Item
 public class Consumable : Item
 {
     public ConsumableType eConsumableType { get; private set; }
-    public int MaxCount;
+    public int Value { get; set; }
+    public int MaxCount { get; set; }
 
     public Consumable(int id) : base(ItemType.Consumable)
     {
@@ -110,20 +111,24 @@ public class Consumable : Item
         if (item.m_iItemType != (int)ItemType.Consumable)
             return;
 
-        Table_Item_Consumable.Info consumable = null;
-        consumable = Managers.Table.m_Item_Consumable.Get(item.m_nID);
+        Table_Item_Consumable.Info data = null;
+        data = Managers.Table.m_Item_Consumable.Get(item.m_nID);
 
-        if (consumable == null)
+        if (data == null)
             return;
 
         {
             Id = id;
-            Name = consumable.m_sName;
-            eItemType = ItemType.Weapon;
+            Name = data.m_sName;
+            eItemType = (ItemType)item.m_iItemType;
+            eCharacterClass = (CharacterClass)item.m_iCharacterClass;
+
             Count = 1;
-            MaxCount = consumable.m_iMaxCount;
-            eConsumableType = (ConsumableType)consumable.m_iConsumableType;
             m_bStackable = true;
+
+            eConsumableType = (ConsumableType)data.m_iConsumableType;
+            Value = data.m_iValue;
+            m_bStackable = (data.m_iMaxCount > 1 );
         }
     }
 

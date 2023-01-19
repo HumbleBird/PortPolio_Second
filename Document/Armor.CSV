@@ -1,6 +1,6 @@
-Idx,Name,Defense,MoveSpeed
-아이디,이름,방어력,이동 속도
-101,IonHelemt,3,-5
-102,IonArmor,10,-10
-103,IonBoots,2,-3
-104,IonGloves,1,-2
+Idx,Name,Defense,MoveSpeed,ItemEquip
+아이디,이름,방어력,이동 속도,장착부위
+101,IonHelemt,3,-5,1
+102,IonArmor,10,-10,2
+103,IonBoots,2,-3,4
+104,IonGloves,1,-2,5

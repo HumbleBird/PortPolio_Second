@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_PlayerInfo : UI_Scene
+public class UI_PlayerInfo : UI_Base
 {
     enum Images
     {
@@ -29,6 +29,9 @@ public class UI_PlayerInfo : UI_Scene
 
         BindImage(typeof(Images));
         BindText(typeof(Texts));
+
+        //Temp Code
+        _player = Managers.Object.Find(1).GetComponent<Character>();
 
         RefreshUI();
 

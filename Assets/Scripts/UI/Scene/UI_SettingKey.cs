@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_SettingKey : UI_Popup
+public class UI_SettingKey : UI_Base
 {
     enum Buttons
     {
@@ -35,8 +35,7 @@ public class UI_SettingKey : UI_Popup
         Managers.InputKey._waitingInputGo = GetObject((int)GameObjects.InputWatingImage);
         Managers.InputKey._verticalLayoutTr = GetObject((int)GameObjects.VerticalLayout).transform;
 
-        // 나중에 모든 옵션 세팅 창들을 한 번에 꺼주는 기능을 만들어 주자
-        gameObject.SetActive(false);
+        Managers.InputKey.Init();
 
         return true;
     }

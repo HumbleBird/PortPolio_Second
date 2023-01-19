@@ -20,11 +20,13 @@ public class Define
 
     public enum ArmorType
     {
-        None,
-        Helmet,
-        Armor,
-        Boots,
-        Gloves
+        None = 0,
+        Helmet = 1,
+        Armor = 2,
+        Pant = 3,
+        Boots = 4,
+        Gloves = 5,
+        Ring = 6,
     }
 
     public enum WeaponType
@@ -44,9 +46,10 @@ public class Define
 
     public enum CharacterClass
     {
-        None,
-        Blow,
-        Range
+        None = 0,
+        Warior = 1,
+        Archer = 2,
+        Wizard = 3
     }
 
     public enum CreatureType

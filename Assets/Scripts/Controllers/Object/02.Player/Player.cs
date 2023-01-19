@@ -7,7 +7,7 @@ using static Define;
 public partial class Player : Character
 {
     public Inventory m_Inven { get; private set; } = new Inventory();
-
+    protected Coroutine cStaminaGraduallyFillingUp;
     protected override void Init()
     {
         base.Init();
@@ -15,7 +15,7 @@ public partial class Player : Character
         eCreatureType = CreatureType.Player;
         tag = "Player";
 
-        StartCoroutine(StaminaGraduallyFillingUp());
+        cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
     }
 
     protected override void UpdateSkill()

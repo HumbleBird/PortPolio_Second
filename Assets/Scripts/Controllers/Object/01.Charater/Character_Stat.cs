@@ -33,19 +33,13 @@ public partial class Character : Base
         }
     }
 
-    protected IEnumerator StaminaGraduallyFillingUp(bool bStart = true)
+    protected IEnumerator StaminaGraduallyFillingUp()
     {
-        if (bStart == false)
-            yield return null;
+        m_strStat.m_fStemina += Time.deltaTime;
+        SetStemina(m_strStat.m_fStemina);
+        //Managers.UIBattle.StatUIRefersh();
 
-        while (true)
-        {
-            m_strStat.m_fStemina += Time.deltaTime;
-            SetStemina(m_strStat.m_fStemina);
-            Managers.UIBattle.StatUIRefersh();
-
-            yield return null;
-        }
+        yield return null;
     }
 
     public virtual void SetMoveState(MoveState state)

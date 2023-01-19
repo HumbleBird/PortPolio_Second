@@ -10,7 +10,7 @@ public class Inventory
 
     public void Add(Item item)
     {
-        m_dicItem.Add(0, item);
+        m_dicItem.Add(item.Id, item);
     }
 
     public Item Get(int itemID)
