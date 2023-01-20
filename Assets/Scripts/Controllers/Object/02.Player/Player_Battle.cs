@@ -23,14 +23,14 @@ public partial class Player : Character
 	{
 		base.SetHp(NewHp);
 
-		//Managers.UIBattle.StatUIRefersh();
+		Managers.UIBattle.StatUIRefersh();
 	}
 
 	protected override void SetStemina(float NewSetStamina)
 	{
 		base.SetStemina(NewSetStamina);
 
-		//Managers.UIBattle.StatUIRefersh();
+		Managers.UIBattle.StatUIRefersh();
 	}
 
 	protected override void AttackEnd()
@@ -41,5 +41,14 @@ public partial class Player : Character
 		StopCoroutine(cCheckNextAttack);
 		m_goTarget = null;
 
+	}
+
+	protected IEnumerator StaminaGraduallyFillingUp()
+	{
+		m_strStat.m_fStemina += Time.deltaTime;
+		SetStemina(m_strStat.m_fStemina);
+		Managers.UIBattle.StatUIRefersh();
+
+		yield return null;
 	}
 }

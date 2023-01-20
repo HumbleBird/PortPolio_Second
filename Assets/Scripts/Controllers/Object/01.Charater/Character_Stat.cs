@@ -33,14 +33,7 @@ public partial class Character : Base
         }
     }
 
-    protected IEnumerator StaminaGraduallyFillingUp()
-    {
-        m_strStat.m_fStemina += Time.deltaTime;
-        SetStemina(m_strStat.m_fStemina);
-        //Managers.UIBattle.StatUIRefersh();
 
-        yield return null;
-    }
 
     public virtual void SetMoveState(MoveState state)
     {

@@ -30,17 +30,12 @@ public class UI_PlayerInfo : UI_Base
         BindImage(typeof(Images));
         BindText(typeof(Texts));
 
-        //Temp Code
-        _player = Managers.Object.Find(1).GetComponent<Character>();
-
-        RefreshUI();
-
         return true;
     }
 
-    public void SetInfo(Character player)
+    public void SetInfo(GameObject player)
     {
-        _player = player;
+        _player = player.GetComponent<Player>();
 
         RefreshUI();
     }

@@ -96,7 +96,7 @@ namespace Rito.InputBindings
             Bind(UserAction.Kick,         KeyCode.V);
             Bind(UserAction.Shield,       KeyCode.C);
 
-            Bind(UserAction.Jump,         KeyCode.Space);
+            //Bind(UserAction.Jump,         KeyCode.Space);
             Bind(UserAction.Roll,         KeyCode.Space);
             Bind(UserAction.Crouch,       KeyCode.LeftControl);
 

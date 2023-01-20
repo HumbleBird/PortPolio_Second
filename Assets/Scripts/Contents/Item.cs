@@ -16,11 +16,39 @@ public class Item
     public string Name { get; set; }
     public ItemType eItemType { get; set; }
     public CharacterClass eCharacterClass { get; set; }
+    public string iconPath { get; set; }
 
     public int Count { get; set; }
     public int Slot { get; set; }
 
     public bool m_bStackable { get; protected set; }
+
+    // 아이템
+    public static Item MakeItem(int id)
+    {
+        Item item = null;
+
+        Table_Item.Info itemInfo = Managers.Table.m_Item.Get(id);
+        if (itemInfo == null)
+            return null;
+
+        switch (itemInfo.m_iItemType)
+        {
+            case (int)ItemType.Weapon:
+                item = new Weapon(itemInfo.m_nID);
+                break;
+            case (int)ItemType.Armor:
+                item = new Armor(itemInfo.m_nID);
+                break;
+            case (int)ItemType.Consumable:
+                item = new Consumable(itemInfo.m_nID);
+                break;
+            default:
+                break;
+        }
+
+        return item;
+    }
 }
 
 public class Weapon : Item
@@ -48,6 +76,7 @@ public class Weapon : Item
             Name = data.m_sName;
             eItemType = (ItemType)item.m_iItemType;
             eCharacterClass = (CharacterClass)item.m_iCharacterClass;
+            iconPath = item.m_sIconPath;
 
             Count = 1;
             m_bStackable = false;
@@ -84,6 +113,7 @@ public class Armor : Item
             Name = data.m_sName;
             eItemType = (ItemType)item.m_iItemType;
             eCharacterClass = (CharacterClass)item.m_iCharacterClass;
+            iconPath = item.m_sIconPath;
 
             Count = 1;
             m_bStackable = false;
@@ -122,6 +152,7 @@ public class Consumable : Item
             Name = data.m_sName;
             eItemType = (ItemType)item.m_iItemType;
             eCharacterClass = (CharacterClass)item.m_iCharacterClass;
+            iconPath = item.m_sIconPath;
 
             Count = 1;
             m_bStackable = true;

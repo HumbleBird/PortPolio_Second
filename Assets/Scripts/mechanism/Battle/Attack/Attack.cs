@@ -47,7 +47,7 @@ public class Attack : Strategy
     }
 
     //Action
-    public virtual void SetKeyMehod()
+    public virtual void SetKey()
     {
         MaintainkeyDictionary = new Dictionary<KeyCode, Action>
         {

@@ -1,10 +1,10 @@
-Idx,Name,ItemType,EquipHerotype,#Icon,#Prefab,#Dec
-아이디,이름,타입,장착 가능 영웅 타입,아이콘,프리팹,설명
-1,LongSword,1,0,,,가장 기본적인 론델검
-2,LongBow,1,1,,,
-101,IonHelemt,2,1,,,
-102,IonArmor,2,1,,,
-103,IonBoots,2,1,,,
-104,IonGloves,2,1,,,
-201,HPPotion,3,0,,,
-202,MPPotion,3,0,,,
+Idx,Name,ItemType,Characterype,Icon,#Prefab,#Dec,,,,,,,
+아이디,이름,타입,장착 가능 영웅 타입,아이콘,프리팹,설명,,,종류,경로,번호,,
+1,LongSword,1,0,Art/Textures/UI/Item/Weapon/LongSword,,가장 기본적인 론델검,,,무기,Art/Textures/UI/Item/Weapon/,1,,무기 경로
+2,LongBow,1,1,Art/Textures/UI/Item/Weapon/LongBow,,,,,아머,Art/Textures/UI/Item/Armor/,2,,아이템 경로
+101,IonHelmet,2,1,Art/Textures/UI/Item/Armor/IonHelmet,,,,,소비,Art/Textures/UI/Item/Consumable/,3,,소비템 경로
+102,IonArmor,2,1,Art/Textures/UI/Item/Armor/IonArmor,,,,,,,,,
+103,IonBoots,2,1,Art/Textures/UI/Item/Armor/IonBoots,,,,,,,,,
+104,IonGloves,2,1,Art/Textures/UI/Item/Armor/IonGloves,,,,,,,,,
+201,HPPotion,3,0,Art/Textures/UI/Item/Consumable/HPPotion,,,,,,,,,
+202,MPPotion,3,0,Art/Textures/UI/Item/Consumable/MPPotion,,,,,,,,,

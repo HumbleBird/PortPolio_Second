@@ -48,30 +48,5 @@ public class ObjectManager
 	}
 
 
-    // 아이템
-    public Item MakeItem(int id)
-    {
-        Item item = null;
-
-        Table_Item.Info itemInfo = Managers.Table.m_Item.Get(id);
-        if (itemInfo == null)
-            return null;
-
-        switch (itemInfo.m_iItemType)
-        {
-            case (int)ItemType.Weapon:
-                item = new Weapon(itemInfo.m_nID);
-                break;
-            case (int)ItemType.Armor:
-                item = new Armor(itemInfo.m_nID);
-                break;
-            case (int)ItemType.Consumable:
-                item = new Consumable(itemInfo.m_nID);
-                break;
-            default:
-                break;
-        }
-
-        return item;
-    }
+    
 }

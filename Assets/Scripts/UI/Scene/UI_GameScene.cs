@@ -17,15 +17,12 @@ public class UI_GameScene : UI_Scene
         UIInven = GetComponentInChildren<UI_Inven>();
         UISetting = GetComponentInChildren<UI_SettingKey>();
 
+        UISetting.Init();
+        Managers.UIBattle.Init();
+
         UIPlayerInfo.gameObject.SetActive(false);
         UIInven.gameObject.SetActive(false);
         UISetting.gameObject.SetActive(false);
-
-
-        GameObject go = Managers.Object.Find(1);
-        Player player = go.GetComponent<Player>();
-
-        UISetting.Init();
 
         return true;
     }

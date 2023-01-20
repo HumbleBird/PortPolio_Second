@@ -42,7 +42,7 @@ public partial class MyPlayer : Player
 		base.SetHp(NewHp);
 
 		//Managers.UIBattle.StatUIRefersh();
-		StartCoroutine(Managers.UIBattle.UIPlayerInfo.DownHP());
+		StartCoroutine(Managers.UIBattle.UIGameScene.UIPlayerInfo.DownHP());
 	}
 
 	protected override void SetStemina(float NewSetStamina)

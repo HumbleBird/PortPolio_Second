@@ -35,17 +35,18 @@ public partial class Option
 
     void ShowInputKeySetting()
     {
-        //ShowAndClose(Managers.UIBattle.UISetting);
+        ShowAndClose(Managers.UIBattle.UIGameScene.UISetting);
     }
 
     void ShowInventory()
     {
-        //ShowAndClose(Managers.UIBattle.UIInven);
+        Managers.UIBattle.LoadInvenItem();
+        ShowAndClose(Managers.UIBattle.UIGameScene.UIInven);
     }
 
-    void ShowAndClose(UI_Scene popup)
+    void ShowAndClose(UI_Base scene)
     {
-        bool B = popup.gameObject.activeSelf;
-        popup.gameObject.SetActive(!B);
+        bool B = scene.gameObject.activeSelf;
+        scene.gameObject.SetActive(!B);
     }
 }

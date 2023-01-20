@@ -10,6 +10,7 @@ public class Table_Item : Table_Base
         public string m_sName;
         public int    m_iItemType;
         public int    m_iCharacterClass;
+        public string m_sIconPath;
     }
 
     public Dictionary<int, Info> m_Dictionary = new Dictionary<int, Info>();
@@ -58,6 +59,7 @@ public class Table_Item : Table_Base
         _reader.get(_nRow, ref _info.m_sName);
         _reader.get(_nRow, ref _info.m_iItemType);
         _reader.get(_nRow, ref _info.m_iCharacterClass);
+        _reader.get(_nRow, ref _info.m_sIconPath);
         return true;
     }
 }

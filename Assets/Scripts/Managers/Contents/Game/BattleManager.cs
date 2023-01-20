@@ -7,7 +7,7 @@ using static Define;
 public class BattleManager
 {
     #region Spawn
-    void CreatePlayer(int id)
+    void CreatePlayer(int id, bool myPlayer = false)
     {
         Table_Player.Info pinfo = Managers.Table.m_Player.Get(id);
 
@@ -28,6 +28,13 @@ public class BattleManager
 
         // 클래스
         pc.ChangeClass(pinfo.m_sClass);
+
+        ////  MyPlayer 한정
+        //if (myPlayer == true)
+        //{
+        //    Managers.UIBattle.UIGameScene.UIPlayerInfo.gameObject.SetActive(true);
+        //    Managers.UIBattle.UIGameScene.UIPlayerInfo.SetInfo(pc.gameObject);
+        //}
     }
 
     void CreateMonster(int id)
@@ -76,12 +83,12 @@ public class BattleManager
         boss.ChangeClass(binfo.m_sClass);
     }
 
-    public void SpawnCharater(CharaterType type)
+    public void SpawnCharater(CharaterType type, bool myplayer = false)
     {
         switch (type)
         {
             case CharaterType.Player:
-                CreatePlayer(1);
+                CreatePlayer(1, myplayer);
                 break;
             case CharaterType.Monster:
                 CreateMonster(201);

@@ -9,11 +9,11 @@ public class GameScene : BaseScene
         base.Init();
 
         SceneType = Define.Scene.Game;
-        Managers.Battle.SpawnCharater(Define.CharaterType.Player);
-        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
+        Managers.UI.ShowSceneUI<UI_GameScene>();
 
-        UI_GameScene UIGameScene = Managers.UI.ShowSceneUI<UI_GameScene>();
+        //Managers.Battle.SpawnCharater(Define.CharaterType.Player, true);
 
+        //Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
 
         //Managers.Battle.SpawnCharater(Define.CharaterType.Boss);
 

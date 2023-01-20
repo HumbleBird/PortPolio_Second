@@ -10,6 +10,9 @@ public class ThirdPersonCameraController : MonoBehaviour
         CinemachineFreeLook m_cinemashin = GetComponent<CinemachineFreeLook>();
 
         GameObject go = Managers.Object.Find(1);
+        if (go == null)
+            return;
+
         Transform follow = go.GetComponent<MyPlayer>().followTransform.transform;
 
         m_cinemashin.Follow = follow;

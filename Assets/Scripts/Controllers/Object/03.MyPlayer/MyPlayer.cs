@@ -16,8 +16,6 @@ public partial class MyPlayer : Player
 		base.Init();
 
 		m_tCamera = Camera.main;
-		m_strAttack.SetKeyMehod();
-		m_cOption.SetKey();
 	}
 
 	protected override void UpdateController()
@@ -96,5 +94,11 @@ public partial class MyPlayer : Player
 		
 		if(m_bMoveInput == false && eMoveState != MoveState.Crouch)
 			eState = CreatureState.Idle;
+	}
+
+	public void SetKey()
+    {
+		m_strAttack.SetKey();
+		m_cOption.SetKey();
 	}
 }

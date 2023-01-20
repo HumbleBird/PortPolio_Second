@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UI_Inven : UI_Base
@@ -18,7 +19,7 @@ public class UI_Inven : UI_Base
 
         BindObject(typeof(GameObjects));
 
-        // 아이템 창 생성
+        // 아이템 칸 생성
         GameObject gridPannel = Get<GameObject>((int)GameObjects.ItemGridPannel);
         foreach (Transform child in gridPannel.transform)
             Managers.Resource.Destroy(child.gameObject);
@@ -39,6 +40,15 @@ public class UI_Inven : UI_Base
         if (_init == false)
             return;
 
+        List<Item> items = Managers.Inventory.m_dicItem.Values.ToList();
+        items.Sort((left, right) => { return left.Slot - right.Slot; });
 
+        foreach (Item item in items)
+        {
+            if (item.Count < 0 || item.Count >= 20)
+                continue;
+
+            Items[item.Slot].SetItem(item.Id, item.Count);
+        }
     }
 }
