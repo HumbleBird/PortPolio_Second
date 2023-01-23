@@ -15,7 +15,23 @@ public class ThirdPersonCameraController : MonoBehaviour
 
         Transform follow = go.GetComponent<MyPlayer>().followTransform.transform;
 
-        m_cinemashin.Follow = follow;
-        m_cinemashin.LookAt = follow;
+        if(Cursor.lockState == CursorLockMode.Locked)
+        {
+            m_cinemashin.Follow = follow;
+            m_cinemashin.LookAt = follow;
+        }
+    }
+
+    //마우스 커서
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 }

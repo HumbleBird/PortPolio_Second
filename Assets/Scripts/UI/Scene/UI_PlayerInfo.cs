@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_PlayerInfo : UI_Base
+public class UI_PlayerInfo : UI_Scene
 {
     enum Images
     {
@@ -35,7 +35,7 @@ public class UI_PlayerInfo : UI_Base
 
     public void SetInfo(GameObject player)
     {
-        _player = player.GetComponent<Player>();
+        _player = player.GetComponent<Character>();
 
         RefreshUI();
     }

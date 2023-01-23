@@ -16,6 +16,8 @@ public partial class MyPlayer : Player
 		base.Init();
 
 		m_tCamera = Camera.main;
+		Managers.UIBattle.PlayerSettinfUI();
+		SetKey();
 	}
 
 	protected override void UpdateController()

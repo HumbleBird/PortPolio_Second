@@ -6,6 +6,7 @@ using static Define;
 
 public class BattleManager
 {
+
     #region Spawn
     void CreatePlayer(int id, bool myPlayer = false)
     {
@@ -28,13 +29,6 @@ public class BattleManager
 
         // 클래스
         pc.ChangeClass(pinfo.m_sClass);
-
-        ////  MyPlayer 한정
-        //if (myPlayer == true)
-        //{
-        //    Managers.UIBattle.UIGameScene.UIPlayerInfo.gameObject.SetActive(true);
-        //    Managers.UIBattle.UIGameScene.UIPlayerInfo.SetInfo(pc.gameObject);
-        //}
     }
 
     void CreateMonster(int id)
@@ -113,21 +107,6 @@ public class BattleManager
         if (Input.GetKey(KeyCode.I))
         {
             Managers.Camera.ZoomEndStage(0f, -1.5f, 1.5f, 3f - 1.5f, 0.5f, Vector3.zero);
-        }
-    }
-    #endregion
-
-    #region ETC
-    //마우스 커서
-    private void OnApplicationFocus(bool focus)
-    {
-        if (focus)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
         }
     }
     #endregion

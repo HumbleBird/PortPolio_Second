@@ -45,10 +45,13 @@ public partial class Player : Character
 
 	protected IEnumerator StaminaGraduallyFillingUp()
 	{
-		m_strStat.m_fStemina += Time.deltaTime;
-		SetStemina(m_strStat.m_fStemina);
-		Managers.UIBattle.StatUIRefersh();
+        while (true)
+        {
+			m_strStat.m_fStemina += Time.deltaTime;
+			SetStemina(m_strStat.m_fStemina);
+			Managers.UIBattle.StatUIRefersh();
 
-		yield return null;
+			yield return null;
+		}
 	}
 }

@@ -48,5 +48,16 @@ public partial class Option
     {
         bool B = scene.gameObject.activeSelf;
         scene.gameObject.SetActive(!B);
+
+        // UI On
+        if(B == false)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        // UI Off
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 }

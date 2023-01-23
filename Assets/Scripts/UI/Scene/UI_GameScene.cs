@@ -13,12 +13,12 @@ public class UI_GameScene : UI_Scene
         if (base.Init() == false)
             return false;
 
+
         UIPlayerInfo = GetComponentInChildren<UI_PlayerInfo>();
         UIInven = GetComponentInChildren<UI_Inven>();
         UISetting = GetComponentInChildren<UI_SettingKey>();
 
         UISetting.Init();
-        Managers.UIBattle.Init();
 
         UIPlayerInfo.gameObject.SetActive(false);
         UIInven.gameObject.SetActive(false);

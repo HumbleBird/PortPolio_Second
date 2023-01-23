@@ -7,13 +7,11 @@ public class UI_BattleManager
 {
     public UI_GameScene UIGameScene;
 
-    public void Init()
-    {
-        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
-    }
 
     public void LoadInvenItem()
     {
+        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
+
         UI_Inven UIInven = UIGameScene.UIInven;
         Managers.Inventory.Clear();
 
@@ -33,8 +31,21 @@ public class UI_BattleManager
         UIInven.RefreshUI();
     }
 
+    public void PlayerSettinfUI()
+    {
+        GameObject go = Managers.Object.Find(1);
+        Player pc = go.GetComponent<MyPlayer>();
+        if (pc != null)
+        {
+            Managers.UIBattle.UIGameScene.UIPlayerInfo.gameObject.SetActive(true);
+            Managers.UIBattle.UIGameScene.UIPlayerInfo.SetInfo(pc.gameObject);
+        }
+    }
+
     public void StatUIRefersh()
     {
+        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
+
         UIGameScene.UIPlayerInfo.RefreshUI();
     }
 }

@@ -2799,8 +2799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1055814170552492411}
-  - component: {fileID: 9004997109257173163}
-  - component: {fileID: 7953538387097713069}
+  - component: {fileID: 3772881873520826734}
   m_Layer: 5
   m_Name: UI_Inven
   m_TagString: Untagged
@@ -2829,15 +2828,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &9004997109257173163
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6837521234235047716}
-  m_CullTransparentMesh: 1
---- !u!114 &7953538387097713069
+--- !u!114 &3772881873520826734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
