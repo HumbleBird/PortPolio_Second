@@ -1,54 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class UI_Inven : UI_Base
 {
-    public List<UI_Inven_Item> Items { get; set; } = new List<UI_Inven_Item>();
+    public UI_InvenMain UIInvenMain { get; set; }
+    public UI_ItemDes UIItemDes { get; set; }
+    public UI_PlayerData UIPlayerData { get; set; }
 
-    enum GameObjects
-    {
-        ItemGridPannel
-    }
+    Player _player;
 
     public override bool Init()
     {
         if (base.Init() == false)
             return false;
 
-        BindObject(typeof(GameObjects));
+        UIInvenMain = GetComponentInChildren<UI_InvenMain>();
+        UIItemDes = GetComponentInChildren<UI_ItemDes>();
+        UIPlayerData = GetComponentInChildren<UI_PlayerData>();
 
-        // 아이템 칸 생성
-        GameObject gridPannel = Get<GameObject>((int)GameObjects.ItemGridPannel);
-        foreach (Transform child in gridPannel.transform)
-            Managers.Resource.Destroy(child.gameObject);
-
-        int InitItemPannelCount = 25;
-        for (int i = 0; i < InitItemPannelCount; i++)
-        {
-            GameObject go = Managers.Resource.Instantiate("UI/Scene/UI_Inven_Item", gridPannel.transform);
-            UI_Inven_Item item = go.GetOrAddComponent<UI_Inven_Item>();
-            Items.Add(item);
-        }
+        gameObject.SetActive(false);
 
         return true;
     }
+
 
     public void RefreshUI()
     {
         if (_init == false)
             return;
 
-        List<Item> items = Managers.Inventory.m_dicItem.Values.ToList();
-        items.Sort((left, right) => { return left.Slot - right.Slot; });
+        UIInvenMain.RefreshUI();
+        UIItemDes.RefreshUI();
 
-        foreach (Item item in items)
-        {
-            if (item.Count < 0 || item.Count >= 20)
-                continue;
+        // Temp
+        UIPlayerData.SetInfo(Managers.Object.Find(1));
+        UIPlayerData.RefreshUI();
 
-            Items[item.Slot].SetItem(item.Id, item.Count);
-        }
     }
 }

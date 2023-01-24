@@ -9,14 +9,14 @@ public partial class MyPlayer : Player
 {
 	public GameObject followTransform;
 	Option m_cOption = new Option();
-	Camera m_tCamera;
+	Camera m_Camera;
 
-	protected override void Init()
-	{
-		base.Init();
+    protected override void Init()
+    {
+        base.Init();
 
-		m_tCamera = Camera.main;
-		Managers.UIBattle.PlayerSettinfUI();
+		m_Camera = Camera.main;
+		Managers.Camera2.m_camera = Camera.main;
 		SetKey();
 	}
 
@@ -75,14 +75,14 @@ public partial class MyPlayer : Player
     // 걷기, 달리기 등
     protected override void UpdateMove()
     {
-		if (m_bWaiting)
+		if (m_bWaiting || Cursor.lockState == CursorLockMode.None)
 			return;
 
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
 
 		Vector3 move = new Vector3(horizontal, 0, vertical);
-		move = Quaternion.AngleAxis(m_tCamera.transform.rotation.eulerAngles.y, Vector3.up) * move;
+		move = Quaternion.AngleAxis(m_Camera.transform.rotation.eulerAngles.y, Vector3.up) * move;
 
 		if (Input.GetKey(KeyCode.LeftShift))
 			SetMoveState(MoveState.Run);
@@ -103,4 +103,6 @@ public partial class MyPlayer : Player
 		m_strAttack.SetKey();
 		m_cOption.SetKey();
 	}
+
+
 }

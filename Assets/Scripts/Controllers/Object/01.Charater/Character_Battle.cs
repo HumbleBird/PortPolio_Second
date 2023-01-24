@@ -13,7 +13,7 @@ public partial class Character : Base
     protected bool  m_bCanAttack = true;
     protected bool  m_bNextAttack = false;
 
-    Coroutine cAttackCheck;
+    protected Coroutine cAttackCheck;
     protected Coroutine cCheckNextAttack;
 
     public void ChangeClass(string typeClass)

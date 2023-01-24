@@ -53,11 +53,13 @@ public partial class Option
         if(B == false)
         {
             Cursor.lockState = CursorLockMode.None;
+            Managers.Camera2.CemeraPauseOnUI();
         }
         // UI Off
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Managers.Camera2.CemeraPauseOnUI();
         }
     }
 }

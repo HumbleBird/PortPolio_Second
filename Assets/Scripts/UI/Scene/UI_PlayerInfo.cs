@@ -20,7 +20,7 @@ public class UI_PlayerInfo : UI_Scene
         Name
     }
 
-    Character _player;
+    Player _player;
 
     public override bool Init()
     {
@@ -33,17 +33,13 @@ public class UI_PlayerInfo : UI_Scene
         return true;
     }
 
-    public void SetInfo(GameObject player)
-    {
-        _player = player.GetComponent<Character>();
-
-        RefreshUI();
-    }
-
     public void RefreshUI()
     {
         if (_init == false)
             return;
+
+        GameObject player = Managers.Object.Find(1);
+        _player = player.GetComponent<Player>();
 
         Image HpBariamge = GetImage((int)Images.HPBar);
         HpBariamge.fillAmount = _player.m_strStat.m_fHp / _player.m_strStat.m_fMaxHp;

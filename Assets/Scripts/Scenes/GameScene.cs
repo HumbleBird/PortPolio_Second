@@ -14,22 +14,13 @@ public class GameScene : BaseScene
 
         // 프리팹 로드
 
-        // UI
-        Managers.UI.ShowSceneUI<UI_GameScene>();
-
         // 캐릭터
         Managers.Battle.SpawnCharater(Define.CharaterType.Player, true);
 
+        // UI
+        Managers.UI.ShowSceneUI<UI_GameScene>();
+         
 
-        //
-
-        //Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
-
-        //Managers.Battle.SpawnCharater(Define.CharaterType.Boss);
-
-        // After the player is summoned,
-        //Managers.UIBattle.Init();
-        //Managers.InputKey.Init();
 
         //bgm
         //Managers.Sound.Play("Bgm/bigbattle_2_FULL", Define.Sound.Bgm);

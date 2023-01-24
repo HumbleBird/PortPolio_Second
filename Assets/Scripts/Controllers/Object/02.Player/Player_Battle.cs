@@ -19,20 +19,6 @@ public partial class Player : Character
 		StopCoroutine(cStaminaGraduallyFillingUp);
 	}
 
-	protected override void SetHp(float NewHp)
-	{
-		base.SetHp(NewHp);
-
-		Managers.UIBattle.StatUIRefersh();
-	}
-
-	protected override void SetStemina(float NewSetStamina)
-	{
-		base.SetStemina(NewSetStamina);
-
-		Managers.UIBattle.StatUIRefersh();
-	}
-
 	protected override void AttackEnd()
     {
 		base.AttackEnd();
@@ -43,13 +29,12 @@ public partial class Player : Character
 
 	}
 
-	protected IEnumerator StaminaGraduallyFillingUp()
+	protected virtual IEnumerator StaminaGraduallyFillingUp()
 	{
         while (true)
         {
 			m_strStat.m_fStemina += Time.deltaTime;
 			SetStemina(m_strStat.m_fStemina);
-			Managers.UIBattle.StatUIRefersh();
 
 			yield return null;
 		}

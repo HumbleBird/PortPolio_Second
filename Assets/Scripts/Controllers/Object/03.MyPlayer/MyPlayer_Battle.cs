@@ -41,7 +41,7 @@ public partial class MyPlayer : Player
 	{
 		base.SetHp(NewHp);
 
-		//Managers.UIBattle.StatUIRefersh();
+		Managers.UIBattle.StatUIRefersh();
 		StartCoroutine(Managers.UIBattle.UIGameScene.UIPlayerInfo.DownHP());
 	}
 
@@ -49,6 +49,6 @@ public partial class MyPlayer : Player
 	{
 		base.SetStemina(NewSetStamina);
 
-		//Managers.UIBattle.StatUIRefersh();
+		Managers.UIBattle.StatUIRefersh();
 	}
 }

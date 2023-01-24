@@ -8,8 +8,11 @@ public class Stat
 {
     public Table_Stat.Info m_tStatInfo { get; set; } = new Table_Stat.Info();
 
+    public int   m_iLevel { get; set; }
     public float m_fHp               { get; set; }           
     public float m_fMaxHp        { get; set; }
+    public float m_fMp               { get; set; }           
+    public float m_fMaxMp        { get; set; }
     public float m_fStemina       { get; set; }
     public float m_fMaxStemina      { get; set; }
     public float m_fAtk         { get; set; }
@@ -24,8 +27,11 @@ public class Stat
 
     public void Init()
     {
+        m_iLevel = 1;
         m_fHp = m_tStatInfo.m_fHp;
         m_fMaxHp = m_fHp;
+        m_fMp = 100; //m_tStatInfo.m_fHp;
+        m_fMaxMp = 100;// m_fHp;
         m_fStemina = m_tStatInfo.m_fStemina;
         m_fMaxStemina = m_fStemina;
         m_fAtk = m_tStatInfo.m_fAtk;

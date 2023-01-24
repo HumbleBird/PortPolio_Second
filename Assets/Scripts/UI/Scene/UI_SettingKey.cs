@@ -37,6 +37,8 @@ public class UI_SettingKey : UI_Base
 
         Managers.InputKey.Init();
 
+        gameObject.SetActive(false);
+
         return true;
     }
 

@@ -31,21 +31,11 @@ public class UI_BattleManager
         UIInven.RefreshUI();
     }
 
-    public void PlayerSettinfUI()
-    {
-        GameObject go = Managers.Object.Find(1);
-        Player pc = go.GetComponent<MyPlayer>();
-        if (pc != null)
-        {
-            Managers.UIBattle.UIGameScene.UIPlayerInfo.gameObject.SetActive(true);
-            Managers.UIBattle.UIGameScene.UIPlayerInfo.SetInfo(pc.gameObject);
-        }
-    }
-
     public void StatUIRefersh()
     {
         UIGameScene = Managers.UI.SceneUI as UI_GameScene;
 
         UIGameScene.UIPlayerInfo.RefreshUI();
+        UIGameScene.UIInven.RefreshUI();
     }
 }
