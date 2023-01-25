@@ -118,4 +118,12 @@ public partial class Character : Base
             front.GetComponent<Collider>().isTrigger = true;
         }
     }
+
+    public virtual void OnDead(GameObject Attacker)
+    {
+        // TODO For Pooling
+        m_strStat.m_fHp = m_strStat.m_fMaxHp;
+        m_strStat.m_fMp = m_strStat.m_fMaxMp;
+        state = CreatureState.Idle;
+    }
 }

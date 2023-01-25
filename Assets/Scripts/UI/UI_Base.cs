@@ -20,7 +20,7 @@ public abstract class UI_Base : MonoBehaviour
 		return _init = true;
 	}
 
-	private void OnEnable()
+	private void Awake()
 	{
 		Init();
 	}

@@ -1,3 +1,3 @@
-Idx,Name,Class,Stat,Level,RewardGold,RewardItem,#Prefab_Path,AI
-아이디,이름,직업,몬스터 스텟,레벨,보상 골드,보상 아이템,프리팹,AI의 ID
-201,스켈레톤,Blow,11,1,5,0,Monster/Normal/SkeletonShieldWarrior,1
+Idx,Name,Class,Stat,Level,#Prefab_Path,AI
+아이디,이름,직업,몬스터 스텟,레벨,프리팹,AI의 ID
+201,스켈레톤,Blow,11,1,Monster/Normal/SkeletonShieldWarrior,1
