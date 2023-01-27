@@ -34,4 +34,18 @@ public class InventoryManager
     {
         m_dicItem.Clear();
     }
+
+    public int? GetEmptySlot()
+    {
+        // 인벤토리의 최대 수까지
+        for (int slot = 0; slot < 25; slot++)
+        {
+            if (Util.TryFirstOrDefault<Item>(m_dicItem.Values, out Item item) == false)
+            {
+                return slot;
+            }
+        }
+
+        return null;
+    }
 }

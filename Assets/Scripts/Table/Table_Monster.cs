@@ -11,8 +11,6 @@ public class Table_Monster : Table_Base
         public string m_sClass;
         public int    m_iStat;
         public int    m_iLevel;
-        public int    m_iRewardGold;
-        public int    m_iRewardItem;
         public string m_sPrefabPath;
         public int    m_iAI;
     }
@@ -64,8 +62,6 @@ public class Table_Monster : Table_Base
         _reader.get(_nRow, ref _info.m_sClass);
         _reader.get(_nRow, ref _info.m_iStat);
         _reader.get(_nRow, ref _info.m_iLevel);
-        _reader.get(_nRow, ref _info.m_iRewardGold);
-        _reader.get(_nRow, ref _info.m_iRewardItem);
         _reader.get(_nRow, ref _info.m_sPrefabPath);
         _reader.get(_nRow, ref _info.m_iAI);
 

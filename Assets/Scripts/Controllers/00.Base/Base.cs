@@ -10,7 +10,7 @@ public class Base : MonoBehaviour
     protected Animator Animator { get; set; }
 
     public int ID { get; set; }
-    public CreatureType eCreatureType { get; set; }
+    public ObjectType eObjectType { get; set; }
     protected Vector3 Pos { get; set; }
 
     private void Start()
@@ -27,5 +27,8 @@ public class Base : MonoBehaviour
         Rigid.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
-
+    public virtual Base GetOwner()
+    {
+        return this;
+    }
 }

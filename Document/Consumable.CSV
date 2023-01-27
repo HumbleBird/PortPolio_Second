@@ -1,5 +1,4 @@
-Idx,Probability,ItemId,count
-아이디,확률,아이템 아이디,개수
-1,20,101,1
-2,50,2,1
-3,70,201,2
+Idx,Name,ConsumableType,Value,MaxCount
+아이디,이름,소비 타입,회복 수치?,최대 소지 개수
+201,체력 포션,2,20,3
+202,마나 포션,4,10,3

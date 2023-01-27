@@ -11,11 +11,13 @@ public class GameScene : BaseScene
         SceneType = Define.Scene.Game;
 
         // 데이터
+        Managers.Inventory.Clear();
 
         // 프리팹 로드
 
         // 캐릭터
         Managers.Battle.SpawnCharater(Define.CharaterType.Player, true);
+        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
 
         // UI
         Managers.UI.ShowSceneUI<UI_GameScene>();

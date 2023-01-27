@@ -52,11 +52,12 @@ public class Define
         Wizard = 3
     }
 
-    public enum CreatureType
+    public enum ObjectType
     {
         None,
         Player,
         Monster,
+        Projectile
     }
 
     public enum Layers

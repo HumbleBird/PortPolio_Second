@@ -6,7 +6,6 @@ using static Define;
 
 public class BattleManager
 {
-
     #region Spawn
     void CreatePlayer(int id, bool myPlayer = false)
     {
@@ -97,7 +96,6 @@ public class BattleManager
     #endregion
 
     #region Camera
-    
     // 보스 한 정 카메라 무브
     void EndStage()
     {
@@ -109,5 +107,31 @@ public class BattleManager
             Managers.Camera.ZoomEndStage(0f, -1.5f, 1.5f, 3f - 1.5f, 0.5f, Vector3.zero);
         }
     }
+    #endregion
+
+    #region Battle
+
+    public void RewardPlayer(Player player, Table_Reward.Info rewardData)
+    {
+        if (player == null || rewardData == null)
+            return;
+
+        // TODO : 살짝 문제가 있긴 하다..
+        int? slot = Managers.Inventory.GetEmptySlot();
+        if (slot == null)
+            return;
+
+        Item newItem =  Item.MakeItem(rewardData.m_iItemId);
+        newItem.Count = rewardData.m_iCount;
+        newItem.Slot = slot.Value;
+
+        // TODO
+        //player.Inven.add(item);
+
+        Managers.Inventory.Add(newItem);
+        Managers.UIBattle.UIInvenRefresh();
+        Debug.Log($"아이템 획득, ID : {newItem.Id}");
+    }
+
     #endregion
 }
