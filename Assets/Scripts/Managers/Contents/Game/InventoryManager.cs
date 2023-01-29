@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InventoryManager 
 {
     public Dictionary<int, Item> m_dicItem { get; } = new Dictionary<int, Item>();
+    public int m_iSlotCountMax { get; private set; } = 25;
 
     public void Add(Item item)
     {
@@ -37,13 +39,11 @@ public class InventoryManager
 
     public int? GetEmptySlot()
     {
-        // 인벤토리의 최대 수까지
-        for (int slot = 0; slot < 25; slot++)
+        for (int slot = 0; slot < Managers.Inventory.m_iSlotCountMax; slot++)
         {
-            if (Util.TryFirstOrDefault<Item>(m_dicItem.Values, out Item item) == false)
-            {
+            Item item = m_dicItem.Values.FirstOrDefault(i => i.Slot == slot);
+            if (item == null)
                 return slot;
-            }
         }
 
         return null;

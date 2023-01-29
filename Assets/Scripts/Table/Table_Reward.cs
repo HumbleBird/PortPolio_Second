@@ -55,7 +55,6 @@ public class Table_Reward : Table_Base
             return false;
 
         _reader.get(_nRow, ref _info.m_nID);
-        _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_fProbability);
         _reader.get(_nRow, ref _info.m_iItemId);
         _reader.get(_nRow, ref _info.m_iCount);

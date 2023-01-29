@@ -24,24 +24,23 @@ public class Item
     public bool m_bStackable { get; protected set; }
 
     // 아이템
-    public static Item MakeItem(int id)
+    public static Item MakeItem(Table_Item.Info info)
     {
         Item item = null;
 
-        Table_Item.Info itemInfo = Managers.Table.m_Item.Get(id);
-        if (itemInfo == null)
+        if (info == null)
             return null;
 
-        switch (itemInfo.m_iItemType)
+        switch (info.m_iItemType)
         {
             case (int)ItemType.Weapon:
-                item = new Weapon(itemInfo.m_nID);
+                item = new Weapon(info.m_nID);
                 break;
             case (int)ItemType.Armor:
-                item = new Armor(itemInfo.m_nID);
+                item = new Armor(info.m_nID);
                 break;
             case (int)ItemType.Consumable:
-                item = new Consumable(itemInfo.m_nID);
+                item = new Consumable(info.m_nID);
                 break;
             default:
                 break;

@@ -24,8 +24,7 @@ public class UI_InvenMain : UI_Base
         foreach (Transform child in gridPannel.transform)
             Managers.Resource.Destroy(child.gameObject);
 
-        int InitItemPannelCount = 25;
-        for (int i = 0; i < InitItemPannelCount; i++)
+        for (int i = 0; i < Managers.Inventory.m_iSlotCountMax; i++)
         {
             GameObject go = Managers.Resource.Instantiate("UI/Scene/UI_Inven_Item", gridPannel.transform);
             UI_Inven_Item item = go.GetOrAddComponent<UI_Inven_Item>();
@@ -46,7 +45,7 @@ public class UI_InvenMain : UI_Base
 
         foreach (Item item in items)
         {
-            if (item.Count < 0 || item.Count >= 20)
+            if (item.Count < 0 || item.Count >= Managers.Inventory.m_iSlotCountMax)
                 continue;
 
             Items[item.Slot].SetItem(item.Id, item.Count);

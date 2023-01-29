@@ -116,12 +116,13 @@ public class BattleManager
         if (player == null || rewardData == null)
             return;
 
-        // TODO : 살짝 문제가 있긴 하다..
         int? slot = Managers.Inventory.GetEmptySlot();
         if (slot == null)
             return;
 
-        Item newItem =  Item.MakeItem(rewardData.m_iItemId);
+        Table_Item.Info info = Managers.Table.m_Item.Get(rewardData.m_iItemId);
+
+        Item newItem =  Item.MakeItem(info);
         newItem.Count = rewardData.m_iCount;
         newItem.Slot = slot.Value;
 

@@ -17,6 +17,10 @@ public class GameScene : BaseScene
 
         // 캐릭터
         Managers.Battle.SpawnCharater(Define.CharaterType.Player, true);
+        
+        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
+        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
+        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
         Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
 
         // UI

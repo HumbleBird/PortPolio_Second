@@ -96,7 +96,7 @@ public partial class Character : Base
 
         dmg = Mathf.Max(0, dmg);
         float NewHp = m_strStat.m_fHp - dmg;
-        SetHp(NewHp);
+        SetHp(NewHp, attacker);
 
         // 공격 별 특수 효과
         attacker.GetComponent<Character>().m_strAttack.SpecialAddAttackInfo();

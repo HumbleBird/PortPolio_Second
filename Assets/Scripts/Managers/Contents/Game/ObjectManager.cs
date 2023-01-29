@@ -13,6 +13,10 @@ public class ObjectManager
 
 	public void Add(int id, GameObject go)
 	{
+		var r = _objects.ContainsKey(id);
+		if (r == true)
+			return;
+
 		_objects.Add(id, go);
 	}
 

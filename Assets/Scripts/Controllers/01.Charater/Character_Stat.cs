@@ -16,6 +16,17 @@ public partial class Character : Base
         }
     }
 
+    protected virtual void SetHp(float NewHp, GameObject attacker)
+    {
+        m_strStat.m_fHp = NewHp;
+        if (m_strStat.m_fHp < 0)
+        {
+            m_strStat.m_fHp = 0;
+            eState = Define.CreatureState.Dead;
+            OnDead(attacker);
+        }
+    }
+
     protected virtual void SetStemina(float NewSetStamina)
     {
         m_strStat.m_fStemina= Mathf.Clamp(NewSetStamina, 0, m_strStat.m_fMaxStemina );
@@ -32,8 +43,6 @@ public partial class Character : Base
             yield return null;
         }
     }
-
-
 
     public virtual void SetMoveState(MoveState state)
     {

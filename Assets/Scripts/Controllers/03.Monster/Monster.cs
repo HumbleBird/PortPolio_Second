@@ -6,7 +6,7 @@ using static Define;
 
 public partial class Monster : AI
 {
-    List<Table_Reward.Info> m_rewards;
+    List<Table_Reward.Info> m_rewards = new List<Table_Reward.Info>();
 
     protected override void Init()
     {
@@ -14,9 +14,8 @@ public partial class Monster : AI
 
         tag = "Monster";
         eObjectType = ObjectType.Monster;
-
+        m_strStat.m_fHp = 1;
         // Temp
-        
     }
 
     public override void OnDead(GameObject attacker)
