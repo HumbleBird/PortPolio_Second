@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Define;
 
+// 사실상 게임 매니저
 public class BattleManager
 {
+    public Player myPlayer = null;
+
     #region Spawn
     void CreatePlayer(int id, bool myPlayer = false)
     {
@@ -28,6 +31,11 @@ public class BattleManager
 
         // 클래스
         pc.ChangeClass(pinfo.m_sClass);
+
+        if (myPlayer == true)
+        {
+            myPlayer = pc;
+        }
     }
 
     void CreateMonster(int id)
@@ -134,5 +142,22 @@ public class BattleManager
         Debug.Log($"아이템 획득, ID : {newItem.Id}");
     }
 
+    #endregion
+
+    #region Item
+    public void EquipItem(Player player, Item equipItem)
+    {
+        if (player == null)
+            return;
+
+        Item item = Managers.Inventory.Get(equipItem);
+        if (item == null)
+            return;
+
+        item.m_bEquipped = equipItem.m_bEquipped;
+        Debug.Log("아이템 착용 변경!");
+
+        Managers.UIBattle.UIInvenRefresh();
+    }
     #endregion
 }

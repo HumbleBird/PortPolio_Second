@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class MainCamera : MonoBehaviour
 {
-    private bool m_bCameraShake = false;
+    //private bool m_bCameraShake = false;
 
     Transform m_ShakeTr;
 
@@ -48,13 +48,13 @@ public partial class MainCamera : MonoBehaviour
     protected void InitShake()
     {
         m_ShakeTr = transform.parent;
-        m_bCameraShake = false;
+        //m_bCameraShake = false;
     }
 
     protected void ResetShakeTr()
     {
         m_ShakeTr.localPosition = Vector3.zero;
-        m_bCameraShake = false;
+        //m_bCameraShake = false;
 
         CameraLimit(); // 보정은 예외
     }
@@ -112,7 +112,7 @@ public partial class MainCamera : MonoBehaviour
 
     IEnumerator ShakeCoroutine()
     {
-        m_bCameraShake = true;
+        //m_bCameraShake = true;
 
         float dt, dist;
 

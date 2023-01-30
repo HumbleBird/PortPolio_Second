@@ -40,7 +40,8 @@ public class UI_InvenMain : UI_Base
             return;
 
         // 아이템 창 아이템
-        List<Item> items = Managers.Inventory.m_dicItem.Values.ToList();
+        //List<Item> items = Managers.Inventory.m_dicItem.Values.ToList();
+        List<Item> items = Managers.Inventory.m_Items.ToList();
         items.Sort((left, right) => { return left.Slot - right.Slot; });
 
         foreach (Item item in items)
@@ -48,7 +49,7 @@ public class UI_InvenMain : UI_Base
             if (item.Count < 0 || item.Count >= Managers.Inventory.m_iSlotCountMax)
                 continue;
 
-            Items[item.Slot].SetItem(item.Id, item.Count);
+            Items[item.Slot].SetItem(item);
         }
     }
 }

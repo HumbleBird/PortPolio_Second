@@ -22,6 +22,7 @@ public class Item
     public int Slot { get; set; }
 
     public bool m_bStackable { get; protected set; }
+    public bool m_bEquipped { get; set; } = false;
 
     // 아이템
     public static Item MakeItem(Table_Item.Info info)
