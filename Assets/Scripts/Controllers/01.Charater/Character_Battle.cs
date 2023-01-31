@@ -89,12 +89,12 @@ public partial class Character : Base
 
             float NewStemina = m_strStat.m_fStemina - ShiledHitStamina;
             SetStemina(NewStemina);
-            dmg -= shiledHitHpDef + m_strStat.m_fDef;
-        }
-        else
-            dmg -= m_strStat.m_fDef;
 
-        dmg = Mathf.Max(0, dmg);
+            // TODO
+            m_strStat.m_fDef += shiledHitHpDef;
+        }
+
+        dmg = Mathf.Max(0, dmg - m_TotalDefence);
         float NewHp = m_strStat.m_fHp - dmg;
         SetHp(NewHp, attacker);
 

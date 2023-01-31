@@ -7,8 +7,6 @@ using static Define;
 // 사실상 게임 매니저
 public class BattleManager
 {
-    public Player myPlayer = null;
-
     #region Spawn
     void CreatePlayer(int id, bool myPlayer = false)
     {
@@ -34,7 +32,7 @@ public class BattleManager
 
         if (myPlayer == true)
         {
-            myPlayer = pc;
+            Managers.Object.MyPlayer = pc;
         }
     }
 
@@ -150,14 +148,15 @@ public class BattleManager
         if (player == null)
             return;
 
-        Item item = Managers.Inventory.Get(equipItem);
-        if (item == null)
+        player.EquipItem(equipItem);
+    }
+
+    public void UseItem(Player player, Item useItem)
+    {
+        if (player == null)
             return;
 
-        item.m_bEquipped = equipItem.m_bEquipped;
-        Debug.Log("아이템 착용 변경!");
-
-        Managers.UIBattle.UIInvenRefresh();
+        player.UseItem(useItem);
     }
     #endregion
 }

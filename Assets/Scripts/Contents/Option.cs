@@ -16,6 +16,7 @@ public partial class Option
         {
             { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], ShowInputKeySetting},
             { Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], ShowInventory},
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Equipment], ShowEquipment},
         };
     }
 
@@ -23,7 +24,7 @@ public partial class Option
     {
         if(Input.anyKeyDown)
         {
-            foreach (var dic in keyDictionary)
+a            foreach (var dic in keyDictionary)
             {
                 if(Input.GetKeyDown(dic.Key))
                 {
@@ -44,22 +45,27 @@ public partial class Option
         ShowAndClose(Managers.UIBattle.UIGameScene.UIInven);
     }
 
+    void ShowEquipment()
+    {
+        ShowAndClose(Managers.UIBattle.UIGameScene.UIEquipment);
+    }
+
     void ShowAndClose(UI_Base scene)
     {
         bool B = scene.gameObject.activeSelf;
         scene.gameObject.SetActive(!B);
 
         // UI On
-        if(B == false)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Managers.Camera2.CemeraPauseOnUI();
-        }
-        // UI Off
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Managers.Camera2.CemeraPauseOnUI();
-        }
+        //if(B == false)
+        //{
+        //    Cursor.lockState = CursorLockMode.None;
+        //    Managers.Camera2.CemeraPauseOnUI();
+        //}
+        //// UI Off
+        //else
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    Managers.Camera2.CemeraPauseOnUI();
+        //}
     }
 }

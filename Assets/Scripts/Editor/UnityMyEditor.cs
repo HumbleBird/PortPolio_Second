@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ECNaming : EditorWindow
 {
-    private bool _bEditOn = true;
+    //private bool _bEditOn = true;
 
     [SerializeField]
     public List<GameObject> ins_GameObjects = new List<GameObject>();
@@ -19,11 +19,11 @@ public class ECNaming : EditorWindow
     }
     private void OnEnable()
     {
-        _bEditOn = true;
+        //_bEditOn = true;
     }
     private void OnDisable()
     {
-        _bEditOn = false;
+        //_bEditOn = false;
         _nCount = 0;
     }
 

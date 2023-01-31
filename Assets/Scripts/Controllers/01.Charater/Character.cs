@@ -28,6 +28,9 @@ public partial class Character : Base
     public Table_Attack.Info m_tAttackInfo { get; set; } = new Table_Attack.Info();
     public Stat m_strStat { get; set; } = new Stat();
 
+    public virtual float m_TotalAttack { get { return m_strStat.m_fAtk; } }
+    public virtual float m_TotalDefence { get { return m_strStat.m_fDef; } }
+
     [HideInInspector] 
     public bool m_bWaiting = false;
 

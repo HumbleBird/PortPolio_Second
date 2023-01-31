@@ -11,6 +11,8 @@ public class ObjectManager
 	Dictionary<int, GameObject> _objects = new Dictionary<int, GameObject>();
 	Dictionary<int, Item> _items = new Dictionary<int, Item>();
 
+	public Player MyPlayer { get; set; }
+
 	public void Add(int id, GameObject go)
 	{
 		var r = _objects.ContainsKey(id);

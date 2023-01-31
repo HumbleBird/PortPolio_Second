@@ -18,6 +18,8 @@ public partial class MyPlayer : Player
 		m_Camera = Camera.main;
 		Managers.Camera2.m_camera = Camera.main;
 		SetKey();
+
+		Managers.Object.MyPlayer = gameObject.GetComponent<MyPlayer>();
 	}
 
 	protected override void UpdateController()
@@ -75,7 +77,7 @@ public partial class MyPlayer : Player
     // 걷기, 달리기 등
     protected override void UpdateMove()
     {
-		if (m_bWaiting || Cursor.lockState == CursorLockMode.None)
+		if (m_bWaiting)// || Cursor.lockState == CursorLockMode.None)
 			return;
 
 		float horizontal = Input.GetAxis("Horizontal");

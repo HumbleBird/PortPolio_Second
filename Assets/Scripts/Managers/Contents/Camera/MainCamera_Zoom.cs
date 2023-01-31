@@ -31,12 +31,12 @@ public partial class MainCamera : MonoBehaviour
     }
 
     cZoomInfo m_ZoomInfo = new cZoomInfo();
-    bool m_IsEndStage = false;
+    //bool m_IsEndStage = false;
 
     protected void ResetZoom()
     {
         m_ZoomDelta = 0f;
-        m_IsEndStage = false;
+        //m_IsEndStage = false;
         m_IsFallowMy = true;
     }
 
@@ -321,7 +321,7 @@ public partial class MainCamera : MonoBehaviour
     public void ZoomEndStage(float Startdelay, float ZoomDest,
         float BlendInTime, float Duration, float BlendOutTime, Vector3 _vec)
     {
-        m_IsEndStage = true;
+        //m_IsEndStage = true;
 
         m_ZoomInfo.m_FadeIn_Time = (BlendInTime * Time.timeScale);
         m_ZoomInfo.m_FadeOut_Time = (BlendOutTime * Time.timeScale);

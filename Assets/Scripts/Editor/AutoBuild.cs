@@ -12,7 +12,7 @@ public class AutoBuild : MonoBehaviour
     static string[] SCENES = FindEnabledEditorScenes();
     static string TARGET_DIR = "Build";
     static string APP_NAME = "MonsterHunter";
-    static string BUILD_DATE;
+    //static string BUILD_DATE;
 
 #if UNITY_ANDROID
     [MenuItem("Custom/CI/Build Google")]
@@ -41,11 +41,11 @@ public class AutoBuild : MonoBehaviour
 #elif DEBUGRELEASE
         string target_filename = APP_NAME + BUILD_DATE + "_" + Application.version + "_Google_D.apk";
 #else
-        string target_filename = APP_NAME + BUILD_DATE + "_" + Application.version + "_Google_D.apk";
+        //string target_filename = APP_NAME + BUILD_DATE + "_" + Application.version + "_Google_D.apk";
 #endif
 
-        GenericBuild(SCENES, BUILD_TARGET_PATH + target_filename,
-            BuildTarget.Android, BuildOptions.None);
+        //GenericBuild(SCENES, BUILD_TARGET_PATH + target_filename,
+            //BuildTarget.Android, BuildOptions.None);
 
         Debug.Log("====================== Android Build Success ===============");
     }

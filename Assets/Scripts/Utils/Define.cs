@@ -113,6 +113,7 @@ public class Define
 
         // UI
         UI_Inventory,
+        UI_Equipment,
         UI_Status,
         UI_Skill,
         UI_Setting

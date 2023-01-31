@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Define;
 
 public class UI_Inven_Item : UI_Base
 {
@@ -22,6 +23,7 @@ public class UI_Inven_Item : UI_Base
     Image itemUseIcon;
 
     public int m_iItemID { get; private set; }
+    public int m_iSlot { get; private set; }
     public int m_iCount { get; private set; }
     public bool m_bEquipped { get; private set; }
 
@@ -41,11 +43,17 @@ public class UI_Inven_Item : UI_Base
 
         itemIcon.gameObject.BindEvent(() =>
         {
-            Debug.Log("Click Item");
             Item newitem = new Item(Define.ItemType.None);
             newitem.Id = m_iItemID;
+            newitem.Slot = m_iSlot;
             newitem.m_bEquipped = !m_bEquipped;
-            Managers.Battle.EquipItem(Managers.Battle.myPlayer, newitem);
+
+            newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
+
+            if (newitem.eItemType == ItemType.Consumable)
+                Managers.Battle.UseItem(Managers.Object.MyPlayer, newitem);
+            else 
+                Managers.Battle.EquipItem(Managers.Object.MyPlayer, newitem);
         });
 
         itemIcon.gameObject.SetActive(false);
@@ -59,6 +67,7 @@ public class UI_Inven_Item : UI_Base
     public void SetItem(Item item)
     {
         m_iItemID = item.Id;
+        m_iSlot = item.Slot;
         m_iCount = item.Count;
         m_bEquipped = item.m_bEquipped;
 
@@ -70,10 +79,7 @@ public class UI_Inven_Item : UI_Base
 
         itemCount.text = m_iCount.ToString();
         itemCount.gameObject.SetActive(true);
-    }
 
-    public void ItemClick()
-    {
-
+        itemUseIcon.gameObject.SetActive(m_bEquipped);
     }
 }
