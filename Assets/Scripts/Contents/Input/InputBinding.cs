@@ -158,14 +158,6 @@ namespace Rito.InputBindings
         }
 
         #endregion
-
-        #region Input Delegate Examples
-        /*
-                public Func<KeyCode, bool> GetKey => (code => Input.GetKey(code));
-                public Func<KeyCode, bool> KeyDown => (code => Input.GetKeyDown(code));
-                public Func<KeyCode, bool> KeyUp => (code => Input.GetKeyUp(code));
-        */
-        #endregion
         
         #region File IO Methods
         public bool SaveToFile()

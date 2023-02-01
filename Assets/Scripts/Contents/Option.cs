@@ -24,7 +24,7 @@ public partial class Option
     {
         if(Input.anyKeyDown)
         {
-a            foreach (var dic in keyDictionary)
+            foreach (var dic in keyDictionary)
             {
                 if(Input.GetKeyDown(dic.Key))
                 {

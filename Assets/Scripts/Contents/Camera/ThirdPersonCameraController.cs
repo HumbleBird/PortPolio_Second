@@ -9,11 +9,11 @@ public class ThirdPersonCameraController : MonoBehaviour
     {
         CinemachineFreeLook m_cinemashin = GetComponent<CinemachineFreeLook>();
 
-        GameObject go = Managers.Object.Find(1);
-        if (go == null)
+        Player player = Managers.Object.MyPlayer;
+        if (player == null)
             return;
 
-        Transform follow = go.GetComponent<MyPlayer>().followTransform.transform;
+        Transform follow = player.GetComponent<MyPlayer>().followTransform.transform;
 
         if(Cursor.lockState == CursorLockMode.Locked)
         {
@@ -21,17 +21,4 @@ public class ThirdPersonCameraController : MonoBehaviour
             m_cinemashin.LookAt = follow;
         }
     }
-
-    //마우스 커서
-    //private void OnApplicationFocus(bool focus)
-    //{
-    //    if (focus)
-    //    {
-    //        Cursor.lockState = CursorLockMode.Locked;
-    //    }
-    //    else
-    //    {
-    //        Cursor.lockState = CursorLockMode.None;
-    //    }
-    //}
 }

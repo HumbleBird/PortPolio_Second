@@ -14,9 +14,6 @@ public partial class MyPlayer : Player
     protected override void Init()
     {
         base.Init();
-
-		m_Camera = Camera.main;
-		Managers.Camera2.m_camera = Camera.main;
 		SetKey();
 
 		Managers.Object.MyPlayer = gameObject.GetComponent<MyPlayer>();

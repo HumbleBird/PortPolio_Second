@@ -107,7 +107,7 @@ public class Define
         Shield,
 
         //Action
-        Jump,
+        //Jump,
         Roll,
         Crouch,
 

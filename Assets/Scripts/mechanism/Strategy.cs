@@ -116,12 +116,6 @@ public abstract class Strategy
         m_sAnimationName = null;
     }
 
-    public void StateAllClear()
-    {
-
-    }
-
-
     public void ActionStateChange(string actionName)
     {
         if (actionName == "Crouch")

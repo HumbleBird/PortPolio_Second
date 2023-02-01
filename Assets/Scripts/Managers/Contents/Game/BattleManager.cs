@@ -33,6 +33,7 @@ public class BattleManager
         if (myPlayer == true)
         {
             Managers.Object.MyPlayer = pc;
+            Managers.Resource.Instantiate("Objects/Camera/CameraArm", go.transform);
         }
     }
 

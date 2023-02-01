@@ -54,9 +54,12 @@ public class Managers : MonoBehaviour
 
     IEnumerator C_Update()
     {
-        s_instance._inputkey.Update();
+        while (true)
+        {
+            s_instance._inputkey.Update();
 
-        yield return null;
+            yield return null;
+        }
     }
 
     static void Init()
