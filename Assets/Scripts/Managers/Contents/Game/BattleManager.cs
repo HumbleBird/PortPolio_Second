@@ -33,7 +33,7 @@ public class BattleManager
         if (myPlayer == true)
         {
             Managers.Object.MyPlayer = pc;
-            Managers.Resource.Instantiate("Objects/Camera/CameraArm", go.transform);
+            Managers.Camera.Init();
         }
     }
 
@@ -111,7 +111,7 @@ public class BattleManager
         // 끝날 때만 이걸 활용하도록 한다.
         if (Input.GetKey(KeyCode.I))
         {
-            Managers.Camera.ZoomEndStage(0f, -1.5f, 1.5f, 3f - 1.5f, 0.5f, Vector3.zero);
+            //Managers.Camera.ZoomEndStage(0f, -1.5f, 1.5f, 3f - 1.5f, 0.5f, Vector3.zero);
         }
     }
     #endregion

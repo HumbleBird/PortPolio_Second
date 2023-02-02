@@ -7,9 +7,9 @@ using static Define;
 
 public partial class MyPlayer : Player
 {
-	public GameObject followTransform;
+	public Vector3 move;
 	Option m_cOption = new Option();
-	Camera m_Camera;
+	public GameObject m_FollwTarget = null;
 
     protected override void Init()
     {
@@ -17,6 +17,7 @@ public partial class MyPlayer : Player
 		SetKey();
 
 		Managers.Object.MyPlayer = gameObject.GetComponent<MyPlayer>();
+		m_FollwTarget = Util.FindChild(gameObject, "FollwTarget");
 	}
 
 	protected override void UpdateController()
@@ -80,8 +81,8 @@ public partial class MyPlayer : Player
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
 
-		Vector3 move = new Vector3(horizontal, 0, vertical);
-		move = Quaternion.AngleAxis(m_Camera.transform.rotation.eulerAngles.y, Vector3.up) * move;
+		move = new Vector3(horizontal, 0, vertical);
+		//move = Quaternion.AngleAxis(Managers.Camera.m_Camera.transform.rotation.eulerAngles.y, Vector3.up) * move;
 
 		if (Input.GetKey(KeyCode.LeftShift))
 			SetMoveState(MoveState.Run);
@@ -90,8 +91,8 @@ public partial class MyPlayer : Player
 
 		transform.position += move * m_strStat.m_fMoveSpeed * Time.deltaTime;
 
-		if (move != Vector3.zero)
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);
+		//if (move != Vector3.zero)
+			//transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);
 		
 		if(m_bMoveInput == false && eMoveState != MoveState.Crouch)
 			eState = CreatureState.Idle;

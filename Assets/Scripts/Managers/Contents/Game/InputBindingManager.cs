@@ -39,7 +39,7 @@ namespace Rito.InputBindings
         public GameObject  _waitingInputGo;
         public Transform   _verticalLayoutTr;
 
-        public string _bindingPairPrefab = "Object/Input/BindingPair";
+        public string _bindingPairPrefab = "Objects/Input/BindingPair";
 
         private List<GameObject> _bindingPairGoList                   = new List<GameObject>();
         private Dictionary<UserAction, BindingPairUI> _bindingPairDict = new Dictionary<UserAction, BindingPairUI>();

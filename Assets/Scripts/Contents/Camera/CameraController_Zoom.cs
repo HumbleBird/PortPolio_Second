@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public partial class MainCamera : MonoBehaviour
+public partial class CameraController : MonoBehaviour
 {
     public bool m_IsCameraAni = false;
     public bool m_IsFallowMy;
@@ -153,8 +153,8 @@ public partial class MainCamera : MonoBehaviour
 
     IEnumerator ZoomEndStageCoroutine()
     {
-        CameraFilterPack_Blur_Focus filter =
-            Managers.Camera.gameObject.AddComponent<CameraFilterPack_Blur_Focus>();
+        CameraFilterPack_Blur_Focus filter;//=//
+            //Managers.Camera.gameObject.AddComponent<CameraFilterPack_Blur_Focus>();
 
         CameraFilterPack_Blur_Focus.ChangeEyes = 20.0f;
 
@@ -280,7 +280,7 @@ public partial class MainCamera : MonoBehaviour
             yield return null;
         }
 
-        Destroy(filter);
+        //Destroy(filter);
     }
 
     public void Zoom(int CameraID)

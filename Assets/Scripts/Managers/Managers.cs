@@ -12,7 +12,6 @@ public class Managers : MonoBehaviour
     ObjectManager _object = new ObjectManager();
     BattleManager _battle = new BattleManager();
     UI_BattleManager _uiBattle = new UI_BattleManager();
-    MainCamera _maincamera;
     ZoneManager _zone = new ZoneManager();
     InputBindingManager _inputkey = new InputBindingManager();
     InventoryManager _inventory = new InventoryManager();
@@ -21,11 +20,10 @@ public class Managers : MonoBehaviour
     public static ObjectManager Object { get { return Instance._object; } }
     public static BattleManager Battle { get { return Instance._battle; } }
     public static UI_BattleManager UIBattle { get { return Instance._uiBattle; } }
-    public static MainCamera Camera { get { return Instance._maincamera; } }
     public static ZoneManager Zone { get { return Instance._zone; } }
     public static InputBindingManager InputKey { get { return Instance._inputkey; } }
     public static InventoryManager Inventory { get { return Instance._inventory; } }
-    public static CameraManager Camera2 { get { return Instance._camera; } }
+    public static CameraManager Camera { get { return Instance._camera; } }
     #endregion
 
     #region Core
