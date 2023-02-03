@@ -223,7 +223,6 @@ GameObject:
   - component: {fileID: 426999756}
   - component: {fileID: 426999755}
   - component: {fileID: 426999754}
-  - component: {fileID: 426999753}
   - component: {fileID: 426999757}
   m_Layer: 0
   m_Name: Camera
@@ -232,37 +231,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &426999753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426999751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cea7e386573e0c48b47834ac6ab56d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Camera: {fileID: 0}
-  m_CinemachineVirtualCamera: {fileID: 1414687614}
-  player: {fileID: 0}
-  cameraArm: {fileID: 0}
-  followTransform: {fileID: 0}
-  _move: {x: 0, y: 0}
-  _look: {x: 0, y: 0}
-  aimValue: 0
-  fireValue: 0
-  nextPosition: {x: 0, y: 0, z: 0}
-  nextRotation: {x: 0, y: 0, z: 0, w: 0}
-  rotationPower: 3
-  rotationLerp: 0.5
-  speed: 1
-  m_CameraFOV_X: 0
-  m_CameraFOV_Y: 0
-  m_IsCameraAni: 0
-  m_IsFallowMy: 0
-  m_ZoomDelta: 0
 --- !u!81 &426999754
 AudioListener:
   m_ObjectHideFlags: 0
@@ -501,6 +469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1414687615}
   - component: {fileID: 1414687614}
+  - component: {fileID: 1414687616}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -562,6 +531,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1414687616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414687613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cea7e386573e0c48b47834ac6ab56d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Camera: {fileID: 0}
+  m_CinemachineVirtualCamera: {fileID: 1414687614}
+  player: {fileID: 0}
+  m_FollwTarget: {fileID: 0}
+  rotationPower: 3
+  rotationLerp: 0.5
+  m_CameraFOV_X: 0
+  m_CameraFOV_Y: 0
+  m_IsCameraAni: 0
+  m_IsFallowMy: 0
+  m_ZoomDelta: 0
 --- !u!1 &1651908770
 GameObject:
   m_ObjectHideFlags: 0

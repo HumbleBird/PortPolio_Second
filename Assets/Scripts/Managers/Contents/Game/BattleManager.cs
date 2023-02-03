@@ -33,7 +33,9 @@ public class BattleManager
         if (myPlayer == true)
         {
             Managers.Object.MyPlayer = pc;
+            MyPlayer myplayer = pc.GetComponent<MyPlayer>();
             Managers.Camera.Init();
+            myplayer.m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", go.transform);
         }
     }
 

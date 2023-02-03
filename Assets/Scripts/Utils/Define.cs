@@ -158,6 +158,7 @@ public class Define
     public enum CameraMode
     {
         QuarterView,
+        Anim
     }
 
     public enum Scene

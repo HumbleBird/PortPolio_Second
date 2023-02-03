@@ -10,91 +10,75 @@ public partial class CameraController : MonoBehaviour
 {
     public Camera m_Camera;
     public CinemachineVirtualCamera m_CinemachineVirtualCamera;
-
     public GameObject player;
-    public Transform cameraArm;
+    public GameObject m_FollwTarget;
 
-    public GameObject followTransform;
+	public float rotationPower = 3f;
+	public float rotationLerp = 0.5f;
 
-    private void Start()
+	Vector3 angles;
+	float angle;
+
+	private void Start()
     {
         m_Camera = Managers.Camera.m_Camera;
 
         player = Managers.Object.MyPlayer.gameObject;
-        followTransform = player.GetComponent<MyPlayer>().m_FollwTarget;
+		m_FollwTarget = player.GetComponent<MyPlayer>().m_FollwTarget;
 
-        cameraArm = followTransform.transform;
-
-        m_CinemachineVirtualCamera.Follow = cameraArm;
+        m_CinemachineVirtualCamera.Follow = m_FollwTarget.transform;
     }
-
-    public Vector2 _move;
-    public Vector2 _look;
-    public float aimValue;
-    public float fireValue;
-
-    public Vector3 nextPosition;
-    public Quaternion nextRotation;
-
-    public float rotationPower = 3f;
-    public float rotationLerp = 0.5f;
-
-    public float speed = 1f;
 
     private void Update()
     {
-        _move = player.GetComponent<MyPlayer>().move;
-        _look = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+		CameraAngleSet();
+	}
 
-        #region Follow Transform Rotation
+    public void CameraAngleSet()
+	{
+		Vector2 _look = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        Vector3 camAngle = cameraArm.rotation.eulerAngles;
-        followTransform.transform.rotation = Quaternion.Euler(camAngle.x - _look.y, camAngle.y + _look.x, camAngle.z);
-
-        Vector3 angles = followTransform.transform.localEulerAngles;
-        angles.z = 0;
-
-        var angle = followTransform.transform.localEulerAngles.x;
-
-        //Clamp the Up/Down rotation
-        if (angle > 180 && angle < 340)
-        {
-            angles.x = 340;
-        }
-        else if (angle < 180 && angle > 40)
-        {
-            angles.x = 40;
-        }
+		//Rotate the Follow Target transform based on the input
+		transform.rotation *= Quaternion.AngleAxis(_look.x * rotationPower, Vector3.up);
 
 
-        followTransform.transform.localEulerAngles = angles;
-        #endregion
+		#region Vertical Rotation
+		transform.rotation *= Quaternion.AngleAxis(_look.y * rotationPower, Vector3.right);
 
-        nextRotation = Quaternion.Lerp(followTransform.transform.rotation, nextRotation, Time.deltaTime * rotationLerp);
+		angles = transform.localEulerAngles;
+		angles.z = 0;
 
-        if (_move.x == 0 && _move.y == 0)
-        {
-            nextPosition = transform.position;
+		angle = transform.localEulerAngles.x;
 
-            if (aimValue == 1)
-            {
-                //Set the player rotation based on the look transform
-                player.transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
-                //reset the y rotation of the look transform
-                followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
-            }
+		//Clamp the Up/Down rotation
+		if (angle > 180 && angle < 340)
+		{
+			angles.x = 340;
+		}
+		else if (angle < 180 && angle > 40)
+		{
+			angles.x = 40;
+		}
 
-            return;
-        }
-        float moveSpeed = speed / 100f;
+		transform.localEulerAngles = angles;
+		#endregion
+	}
 
-        Vector3 position = (player.transform.forward * _move.y * moveSpeed) + (player.transform.right * _move.x * moveSpeed);
-        nextPosition = player.transform.position + position;
+	public void AnimSet()
+	{
+		//if (move.x == 0 && move.y == 0)
+		//{
+		//	nextPosition = transform.position;
 
+		//	if (aimValue == 1)
+		//	{
+		//		//Set the player rotation based on the look transform
+		//		transform.rotation = Quaternion.Euler(0, m_FollwTarget.transform.rotation.eulerAngles.y, 0);
+		//		//reset the y rotation of the look transform
+		//		m_FollwTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+		//	}
 
-        //Set the player rotation based on the look transform
-        player.transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
-        //reset the y rotation of the look transform
-        followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
-    }
+		//	return;
+		//}
+	}
 }

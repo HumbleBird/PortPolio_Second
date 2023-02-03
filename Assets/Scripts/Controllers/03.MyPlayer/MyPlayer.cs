@@ -7,17 +7,16 @@ using static Define;
 
 public partial class MyPlayer : Player
 {
-	public Vector3 move;
+	public Vector2 move;
 	Option m_cOption = new Option();
 	public GameObject m_FollwTarget = null;
 
-    protected override void Init()
+	protected override void Init()
     {
         base.Init();
 		SetKey();
 
-		Managers.Object.MyPlayer = gameObject.GetComponent<MyPlayer>();
-		m_FollwTarget = Util.FindChild(gameObject, "FollwTarget");
+		Managers.Object.MyPlayer = this;
 	}
 
 	protected override void UpdateController()
@@ -75,26 +74,35 @@ public partial class MyPlayer : Player
     // 걷기, 달리기 등
     protected override void UpdateMove()
     {
-		if (m_bWaiting)// || Cursor.lockState == CursorLockMode.None)
+		if (m_bWaiting)
 			return;
 
-		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
+		float horizontal = Input.GetAxis("Horizontal");
 
 		move = new Vector3(horizontal, 0, vertical);
-		//move = Quaternion.AngleAxis(Managers.Camera.m_Camera.transform.rotation.eulerAngles.y, Vector3.up) * move;
 
 		if (Input.GetKey(KeyCode.LeftShift))
 			SetMoveState(MoveState.Run);
 		else if (eMoveState != MoveState.Crouch)
 			SetMoveState(MoveState.Walk);
 
-		transform.position += move * m_strStat.m_fMoveSpeed * Time.deltaTime;
+		Camera camera = Managers.Camera.m_Camera;
 
-		//if (move != Vector3.zero)
-			//transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 10 * Time.deltaTime);
-		
-		if(m_bMoveInput == false && eMoveState != MoveState.Crouch)
+		Vector3 forward = camera.transform.forward;
+		Vector3 right = camera.transform.right;
+		forward.y = 0;
+		right.y = 0;
+		forward = forward.normalized;
+		right = right.normalized;
+
+		Vector3 forwardRelativeVerticalInput = vertical * forward;
+		Vector3 rightRelativeHorizontalInput = horizontal * right;
+		Vector3 CameraRelativeMovement = forwardRelativeVerticalInput + rightRelativeHorizontalInput;
+		transform.Translate(CameraRelativeMovement, Space.World);
+
+
+		if (m_bMoveInput == false && eMoveState != MoveState.Crouch)
 			eState = CreatureState.Idle;
 	}
 
@@ -104,5 +112,6 @@ public partial class MyPlayer : Player
 		m_cOption.SetKey();
 	}
 
-
+	
 }
+
