@@ -15,7 +15,6 @@ public partial class Monster : AI
         tag = "Monster";
         eObjectType = ObjectType.Monster;
         m_strStat.m_fHp = 1;
-        // Temp
     }
 
     public override void OnDead(GameObject attacker)
@@ -73,4 +72,6 @@ public partial class Monster : AI
             m_rewards.Add(Managers.Table.m_Reward.Get(tempIds[i]));
         }
     }
+
+
 }

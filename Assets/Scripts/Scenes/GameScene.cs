@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class GameScene : BaseScene
 {
@@ -14,14 +15,14 @@ public class GameScene : BaseScene
         Managers.Inventory.Clear();
 
         // 프리팹 로드
+        Managers.Battle.Init();
 
         // 캐릭터
-        Managers.Battle.SpawnCharater(Define.CharaterType.Player, true);
-        
-        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
-        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
-        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
-        Managers.Battle.SpawnCharater(Define.CharaterType.Monster);
+        Managers.Battle.Spawn(ObjectType.Player, 1, 1, 0, true);
+
+        List<GameObject> list = Managers.Battle.Spawn(ObjectType.Monster, 201, 5, 0, true);
+        foreach (var go in list)
+            Managers.Battle.RandomSetPosition(go);
 
         // UI
         Managers.UI.ShowSceneUI<UI_GameScene>();

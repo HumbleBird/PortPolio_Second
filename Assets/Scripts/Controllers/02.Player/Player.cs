@@ -18,7 +18,6 @@ public partial class Player : Character
     {
         base.Init();
 
-        eObjectType = ObjectType.Player;
         tag = "Player";
 
         cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());

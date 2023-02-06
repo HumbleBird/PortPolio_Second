@@ -7,9 +7,10 @@ using static Define;
 
 public partial class MyPlayer : Player
 {
-	public Vector2 move;
+	public Vector3 m_MovementDirection;
 	Option m_cOption = new Option();
 	public GameObject m_FollwTarget = null;
+	public float m_fRotationSpeed = 10f;
 
 	protected override void Init()
     {
@@ -77,29 +78,30 @@ public partial class MyPlayer : Player
 		if (m_bWaiting)
 			return;
 
+		// 이동 입력
 		float vertical = Input.GetAxis("Vertical");
 		float horizontal = Input.GetAxis("Horizontal");
 
-		move = new Vector3(horizontal, 0, vertical);
+		m_MovementDirection = new Vector3(horizontal, 0, vertical);
 
+		// 이동 상태 결정 : 걷기, 뛰기
 		if (Input.GetKey(KeyCode.LeftShift))
 			SetMoveState(MoveState.Run);
 		else if (eMoveState != MoveState.Crouch)
 			SetMoveState(MoveState.Walk);
 
+		// 카메라를 향해 캐릭터 이동 방향 결정
 		Camera camera = Managers.Camera.m_Camera;
+		m_MovementDirection = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
+		//m_MovementDirection.Normalize();
 
-		Vector3 forward = camera.transform.forward;
-		Vector3 right = camera.transform.right;
-		forward.y = 0;
-		right.y = 0;
-		forward = forward.normalized;
-		right = right.normalized;
-
-		Vector3 forwardRelativeVerticalInput = vertical * forward;
-		Vector3 rightRelativeHorizontalInput = horizontal * right;
-		Vector3 CameraRelativeMovement = forwardRelativeVerticalInput + rightRelativeHorizontalInput;
-		transform.Translate(CameraRelativeMovement, Space.World);
+		if (m_MovementDirection != Vector3.zero)
+        {
+			transform.position += Time.deltaTime * m_strStat.m_fMoveSpeed * m_MovementDirection;
+			//Quaternion toRotation = Quaternion.LookRotation(m_MovementDirection, Vector3.up);
+			//transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, m_fRotationSpeed * Time.deltaTime);
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
+		}
 
 
 		if (m_bMoveInput == false && eMoveState != MoveState.Crouch)
@@ -112,6 +114,13 @@ public partial class MyPlayer : Player
 		m_cOption.SetKey();
 	}
 
-	
+	public void Move()
+    {
+		float horizontal = Input.GetAxis("Horizontal");
+		float vertical = Input.GetAxis("Vertical");
+
+		Vector3 movementDirection = new Vector3(horizontal, 0, vertical);
+
+	}
 }
 

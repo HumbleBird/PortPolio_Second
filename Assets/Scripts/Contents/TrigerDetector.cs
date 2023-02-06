@@ -14,10 +14,10 @@ public class TrigerDetector : MonoBehaviour
 
     public void Init()
     {
-        // Managers.Camera.Shake(100001);
-        Attacker = transform.root.gameObject;
-        CAttacker = Attacker.GetComponent<Character>();
+        CAttacker = transform.GetComponentInParent<Character>();
         CAttacker.m_GoAttackItem.Add(GetComponent<TrigerDetector>());
+
+        Attacker = CAttacker.gameObject;
 
         m_cAttackCollider = GetComponent<Collider>();
         m_cAttackCollider.enabled = false;

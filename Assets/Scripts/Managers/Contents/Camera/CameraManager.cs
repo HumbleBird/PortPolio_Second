@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraManager 
 {
     public Camera m_Camera;
+    public CameraEffectController m_CameraEffect;
 
     public void Init()
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public partial class CameraController : MonoBehaviour
+public partial class CameraEffectController : MonoBehaviour
 {
     public bool m_IsCameraAni = false;
     public bool m_IsFallowMy;

@@ -4,14 +4,44 @@ using UnityEngine;
 
 public class Define
 {
-    public enum CharacterJob
+    #region Creature
+    public enum ObjectType
     {
         None,
-        Warior,
-        Archor,
-        Wizard
+        Player,
+        Monster,
+        Boss,
+        Projectile,
     }
 
+    public enum CharacterClass
+    {
+        None = 0,
+        Warior = 1,
+        Archer = 2,
+        Wizard = 3
+    }
+
+    public enum CreatureState
+    {
+        Idle,
+        Move,
+        Skill,
+        Dead
+    }
+    #endregion
+
+    #region Battle
+
+    public enum Team
+    {
+        All,
+        Player1,
+        Player2
+    }
+    #endregion
+
+    #region Item
     public enum ConsumableType
     {
         None,
@@ -43,28 +73,9 @@ public class Define
         Armor = 2,
         Consumable = 3
     }
+    #endregion
 
-    public enum CharacterClass
-    {
-        None = 0,
-        Warior = 1,
-        Archer = 2,
-        Wizard = 3
-    }
-
-    public enum ObjectType
-    {
-        None,
-        Player,
-        Monster,
-        Projectile
-    }
-
-    public enum Layers
-    {
-        BaseLayer = 0,
-        UpperLayer = 1,
-    }
+    #region Action
 
     public enum HitMotion
     {
@@ -119,26 +130,9 @@ public class Define
         UI_Setting
     }
 
-    public enum CharaterType
-    {
-        Player,
-        Monster,
-        Boss
-    }
+    #endregion
 
-    public enum Team
-    {
-        All,
-        Player1,
-        Player2
-    }
-
-    public enum WorldObject
-    {
-        Unknown,
-        Player,
-        Monster,
-    }
+    #region Other
 
     public enum Layer
     {
@@ -147,16 +141,10 @@ public class Define
         Block = 10,
     }
 
-    public enum CreatureState
-    {
-        Idle,
-        Move,
-        Skill,
-        Dead
-    }
 
     public enum CameraMode
     {
+        Third,
         QuarterView,
         Anim
     }
@@ -183,4 +171,11 @@ public class Define
         PointerDown,
         PointerUp,
     }
+
+    public enum AnimationLayers
+    {
+        BaseLayer = 0,
+        UpperLayer = 1,
+    }
+    #endregion
 }

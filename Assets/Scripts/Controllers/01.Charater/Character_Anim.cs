@@ -66,7 +66,7 @@ public partial class Character : Base
     }
 
     // 공격 및 특수 액션 애니메이션
-    public void StrAnimation(string animName, bool bStart = true, Layers animLayer = Layers.BaseLayer)
+    public void StrAnimation(string animName, bool bStart = true, AnimationLayers animLayer = AnimationLayers.BaseLayer)
     {
         if (animName == null)
             return;

@@ -19,7 +19,7 @@ public abstract class Strategy
     protected GameObject m_GoProjectile = null; // 투사체
 
     public string m_sAnimationName = null;
-    public Layers m_eAnimLayers = Layers.BaseLayer;
+    public AnimationLayers m_eAnimLayers = AnimationLayers.BaseLayer;
 
     public void SetInfo(GameObject go)
     {
@@ -29,11 +29,11 @@ public abstract class Strategy
 
     protected void PlayAnimation(string AnimName, bool bStart)
     {
-        m_eAnimLayers = Layers.BaseLayer;
+        m_eAnimLayers = AnimationLayers.BaseLayer;
 
         if(AnimName == "Shield")
         {
-            m_eAnimLayers = Layers.UpperLayer;
+            m_eAnimLayers = AnimationLayers.UpperLayer;
         }
 
         m_cGo.StrAnimation(AnimName, bStart, m_eAnimLayers);

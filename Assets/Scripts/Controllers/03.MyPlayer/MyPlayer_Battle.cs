@@ -21,7 +21,7 @@ public partial class MyPlayer : Player
 
 	protected override IEnumerator CheckNextAttack()
 	{
-		AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)Layers.BaseLayer);
+		AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)AnimationLayers.BaseLayer);
 
 		if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
 		{

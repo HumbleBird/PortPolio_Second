@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class CameraController : MonoBehaviour
+public partial class CameraEffectController : MonoBehaviour
 {
     //private bool m_bCameraShake = false;
 
@@ -38,7 +38,7 @@ public partial class CameraController : MonoBehaviour
     public float m_CameraFOV_X = 0;
     public float m_CameraFOV_Y = 0;
 
-    public void Init2()
+    public void Init()
     {
         m_vOrgPos = transform.position;
 

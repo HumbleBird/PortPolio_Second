@@ -78,9 +78,6 @@ public class Managers : MonoBehaviour
             s_instance._sound.Init();
             s_instance._table.Init();
             //s_instance._photon.Init();
-
-            //s_instance._uiBattle.Init();
-            //s_instance._inputkey.Init();
         }
     }
 

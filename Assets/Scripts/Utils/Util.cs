@@ -74,4 +74,13 @@ public class Util
         }
 
     }
+
+    public static GameObject FindOrCreateGameObject(string name) 
+    {
+        GameObject component = GameObject.Find(name);
+        if (component == null)
+            component = new GameObject { name = name };
+        return component;
+
+    }
 }

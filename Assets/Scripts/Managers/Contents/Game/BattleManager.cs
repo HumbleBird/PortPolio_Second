@@ -1,21 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using static Define;
 
 // 사실상 게임 매니저
 public class BattleManager
 {
+    GameObject root;
+    GameObject monsterContainer;
+    GameObject playerContainer;
+
     #region Spawn
-    void CreatePlayer(int id, bool myPlayer = false)
+    public GameObject CreatePlayer(int id, bool myPlayer = false)
     {
         Table_Player.Info pinfo = Managers.Table.m_Player.Get(id);
 
         if (pinfo == null)
         {
             Debug.LogError("해당하는 Id의 플레이어가 없습니다.");
-            return;
+            return null;
         }
 
         // 소환
@@ -26,6 +31,7 @@ public class BattleManager
         Player pc = Util.GetOrAddComponent<Player>(go);
         pc.ID = id;
         pc.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(pinfo.m_iStat);
+        pc.eObjectType = ObjectType.Player;
 
         // 클래스
         pc.ChangeClass(pinfo.m_sClass);
@@ -37,16 +43,18 @@ public class BattleManager
             Managers.Camera.Init();
             myplayer.m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", go.transform);
         }
+
+        return go;
     }
 
-    void CreateMonster(int id)
+    public GameObject CreateMonster(int id)
     {
         Table_Monster.Info minfo = Managers.Table.m_Monster.Get(id);
 
         if (minfo == null)
         {
             Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
-            return;
+            return null;
         }
 
         // 소환
@@ -57,19 +65,21 @@ public class BattleManager
         Monster monster = Util.GetOrAddComponent<Monster>(go);
         monster.ID = id;
         monster.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(minfo.m_iStat);
+        monster.eObjectType = ObjectType.Monster;
 
         // 클래스
         monster.ChangeClass(minfo.m_sClass);
+        return go;
     }
 
-    void CreateBossMonster(int id)
+    public GameObject CreateBossMonster(int id)
     {
         Table_Boss.Info binfo = Managers.Table.m_Boss.Get(id);
 
         if (binfo == null)
         {
             Debug.LogError("해당하는 Id의 보스가 없습니다.");
-            return;
+            return null;
         }
 
         // 소환
@@ -80,28 +90,73 @@ public class BattleManager
         Monster boss = go.GetComponent<Monster>();
         boss.ID = id;
         boss.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(binfo.m_iStat);
+        boss.eObjectType = ObjectType.Monster;
 
         // 클래스
         boss.ChangeClass(binfo.m_sClass);
+        return go;
     }
 
-    public void SpawnCharater(CharaterType type, bool myplayer = false)
+    public List<GameObject> Spawn(ObjectType type, int id, int count = 1, int delay = 0, bool myplayer = false)
     {
-        switch (type)
+        List<GameObject> list = new List<GameObject>();
+        GameObject go;
+
+        for (int i = 0; i < count; i++)
         {
-            case CharaterType.Player:
-                CreatePlayer(1, myplayer);
-                break;
-            case CharaterType.Monster:
-                CreateMonster(201);
-                break;
-            case CharaterType.Boss:
-                CreateBossMonster(101);
-                break;
-            default:
-                break;
+            switch (type)
+            {
+                case ObjectType.Player:
+                    go = CreatePlayer(id, myplayer);
+                    break;
+                case ObjectType.Monster:
+                    go = CreateMonster(id);
+                    break;
+                case ObjectType.Boss:
+                    go = CreateBossMonster(id);
+                    break;
+                default:
+                    go = null;
+                    break;
+            }
+
+            CreatureInputContainer(go);
+            list.Add(go);
         }
+
+        return list;
     }
+
+    public void RandomSetPosition(GameObject go)
+    {
+        Vector3 playerPos = Managers.Object.MyPlayer.transform.position;
+        float disRandomSpawntoPlayer = 10.0f;
+        Vector3 result;
+        GetNearThePlayerRandomPos(playerPos, disRandomSpawntoPlayer, out result);
+        go.transform.position = result;
+    }
+
+    public void GetNearThePlayerRandomPos(Vector3 center, float range, out Vector3 result)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            Vector3 randomPoint = center + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return;
+            }
+        }
+
+        result = Vector3.zero;
+    }
+
+    void GetRandomPosition()
+    {
+
+    }
+
     #endregion
 
     #region Camera
@@ -111,10 +166,7 @@ public class BattleManager
         // 스테이지 blur
         // Cinemashin의 카메라와 shake가 충돌을 일으켜서 안 되는 듯.
         // 끝날 때만 이걸 활용하도록 한다.
-        if (Input.GetKey(KeyCode.I))
-        {
-            //Managers.Camera.ZoomEndStage(0f, -1.5f, 1.5f, 3f - 1.5f, 0.5f, Vector3.zero);
-        }
+        Managers.Camera.m_CameraEffect.ZoomEndStage(0f, -1.5f, 1.5f, 3f - 1.5f, 0.5f, Vector3.zero);
     }
     #endregion
 
@@ -161,5 +213,45 @@ public class BattleManager
 
         player.UseItem(useItem);
     }
+    #endregion
+
+    #region Development Convenience
+
+    public void Init()
+    {
+        CreateCreatureContainer();
+    }
+
+    public void CreateCreatureContainer()
+    {
+        root = Util.FindOrCreateGameObject("CreatureContainer");
+        monsterContainer = Util.FindOrCreateGameObject("Monster");
+        playerContainer = Util.FindOrCreateGameObject("Player");
+
+        monsterContainer.transform.SetParent(root.transform);
+        playerContainer.transform.SetParent(root.transform);
+    }
+
+    public void CreatureInputContainer(GameObject Creature)
+    {
+        ObjectType type = Creature.GetComponent<Base>().eObjectType;
+        switch (type)
+        {
+            case ObjectType.None:
+                break;
+            case ObjectType.Player:
+                Creature.transform.SetParent(playerContainer.transform);
+                break;
+            case ObjectType.Monster:
+            case ObjectType.Boss:
+                Creature.transform.SetParent(monsterContainer.transform);
+                break;
+            case ObjectType.Projectile:
+                break;
+            default:
+                break;
+        }
+    }
+
     #endregion
 }

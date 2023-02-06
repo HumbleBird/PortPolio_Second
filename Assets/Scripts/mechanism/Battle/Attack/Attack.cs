@@ -16,7 +16,11 @@ public class Attack : Strategy
     //public int m_iCrouchAttackNum = 7;
     public int m_iKickNum = 501;
 
-    protected virtual void BasicAttack() { }
+    protected virtual void BasicAttack() 
+    {
+        // 카메라 쉐이크
+        Managers.Camera.m_CameraEffect.Shake(1);
+    }
     protected virtual void StrongAttack() { }
 
     // 넉백 효과
@@ -81,7 +85,7 @@ public class Attack : Strategy
         else
             m_sAnimationName = "Shield";
 
-        m_eAnimLayers = Layers.UpperLayer;
+        m_eAnimLayers = AnimationLayers.UpperLayer;
     }
 
     public void Crouch()

@@ -9,7 +9,7 @@ public partial class Character : Base
     public ActionState eActionState = ActionState.None;
     public MoveState eMoveState = MoveState.None;
     private CreatureState state = CreatureState.Idle;
-    public CharacterJob eCharacterJob = CharacterJob.None;
+    public CharacterClass eCharacterClass = CharacterClass.None;
 
     public virtual CreatureState eState
     {
@@ -72,14 +72,13 @@ public partial class Character : Base
 
     protected virtual void UpdateIdle() { }
     protected virtual void UpdateMove() { }
-
     protected virtual void UpdateSkill() { }
 
     protected virtual void UpdateDead() 
     {
         Rigid.isKinematic = true;
         Managers.Object.Remove(ID);
-        Destroy(gameObject, 5);
+        Destroy(gameObject, 2);
 
         // TODO Regdoll
     }
