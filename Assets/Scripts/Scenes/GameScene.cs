@@ -21,8 +21,9 @@ public class GameScene : BaseScene
         Managers.Battle.Spawn(ObjectType.Player, 1, 1, 0, true);
 
         List<GameObject> list = Managers.Battle.Spawn(ObjectType.Monster, 201, 5, 0, true);
+
         foreach (var go in list)
-            Managers.Battle.RandomSetPosition(go);
+            Managers.Battle.SetPostionNearToPlayer(go);
 
         // UI
         Managers.UI.ShowSceneUI<UI_GameScene>();

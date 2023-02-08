@@ -73,6 +73,18 @@ public class Define
         Armor = 2,
         Consumable = 3
     }
+
+    public enum EquimentItemCategory
+    {
+        Weapon,
+        RightProjectile,
+        Shield,
+        LeftProjectile,
+        Armor,
+        Speicial,
+        Ring,
+        Item
+    }
     #endregion
 
     #region Action

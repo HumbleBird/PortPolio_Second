@@ -127,34 +127,44 @@ public class BattleManager
         return list;
     }
 
-    public void RandomSetPosition(GameObject go)
+    public void SetPostionNearToPlayer(GameObject go)
     {
-        Vector3 playerPos = Managers.Object.MyPlayer.transform.position;
-        float disRandomSpawntoPlayer = 10.0f;
-        Vector3 result;
-        GetNearThePlayerRandomPos(playerPos, disRandomSpawntoPlayer, out result);
-        go.transform.position = result;
-    }
+        Quaternion randomRotation = Quaternion.Euler(Random.Range(0, 360), 0, 0);
+        Player player =  Managers.Object.MyPlayer;
 
-    public void GetNearThePlayerRandomPos(Vector3 center, float range, out Vector3 result)
-    {
-        for (int i = 0; i < 10; i++)
+        Vector3 result;
+        if (GetRandomNavmeshLocation(player.transform.position, out result))
         {
-            Vector3 randomPoint = center + Random.insideUnitSphere * range;
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                result = hit.position;
-                return;
-            }
+            go.transform.position = result;
+            go.transform.rotation = randomRotation;
         }
 
-        result = Vector3.zero;
     }
 
-    void GetRandomPosition()
+    // TODO
+    public void SetPostionRandom(GameObject go)
     {
+        Vector3 result;
+        if(GetRandomNavmeshLocation(go.transform.position, out result))
+        {
+            go.transform.position = result;
+        }
+    }
 
+    public bool GetRandomNavmeshLocation(Vector3 center, out Vector3 resultPostion, float radius = 10)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        randomDirection += center;
+        resultPostion = Vector3.zero;
+        NavMeshHit anonymous;
+
+        if (NavMesh.SamplePosition(randomDirection, out anonymous, radius, 1))
+        {
+            resultPostion = anonymous.position;
+            return true;
+        }
+
+        return false;
     }
 
     #endregion

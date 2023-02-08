@@ -77,8 +77,11 @@ public class UI_Inven_Item : UI_Base
         itemIcon.sprite = Managers.Resource.Load<Sprite>(itemData.m_sIconPath);
         itemIcon.gameObject.SetActive(true);
 
-        itemCount.text = m_iCount.ToString();
-        itemCount.gameObject.SetActive(true);
+        if (item.eItemType == ItemType.Consumable)
+        {
+            itemCount.text = m_iCount.ToString();
+            itemCount.gameObject.SetActive(true);
+        }
 
         itemUseIcon.gameObject.SetActive(m_bEquipped);
     }
