@@ -18,11 +18,10 @@ public class UI_Equipment_Item : UI_Base
     }
 
 	public int m_iItemId { get; private set; }
-	public int m_iItemCount { get; private set; }
+	public TextMeshProUGUI m_iItemCount { get; private set; }
     public Image  m_itemIcon { get; private set; }
     public EquimentItemCategory eEquimentItemCategory;
-
-    // 현재 이 아이템 창이 어떤 카테고리인지 알고 있어야 됨.
+    public bool m_bEquipped = false;
 
     public override bool Init()
     {
@@ -32,6 +31,9 @@ public class UI_Equipment_Item : UI_Base
         BindText(typeof(Texts));
         BindImage(typeof(Images));
 
+        m_itemIcon = GetImage((int)Images.EquipmentIcon);
+        m_iItemCount = GetText((int)Texts.ProjectileCountText);
+
         GetText((int)Texts.ProjectileCountText).enabled = false;
 
         return true;
@@ -39,7 +41,18 @@ public class UI_Equipment_Item : UI_Base
 
     public void EquipItem(Item item)
     {
-        // 아이콘과 개수, 아이디만 가지자
+        m_iItemId = item.Id;
+        m_iItemCount.text = item.Count.ToString();
+        m_itemIcon.sprite = Managers.Resource.Load<Sprite>(item.iconPath);
+
+        m_bEquipped = true;
+        m_iItemCount.enabled = false;
+
+        if (item.eItemType == ItemType.Consumable)
+        {
+            m_iItemCount.enabled = true;
+        }
+
         RefreshUI();
     }
 
@@ -47,8 +60,13 @@ public class UI_Equipment_Item : UI_Base
 	{
 		if (_init == false)
 			return;
-
-        // 
-
 	}
+
+    public void UnEquipItem()
+    {
+        m_iItemId = 0;
+        m_iItemCount = null;
+        m_itemIcon = null;
+        m_bEquipped = false;
+    }
 }

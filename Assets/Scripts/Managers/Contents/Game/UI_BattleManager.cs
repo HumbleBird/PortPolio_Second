@@ -32,4 +32,12 @@ public class UI_BattleManager
         UI_Inven UIInven = UIGameScene.UIInven;
         UIInven.RefreshUI();
     }
+
+    public void ItemUIRefresh()
+    {
+        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
+
+        UI_Equipment UIEquipment = UIGameScene.UIEquipment;
+        UIEquipment.RefreshUI();
+    }
 }

@@ -214,6 +214,7 @@ public class BattleManager
             return;
 
         player.EquipItem(equipItem);
+        Managers.UIBattle.ItemUIRefresh();
     }
 
     public void UseItem(Player player, Item useItem)

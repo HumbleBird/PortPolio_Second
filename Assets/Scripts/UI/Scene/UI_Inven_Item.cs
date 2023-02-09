@@ -66,23 +66,36 @@ public class UI_Inven_Item : UI_Base
 
     public void SetItem(Item item)
     {
-        m_iItemID = item.Id;
-        m_iSlot = item.Slot;
-        m_iCount = item.Count;
-        m_bEquipped = item.m_bEquipped;
-
-        Table_Item.Info itemData = null;
-        itemData = Managers.Table.m_Item.Get(m_iItemID);
-
-        itemIcon.sprite = Managers.Resource.Load<Sprite>(itemData.m_sIconPath);
-        itemIcon.gameObject.SetActive(true);
-
-        if (item.eItemType == ItemType.Consumable)
+        if(item == null)
         {
-            itemCount.text = m_iCount.ToString();
-            itemCount.gameObject.SetActive(true);
-        }
+            m_iItemID = 0;
+            m_iSlot = 0;
+            m_iCount = 0;
+            m_bEquipped = false;
 
-        itemUseIcon.gameObject.SetActive(m_bEquipped);
+            itemIcon.gameObject.SetActive(false);
+            itemCount.gameObject.SetActive(false);
+        }
+        else
+        {
+            m_iItemID = item.Id;
+            m_iSlot = item.Slot;
+            m_iCount = item.Count;
+            m_bEquipped = item.m_bEquipped;
+
+            Table_Item.Info itemData = null;
+            itemData = Managers.Table.m_Item.Get(m_iItemID);
+
+            itemIcon.sprite = Managers.Resource.Load<Sprite>(itemData.m_sIconPath);
+            itemIcon.gameObject.SetActive(true);
+
+            if (item.eItemType == ItemType.Consumable)
+            {
+                itemCount.text = m_iCount.ToString();
+                itemCount.gameObject.SetActive(true);
+            }
+
+            itemUseIcon.gameObject.SetActive(m_bEquipped);
+        }
     }
 }

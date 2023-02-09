@@ -54,16 +54,14 @@ public class Define
         Helmet = 1,
         Armor = 2,
         Pant = 3,
-        Boots = 4,
-        Gloves = 5,
-        Ring = 6,
+        Gloves = 4,
     }
 
     public enum WeaponType
     {
-        None,
-        Sword,
-        Bow,
+        None = 0,
+        Sword = 1,
+        Bow = 2,
     }
 
     public enum ItemType
@@ -71,7 +69,7 @@ public class Define
         None = 0,
         Weapon = 1,
         Armor = 2,
-        Consumable = 3
+        Consumable = 3,
     }
 
     public enum EquimentItemCategory

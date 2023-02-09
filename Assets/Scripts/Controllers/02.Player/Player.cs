@@ -94,8 +94,6 @@ public partial class Player : Character
 
             switch (item.eItemType)
             {
-                case ItemType.None:
-                    break;
                 case ItemType.Weapon:
                     m_iWeaponDamage += ((Weapon)item).Damage;
                     break;
