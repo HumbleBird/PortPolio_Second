@@ -45,6 +45,7 @@ public partial class Character : Base
         }
 
         m_bCanAttack = false;
+        Debug.Log("공격");
 
         // 애니메이션 실행
         StrAnimation(m_strAttack.info.m_sAnimName);
@@ -80,6 +81,7 @@ public partial class Character : Base
     // 피격
     public virtual void HitEvent(GameObject attacker, float dmg)
     {
+        // 특수 동장으로 인한 데미지 처리
         if (eActionState == ActionState.Invincible)
             return;
         else if (eActionState == ActionState.Shield)
@@ -94,6 +96,7 @@ public partial class Character : Base
             m_strStat.m_fDef += shiledHitHpDef;
         }
 
+        // HP 관리
         dmg = Mathf.Max(0, dmg - m_TotalDefence);
         float NewHp = m_strStat.m_fHp - dmg;
         SetHp(NewHp, attacker);
@@ -101,9 +104,10 @@ public partial class Character : Base
         // 공격 별 특수 효과
         attacker.GetComponent<Character>().m_strAttack.SpecialAddAttackInfo();
 
+        // 애니메이션
         HitAnimation();
 
-        Stop(0.2f);
+        StartCoroutine(AnimationFinishAndStateToIdle(m_sCurrentAnimationName));
     }
 
     IEnumerator AttackEndCheck()

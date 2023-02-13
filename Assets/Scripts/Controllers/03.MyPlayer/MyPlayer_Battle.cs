@@ -37,9 +37,9 @@ public partial class MyPlayer : Player
 		yield return null;
 	}
 
-	protected override void SetHp(float NewHp)
+	protected override void SetHp(float NewHp, GameObject attacker)
 	{
-		base.SetHp(NewHp);
+		base.SetHp(NewHp, attacker);
 
 		Managers.UIBattle.StatUIRefersh();
 		StartCoroutine(Managers.UIBattle.UIGameScene.UIPlayerInfo.DownHP());

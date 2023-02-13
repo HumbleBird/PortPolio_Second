@@ -98,8 +98,6 @@ public partial class MyPlayer : Player
 		if (m_MovementDirection != Vector3.zero)
         {
 			transform.position += Time.deltaTime * m_strStat.m_fMoveSpeed * m_MovementDirection;
-			//Quaternion toRotation = Quaternion.LookRotation(m_MovementDirection, Vector3.up);
-			//transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, m_fRotationSpeed * Time.deltaTime);
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
 		}
 
@@ -114,13 +112,5 @@ public partial class MyPlayer : Player
 		m_cOption.SetKey();
 	}
 
-	public void Move()
-    {
-		float horizontal = Input.GetAxis("Horizontal");
-		float vertical = Input.GetAxis("Vertical");
-
-		Vector3 movementDirection = new Vector3(horizontal, 0, vertical);
-
-	}
 }
 

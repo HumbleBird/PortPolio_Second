@@ -45,15 +45,12 @@ public class UI_Inven_Item : UI_Base
         {
             Item newitem = new Item(Define.ItemType.None);
             newitem.Id = m_iItemID;
-            newitem.Slot = m_iSlot;
+            newitem.InventorySlot = m_iSlot;
             newitem.m_bEquipped = !m_bEquipped;
 
             newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
 
-            if (newitem.eItemType == ItemType.Consumable)
-                Managers.Battle.UseItem(Managers.Object.MyPlayer, newitem);
-            else 
-                Managers.Battle.EquipItem(Managers.Object.MyPlayer, newitem);
+            Managers.Battle.EquipItem(Managers.Object.MyPlayer, newitem);
         });
 
         itemIcon.gameObject.SetActive(false);
@@ -79,7 +76,7 @@ public class UI_Inven_Item : UI_Base
         else
         {
             m_iItemID = item.Id;
-            m_iSlot = item.Slot;
+            m_iSlot = item.InventorySlot;
             m_iCount = item.Count;
             m_bEquipped = item.m_bEquipped;
 

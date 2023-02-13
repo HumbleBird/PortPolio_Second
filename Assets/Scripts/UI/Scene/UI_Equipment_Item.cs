@@ -23,6 +23,9 @@ public class UI_Equipment_Item : UI_Base
     public EquimentItemCategory eEquimentItemCategory;
     public bool m_bEquipped = false;
 
+
+    public int m_iSlot;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -43,7 +46,9 @@ public class UI_Equipment_Item : UI_Base
     {
         m_iItemId = item.Id;
         m_iItemCount.text = item.Count.ToString();
+        m_itemIcon.enabled = true;
         m_itemIcon.sprite = Managers.Resource.Load<Sprite>(item.iconPath);
+        item.EquipmentSlot = m_iSlot;
 
         m_bEquipped = true;
         m_iItemCount.enabled = false;
@@ -65,8 +70,9 @@ public class UI_Equipment_Item : UI_Base
     public void UnEquipItem()
     {
         m_iItemId = 0;
-        m_iItemCount = null;
-        m_itemIcon = null;
+        m_iItemCount.enabled = false;
+        m_itemIcon.enabled = false;
         m_bEquipped = false;
+
     }
 }

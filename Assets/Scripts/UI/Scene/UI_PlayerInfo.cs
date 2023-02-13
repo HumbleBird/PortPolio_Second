@@ -67,7 +67,5 @@ public class UI_PlayerInfo : UI_Scene
 
             yield return null;
         }
-
-        RefreshUI();
     }
 }

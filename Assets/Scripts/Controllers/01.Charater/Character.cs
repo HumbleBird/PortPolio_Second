@@ -128,4 +128,15 @@ public partial class Character : Base
         //m_strStat.m_fMp = m_strStat.m_fMaxMp;
         //state = CreatureState.Idle;
     }
+
+    public IEnumerator AnimationFinishAndStateToIdle(string hitAnimName)
+    {
+        if (Animator.GetCurrentAnimatorStateInfo(0).IsName(hitAnimName))
+        {
+            float animationlegth = Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            Stop(animationlegth);
+            yield return new WaitForSeconds(animationlegth);
+            eState = CreatureState.Idle;
+        }
+    }
 }

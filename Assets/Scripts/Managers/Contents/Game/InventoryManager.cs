@@ -61,8 +61,8 @@ public class InventoryManager
     {
         for (int slot = 0; slot < Managers.Inventory.m_iSlotCountMax; slot++)
         {
-            //Item item = m_dicItem.Values.FirstOrDefault(i => i.Slot == slot);
-            Item item = m_Items.FirstOrDefault(i => i.Slot == slot);
+            //Item item = m_dicItem.Values.FirstOrDefault(i => i.InventorySlot == slot);
+            Item item = m_Items.FirstOrDefault(i => i.InventorySlot == slot);
             if (item == null)
                 return slot;
         }

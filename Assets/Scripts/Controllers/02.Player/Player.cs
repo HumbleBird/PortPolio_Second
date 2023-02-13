@@ -37,11 +37,37 @@ public partial class Player : Character
 
         Item item = Managers.Inventory.Find(i =>
         i.Id == equipItem.Id &&
-        i.Slot == equipItem.Slot);
+        i.InventorySlot == equipItem.InventorySlot);
 
         if (item == null)
             return;
 
+        // 아이템 해제
+
+        // 해당 아이템의 카테고리의 칸이 전부 꽉차면 장착 x
+        // TODO 아이템 장착 전 장비창을 열어 아이템 장착
+        // -> 빈 칸에 아이템을 장착을, 아이템이 이미 장착 중이라면 새롭게 장착을
+        if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
+        {
+            Debug.Log("장비 창의 빈 칸이 없습니다. 장비 창의 아이템을 비워주세요.");
+            return;
+        }
+
+        {
+            item.m_bEquipped = equipItem.m_bEquipped;
+
+            
+
+            Managers.UIBattle.UIInvenRefresh();
+        }
+
+        RefreshAdditionalStat();
+    }
+
+    public void UnEquipItem(Item equipItem)
+    {
+        Item item = null;
+        // 장착 해제
         if (equipItem.m_bEquipped)
         {
             Item unequipItem = null;
@@ -67,19 +93,16 @@ public partial class Player : Character
                 Managers.UIBattle.UIInvenRefresh();
             }
         }
-
-        {
-            item.m_bEquipped = equipItem.m_bEquipped;
-
-            Managers.UIBattle.UIInvenRefresh();
-        }
-
-        RefreshAdditionalStat();
     }
 
+    // 소모품 아이템
     public void UseItem(Item item)
     {
         Debug.Log("아이템 사용");
+
+        // TODO 아이템 효과에 따라
+        // 대분류 : consumable (포션, 퀘스트 아이템 등)
+        // 분류 : potionEffect (포션 종류에 따라)
     }
 
     public void RefreshAdditionalStat()

@@ -7,6 +7,7 @@ using static Define;
 public partial class Character : Base
 {
 	float m_fNormalizeTransitionDuration = 0.14f;
+    string m_sCurrentAnimationName = null;
 
 	public virtual void UpdateAnimation()
     {
@@ -62,7 +63,10 @@ public partial class Character : Base
         else if (eMoveState == MoveState.Crouch)
             hitAnimName = HitMotion.CrouchingHit.ToString();
 
+        m_sCurrentAnimationName = hitAnimName;
+
         Animator.CrossFade(hitAnimName, m_fNormalizeTransitionDuration);
+
     }
 
     // 공격 및 특수 액션 애니메이션

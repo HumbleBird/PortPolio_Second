@@ -195,19 +195,19 @@ public class BattleManager
 
         Item newItem =  Item.MakeItem(info);
         newItem.Count = rewardData.m_iCount;
-        newItem.Slot = slot.Value;
+        newItem.InventorySlot = slot.Value;
 
         // TODO
         //player.Inven.add(item);
 
         Managers.Inventory.Add(newItem);
         Managers.UIBattle.UIInvenRefresh();
-        Debug.Log($"아이템 획득, ID : {newItem.Id}");
     }
 
     #endregion
 
     #region Item
+    // 장착 아이템
     public void EquipItem(Player player, Item equipItem)
     {
         if (player == null)
@@ -217,6 +217,7 @@ public class BattleManager
         Managers.UIBattle.ItemUIRefresh();
     }
 
+    // 소모품 아이템
     public void UseItem(Player player, Item useItem)
     {
         if (player == null)

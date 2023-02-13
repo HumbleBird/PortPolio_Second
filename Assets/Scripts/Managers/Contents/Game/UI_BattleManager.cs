@@ -40,4 +40,12 @@ public class UI_BattleManager
         UI_Equipment UIEquipment = UIGameScene.UIEquipment;
         UIEquipment.RefreshUI();
     }
+
+    public bool AreTheSlotsForThatItemFull(Item item)
+    {
+        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
+
+        UI_Equipment UIEquipment = UIGameScene.UIEquipment;
+        return UIEquipment.AreTheSlotsForThatItemFull(item);
+    }
 }
