@@ -29,6 +29,8 @@ public class Define
         Skill,
         Dead
     }
+
+    
     #endregion
 
     #region Battle

@@ -31,6 +31,9 @@ public class UI_InvenMain : UI_Base
             Items.Add(item);
         }
 
+        _init = true;
+        RefreshUI();
+
         return true;
     }
 

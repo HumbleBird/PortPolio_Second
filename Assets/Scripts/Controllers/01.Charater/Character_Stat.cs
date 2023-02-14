@@ -6,22 +6,22 @@ using static Define;
 
 public partial class Character : Base
 {
-    protected virtual void SetHp(float NewHp)
+    protected virtual void SetHp(int NewHp)
     {
-        m_strStat.m_fHp = NewHp;
-        if (m_strStat.m_fHp < 0)
+        m_strStat.m_iHp = NewHp;
+        if (m_strStat.m_iHp < 0)
         {
-            m_strStat.m_fHp = 0;
+            m_strStat.m_iHp = 0;
             eState = Define.CreatureState.Dead;
         }
     }
 
-    protected virtual void SetHp(float NewHp, GameObject attacker)
+    protected virtual void SetHp(int NewHp, GameObject attacker)
     {
-        m_strStat.m_fHp = NewHp;
-        if (m_strStat.m_fHp < 0)
+        m_strStat.m_iHp = NewHp;
+        if (m_strStat.m_iHp < 0)
         {
-            m_strStat.m_fHp = 0;
+            m_strStat.m_iHp = 0;
             eState = Define.CreatureState.Dead;
             OnDead(attacker);
         }
@@ -70,6 +70,8 @@ public partial class Character : Base
             default:
                 break;
         }
+
+        navMeshAgent.speed = m_strStat.m_fMoveSpeed;
         UpdateAnimation();
     }
 

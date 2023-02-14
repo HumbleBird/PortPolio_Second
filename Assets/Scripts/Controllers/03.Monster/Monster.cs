@@ -14,7 +14,7 @@ public partial class Monster : AI
 
         tag = "Monster";
         eObjectType = ObjectType.Monster;
-        m_strStat.m_fHp = 1;
+        m_strStat.m_iHp = 1;
     }
 
     public override void OnDead(GameObject attacker)

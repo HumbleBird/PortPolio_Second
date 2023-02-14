@@ -8,30 +8,29 @@ using static Define;
 
 public abstract class Strategy
 {
-    public Dictionary<KeyCode, Action> MaintainkeyDictionary; // 연속성
-    public Dictionary<KeyCode, Action> OnekeyDictionary; // 단발성
-    public Dictionary<KeyCode, string> InputKeyDic = new Dictionary<KeyCode, string>(); // 키 값 저장
+    // 키보드 입력
+    protected Dictionary<KeyCode, Action> MaintainkeyDictionary; // 연속성
+    protected Dictionary<KeyCode, Action> OnekeyDictionary; // 단발성
+    Dictionary<KeyCode, string> InputKeyDic = new Dictionary<KeyCode, string>(); // 키 값 저장
 
-    protected GameObject m_Go; // 행동 주체자
-    protected Character  m_cGo;
-    protected GameObject m_GoTarget; // 목표물
-    protected Base m_cTarget; // 목표물 스크립트
+    // 오브젝트
+    protected Character  m_cGo; // 공격자
+    protected Character m_cTarget;  // 피격자
     protected GameObject m_GoProjectile = null; // 투사체
 
     public string m_sAnimationName = null;
     public AnimationLayers m_eAnimLayers = AnimationLayers.BaseLayer;
 
-    public void SetInfo(GameObject go)
+    public void SetInfo(Character character)
     {
-        m_Go = go.gameObject;
-        m_cGo = m_Go.GetComponent<Character>();
+        m_cGo = character;
     }
 
     protected void PlayAnimation(string AnimName, bool bStart)
     {
         m_eAnimLayers = AnimationLayers.BaseLayer;
 
-        if(AnimName == "Shield")
+        if(AnimName == ActionState.Shield.ToString())
         {
             m_eAnimLayers = AnimationLayers.UpperLayer;
         }

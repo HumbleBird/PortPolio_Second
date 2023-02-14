@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 
 public partial class AI : Character
 {
-    int[] AttackNum = { };
-
     protected override void UpdateSkill()
     {
         base.UpdateSkill();

@@ -42,7 +42,7 @@ public class UI_PlayerInfo : UI_Scene
         _player = player.GetComponent<Player>();
 
         Image HpBariamge = GetImage((int)Images.HPBar);
-        HpBariamge.fillAmount = _player.m_strStat.m_fHp / _player.m_strStat.m_fMaxHp;
+        HpBariamge.fillAmount = _player.m_strStat.m_iHp / _player.m_strStat.m_iMaxHp;
         Image StaminaBariamge = GetImage((int)Images.STAMINABar);
         StaminaBariamge.fillAmount = _player.m_strStat.m_fStemina / _player.m_strStat.m_fMaxStemina;
 
@@ -59,9 +59,9 @@ public class UI_PlayerInfo : UI_Scene
         while (true)
         {
             HpBarBGHitiamge.fillAmount -= Time.deltaTime;
-            if (HpBarBGHitiamge.fillAmount <= _player.m_strStat.m_fHp / _player.m_strStat.m_fMaxHp)
+            if (HpBarBGHitiamge.fillAmount <= _player.m_strStat.m_iHp / _player.m_strStat.m_iMaxHp)
             {
-                HpBarBGHitiamge.fillAmount = _player.m_strStat.m_fHp / _player.m_strStat.m_fMaxHp;
+                HpBarBGHitiamge.fillAmount = _player.m_strStat.m_iHp / _player.m_strStat.m_iMaxHp;
                 break;
             }
 

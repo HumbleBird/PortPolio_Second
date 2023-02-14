@@ -8,9 +8,7 @@ public class UI_Inven : UI_Base
 {
     public UI_InvenMain UIInvenMain { get; set; }
     public UI_ItemDes UIItemDes { get; set; }
-    public UI_PlayerData UIPlayerData { get; set; }
-
-    Player _player;
+    public UI_CharacterData UICharacterData { get; set; }
 
     public override bool Init()
     {
@@ -19,7 +17,7 @@ public class UI_Inven : UI_Base
 
         UIInvenMain = GetComponentInChildren<UI_InvenMain>();
         UIItemDes = GetComponentInChildren<UI_ItemDes>();
-        UIPlayerData = GetComponentInChildren<UI_PlayerData>();
+        UICharacterData = GetComponentInChildren<UI_CharacterData>();
 
         gameObject.SetActive(false);
 
@@ -35,9 +33,7 @@ public class UI_Inven : UI_Base
         UIInvenMain.RefreshUI();
         UIItemDes.RefreshUI();
 
-        // Temp
-        UIPlayerData.SetInfo(Managers.Object.Find(1));
-        UIPlayerData.RefreshUI();
-
+        UICharacterData.SetInfo(Managers.Object.MyPlayer.gameObject);
+        UICharacterData.RefreshUI();
     }
 }

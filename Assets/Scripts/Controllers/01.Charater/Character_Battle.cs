@@ -7,7 +7,7 @@ using static Define;
 public partial class Character : Base
 {
     public Attack m_strAttack;
-    public GameObject m_goTarget { get; set; } // 타겟
+    public Character m_goTarget { get; set; } // 타겟
 
     protected float m_fCoolTime = 0f;
     protected bool  m_bCanAttack = true;
@@ -45,14 +45,13 @@ public partial class Character : Base
         }
 
         m_bCanAttack = false;
-        Debug.Log("공격");
 
         // 애니메이션 실행
         StrAnimation(m_strAttack.info.m_sAnimName);
 
         // 공격 데미지 더해주기
         m_fCoolTime += m_strAttack.info.m_fCoolTime;
-        m_strStat.m_fAtk += m_strAttack.info.m_fDmg;
+        m_strStat.m_iAtk += m_strAttack.info.m_iDmg;
 
         // 공격 종료 체크
         cAttackCheck = StartCoroutine(AttackEndCheck());
@@ -79,7 +78,7 @@ public partial class Character : Base
     }
 
     // 피격
-    public virtual void HitEvent(GameObject attacker, float dmg)
+    public virtual void HitEvent(GameObject attacker, int dmg)
     {
         // 특수 동장으로 인한 데미지 처리
         if (eActionState == ActionState.Invincible)
@@ -87,27 +86,28 @@ public partial class Character : Base
         else if (eActionState == ActionState.Shield)
         {
             int ShiledHitStamina = 10;
-            float shiledHitHpDef = 1.0f;
+            int shiledHitHpDef = 1;
 
             float NewStemina = m_strStat.m_fStemina - ShiledHitStamina;
             SetStemina(NewStemina);
 
             // TODO
-            m_strStat.m_fDef += shiledHitHpDef;
+            m_strStat.m_iDef += shiledHitHpDef;
         }
 
         // HP 관리
         dmg = Mathf.Max(0, dmg - m_TotalDefence);
-        float NewHp = m_strStat.m_fHp - dmg;
+        int NewHp = m_strStat.m_iHp - dmg;
         SetHp(NewHp, attacker);
 
         // 공격 별 특수 효과
         attacker.GetComponent<Character>().m_strAttack.SpecialAddAttackInfo();
 
         // 애니메이션
-        HitAnimation();
+        if(m_strStat.m_iHp > 0)
+            HitAnimation();
 
-        StartCoroutine(AnimationFinishAndStateToIdle(m_sCurrentAnimationName));
+        StartCoroutine(AnimationFinishAndState(m_sCurrentAnimationName, CreatureState.Idle));
     }
 
     IEnumerator AttackEndCheck()
@@ -137,7 +137,7 @@ public partial class Character : Base
         m_bCanAttack = true;
         m_bWaiting = false;
 
-        m_strStat.m_fAtk = m_strStat.m_fOriginalAtk;
+        m_strStat.m_iAtk = m_strStat.m_fOriginalAtk;
 
         StopCoroutine(cAttackCheck);
 

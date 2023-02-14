@@ -41,7 +41,7 @@ public partial class Option
 
     void ShowInventory()
     {
-        Managers.UIBattle.LoadInvenItem();
+        Managers.UIBattle.InvenRefreshUI();
         ShowAndClose(Managers.UIBattle.UIGameScene.UIInven);
     }
 

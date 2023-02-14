@@ -7,10 +7,10 @@ public class Table_Stat : Table_Base
     public class Info
     {
         public int   m_nID;
-        public float m_fHp;
-        public float m_fStemina;
-        public float m_fAtk;
-        public float m_fDef;
+        public int   m_iHp;
+        public int   m_fStemina;
+        public int   m_iAtk;
+        public int   m_iDef;
         public float m_fJumpPower;
         public float m_fWalkSpeed;
         public float m_fRunSpeed;
@@ -61,10 +61,10 @@ public class Table_Stat : Table_Base
             return false;
 
         _reader.get(_nRow, ref _info.m_nID);
-        _reader.get(_nRow, ref _info.m_fHp);
+        _reader.get(_nRow, ref _info.m_iHp);
         _reader.get(_nRow, ref _info.m_fStemina);
-        _reader.get(_nRow, ref _info.m_fAtk);
-        _reader.get(_nRow, ref _info.m_fDef);
+        _reader.get(_nRow, ref _info.m_iAtk);
+        _reader.get(_nRow, ref _info.m_iDef);
         _reader.get(_nRow, ref _info.m_fJumpPower);
         _reader.get(_nRow, ref _info.m_fWalkSpeed);
         _reader.get(_nRow, ref _info.m_fRunSpeed);

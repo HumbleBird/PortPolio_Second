@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using static Define;
 
 public partial class Character : Base
@@ -10,6 +11,7 @@ public partial class Character : Base
     public MoveState eMoveState = MoveState.None;
     private CreatureState state = CreatureState.Idle;
     public CharacterClass eCharacterClass = CharacterClass.None;
+	public NavMeshAgent navMeshAgent;
 
     public virtual CreatureState eState
     {
@@ -28,8 +30,8 @@ public partial class Character : Base
     public Table_Attack.Info m_tAttackInfo { get; set; } = new Table_Attack.Info();
     public Stat m_strStat { get; set; } = new Stat();
 
-    public virtual float m_TotalAttack { get { return m_strStat.m_fAtk; } }
-    public virtual float m_TotalDefence { get { return m_strStat.m_fDef; } }
+    public virtual int m_TotalAttack { get { return m_strStat.m_iAtk; } }
+    public virtual int m_TotalDefence { get { return m_strStat.m_iDef; } }
 
     [HideInInspector] 
     public bool m_bWaiting = false;
@@ -38,7 +40,9 @@ public partial class Character : Base
     {
         base.Init();
 
-        m_strAttack.SetInfo(gameObject);
+        navMeshAgent = Util.GetOrAddComponent<NavMeshAgent>(gameObject);
+
+        m_strAttack.SetInfo(this);
         m_strStat.Init();
 
         AttackColliderInit();
@@ -78,9 +82,11 @@ public partial class Character : Base
     {
         Rigid.isKinematic = true;
         Managers.Object.Remove(ID);
-        Destroy(gameObject, 2);
 
-        // TODO Regdoll
+        // TODO
+        m_Collider.isTrigger = true;
+        // 애니메이션을 체크해서, 애니메이션이 끝나면 시체가 남게
+        StartCoroutine(AnimationFinishAndState(m_sCurrentAnimationName, CreatureState.Dead));
     }
 
     public void Stop(float duration)
@@ -124,19 +130,19 @@ public partial class Character : Base
     public virtual void OnDead(GameObject Attacker)
     {
         // TODO For Pooling
-        //m_strStat.m_fHp = m_strStat.m_fMaxHp;
-        //m_strStat.m_fMp = m_strStat.m_fMaxMp;
+        //m_strStat.m_iHp = m_strStat.m_iMaxHp;
+        //m_strStat.m_iMp = m_strStat.m_iMaxMp;
         //state = CreatureState.Idle;
     }
 
-    public IEnumerator AnimationFinishAndStateToIdle(string hitAnimName)
+    public IEnumerator AnimationFinishAndState(string hitAnimName, CreatureState state)
     {
         if (Animator.GetCurrentAnimatorStateInfo(0).IsName(hitAnimName))
         {
             float animationlegth = Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             Stop(animationlegth);
             yield return new WaitForSeconds(animationlegth);
-            eState = CreatureState.Idle;
+            eState = state;
         }
     }
 }

@@ -37,11 +37,11 @@ public partial class MyPlayer : Player
 		yield return null;
 	}
 
-	protected override void SetHp(float NewHp, GameObject attacker)
+	protected override void SetHp(int NewHp, GameObject attacker)
 	{
 		base.SetHp(NewHp, attacker);
 
-		Managers.UIBattle.StatUIRefersh();
+		Managers.UIBattle.StatRefershUI();
 		StartCoroutine(Managers.UIBattle.UIGameScene.UIPlayerInfo.DownHP());
 	}
 
@@ -49,6 +49,6 @@ public partial class MyPlayer : Player
 	{
 		base.SetStemina(NewSetStamina);
 
-		Managers.UIBattle.StatUIRefersh();
+		Managers.UIBattle.StatRefershUI();
 	}
 }

@@ -12,7 +12,7 @@ public partial class Player : Character
 		eState = CreatureState.Skill;
 
 		// 스테미너 감소
-		m_strStat.m_fStemina -= 10f;
+		m_strStat.m_fStemina -= 10;
 		SetStemina(m_strStat.m_fStemina);
 
 		// 스테미너 일시 정지
@@ -33,7 +33,7 @@ public partial class Player : Character
 	{
         while (true)
         {
-			m_strStat.m_fStemina += Time.deltaTime;
+			m_strStat.m_fStemina += 0.2f;
 			SetStemina(m_strStat.m_fStemina);
 
 			yield return null;

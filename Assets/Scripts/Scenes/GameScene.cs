@@ -27,7 +27,7 @@ public class GameScene : BaseScene
 
         // UI
         Managers.UI.ShowSceneUI<UI_GameScene>();
-         
+        Managers.UIBattle.Init();
 
 
         //bgm

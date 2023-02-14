@@ -9,8 +9,8 @@ public partial class Player : Character
     public int m_iWeaponDamage { get; private set; }
     public int m_iArmorDefence { get; private set; }
 
-    public override float m_TotalAttack { get { return m_strStat.m_fAtk + m_iWeaponDamage; } }
-    public override float m_TotalDefence { get { return m_strStat.m_fDef + m_iArmorDefence; } }
+    public override int m_TotalAttack { get { return m_strStat.m_iAtk + m_iWeaponDamage; } }
+    public override int m_TotalDefence { get { return m_strStat.m_iDef + m_iArmorDefence; } }
 
     protected Coroutine cStaminaGraduallyFillingUp;
 
@@ -56,9 +56,7 @@ public partial class Player : Character
         {
             item.m_bEquipped = equipItem.m_bEquipped;
 
-            
-
-            Managers.UIBattle.UIInvenRefresh();
+            Managers.UIBattle.InvenRefreshUI();
         }
 
         RefreshAdditionalStat();
@@ -90,7 +88,7 @@ public partial class Player : Character
             {
                 unequipItem.m_bEquipped = false;
 
-                Managers.UIBattle.UIInvenRefresh();
+                Managers.UIBattle.InvenRefreshUI();
             }
         }
     }

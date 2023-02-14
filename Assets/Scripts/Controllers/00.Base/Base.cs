@@ -6,7 +6,7 @@ using static Define;
 public class Base : MonoBehaviour
 {
     public Rigidbody Rigid { get; set; }
-    protected Collider Coller { get; set; }
+    protected Collider m_Collider { get; set; }
     protected Animator Animator { get; set; }
 
     public int ID { get; set; }
@@ -22,7 +22,7 @@ public class Base : MonoBehaviour
     {
         Animator = Util.GetOrAddComponent<Animator>(gameObject);
         Rigid = Util.GetOrAddComponent<Rigidbody>(gameObject);
-        Coller = Util.GetOrAddComponent<Collider>(gameObject);
+        m_Collider = Util.GetOrAddComponent<Collider>(gameObject);
 
         Rigid.constraints = RigidbodyConstraints.FreezeRotation;
     }

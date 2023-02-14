@@ -7,44 +7,37 @@ public class UI_BattleManager
 {
     public UI_GameScene UIGameScene;
 
-    public void LoadInvenItem()
+    public void Init()
     {
         UIGameScene = Managers.UI.SceneUI as UI_GameScene;
-
-        UI_Inven UIInven = UIGameScene.UIInven;
-
-        // UI에 적용
-        UIInven.RefreshUI();
     }
 
-    public void StatUIRefersh()
+    // 인베토리
+    public void InvenRefreshUI()
     {
-        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
-
-        UIGameScene.UIPlayerInfo.RefreshUI();
-        UIGameScene.UIInven.RefreshUI();
-    }
-
-    public void UIInvenRefresh()
-    {
-        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
-
+        Init();
         UI_Inven UIInven = UIGameScene.UIInven;
         UIInven.RefreshUI();
     }
 
-    public void ItemUIRefresh()
+    // 플레이어 HP/MP/Stamina
+    public void StatRefershUI()
     {
-        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
+        UI_PlayerInfo UIPlayerInfo = UIGameScene.UIPlayerInfo;
+        UIPlayerInfo.RefreshUI();
+    }
 
+    // 장비창
+    public void EquipmentRefreshUI()
+    {
         UI_Equipment UIEquipment = UIGameScene.UIEquipment;
         UIEquipment.RefreshUI();
+
+        StatRefershUI();
     }
 
     public bool AreTheSlotsForThatItemFull(Item item)
     {
-        UIGameScene = Managers.UI.SceneUI as UI_GameScene;
-
         UI_Equipment UIEquipment = UIGameScene.UIEquipment;
         return UIEquipment.AreTheSlotsForThatItemFull(item);
     }

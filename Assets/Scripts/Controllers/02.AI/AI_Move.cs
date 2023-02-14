@@ -228,7 +228,7 @@ public partial class AI : Character
                 {
                     m_playerInRange = true;             //  The player has been seeing by the enemy and then the nemy starts to chasing the player
                     m_IsPatrol = false;                 //  Change the eState to chasing the player
-                    m_goTarget = player.gameObject;
+                    m_goTarget = player.GetComponent<Player>();
                 }
                 else
                 {

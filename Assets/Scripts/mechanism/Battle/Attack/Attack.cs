@@ -26,7 +26,7 @@ public class Attack : Strategy
     // 넉백 효과
     void Kick()
     {
-        Vector3 moveDirection = m_cGo.transform.position - m_GoTarget.transform.position;
+        Vector3 moveDirection = m_cGo.transform.position - m_cTarget.gameObject.transform.position;
         m_cTarget.Rigid.AddForce(moveDirection.normalized * -100f);
     }
 
@@ -46,8 +46,7 @@ public class Attack : Strategy
 
     void RefreshTargetSet()
     {
-        m_GoTarget = m_cGo.m_goTarget;
-        m_cTarget = m_GoTarget.GetComponent<Base>();
+        m_cTarget = m_cGo.m_goTarget;
     }
 
     //Action
@@ -67,7 +66,6 @@ public class Attack : Strategy
             { Managers.InputKey._binding.Bindings[UserAction.Roll], Roll},
         };
     }
-
 
 
     public void Shield()
