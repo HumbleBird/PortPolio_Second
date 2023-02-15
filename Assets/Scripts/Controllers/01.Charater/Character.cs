@@ -86,7 +86,7 @@ public partial class Character : Base
         // TODO
         m_Collider.isTrigger = true;
         // 애니메이션을 체크해서, 애니메이션이 끝나면 시체가 남게
-        StartCoroutine(AnimationFinishAndState(m_sCurrentAnimationName, CreatureState.Dead));
+        AnimationFinishAndState(m_sCurrentAnimationName, CreatureState.Dead);
     }
 
     public void Stop(float duration)
@@ -135,9 +135,14 @@ public partial class Character : Base
         //state = CreatureState.Idle;
     }
 
-    public IEnumerator AnimationFinishAndState(string hitAnimName, CreatureState state)
+    public void AnimationFinishAndState(string animName, CreatureState state = CreatureState.Idle)
     {
-        if (Animator.GetCurrentAnimatorStateInfo(0).IsName(hitAnimName))
+        StartCoroutine(CoAnimationFinishAndState(animName, state));
+    }
+
+    public IEnumerator CoAnimationFinishAndState(string animName, CreatureState state = CreatureState.Idle)
+    {
+        if (Animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
         {
             float animationlegth = Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             Stop(animationlegth);

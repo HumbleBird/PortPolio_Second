@@ -107,7 +107,7 @@ public partial class Character : Base
         if(m_strStat.m_iHp > 0)
             HitAnimation();
 
-        StartCoroutine(AnimationFinishAndState(m_sCurrentAnimationName, CreatureState.Idle));
+        AnimationFinishAndState(m_sCurrentAnimationName, CreatureState.Idle);
     }
 
     IEnumerator AttackEndCheck()

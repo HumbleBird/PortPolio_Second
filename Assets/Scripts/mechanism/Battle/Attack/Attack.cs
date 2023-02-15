@@ -16,6 +16,24 @@ public class Attack : Strategy
     //public int m_iCrouchAttackNum = 7;
     public int m_iKickNum = 501;
 
+    //Action
+    public virtual void SetKey()
+    {
+        MaintainkeyDictionary = new Dictionary<KeyCode, Action>
+        {
+            { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
+            { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
+
+        };
+
+        OnekeyDictionary = new Dictionary<KeyCode, Action>
+        {
+            // 액션
+            //Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
+            { Managers.InputKey._binding.Bindings[UserAction.Roll], Roll},
+        };
+    }
+
     protected virtual void BasicAttack() 
     {
         // 카메라 쉐이크
@@ -49,47 +67,19 @@ public class Attack : Strategy
         m_cTarget = m_cGo.m_goTarget;
     }
 
-    //Action
-    public virtual void SetKey()
-    {
-        MaintainkeyDictionary = new Dictionary<KeyCode, Action>
-        {
-            { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
-            { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
-
-        };
-
-        OnekeyDictionary = new Dictionary<KeyCode, Action>
-        {
-            // 액션
-            //Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
-            { Managers.InputKey._binding.Bindings[UserAction.Roll], Roll},
-        };
-    }
-
-
     public void Shield()
     {
         if (m_cGo.m_strStat.m_fStemina == 0)
             return;
 
-        if (m_cGo.eMoveState == MoveState.Crouch)
-            m_sAnimationName = "Crouch Shield";
-        else if (m_cGo.eMoveState == MoveState.Run)
-        {
+        if (m_cGo.eMoveState == MoveState.Run)
             m_cGo.SetMoveState(MoveState.Walk);
-            m_sAnimationName = "Shield";
-        }
-        else
-            m_sAnimationName = "Shield";
 
-        m_eAnimLayers = AnimationLayers.UpperLayer;
+        m_cGo.eActionState = ActionState.Shield;
     }
 
     public void Crouch()
     {
-        m_cGo.m_bWaiting = true;
-        m_sAnimationName = "Crouch";
         m_cGo.SetMoveState(MoveState.Crouch);
     }
 
@@ -101,10 +91,5 @@ public class Attack : Strategy
     public void Roll()
     {
         m_cGo.eActionState = ActionState.Invincible;
-
-        if (m_cGo.eState == CreatureState.Idle)
-            m_sAnimationName = "Stand To Roll";
-        else if (m_cGo.eState == CreatureState.Move)
-            m_sAnimationName = "Run To Roll";
     }
 }

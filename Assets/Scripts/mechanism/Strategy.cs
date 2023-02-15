@@ -11,7 +11,8 @@ public abstract class Strategy
     // 키보드 입력
     protected Dictionary<KeyCode, Action> MaintainkeyDictionary; // 연속성
     protected Dictionary<KeyCode, Action> OnekeyDictionary; // 단발성
-    Dictionary<KeyCode, string> InputKeyDic = new Dictionary<KeyCode, string>(); // 키 값 저장
+    Dictionary<KeyCode, Action> InputKeyDic = new Dictionary<KeyCode, Action>(); // 키 값 저장
+
 
     // 오브젝트
     protected Character  m_cGo; // 공격자
@@ -19,28 +20,16 @@ public abstract class Strategy
     protected GameObject m_GoProjectile = null; // 투사체
 
     public string m_sAnimationName = null;
-    public AnimationLayers m_eAnimLayers = AnimationLayers.BaseLayer;
 
     public void SetInfo(Character character)
     {
         m_cGo = character;
     }
 
-    protected void PlayAnimation(string AnimName, bool bStart)
-    {
-        m_eAnimLayers = AnimationLayers.BaseLayer;
-
-        if(AnimName == ActionState.Shield.ToString())
-        {
-            m_eAnimLayers = AnimationLayers.UpperLayer;
-        }
-
-        m_cGo.StrAnimation(AnimName, bStart, m_eAnimLayers);
-    }
-
     // 연속성 (쉴드, 앉기, 장전 등)
     public void InputMaintainKey()
     {
+        // 키를 누르고 있을 때
         if (Input.anyKey)
         {
             foreach (var dic in MaintainkeyDictionary)
@@ -49,10 +38,17 @@ public abstract class Strategy
                 {
                     if (!InputKeyDic.ContainsKey(dic.Key))
                     {
+                        string animName = dic.Value.Method.Name;
                         dic.Value();
+
+                        // 애니메이션 실행
+                        animName = m_cGo.StrAnimation(animName);
+
+                        // 애니메이션 실행전까지 대기
+                        m_cGo.AnimationFinishAndState(animName);
+
                         // 입력한 값과 함수 임시 저장
-                        InputKeyDic.Add(dic.Key, m_sAnimationName);
-                        PlayAnimation(m_sAnimationName, true);
+                        InputKeyDic.Add(dic.Key, dic.Value);
                     }
                 }
             }
@@ -61,13 +57,30 @@ public abstract class Strategy
         if (InputKeyDic.Count == 0)
             return;
 
-        var RemoveKey = InputKeyDic.ToArray();
+        var removeDic = InputKeyDic.ToArray();
 
-        foreach (var dic in RemoveKey)
+        // 키를 올렸을 때
+        foreach (var dic in removeDic)
         {
             if (Input.GetKeyUp(dic.Key))
             {
-                PlayAnimation(dic.Value, false);
+                string animName = dic.Value.Method.Name;
+
+                animName = m_cGo.StrAnimation(animName, false);
+
+                m_cGo.AnimationFinishAndState(animName);
+
+                // 초기화
+                if (dic.Key == Managers.InputKey._binding.Bindings[UserAction.Crouch])
+                {
+                    m_cGo.SetMoveState(MoveState.Walk);
+                }
+                
+                if(dic.Key == Managers.InputKey._binding.Bindings[UserAction.Shield])
+                {
+                    m_cGo.eMoveState = MoveState.None;
+                }
+
                 InputKeyDic.Remove(dic.Key);
             }
         }
@@ -84,11 +97,11 @@ public abstract class Strategy
                 {
                     if (!InputKeyDic.ContainsKey(dic.Key))
                     {
-                        InputKeyDic.Add(dic.Key, m_sAnimationName);
+                        string animName = dic.Value.Method.Name;
 
-                        m_cGo.m_bWaiting = true;
+                        InputKeyDic.Add(dic.Key, dic.Value);
                         dic.Value();
-                        m_cGo.StrAnimation(m_sAnimationName);
+                        m_cGo.StrAnimation(animName);
                     }
                 }
             }
@@ -117,11 +130,6 @@ public abstract class Strategy
 
     public void ActionStateChange(string actionName)
     {
-        if (actionName == "Crouch")
-        {
-            m_cGo.m_bWaiting = false;
-        }
-
         // 생각보다 시간을 꽤 잡아먹은 0.5초?
         foreach (ActionState state in Enum.GetValues(typeof(ActionState)))
         {

@@ -42,7 +42,7 @@ public class UI_PlayerInfo : UI_Scene
         _player = player.GetComponent<Player>();
 
         Image HpBariamge = GetImage((int)Images.HPBar);
-        HpBariamge.fillAmount = _player.m_strStat.m_iHp / _player.m_strStat.m_iMaxHp;
+        HpBariamge.fillAmount = _player.m_strStat.m_iHp / (float)_player.m_strStat.m_iMaxHp;
         Image StaminaBariamge = GetImage((int)Images.STAMINABar);
         StaminaBariamge.fillAmount = _player.m_strStat.m_fStemina / _player.m_strStat.m_fMaxStemina;
 

@@ -70,14 +70,49 @@ public partial class Character : Base
     }
 
     // 공격 및 특수 액션 애니메이션
-    public void StrAnimation(string animName, bool bStart = true, AnimationLayers animLayer = AnimationLayers.BaseLayer)
+    public string StrAnimation(string animName, bool bStart = true)
     {
         if (animName == null)
-            return;
+            return null;
 
-        if (bStart)
-            Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)animLayer);
+        AnimationLayers animLayer;
+
+        // 레이어 결정
+        if (animName == UserAction.Shield.ToString())
+        {
+            animLayer = AnimationLayers.UpperLayer;
+
+            if (eMoveState == MoveState.Crouch)
+            {
+                animLayer = AnimationLayers.BaseLayer;
+            }
+        }
         else
-            Animator.CrossFade(animName + " End", m_fNormalizeTransitionDuration, (int)animLayer);
+        {
+            animLayer = AnimationLayers.BaseLayer;
+        }
+
+        // 상태에 따른 애니메이션 이름 결정
+        if (animName == UserAction.Shield.ToString())
+        {
+            if (eMoveState == MoveState.Crouch)
+            {
+                animName = "Crouch Shield";
+            }
+        }
+        else if (animName == UserAction.Crouch.ToString())
+        {
+            if (eState == CreatureState.Idle)
+                animName = "Stand To Roll";
+            else if (eState == CreatureState.Move)
+                animName = "Run To Roll";
+        }
+
+        if (bStart == false)
+        animName = animName + " End";
+
+        Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)animLayer);
+
+        return animName;
     }
 }
