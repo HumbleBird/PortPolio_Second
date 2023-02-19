@@ -19,8 +19,6 @@ public partial class Monster : AI
 
     public override void OnDead(GameObject attacker)
     {
-        base.OnDead(attacker);
-
         Base ba = attacker.GetComponent<Base>();
 
         if(ba.eObjectType == ObjectType.Player)
@@ -32,6 +30,8 @@ public partial class Monster : AI
                 Managers.Battle.RewardPlayer(player, rewardData);
             }
         }
+
+        eState = Define.CreatureState.Dead;
     }
 
     Table_Reward.Info GetRandomReward()

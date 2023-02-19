@@ -98,9 +98,7 @@ public partial class MyPlayer : Player
 		// 이동 및 회전
 		if (m_MovementDirection != Vector3.zero)
         {
-			//transform.position += Time.deltaTime * m_strStat.m_fMoveSpeed * m_MovementDirection;
-			Vector3 destination = transform.position + Time.deltaTime * m_strStat.m_fMoveSpeed * m_MovementDirection;
-			navMeshAgent.destination = destination;
+			transform.position += Time.deltaTime * m_strStat.m_fMoveSpeed * m_MovementDirection;
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
 		}
 

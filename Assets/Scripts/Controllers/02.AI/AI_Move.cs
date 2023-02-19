@@ -35,7 +35,6 @@ public partial class AI : Character
 
     protected bool m_CaughtPlayer= false;                 //  if the enemy has caught the player
 
-    Vector3 centrePoint = new Vector3(0, 1, 0);
     float range = 10f;
     #endregion
 
@@ -44,6 +43,10 @@ public partial class AI : Character
         //  The enemy is chasing the player
         m_PlayerNear = false;                       //  Set false that hte player is near beacause the enemy already sees the player
         playerLastPosition = Vector3.zero;          //  Reset the player near position
+
+        if (m_goTarget == null)
+            return;
+
         float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
 
         if (!m_CaughtPlayer)
@@ -116,8 +119,6 @@ public partial class AI : Character
 
             if (eAIPatrolMode == AIPatrolMode.WayPoint)
                 navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the enemy destination to the next waypoint
-            //else if (eAIPatrolMode == AIPatrolMode.Random)
-                //Patroling_RandomMove();
 
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
             {
@@ -148,6 +149,8 @@ public partial class AI : Character
     void Patroling_RandomMove()
     {
         Vector3 point;
+        Vector3 centrePoint = transform.position;
+
         if (RandomPoint(centrePoint, range, out point)) //pass in our centre point and radius of area
         {
             navMeshAgent.SetDestination(point);
@@ -178,8 +181,6 @@ public partial class AI : Character
         }
         else
         {
-            if(eActionState !=ActionState.None)
-                m_strAttack.ActionStateReset();
             SetMoveState(MoveState.Walk);
         }
     }

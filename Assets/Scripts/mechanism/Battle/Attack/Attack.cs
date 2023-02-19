@@ -23,7 +23,6 @@ public class Attack : Strategy
         {
             { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
             { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
-
         };
 
         OnekeyDictionary = new Dictionary<KeyCode, Action>

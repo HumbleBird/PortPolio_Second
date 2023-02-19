@@ -24,9 +24,7 @@ public partial class Player : Character
 		base.AttackEnd();
 
 		StartCoroutine(StaminaGraduallyFillingUp());
-		StopCoroutine(cCheckNextAttack);
 		m_goTarget = null;
-
 	}
 
 	protected virtual IEnumerator StaminaGraduallyFillingUp()

@@ -23,13 +23,6 @@ public partial class Player : Character
         cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
     }
 
-    protected override void UpdateSkill()
-    {
-        base.UpdateSkill();
-
-        cCheckNextAttack = StartCoroutine(CheckNextAttack());
-    }
-
     public void EquipItem(Item equipItem)
     {
         if (equipItem == null)
@@ -43,11 +36,7 @@ public partial class Player : Character
             return;
 
         // 아이템 해제
-
-        // 해당 아이템의 카테고리의 칸이 전부 꽉차면 장착 x
-        // TODO 아이템 장착 전 장비창을 열어 아이템 장착
-        // -> 빈 칸에 아이템을 장착을, 아이템이 이미 장착 중이라면 새롭게 장착을
-        if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
+         if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
         {
             Debug.Log("장비 창의 빈 칸이 없습니다. 장비 창의 아이템을 비워주세요.");
             return;

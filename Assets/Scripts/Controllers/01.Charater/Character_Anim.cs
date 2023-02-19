@@ -70,14 +70,42 @@ public partial class Character : Base
     }
 
     // 공격 및 특수 액션 애니메이션
-    public string StrAnimation(string animName, bool bStart = true)
+    public string ActionAnimation(string animName, bool bStart = true)
     {
         if (animName == null)
             return null;
 
-        AnimationLayers animLayer;
+        AnimationLayers animLayer = SetLayer(animName);
 
-        // 레이어 결정
+        // 상태에 따른 애니메이션 이름 결정
+        if (animName == UserAction.Shield.ToString())
+        {
+            if (eMoveState == MoveState.Crouch)
+            {
+                animName = "Crouch Shield";
+            }
+        }
+
+        else if (animName == UserAction.Roll.ToString())
+        {
+            if (eState == CreatureState.Idle)
+                animName = "Stand To Roll";
+            else if (eState == CreatureState.Move)
+                animName = "Run To Roll";
+        }
+
+        if (bStart == false)
+            animName = animName + " End";
+
+        Debug.Log(animName);
+        Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)animLayer);
+
+        return animName;
+    }
+
+    private AnimationLayers SetLayer(string animName)
+    {
+        AnimationLayers animLayer;
         if (animName == UserAction.Shield.ToString())
         {
             animLayer = AnimationLayers.UpperLayer;
@@ -92,27 +120,7 @@ public partial class Character : Base
             animLayer = AnimationLayers.BaseLayer;
         }
 
-        // 상태에 따른 애니메이션 이름 결정
-        if (animName == UserAction.Shield.ToString())
-        {
-            if (eMoveState == MoveState.Crouch)
-            {
-                animName = "Crouch Shield";
-            }
-        }
-        else if (animName == UserAction.Crouch.ToString())
-        {
-            if (eState == CreatureState.Idle)
-                animName = "Stand To Roll";
-            else if (eState == CreatureState.Move)
-                animName = "Run To Roll";
-        }
-
-        if (bStart == false)
-        animName = animName + " End";
-
-        Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)animLayer);
-
-        return animName;
+        return animLayer;
     }
+
 }

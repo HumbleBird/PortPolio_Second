@@ -13,9 +13,6 @@ public partial class Character : Base
     protected bool  m_bCanAttack = true;
     protected bool  m_bNextAttack = false;
 
-    protected Coroutine cAttackCheck;
-    protected Coroutine cCheckNextAttack;
-
     public void ChangeClass(string typeClass)
     {
         switch (typeClass)
@@ -47,14 +44,14 @@ public partial class Character : Base
         m_bCanAttack = false;
 
         // 애니메이션 실행
-        StrAnimation(m_strAttack.info.m_sAnimName);
+        ActionAnimation(m_strAttack.info.m_sAnimName);
 
         // 공격 데미지 더해주기
         m_fCoolTime += m_strAttack.info.m_fCoolTime;
         m_strStat.m_iAtk += m_strAttack.info.m_iDmg;
 
         // 공격 종료 체크
-        cAttackCheck = StartCoroutine(AttackEndCheck());
+        StartCoroutine(CoAttackCheck());
     }
 
     void Attack()
@@ -92,6 +89,8 @@ public partial class Character : Base
             SetStemina(NewStemina);
 
             // TODO
+            // 나중에 방패 버티기 만큼 감소량 증가 시키기
+
             m_strStat.m_iDef += shiledHitHpDef;
         }
 
@@ -107,25 +106,9 @@ public partial class Character : Base
         if(m_strStat.m_iHp > 0)
             HitAnimation();
 
-        AnimationFinishAndState(m_sCurrentAnimationName, CreatureState.Idle);
-    }
-
-    IEnumerator AttackEndCheck()
-    {
-        while (true)
-        {
-            AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)AnimationLayers.BaseLayer);
-
-            if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
-            {
-                if (stateInfo.normalizedTime >= 0.9)
-                {
-                    AttackEnd();
-                }
-            }
-
-            yield return new WaitForSeconds(0.1f);
-        }
+        float time = GetAnimationTime(m_sCurrentAnimationName);
+        Stop(time);
+        eState = CreatureState.Idle;
     }
 
     // 공격 끝
@@ -139,27 +122,7 @@ public partial class Character : Base
 
         m_strStat.m_iAtk = m_strStat.m_fOriginalAtk;
 
-        StopCoroutine(cAttackCheck);
-
         eState = CreatureState.Idle;
-    }
-
-    // 애니메이션 이벤트에서 실행
-    void ActionStateChange(string actionName)
-    {
-        m_strAttack.ActionStateChange(actionName);
-    }
-
-    protected void ActionStateEnd(string eState)
-    {
-        m_strAttack.ActionStateReset(eState);
-    }
-
-    void MoveEnable()
-    {
-        eState = CreatureState.Idle;
-        m_bWaiting = false;
-        m_strAttack.ActionStateReset();
     }
 
     public bool CheckCooltime()
@@ -170,20 +133,20 @@ public partial class Character : Base
         return false;
     }
 
-    protected virtual IEnumerator CheckNextAttack()
+    protected virtual IEnumerator CoAttackCheck()
     {
-        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)AnimationLayers.BaseLayer);
+        yield return new WaitForSeconds(GetAnimationTime(m_strAttack.info.m_sAnimName, 0.6f));
 
-        if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
+        if (m_bNextAttack == true && m_strAttack.info.m_iNextNum != 0)
         {
-            if (stateInfo.normalizedTime >= 0.6)
-            {
-                // 어떤 공격 키를 눌렀는지에 따라서
-                if (m_bNextAttack == true)
-                    AttackEvent(m_strAttack.info.m_iNextNum);
-            }
+            AttackEvent(m_strAttack.info.m_iNextNum);
+            yield break;
         }
 
-        yield return null;
+        yield return new WaitForSeconds(GetAnimationTime(m_strAttack.info.m_sAnimName, 0.4f));
+        {
+            AttackEnd();
+            yield break;
+        }
     }
 }

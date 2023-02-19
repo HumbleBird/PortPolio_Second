@@ -25,7 +25,7 @@ public class TrigerDetector : MonoBehaviour
         if (other != null && other.tag != "Ground")
         {
             CAttacker.m_goTarget = other.GetComponent<Character>();
-            CAttacker.m_goTarget.GetComponent<Character>().HitEvent(CAttacker.gameObject, CAttacker.m_TotalAttack);
+            CAttacker.m_goTarget.HitEvent(CAttacker.gameObject, CAttacker.m_TotalAttack);
         }
     }
 

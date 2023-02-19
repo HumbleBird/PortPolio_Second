@@ -11,7 +11,6 @@ public partial class Character : Base
     public MoveState eMoveState = MoveState.None;
     private CreatureState state = CreatureState.Idle;
     public CharacterClass eCharacterClass = CharacterClass.None;
-	public NavMeshAgent navMeshAgent;
 
     public virtual CreatureState eState
     {
@@ -39,8 +38,6 @@ public partial class Character : Base
     protected override void Init()
     {
         base.Init();
-
-        navMeshAgent = Util.GetOrAddComponent<NavMeshAgent>(gameObject);
 
         m_strAttack.SetInfo(this);
         m_strStat.Init();
@@ -83,10 +80,11 @@ public partial class Character : Base
         Rigid.isKinematic = true;
         Managers.Object.Remove(ID);
 
-        // TODO
         m_Collider.isTrigger = true;
         // 애니메이션을 체크해서, 애니메이션이 끝나면 시체가 남게
-        AnimationFinishAndState(m_sCurrentAnimationName, CreatureState.Dead);
+        float deadTime = GetAnimationTime(m_sCurrentAnimationName);
+        // 지연 시간 후에 아이템이 지급되게?
+
     }
 
     public void Stop(float duration)
@@ -133,21 +131,41 @@ public partial class Character : Base
         //m_strStat.m_iHp = m_strStat.m_iMaxHp;
         //m_strStat.m_iMp = m_strStat.m_iMaxMp;
         //state = CreatureState.Idle;
+
+        eState = Define.CreatureState.Dead;
     }
 
-    public void AnimationFinishAndState(string animName, CreatureState state = CreatureState.Idle)
+    public float GetAnimationTime(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
     {
-        StartCoroutine(CoAnimationFinishAndState(animName, state));
-    }
+        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)layer);
 
-    public IEnumerator CoAnimationFinishAndState(string animName, CreatureState state = CreatureState.Idle)
-    {
-        if (Animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
+        if (stateInfo.IsName(animName))
         {
-            float animationlegth = Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            Stop(animationlegth);
-            yield return new WaitForSeconds(animationlegth);
-            eState = state;
+            float animationlegth = stateInfo.length;
+            return animationlegth * time;
+        }
+
+        return 0;
+    }
+
+    public void FreezeWhileAnimation(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
+    {
+        StartCoroutine(CoGetAnimationTime(animName, time, layer));
+    }
+
+    public IEnumerator CoGetAnimationTime(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
+    {
+        while (true)
+        {
+            float getTime = GetAnimationTime(animName, time, layer);
+            if (getTime != 0)
+            {
+                Stop(getTime);
+                yield return new WaitForSeconds(getTime* 0.95f);
+                yield break;
+            }
+
+            yield return null;
         }
     }
 }

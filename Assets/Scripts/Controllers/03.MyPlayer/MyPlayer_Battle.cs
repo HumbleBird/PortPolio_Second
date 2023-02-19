@@ -19,22 +19,29 @@ public partial class MyPlayer : Player
 			AttackEvent(m_strAttack.m_iKickNum);
 	}
 
-	protected override IEnumerator CheckNextAttack()
+	protected override IEnumerator CoAttackCheck()
 	{
-		AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)AnimationLayers.BaseLayer);
+		yield return new WaitForSeconds(GetAnimationTime(m_strAttack.info.m_sAnimName, 0.6f));
 
-		if (stateInfo.IsName(m_strAttack.info.m_sAnimName))
+		if (m_bNextAttack == true && m_strAttack.info.m_iNextNum != 0)
 		{
-			if (stateInfo.normalizedTime >= 0.6 && m_strAttack.info.m_iNextNum != 0)
-			{
-				// 어떤 공격 키를 눌렀는지에 따라서
-				if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.BasicAttack])
-					|| Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
-					AttackEvent(m_strAttack.info.m_iNextNum);
-			}
+			// TODO 공격 콤보
+			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.BasicAttack])
+				|| Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
+				AttackEvent(m_strAttack.info.m_iNextNum);
+
+			Debug.Log("다음 공격 가능");
+
+			yield break;
 		}
 
-		yield return null;
+		yield return new WaitForSeconds(GetAnimationTime(m_strAttack.info.m_sAnimName, 0.4f));
+		{
+			AttackEnd();
+			Debug.Log("공격 끝");
+
+			yield break;
+		}
 	}
 
 	protected override void SetHp(int NewHp, GameObject attacker)

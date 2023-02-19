@@ -141,15 +141,6 @@ public class BattleManager
 
     }
 
-    // TODO
-    public void SetPostionRandom(GameObject go)
-    {
-        Vector3 result;
-        if(GetRandomNavmeshLocation(go.transform.position, out result))
-        {
-            go.transform.position = result;
-        }
-    }
 
     public bool GetRandomNavmeshLocation(Vector3 center, out Vector3 resultPostion, float radius = 10)
     {

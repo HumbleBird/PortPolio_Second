@@ -11,15 +11,11 @@ public abstract class Strategy
     // 키보드 입력
     protected Dictionary<KeyCode, Action> MaintainkeyDictionary; // 연속성
     protected Dictionary<KeyCode, Action> OnekeyDictionary; // 단발성
-    Dictionary<KeyCode, Action> InputKeyDic = new Dictionary<KeyCode, Action>(); // 키 값 저장
-
 
     // 오브젝트
     protected Character  m_cGo; // 공격자
     protected Character m_cTarget;  // 피격자
     protected GameObject m_GoProjectile = null; // 투사체
-
-    public string m_sAnimationName = null;
 
     public void SetInfo(Character character)
     {
@@ -29,6 +25,8 @@ public abstract class Strategy
     // 연속성 (쉴드, 앉기, 장전 등)
     public void InputMaintainKey()
     {
+        Dictionary<KeyCode, Action> InputKeyDic = new Dictionary<KeyCode, Action>(); // 키 값 저장
+
         // 키를 누르고 있을 때
         if (Input.anyKey)
         {
@@ -42,10 +40,10 @@ public abstract class Strategy
                         dic.Value();
 
                         // 애니메이션 실행
-                        animName = m_cGo.StrAnimation(animName);
+                        animName = m_cGo.ActionAnimation(animName);
 
                         // 애니메이션 실행전까지 대기
-                        m_cGo.AnimationFinishAndState(animName);
+                        m_cGo.FreezeWhileAnimation(animName);
 
                         // 입력한 값과 함수 임시 저장
                         InputKeyDic.Add(dic.Key, dic.Value);
@@ -66,9 +64,9 @@ public abstract class Strategy
             {
                 string animName = dic.Value.Method.Name;
 
-                animName = m_cGo.StrAnimation(animName, false);
+                animName = m_cGo.ActionAnimation(animName, false);
 
-                m_cGo.AnimationFinishAndState(animName);
+                m_cGo.FreezeWhileAnimation(animName);
 
                 // 초기화
                 if (dic.Key == Managers.InputKey._binding.Bindings[UserAction.Crouch])
@@ -86,9 +84,11 @@ public abstract class Strategy
         }
     }
 
-    // 단발성(점프, 구르기 등)
+    // 단발성(점프, 구르기)
     public virtual void InputOnekey()
     {
+        Dictionary<KeyCode, Action> InputKeyDic = new Dictionary<KeyCode, Action>(); // 키 값 저장
+
         if (Input.anyKeyDown)
         {
             foreach (var dic in OnekeyDictionary)
@@ -101,40 +101,11 @@ public abstract class Strategy
 
                         InputKeyDic.Add(dic.Key, dic.Value);
                         dic.Value();
-                        m_cGo.StrAnimation(animName);
+                        animName = m_cGo.ActionAnimation(animName);
+                        m_cGo.FreezeWhileAnimation(animName);
                     }
                 }
             }
-        }
-    }
-
-    public void ActionStateReset(string ActionKinds = "")
-    {
-        if (ActionKinds == "")
-        {
-            InputKeyDic.Clear();
-        }
-        else if(ActionKinds == "eAction")
-        {
-            InputKeyDic.Remove(Managers.InputKey._binding.Bindings[UserAction.Shield]);
-        }
-        else if(ActionKinds == "eMove")
-        {
-            m_cGo.eMoveState = MoveState.None;
-        }
-
-        m_cGo.eActionState = ActionState.None;
-        m_cGo.m_bWaiting = false;
-        m_sAnimationName = null;
-    }
-
-    public void ActionStateChange(string actionName)
-    {
-        // 생각보다 시간을 꽤 잡아먹은 0.5초?
-        foreach (ActionState state in Enum.GetValues(typeof(ActionState)))
-        {
-            if(actionName == state.ToString())
-                m_cGo.eActionState = state;
         }
     }
 }
