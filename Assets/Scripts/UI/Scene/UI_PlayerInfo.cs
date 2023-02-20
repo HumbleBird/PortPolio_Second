@@ -11,6 +11,8 @@ public class UI_PlayerInfo : UI_Scene
         HPBarBG,
         HPBarBGHit,
         HPBar,
+        MPBarBG,
+        MPBar,
         STAMINABarBG,
         STAMINABar,
     }
@@ -44,7 +46,9 @@ public class UI_PlayerInfo : UI_Scene
         Image HpBariamge = GetImage((int)Images.HPBar);
         HpBariamge.fillAmount = _player.m_strStat.m_iHp / (float)_player.m_strStat.m_iMaxHp;
         Image StaminaBariamge = GetImage((int)Images.STAMINABar);
-        StaminaBariamge.fillAmount = _player.m_strStat.m_fStemina / _player.m_strStat.m_fMaxStemina;
+        StaminaBariamge.fillAmount = _player.m_strStat.m_fStemina / (float)_player.m_strStat.m_fMaxStemina;
+        Image MpBariamge = GetImage((int)Images.MPBar);
+        MpBariamge.fillAmount = _player.m_strStat.m_iMp / (float)_player.m_strStat.m_iMaxMp;
 
         TextMeshProUGUI nameText = GetText((int)Texts.Name);
         nameText.text = _player.name;

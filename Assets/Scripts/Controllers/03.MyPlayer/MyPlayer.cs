@@ -2,6 +2,7 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using static Define;
@@ -14,8 +15,8 @@ public partial class MyPlayer : Player
 	public float m_fRotationSpeed = 10f;
 
 	protected override void Init()
-    {
-        base.Init();
+	{
+		base.Init();
 		SetKey();
 
 		Managers.Object.MyPlayer = this;
@@ -34,17 +35,19 @@ public partial class MyPlayer : Player
 				IdleAndMoveState();
 				break;
 		}
-
-		//TODO temp
-		m_cOption.InputOptionKey();
 	}
 
 	void IdleAndMoveState()
     {
 		GetMoveInput();
 		GetInputAttack();
-		m_strAttack.InputMaintainKey();
-		m_strAttack.InputOnekey();
+
+		if (m_bWaiting)
+			return;
+
+		InputMaintainKey();
+		InputOnekey();
+		InputOptionKey();
 	}
 
 	bool m_bMoveInput = false;
@@ -106,11 +109,6 @@ public partial class MyPlayer : Player
 			eState = CreatureState.Idle;
 	}
 
-	public void SetKey()
-    {
-		m_strAttack.SetKey();
-		m_cOption.SetKey();
-	}
-
+	
 }
 

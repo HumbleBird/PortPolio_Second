@@ -11,6 +11,30 @@ public class BattleManager
     GameObject root;
     GameObject monsterContainer;
     GameObject playerContainer;
+    Transform savePoint = null;
+
+    #region CheckPoint
+    public void CheckPointLoad(GameObject go)
+    {
+        if(savePoint == null)
+        {
+            // 만약에 세이브를 처음 하지 않았다면
+            GameObject startPoint = Managers.Resource.Load<GameObject>("Objects/Other/StartPoint");
+            go.transform.position = startPoint.transform.position;
+        }
+        else
+        {
+            go.transform.position = savePoint.transform.position;
+        }
+    }
+
+    public void CheckPointSave(Transform pos)
+    {
+        savePoint.transform.position = pos.position;
+    }
+
+
+    #endregion
 
     #region Spawn
     public GameObject CreatePlayer(int id, bool myPlayer = false)

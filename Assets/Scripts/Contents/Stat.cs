@@ -30,8 +30,8 @@ public class Stat
         m_iLevel = 1;
         m_iHp = m_tStatInfo.m_iHp;
         m_iMaxHp = m_iHp;
-        m_iMp = 100; //m_tStatInfo.m_iHp;
-        m_iMaxMp = 100;// m_iHp;
+        m_iMp = m_tStatInfo.m_iMp;
+        m_iMaxMp = m_iMp;
         m_fStemina = m_tStatInfo.m_fStemina;
         m_fMaxStemina = m_fStemina;
         m_iAtk = m_tStatInfo.m_iAtk;

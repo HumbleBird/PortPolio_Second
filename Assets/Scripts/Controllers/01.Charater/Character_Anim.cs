@@ -6,7 +6,7 @@ using static Define;
 
 public partial class Character : Base
 {
-	float m_fNormalizeTransitionDuration = 0.14f;
+	float m_fNormalizeTransitionDuration = 0.15f;
     string m_sCurrentAnimationName = null;
 
 	public virtual void UpdateAnimation()
@@ -66,7 +66,6 @@ public partial class Character : Base
         m_sCurrentAnimationName = hitAnimName;
 
         Animator.CrossFade(hitAnimName, m_fNormalizeTransitionDuration);
-
     }
 
     // 공격 및 특수 액션 애니메이션
@@ -97,7 +96,6 @@ public partial class Character : Base
         if (bStart == false)
             animName = animName + " End";
 
-        Debug.Log(animName);
         Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)animLayer);
 
         return animName;

@@ -43,7 +43,10 @@ public partial class Character : Base
 
         m_bCanAttack = false;
 
+        // 정지
+
         // 애니메이션 실행
+        // TODO MyPlayerInput Dic.Action() 부분에 합쳐 버리기
         ActionAnimation(m_strAttack.info.m_sAnimName);
 
         // 공격 데미지 더해주기
@@ -106,6 +109,7 @@ public partial class Character : Base
         if(m_strStat.m_iHp > 0)
             HitAnimation();
 
+        // 일시정지
         float time = GetAnimationTime(m_sCurrentAnimationName);
         Stop(time);
         eState = CreatureState.Idle;
@@ -133,20 +137,22 @@ public partial class Character : Base
         return false;
     }
 
-    protected virtual IEnumerator CoAttackCheck()
+    protected IEnumerator CoAttackCheck()
     {
-        yield return new WaitForSeconds(GetAnimationTime(m_strAttack.info.m_sAnimName, 0.6f));
+        float time = GetAnimationTime(m_strAttack.info.m_sAnimName, 0.6f);
 
-        if (m_bNextAttack == true && m_strAttack.info.m_iNextNum != 0)
+        yield return new WaitForSeconds(time);
+
+        if (m_strAttack.info.m_iNextNum != 0)
         {
-            AttackEvent(m_strAttack.info.m_iNextNum);
-            yield break;
+            m_bNextAttack = true;
         }
 
-        yield return new WaitForSeconds(GetAnimationTime(m_strAttack.info.m_sAnimName, 0.4f));
-        {
-            AttackEnd();
-            yield break;
-        }
+        time = GetAnimationTime(m_strAttack.info.m_sAnimName, 0.4f);
+
+        yield return new WaitForSeconds(time);
+
+        AttackEnd();
+        yield break;
     }
 }

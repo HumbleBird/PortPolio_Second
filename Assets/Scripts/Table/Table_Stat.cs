@@ -8,6 +8,7 @@ public class Table_Stat : Table_Base
     {
         public int   m_nID;
         public int   m_iHp;
+        public int   m_iMp;
         public int   m_fStemina;
         public int   m_iAtk;
         public int   m_iDef;
@@ -62,6 +63,7 @@ public class Table_Stat : Table_Base
 
         _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_iHp);
+        _reader.get(_nRow, ref _info.m_iMp);
         _reader.get(_nRow, ref _info.m_fStemina);
         _reader.get(_nRow, ref _info.m_iAtk);
         _reader.get(_nRow, ref _info.m_iDef);

@@ -11,33 +11,26 @@ public class Attack : Strategy
 {
     public Table_Attack.Info info;
 
+    public override void Init()
+    {
+        throw new NotImplementedException();
+
+
+    }
+
     public int m_iBasicAttackNum = 1;
     public int m_iStrongAttackNum = 4;
     //public int m_iCrouchAttackNum = 7;
     public int m_iKickNum = 501;
 
-    //Action
-    public virtual void SetKey()
-    {
-        MaintainkeyDictionary = new Dictionary<KeyCode, Action>
-        {
-            { Managers.InputKey._binding.Bindings[UserAction.Crouch], Crouch},
-            { Managers.InputKey._binding.Bindings[UserAction.Shield], Shield},
-        };
-
-        OnekeyDictionary = new Dictionary<KeyCode, Action>
-        {
-            // 액션
-            //Managers.InputKey._binding.Bindings[UserAction.Jump], Jump},
-            { Managers.InputKey._binding.Bindings[UserAction.Roll], Roll},
-        };
-    }
-
+    // 플레이어만 적용
     protected virtual void BasicAttack() 
     {
         // 카메라 쉐이크
         Managers.Camera.m_CameraEffect.Shake(1);
     }
+
+    // 플레이어만 적용
     protected virtual void StrongAttack() { }
 
     // 넉백 효과

@@ -137,12 +137,15 @@ public partial class Character : Base
 
     public float GetAnimationTime(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
     {
-        AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo((int)layer);
+        AnimationClip[] clips = Animator.runtimeAnimatorController.animationClips;
 
-        if (stateInfo.IsName(animName))
+        foreach (var clip in clips)
         {
-            float animationlegth = stateInfo.length;
-            return animationlegth * time;
+            if(clip.name == animName)
+            {
+                float animationlegth = clip.length;
+                return animationlegth * time;
+            }
         }
 
         return 0;
@@ -160,12 +163,13 @@ public partial class Character : Base
             float getTime = GetAnimationTime(animName, time, layer);
             if (getTime != 0)
             {
-                Stop(getTime);
-                yield return new WaitForSeconds(getTime* 0.95f);
+                getTime *= 0.7f;
+                StartCoroutine(Wait(getTime));
                 yield break;
             }
 
             yield return null;
         }
+
     }
 }
