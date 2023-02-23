@@ -107,12 +107,14 @@ public partial class Character : Base
 
         // 애니메이션
         if(m_strStat.m_iHp > 0)
+        {
             HitAnimation();
 
-        // 일시정지
-        float time = GetAnimationTime(m_sCurrentAnimationName);
-        Stop(time);
-        eState = CreatureState.Idle;
+            // 일시정지 히트 애니메이션이 된 후에 idle로
+            float time = GetAnimationTime(m_sCurrentAnimationName);
+            Stop(time);
+            eState = CreatureState.Idle;
+        }
     }
 
     // 공격 끝

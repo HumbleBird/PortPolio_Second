@@ -30,6 +30,8 @@ public partial class Monster : AI
                 Managers.Battle.RewardPlayer(player, rewardData);
             }
         }
+
+        eState = CreatureState.Dead;
     }
 
     Table_Reward.Info GetRandomReward()

@@ -163,4 +163,21 @@ public partial class Character : Base
             yield return null;
         }
     }
+
+    public IEnumerator CoGetAnimationTime(string animName, Action action, float time = 1f,  AnimationLayers layer = AnimationLayers.BaseLayer)
+    {
+        while (true)
+        {
+            float getTime = GetAnimationTime(animName, time, layer);
+            if (getTime != 0)
+            {
+                getTime *= 0.7f;
+                StartCoroutine(Wait(getTime));
+                action.Invoke();
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
 }

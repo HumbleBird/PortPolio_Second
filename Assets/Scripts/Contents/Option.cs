@@ -8,8 +8,6 @@ using static Define;
 
 public partial class Option
 {
-
-
     public void ShowInputKeySetting()
     {
         ShowAndClose(Managers.UIBattle.UIGameScene.UISetting);
