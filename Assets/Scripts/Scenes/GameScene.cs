@@ -16,21 +16,13 @@ public class GameScene : BaseScene
         // 데이터
         Managers.Inventory.Clear();
 
-        // 프리팹 로드
+        // 프리팹 로드 && 처음 지정 위치에 몬스터 스폰
         Managers.Battle.Init();
 
         // 캐릭터
-        List<GameObject> go = Managers.Battle.Spawn(ObjectType.Player, 1, 1, 0, true);
-        foreach (var player in go)
-        {
-            Managers.Battle.CheckPointLoad(player);
-        }
-
-        //List<GameObject> list = Managers.Battle.Spawn(ObjectType.Monster, 201, 5, 0, true);
-
-        //foreach (var go in list)
-           // Managers.Battle.SetPostionNearToPlayer(go);
-
+        GameObject go = Managers.Battle.Spawn(ObjectType.Player, 1, 0, true);
+        Managers.Battle.CheckPointLoad(go);
+        
         // UI
         Managers.UI.ShowSceneUI<UI_GameScene>();
         Managers.UIBattle.Init();
@@ -38,24 +30,6 @@ public class GameScene : BaseScene
 #if DEBUG
         ClearLog();
 #endif
-
-#if DEVELOPMENT_BUILD
-        Debug.ClearDeveloperConsole();
-#endif
-
-        //bgm
-        //Managers.Sound.Play("Bgm/bigbattle_2_FULL", Define.Sound.Bgm);
-
-        //Managers.UI.ShowSceneUI<UI_Inven>();
-        //gameObject.GetOrAddComponent<CursorController>();
-
-        //GameObject player = Managers.Game.Spawn(Define.WorldObject.Player, "UnityChan");
-        //Camera.main.gameObject.GetOrAddComponent<CameraController>().SetPlayer(player);
-
-        ////Managers.Game.Spawn(Define.WorldObject.Monster, "Knight");
-        //GameObject go = new GameObject { name = "SpawningPool" };
-        //SpawningPool pool = go.GetOrAddComponent<SpawningPool>();
-        //pool.SetKeepMonsterCount(2);
     }
 
     public override void Clear()

@@ -17,12 +17,12 @@ public class UI_Equipment_Item : UI_Base
         ProjectileCountText
     }
 
-	public int m_iItemId { get; private set; }
+    public int m_iItemId { get; private set; } = -1;
 	public TextMeshProUGUI m_iItemCount { get; private set; }
     public Image  m_itemIcon { get; private set; }
+    public string m_sName { get; private set; }
     public EquimentItemCategory eEquimentItemCategory;
     public bool m_bEquipped = false;
-
 
     public int m_iSlot;
 
@@ -39,6 +39,11 @@ public class UI_Equipment_Item : UI_Base
 
         GetText((int)Texts.ProjectileCountText).enabled = false;
 
+        m_itemIcon.gameObject.BindEvent(() =>
+        {
+            Managers.UIBattle.UIGameScene.UIEquipment.equipmentNameText.text = m_sName;
+        });
+
         return true;
     }
 
@@ -47,6 +52,7 @@ public class UI_Equipment_Item : UI_Base
         m_iItemId = item.Id;
         m_iItemCount.text = item.Count.ToString();
         m_itemIcon.enabled = true;
+        m_sName = item.Name;
         m_itemIcon.sprite = Managers.Resource.Load<Sprite>(item.iconPath);
         item.EquipmentSlot = m_iSlot;
 
@@ -69,7 +75,7 @@ public class UI_Equipment_Item : UI_Base
 
     public void UnEquipItem()
     {
-        m_iItemId = 0;
+        m_iItemId = -1;
         m_iItemCount.enabled = false;
         m_itemIcon.enabled = false;
         m_bEquipped = false;

@@ -18,8 +18,6 @@ public partial class Player : Character
     {
         base.Init();
 
-        tag = "Player";
-
         cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
     }
 
@@ -36,17 +34,18 @@ public partial class Player : Character
             return;
 
         // 아이템 해제
-         if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
+        if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
         {
             Debug.Log("장비 창의 빈 칸이 없습니다. 장비 창의 아이템을 비워주세요.");
             return;
         }
-
+        else
         {
             item.m_bEquipped = equipItem.m_bEquipped;
 
             Managers.UIBattle.InvenRefreshUI();
         }
+
 
         RefreshAdditionalStat();
     }
@@ -116,5 +115,16 @@ public partial class Player : Character
                     break;
             }
         }
+    }
+
+    public override void OnDead(GameObject Attacker)
+    {
+        base.OnDead(Attacker);
+
+        m_strStat.m_iHp = m_strStat.m_iMaxHp;
+        m_strStat.m_iMp = m_strStat.m_iMaxMp;
+        eState = CreatureState.Idle;
+
+        Managers.Battle.CheckPointLoad(gameObject);
     }
 }

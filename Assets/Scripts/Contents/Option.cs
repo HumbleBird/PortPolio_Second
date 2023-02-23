@@ -23,6 +23,7 @@ public partial class Option
 
     public void ShowEquipment()
     {
+        Managers.UIBattle.EquipmentRefreshUI();
         ShowAndClose(Managers.UIBattle.UIGameScene.UIEquipment);
     }
 

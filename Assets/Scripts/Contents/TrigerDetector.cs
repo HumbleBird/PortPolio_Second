@@ -22,7 +22,9 @@ public class TrigerDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other != null && other.tag != "Ground")
+        Base goBase = other.GetComponent<Base>();
+
+        if (goBase != null)
         {
             CAttacker.m_goTarget = other.GetComponent<Character>();
             CAttacker.m_goTarget.HitEvent(CAttacker.gameObject, CAttacker.m_TotalAttack);

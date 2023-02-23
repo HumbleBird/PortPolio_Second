@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 using System.Linq;
+using TMPro;
 
 public class UI_Equipment : UI_Base
 {
@@ -18,8 +19,19 @@ public class UI_Equipment : UI_Base
         ItemGrid
     }
 
+    enum Texts
+    {
+        EquipmentPartsText,
+        EquipmentNameText
+    }
+
+    public TextMeshProUGUI equipmentPartsText;
+    public TextMeshProUGUI equipmentNameText;
+    bool m_bStartClick = false;
+
     int[] EquipmentInventoryCount = { 3, 2, 3, 2, 4, 1, 4, 10 };
 
+    #region Grid
     List<UI_Equipment_Item> AllGrid = new List<UI_Equipment_Item>();
     List<UI_Equipment_Item> WeaponGrid = new List<UI_Equipment_Item>();
     List<UI_Equipment_Item> RightProjectileGrid = new List<UI_Equipment_Item>();
@@ -29,6 +41,7 @@ public class UI_Equipment : UI_Base
     List<UI_Equipment_Item> SpeicialGrid = new List<UI_Equipment_Item>();
     List<UI_Equipment_Item> RingGrid = new List<UI_Equipment_Item>();
     List<UI_Equipment_Item> ItemGrid = new List<UI_Equipment_Item>();
+    #endregion
 
     public override bool Init()
     {
@@ -36,6 +49,10 @@ public class UI_Equipment : UI_Base
             return false;
 
         BindObject(typeof(GameObjects));
+        BindText(typeof(Texts));
+
+        equipmentPartsText = GetText((int)Texts.EquipmentPartsText);
+        equipmentNameText = GetText((int)Texts.EquipmentNameText);
 
         for (int i = 0; i < EquipmentInventoryCount.Length; i++)
         {
@@ -98,6 +115,7 @@ public class UI_Equipment : UI_Base
         if (_init == false)
             return;
 
+        // 장비칸에 아이템 넣기
         foreach (Item item in Managers.Inventory.m_Items)
         {
             // 아이템 해제
@@ -176,6 +194,24 @@ public class UI_Equipment : UI_Base
                         itemInGrid.EquipItem(item);
                         return;
                     }
+                }
+            }
+        }
+
+        // 처음 장비창을 열었다면
+        if (m_bStartClick == false)
+        {
+            foreach (var item in AllGrid)
+            {
+                if (item.m_iItemId != -1)
+                {
+                    equipmentPartsText.text = "Get";
+                    equipmentNameText.text = item.m_sName;
+                }
+                else
+                {
+                    equipmentPartsText.text = "";
+                    equipmentNameText.text = "";
                 }
             }
         }

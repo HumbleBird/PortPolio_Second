@@ -12,13 +12,13 @@ public partial class Monster : AI
     {
         base.Init();
 
-        tag = "Monster";
         eObjectType = ObjectType.Monster;
         m_strStat.m_iHp = 1;
     }
 
     public override void OnDead(GameObject attacker)
     {
+        // 아이템 보상
         Base ba = attacker.GetComponent<Base>();
 
         if(ba.eObjectType == ObjectType.Player)
@@ -30,8 +30,6 @@ public partial class Monster : AI
                 Managers.Battle.RewardPlayer(player, rewardData);
             }
         }
-
-        eState = Define.CreatureState.Dead;
     }
 
     Table_Reward.Info GetRandomReward()

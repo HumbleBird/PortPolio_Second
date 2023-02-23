@@ -101,8 +101,11 @@ public partial class MyPlayer : Player
 		// 이동 및 회전
 		if (m_MovementDirection != Vector3.zero)
         {
-			transform.position += Time.deltaTime * m_strStat.m_fMoveSpeed * m_MovementDirection;
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
+			//if (Physics.Raycast(transform.position + Vector3.up * 0.5f, m_MovementDirection, 1.0f, LayerMask.GetMask("Ground")))
+			{
+				transform.position += Time.deltaTime * m_strStat.m_fMoveSpeed * m_MovementDirection;
+				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
+			}
 		}
 
 		if (m_bMoveInput == false && eMoveState != MoveState.Crouch)

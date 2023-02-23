@@ -158,15 +158,15 @@ public class Define
     {
         Third,
         QuarterView,
-        Anim
+        Aim
     }
 
     public enum Scene
     {
-        Unknown,
-        Login,
-        Lobby,
-        Game,
+        Unknown = 0,
+        Login = 1,
+        Lobby = 2,
+        Game = 3,
     }
 
     public enum Sound

@@ -17,10 +17,6 @@ public class UI_PlayerInfo : UI_Scene
         STAMINABar,
     }
 
-    enum Texts
-    {
-        Name
-    }
 
     Player _player;
 
@@ -30,7 +26,6 @@ public class UI_PlayerInfo : UI_Scene
             return false;
 
         BindImage(typeof(Images));
-        BindText(typeof(Texts));
 
         return true;
     }
@@ -50,8 +45,6 @@ public class UI_PlayerInfo : UI_Scene
         Image MpBariamge = GetImage((int)Images.MPBar);
         MpBariamge.fillAmount = _player.m_strStat.m_iMp / (float)_player.m_strStat.m_iMaxMp;
 
-        TextMeshProUGUI nameText = GetText((int)Texts.Name);
-        nameText.text = _player.name;
     }
 
     public IEnumerator DownHP()

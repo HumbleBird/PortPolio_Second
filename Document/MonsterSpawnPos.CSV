@@ -1,0 +1,6 @@
+Idx,DungeonType,MonsterSpawnPosId,MonsterId
+인덱스,던전타입,몬스터 스폰 위치,몬스터 아이디
+1,3,1,201
+2,3,2,201
+3,,,
+4,,,

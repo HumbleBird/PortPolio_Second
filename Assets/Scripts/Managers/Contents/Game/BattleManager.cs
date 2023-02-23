@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -11,7 +12,14 @@ public class BattleManager
     GameObject root;
     GameObject monsterContainer;
     GameObject playerContainer;
-    Transform savePoint = null;
+    public Transform savePoint = null;
+    public Dictionary<int, Transform> MonstersSpawnPos = new Dictionary<int, Transform>();
+
+    public void Init()
+    {
+        CreateCreatureContainer();
+        InitMonsterSpawn();
+    }
 
     #region CheckPoint
     public void CheckPointLoad(GameObject go)
@@ -19,7 +27,7 @@ public class BattleManager
         if(savePoint == null)
         {
             // 만약에 세이브를 처음 하지 않았다면
-            GameObject startPoint = Managers.Resource.Load<GameObject>("Objects/Other/StartPoint");
+            GameObject startPoint = Managers.Resource.Instantiate("Objects/Other/StartPoint");
             go.transform.position = startPoint.transform.position;
         }
         else
@@ -37,6 +45,45 @@ public class BattleManager
     #endregion
 
     #region Spawn
+    public void InitMonsterSpawn()
+    {
+        // 맵 이름 얻기
+        // 맵 이름에 맞는 몬스터 스폰 위치 전부 가져오기
+        if (Managers.Scene.CurrentScene.SceneType == Scene.Game)
+        {
+            string path = "Assets/Resources/Prefabs/Objects/MonsterSpawnPoint/Dungeon";
+            var files = Directory.GetFiles(path);
+            foreach (string file in files)
+            {
+                if (file.Contains(".meta"))
+                    continue;
+
+                path = file.Replace("\\", "/");
+                path = path.Replace(".prefab", "");
+                path = path.Replace("Assets/Resources/", "");
+                GameObject go = Managers.Resource.Load<GameObject>(path);
+                MonstersSpawnPos.Add(int.Parse(go.name), go.transform);
+            }
+
+            // 스폰할 위치랑 몬스터 매치하기
+            foreach (var info in Managers.Table.m_MonsterSpawnPos.m_Dictionary)
+            {
+                if (info.Value.m_iDungeonType != (int)Managers.Scene.CurrentScene.SceneType)
+                    return;
+
+                foreach (var pos in MonstersSpawnPos)
+                {
+                    if(pos.Key == info.Value.m_iMonsterSpawnPosId)
+                    {
+                        GameObject go =  Spawn(ObjectType.Monster, info.Value.m_iMonsterId);
+                        Base goBase = go.GetComponent<Base>();
+                        goBase.Pos = pos.Value;
+                    }
+                }
+            }
+        }
+    }
+
     public GameObject CreatePlayer(int id, bool myPlayer = false)
     {
         Table_Player.Info pinfo = Managers.Table.m_Player.Get(id);
@@ -121,7 +168,32 @@ public class BattleManager
         return go;
     }
 
-    public List<GameObject> Spawn(ObjectType type, int id, int count = 1, int delay = 0, bool myplayer = false)
+    public GameObject Spawn(ObjectType type, int id, int delay = 0, bool myplayer = false)
+    {
+        GameObject go;
+
+        switch (type)
+        {
+            case ObjectType.Player:
+                go = CreatePlayer(id, myplayer);
+                break;
+            case ObjectType.Monster:
+                go = CreateMonster(id);
+                break;
+            case ObjectType.Boss:
+                go = CreateBossMonster(id);
+                break;
+            default:
+                go = null;
+                break;
+        }
+
+        CreatureInputContainer(go);
+
+        return go;
+    }
+    
+    public List<GameObject> Spawns(ObjectType type, int id, int count = 1, int delay = 0, bool myplayer = false)
     {
         List<GameObject> list = new List<GameObject>();
         GameObject go;
@@ -244,10 +316,7 @@ public class BattleManager
 
     #region Development Convenience
 
-    public void Init()
-    {
-        CreateCreatureContainer();
-    }
+
 
     public void CreateCreatureContainer()
     {

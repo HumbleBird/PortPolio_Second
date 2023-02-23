@@ -11,7 +11,7 @@ public class Base : MonoBehaviour
 
     public int ID { get; set; }
     public ObjectType eObjectType { get; set; }
-    protected Vector3 Pos { get; set; }
+    public Transform Pos { get; set; } = null;
 
     private void Start()
     {
@@ -25,6 +25,9 @@ public class Base : MonoBehaviour
         m_Collider = Util.GetOrAddComponent<Collider>(gameObject);
 
         Rigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        if(Pos != null)
+            transform.position = Pos.position;
     }
 
     public virtual Base GetOwner()

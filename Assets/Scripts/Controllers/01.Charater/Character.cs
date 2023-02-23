@@ -81,9 +81,6 @@ public partial class Character : Base
         Managers.Object.Remove(ID);
 
         m_Collider.isTrigger = true;
-        // 애니메이션을 체크해서, 애니메이션이 끝나면 시체가 남게
-        float deadTime = GetAnimationTime(m_sCurrentAnimationName);
-        // 지연 시간 후에 아이템이 지급되게?
 
     }
 
@@ -127,11 +124,6 @@ public partial class Character : Base
 
     public virtual void OnDead(GameObject Attacker)
     {
-        // TODO For Pooling
-        //m_strStat.m_iHp = m_strStat.m_iMaxHp;
-        //m_strStat.m_iMp = m_strStat.m_iMaxMp;
-        //state = CreatureState.Idle;
-
         eState = Define.CreatureState.Dead;
     }
 
@@ -170,6 +162,5 @@ public partial class Character : Base
 
             yield return null;
         }
-
     }
 }
