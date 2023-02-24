@@ -35,6 +35,8 @@ public partial class MyPlayer : Player
 				IdleAndMoveState();
 				break;
 		}
+
+		InputOptionKey();
 	}
 
 	void IdleAndMoveState()
@@ -42,12 +44,11 @@ public partial class MyPlayer : Player
 		GetMoveInput();
 		GetInputAttack();
 
-		if (m_bWaiting)
-			return;
-
-		InputMaintainKey();
-		InputOnekey();
-		InputOptionKey();
+		if (m_bWaiting == false)
+        {
+			InputMaintainKey();
+			InputOnekey();
+		}
 	}
 
 	bool m_bMoveInput = false;

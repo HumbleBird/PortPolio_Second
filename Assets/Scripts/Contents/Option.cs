@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static Define;
 
-public partial class Option
+public class Option
 {
+    int m_count = 0;
+
     public void ShowInputKeySetting()
     {
         ShowAndClose(Managers.UIBattle.UIGameScene.UISetting);
@@ -29,5 +31,29 @@ public partial class Option
     {
         bool B = scene.gameObject.activeSelf;
         scene.gameObject.SetActive(!B);
+
+        //  UI창을 켰다면
+        if(B == false)
+        {
+            m_count += 1;
+
+            if(m_count == 1)
+            {
+                // 마우스 커서 Lock Off
+                CursorController.MouseCurserLockOnOff(true);
+            }
+        }
+        else
+        {
+            m_count -= 1;
+
+            if(m_count == 0)
+            {
+                // 마우스 커서 Lock on
+                CursorController.MouseCurserLockOnOff(false);
+            }
+        }
+
+
     }
 }

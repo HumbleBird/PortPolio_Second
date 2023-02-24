@@ -148,6 +148,7 @@ public class Define
 
     public enum Layer
     {
+        UI = 5,
         Monster = 8,
         Ground = 9,
         Block = 10,
@@ -188,6 +189,14 @@ public class Define
     {
         BaseLayer = 0,
         UpperLayer = 1,
+    }
+
+    public enum CursorType
+    {
+        None,
+        Arrow,
+        Hand,
+        Look,
     }
     #endregion
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3158283238144685673}
   - component: {fileID: 2910087324986758684}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: UI_PlayerInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 7710553074002050803}
   - component: {fileID: 856557322404259629}
   - component: {fileID: 6003951726585035127}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6914517921654255473}
   - component: {fileID: 3381115821242555741}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Pannel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6768315398260308552}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 5887350821933816079}
   - component: {fileID: 5887350821933816077}
   - component: {fileID: 5887350821933816078}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HPBarBGHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 7019080943785983791}
   - component: {fileID: 7019080943785983789}
   - component: {fileID: 7019080943785983790}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: STAMINABar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +389,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7019080943974079237}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 7019080943982327449}
   - component: {fileID: 7019080943982327431}
   - component: {fileID: 7019080943982327448}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: STAMINABarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -504,7 +504,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7019080944248960000}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: STAMINA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 7019080944329660835}
   - component: {fileID: 7019080944329660833}
   - component: {fileID: 7019080944329660834}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -620,7 +620,7 @@ GameObject:
   - component: {fileID: 7019080944698224100}
   - component: {fileID: 7019080944698224098}
   - component: {fileID: 7019080944698224099}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HPBarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 613681720369375981}
   - component: {fileID: 2586444427280683799}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -742,7 +742,7 @@ GameObject:
   - component: {fileID: 4178366561732962738}
   - component: {fileID: 7728668415484809727}
   - component: {fileID: 2175263680453871495}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MPBarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}

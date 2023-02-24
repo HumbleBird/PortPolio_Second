@@ -81,7 +81,7 @@ public partial class Character : Base
     public virtual void HitEvent(GameObject attacker, int dmg)
     {
         // 특수 동장으로 인한 데미지 처리
-        if (eActionState == ActionState.Invincible)
+        if (eActionState == ActionState.Invincible || eState == CreatureState.Dead)
             return;
         else if (eActionState == ActionState.Shield)
         {

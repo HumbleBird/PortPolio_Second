@@ -497,8 +497,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8cec9a89c9a2034a92c2006f401ed3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipmentPartsText: 
-  equipmentNameText: 
+  equipmentPartsText: {fileID: 0}
+  equipmentNameText: {fileID: 0}
 --- !u!222 &5596452009911962852
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -768,7 +768,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 197.5, y: 50}
+  m_SizeDelta: {x: 193.1, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1199336613366906056
 CanvasRenderer:
@@ -1039,7 +1039,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 184.87, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &303490287408564832
 CanvasRenderer:
