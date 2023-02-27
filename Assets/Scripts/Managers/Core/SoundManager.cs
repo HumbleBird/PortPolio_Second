@@ -41,13 +41,13 @@ public class SoundManager
         _audioClips.Clear();
     }
 
-    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
+    public void Play(string path, int loop = 0, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
     {
         AudioClip audioClip = GetOrAddAudioClip(path, type);
-        Play(audioClip, type, pitch);
+        Play(audioClip, loop, type, pitch);
     }
 
-	public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
+	public void Play(AudioClip audioClip, int loop = 0, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
 	{
         if (audioClip == null)
             return;
@@ -66,8 +66,15 @@ public class SoundManager
 		{
 			AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
 			audioSource.pitch = pitch;
-			audioSource.PlayOneShot(audioClip);
-		}
+            if(loop == 0)
+    			audioSource.PlayOneShot(audioClip);
+            else
+            {
+                audioSource.clip = audioClip;
+                audioSource.Play();
+                _audioSources[(int)Define.Sound.Effect].loop = true;
+            }
+        }
 	}
 
     // TODO 뮤트 기능

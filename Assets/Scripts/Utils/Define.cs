@@ -30,7 +30,13 @@ public class Define
         Dead
     }
 
-    
+    public enum MonsterType
+    {
+        Skeleton,
+        Jombi,
+        Mummy, // 미라
+        
+    }
     #endregion
 
     #region Battle
@@ -172,8 +178,8 @@ public class Define
 
     public enum Sound
     {
-        Bgm,
-        Effect,
+        Bgm = 0,
+        Effect = 1,
         MaxCount,
     }
 

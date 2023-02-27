@@ -28,6 +28,7 @@ public partial class Character : Base
     public List<TrigerDetector> m_GoAttackItem { get; set; } = new List<TrigerDetector>();
     public Table_Attack.Info m_tAttackInfo { get; set; } = new Table_Attack.Info();
     public Stat m_strStat { get; set; } = new Stat();
+    protected AudioSource audioSource { get; private set; }
 
     public virtual int m_TotalAttack { get { return m_strStat.m_iAtk; } }
     public virtual int m_TotalDefence { get { return m_strStat.m_iDef; } }
@@ -39,12 +40,18 @@ public partial class Character : Base
     {
         base.Init();
 
+        audioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
+        audioSource.spatialBlend = 1;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
+
         m_strAttack.SetInfo(this);
         m_strStat.Init();
 
         AttackColliderInit();
 
         StartCoroutine(UpdateCoolTime());
+
+
     }
 
     void Update()
