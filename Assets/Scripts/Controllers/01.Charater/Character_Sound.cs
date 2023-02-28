@@ -6,35 +6,26 @@ using static Define;
 
 public partial class Character : Base
 {
-    public Table_Sound.Info m_tSoundInfo { get; set; } = new Table_Sound.Info();
-    string clipName = null;
-
-    public void GetAudioClicpName()
-    {
-        clipName = gameObject.name + " " + eState.ToString();
-
-        foreach (var sound in Managers.Table.m_Sound.m_Dictionary)
-        {   
-
-        }
-
-        if (eState == CreatureState.Move)
-            clipName += " " + eMoveState.ToString();
-    }
-
+    // character의 Idle 혹은 Dead 상태의 Sound Effect
     public void UpdateSound()
     {
         if (eState == CreatureState.Skill || eState == CreatureState.Move)
             return;
 
-        GetAudioClicpName();
-
-        Managers.Sound.Play(m_tSoundInfo.m_sPath, m_tSoundInfo.m_iLoop, (Sound)m_tSoundInfo.m_iSoundType);
+        SoundPlay(gameObject.name + " " + eState.ToString());
     }
 
-    // 걸을 때
-    public void Step()
+    void SoundPlay(string soundName)
     {
+        foreach (var sound in Managers.Table.m_Sound.m_Dictionary.Values)
+        {
+            if (soundName == sound.m_sName)
+            {
+                Managers.Sound.Play(sound.m_sPath, sound.m_iLoop, (Sound)sound.m_iSoundType);
+                return;
+            }
+        }
 
+        Debug.Log("Not Sound " + gameObject.name + soundName);
     }
 }

@@ -22,6 +22,7 @@ public partial class Character : Base
 
             state = value;
             UpdateAnimation();
+            UpdateSound();
         }
     }
 

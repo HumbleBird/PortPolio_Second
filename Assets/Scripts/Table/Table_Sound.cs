@@ -7,6 +7,7 @@ public class Table_Sound : Table_Base
     public class Info
     {
         public int      m_nID;
+        public string   m_sName;
         public int      m_iSoundType;
         public int      m_iLoop;
         public string   m_sPath;
@@ -55,6 +56,7 @@ public class Table_Sound : Table_Base
             return false;
 
         _reader.get(_nRow, ref _info.m_nID);
+        _reader.get(_nRow, ref _info.m_sName);
         _reader.get(_nRow, ref _info.m_iSoundType);
         _reader.get(_nRow, ref _info.m_iLoop);
         _reader.get(_nRow, ref _info.m_sPath);
