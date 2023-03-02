@@ -13,7 +13,7 @@ public partial class Monster : AI
         base.Init();
 
         eObjectType = ObjectType.Monster;
-        m_strStat.m_iHp = 1;
+        m_strStat.m_iHp = 30;
     }
 
     public override void OnDead(GameObject attacker)

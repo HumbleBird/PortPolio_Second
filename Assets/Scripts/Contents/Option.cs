@@ -53,7 +53,5 @@ public class Option
                 CursorController.MouseCurserLockOnOff(false);
             }
         }
-
-
     }
 }

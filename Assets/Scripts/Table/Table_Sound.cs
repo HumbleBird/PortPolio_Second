@@ -6,16 +6,15 @@ public class Table_Sound : Table_Base
     [Serializable] 
     public class Info
     {
-        public int      m_nID;
         public string   m_sName;
         public int      m_iSoundType;
         public int      m_iLoop;
         public string   m_sPath;
     }
 
-    public Dictionary<int, Info> m_Dictionary = new Dictionary<int, Info>();
+    public Dictionary<string, Info> m_Dictionary = new Dictionary<string, Info>();
 
-    public Info Get(int _nID)
+    public Info Get(string _nID)
     {
         if (m_Dictionary.ContainsKey(_nID))
             return m_Dictionary[_nID];
@@ -25,7 +24,7 @@ public class Table_Sound : Table_Base
 
     public void Init_Binary(string _strName)// 파일 읽어오기
     {
-        Load_Binary<Dictionary<int, Info>>(_strName, ref m_Dictionary);
+        Load_Binary<Dictionary<string, Info>>(_strName, ref m_Dictionary);
     }
 
     public void Save_Binary(string _strName) // 파일 만들기
@@ -44,7 +43,7 @@ public class Table_Sound : Table_Base
             if (Read(reader, info, row, _nStartCol) == false)
                 break;
 
-            m_Dictionary.Add(info.m_nID, info);
+            m_Dictionary.Add(info.m_sName, info);
         }
 
         return;
@@ -55,7 +54,6 @@ public class Table_Sound : Table_Base
         if (_reader.reset_row(_nRow, _nStartCol) == false)
             return false;
 
-        _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_sName);
         _reader.get(_nRow, ref _info.m_iSoundType);
         _reader.get(_nRow, ref _info.m_iLoop);

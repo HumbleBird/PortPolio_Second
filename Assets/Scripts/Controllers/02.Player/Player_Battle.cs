@@ -9,7 +9,6 @@ public partial class Player : Character
 	protected override void AttackEvent(int id)
     {
         base.AttackEvent(id);
-		eState = CreatureState.Skill;
 
 		// 스테미너 감소
 		m_strStat.m_fStemina -= 10;
@@ -36,5 +35,13 @@ public partial class Player : Character
 
 			yield return null;
 		}
+	}
+
+	protected override void HowNextAttack()
+	{
+		base.HowNextAttack();
+
+		// 플레이어라면 직접 할지 말지를 결정함.
+		m_bNextAttack = true;
 	}
 }

@@ -30,7 +30,6 @@ public partial class MyPlayer : Player
         };
     }
 
-
     #region Action
 
     protected Dictionary<KeyCode, Action> MaintainkeyDictionary; // 연속성
@@ -50,15 +49,7 @@ public partial class MyPlayer : Player
                 {
                     if (!InputKeyDic.ContainsKey(dic.Key))
                     {
-                        string animName = dic.Value.Method.Name;
-                        dic.Value();
-
-                        // 애니메이션 실행
-                        animName = ActionAnimation(animName);
-
-                        // 애니메이션 실행전까지 대기
-                        m_bWaiting = true;
-                        FreezeWhileAnimation(animName);
+                        SpeicialAction(dic.Value);
 
                         // 입력한 값과 함수 임시 저장
                         InputKeyDic.Add(dic.Key, dic.Value);
@@ -77,12 +68,7 @@ public partial class MyPlayer : Player
         {
             if (Input.GetKeyUp(dic.Key))
             {
-                string animName = dic.Value.Method.Name;
-
-                animName = ActionAnimation(animName, false);
-
-                m_bWaiting = true;
-                FreezeWhileAnimation(animName);
+                SpeicialAction(dic.Value, false);
 
                 // 초기화
                 if (dic.Key == Managers.InputKey._binding.Bindings[UserAction.Crouch])
@@ -113,13 +99,9 @@ public partial class MyPlayer : Player
                 {
                     if (!InputKeyDic.ContainsKey(dic.Key))
                     {
-                        string animName = dic.Value.Method.Name;
+                        SpeicialAction(dic.Value);
 
                         InputKeyDic.Add(dic.Key, dic.Value);
-                        dic.Value();
-                        animName = ActionAnimation(animName);
-                        m_bWaiting = true;
-                        FreezeWhileAnimation(animName);
                     }
                 }
             }
@@ -142,6 +124,9 @@ public partial class MyPlayer : Player
                 if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
+
+                    // Sound
+                    SoundPlay("UI On Off Sound");
                 }
             }
         }

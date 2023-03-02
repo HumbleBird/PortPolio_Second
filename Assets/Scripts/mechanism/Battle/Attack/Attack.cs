@@ -14,13 +14,10 @@ public class Attack : Strategy
     public override void Init()
     {
         throw new NotImplementedException();
-
-
     }
 
     public int m_iBasicAttackNum = 1;
     public int m_iStrongAttackNum = 4;
-    //public int m_iCrouchAttackNum = 7;
     public int m_iKickNum = 501;
 
     // 플레이어만 적용
@@ -73,11 +70,6 @@ public class Attack : Strategy
     public void Crouch()
     {
         m_cGo.SetMoveState(MoveState.Crouch);
-    }
-
-    public void Jump()
-    {
-
     }
 
     public void Roll()

@@ -27,6 +27,9 @@ public class GameScene : BaseScene
         Managers.UI.ShowSceneUI<UI_GameScene>();
         Managers.UIBattle.Init();
 
+        // Sound
+        Managers.Sound.Play("Sounds/Bgm/Game/Dungeon", 0, Sound.Bgm);
+
 #if DEBUG
         ClearLog();
 #endif

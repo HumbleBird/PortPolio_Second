@@ -37,22 +37,27 @@ public partial class Character : Base
     [HideInInspector] 
     public bool m_bWaiting = false;
 
+    protected Dictionary<string, AnimationClip> m_DicAniactionclip = new Dictionary<string, AnimationClip>();
+
     protected override void Init()
     {
         base.Init();
-
-        audioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
-        audioSource.spatialBlend = 1;
-        audioSource.rolloffMode = AudioRolloffMode.Linear;
 
         m_strAttack.SetInfo(this);
         m_strStat.Init();
 
         AttackColliderInit();
 
-        StartCoroutine(UpdateCoolTime());
+        // Audio
+        audioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
+        audioSource.spatialBlend = 1;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
 
-
+        AnimationClip[] clips = Animator.runtimeAnimatorController.animationClips;
+        foreach (var clip in clips)
+        {
+            m_DicAniactionclip.Add(clip.name, clip);
+        }
     }
 
     void Update()
@@ -135,32 +140,24 @@ public partial class Character : Base
         eState = Define.CreatureState.Dead;
     }
 
-    public float GetAnimationTime(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
+    public float GetAnimationTime(string animName, float time = 1f)
     {
-        AnimationClip[] clips = Animator.runtimeAnimatorController.animationClips;
-
-        foreach (var clip in clips)
+        if (m_DicAniactionclip.ContainsKey(animName) == false)
         {
-            if(clip.name == animName)
-            {
-                float animationlegth = clip.length;
-                return animationlegth * time;
-            }
+            Debug.Log("해당 애니메이션 클립이 없습니다." + animName);
+            return 0;
         }
 
-        return 0;
+        AnimationClip clip = m_DicAniactionclip[animName];
+        return clip.length * time;
     }
 
-    public void FreezeWhileAnimation(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
-    {
-        StartCoroutine(CoGetAnimationTime(animName, time, layer));
-    }
-
-    public IEnumerator CoGetAnimationTime(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
+    public IEnumerator CoGetAnimationTimeAndWait(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
     {
         while (true)
         {
-            float getTime = GetAnimationTime(animName, time, layer);
+            float getTime = GetAnimationTime(animName, time);
+
             if (getTime != 0)
             {
                 getTime *= 0.7f;
@@ -172,20 +169,17 @@ public partial class Character : Base
         }
     }
 
-    public IEnumerator CoGetAnimationTime(string animName, Action action, float time = 1f,  AnimationLayers layer = AnimationLayers.BaseLayer)
+    protected virtual void SpeicialAction(Action action, bool wating = true)
     {
-        while (true)
-        {
-            float getTime = GetAnimationTime(animName, time, layer);
-            if (getTime != 0)
-            {
-                getTime *= 0.7f;
-                StartCoroutine(Wait(getTime));
-                action.Invoke();
-                yield break;
-            }
+        // Action 실행
+        string animName = action.Method.Name;
+        action.Invoke();
 
-            yield return null;
-        }
+        // 애니메이션 실행
+        animName = ActionAnimation(animName);
+
+        // 애니메이션 실행전까지 대기
+        StartCoroutine(CoGetAnimationTimeAndWait(animName));
+
     }
 }

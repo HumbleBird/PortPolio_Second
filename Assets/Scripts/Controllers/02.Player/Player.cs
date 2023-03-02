@@ -127,4 +127,17 @@ public partial class Player : Character
 
         Managers.Battle.CheckPointLoad(gameObject);
     }
+
+    public override void UpdateSound()
+    {
+        if (eState == CreatureState.Dead)
+            SoundPlay("Player" + eState.ToString());
+    }
+
+    protected override void SpeicialAction(Action action, bool wating = true)
+    {
+        base.SpeicialAction(action);
+
+        m_bWaiting = wating;
+    }
 }

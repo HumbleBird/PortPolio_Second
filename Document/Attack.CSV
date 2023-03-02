@@ -15,6 +15,6 @@ Idx,Name,Dmg,Speed,CoolTime,Range,NextNum,AnimName
 1001,오크 펀치,5,1,2,1,0,Punch
 1002,오크의 강화된 펀치,7,1.4,3,1,0,Reinforced Right Punch
 1003,오크 내려찍기,20,0.5,10,1,0,Jump Attack 
-1011,스켈레톤의 횡베기,0,0,5,1,0,Attack1
-1012,스켈레톤의 대각선 베기,0,0,5,1,0,Attack2
+1011,스켈레톤의 횡베기,0,0,5,1,0,Skeleton Warior Attack 1
+1012,스켈레톤의 대각선 베기,0,0,5,1,0,Skeleton Warior Attack 2
 1013,스켈레톤 방패병의 방패 들기,0,0,0,1,0,Shiled

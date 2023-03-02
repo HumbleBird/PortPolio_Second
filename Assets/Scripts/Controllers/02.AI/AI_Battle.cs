@@ -11,7 +11,8 @@ public partial class AI : Character
     {
         base.UpdateSkill();
 
-        DecideAttackNum();
+        if(m_bCanAttack == true)
+            DecideAttackNum();
     }
 
     void DecideAttackNum()
@@ -21,5 +22,18 @@ public partial class AI : Character
         int[] RandomAttackNum = { 1011, 1012 }; //스켈레톤
         int RandomNum = Random.Range(0, RandomAttackNum.Length);
         AttackEvent(RandomAttackNum[RandomNum]);
+    }
+
+    protected override void HowNextAttack()
+    {
+        base.HowNextAttack();
+
+        // AI는 확률적으로 공격할지 아니면 끝을 낼지를 함.
+        int rand = Random.Range(0, 101);
+        if (rand >= 50)
+        {
+            AttackEvent(m_strAttack.info.m_iNextNum);
+            StopCoroutine(m_coAttackCheck);
+        }
     }
 }

@@ -13,6 +13,8 @@ public partial class Character : Base
     protected bool  m_bCanAttack = true;
     protected bool  m_bNextAttack = false;
 
+    protected Coroutine m_coAttackCheck;
+
     public void ChangeClass(string typeClass)
     {
         switch (typeClass)
@@ -30,8 +32,9 @@ public partial class Character : Base
 
     protected virtual void AttackEvent(int id)
     {
-        if (CheckCooltime() == false)
-            return;
+        // TODO 공격별 쿨타임 체크 - 스킬 같은 경우
+        //if (CheckCooltime() == false)
+        //return;
 
         m_strAttack.info = Managers.Table.m_Attack.Get(id);
 
@@ -41,24 +44,28 @@ public partial class Character : Base
             return;
         }
 
-        m_bCanAttack = false;
+        eState = CreatureState.Skill;
 
-        // 정지
+        m_bCanAttack = false;
+        m_bWaiting = true;
+        m_bNextAttack = false;
 
         // 애니메이션 실행
-        // TODO MyPlayerInput Dic.Action() 부분에 합쳐 버리기
         ActionAnimation(m_strAttack.info.m_sAnimName);
 
         // 공격 데미지 더해주기
-        m_fCoolTime += m_strAttack.info.m_fCoolTime;
+        //m_fCoolTime += m_strAttack.info.m_fCoolTime;
         m_strStat.m_iAtk += m_strAttack.info.m_iDmg;
 
         // 공격 종료 체크
-        StartCoroutine(CoAttackCheck());
+        m_coAttackCheck = StartCoroutine(CoAttackCheck());
     }
 
     void Attack()
     {
+        // Sound
+        SoundPlay(m_strAttack.info.m_sAnimName);
+
         // 콜라이더 활성화
         AttackCollider tempAttackCollider = AttackCollider.None;
 
@@ -75,6 +82,7 @@ public partial class Character : Base
                 return;
             }
         }
+
     }
 
     // 피격
@@ -125,6 +133,7 @@ public partial class Character : Base
 
         m_bCanAttack = true;
         m_bWaiting = false;
+        m_bNextAttack = false;
 
         m_strStat.m_iAtk = m_strStat.m_fOriginalAtk;
 
@@ -139,7 +148,7 @@ public partial class Character : Base
         return false;
     }
 
-    protected IEnumerator CoAttackCheck()
+    IEnumerator CoAttackCheck()
     {
         float time = GetAnimationTime(m_strAttack.info.m_sAnimName, 0.6f);
 
@@ -147,7 +156,7 @@ public partial class Character : Base
 
         if (m_strAttack.info.m_iNextNum != 0)
         {
-            m_bNextAttack = true;
+            HowNextAttack();
         }
 
         time = GetAnimationTime(m_strAttack.info.m_sAnimName, 0.4f);
@@ -156,5 +165,10 @@ public partial class Character : Base
 
         AttackEnd();
         yield break;
+    }
+
+    protected virtual void HowNextAttack()
+    {
+
     }
 }

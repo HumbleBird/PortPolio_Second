@@ -60,7 +60,6 @@ public class CursorController : MonoBehaviour
                 _cursorType = CursorType.Arrow;
             }
         }
-		print(IsPointerOverUIElement() ? "Over UI" : "Not over UI");
 	}
 
 	public bool IsPointerOverUIElement()

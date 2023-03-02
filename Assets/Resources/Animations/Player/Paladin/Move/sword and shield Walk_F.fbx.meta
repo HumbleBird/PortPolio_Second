@@ -62,14 +62,14 @@ ModelImporter:
       events:
       - time: 0.35584414
         functionName: SoundPlay
-        data: 'Player Move Walk '
+        data: Player Move Walk
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.88571703
         functionName: SoundPlay
-        data: 'Player Move Walk '
+        data: Player Move Walk
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
