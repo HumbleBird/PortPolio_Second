@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -109,7 +110,7 @@ public class BattleManager
 
         if (myPlayer == true)
         {
-            Managers.Object.MyPlayer = pc;
+            Managers.Object.myPlayer = pc.GetComponent<MyPlayer>();
             MyPlayer myplayer = pc.GetComponent<MyPlayer>();
             Managers.Camera.Init();
             myplayer.m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", go.transform);
@@ -225,8 +226,8 @@ public class BattleManager
 
     public void SetPostionNearToPlayer(GameObject go)
     {
-        Quaternion randomRotation = Quaternion.Euler(Random.Range(0, 360), 0, 0);
-        Player player =  Managers.Object.MyPlayer;
+        Quaternion randomRotation = Quaternion.Euler(UnityEngine.Random.Range(0, 360), 0, 0);
+        Player player =  Managers.Object.myPlayer;
 
         Vector3 result;
         if (GetRandomNavmeshLocation(player.transform.position, out result))
@@ -240,7 +241,7 @@ public class BattleManager
 
     public bool GetRandomNavmeshLocation(Vector3 center, out Vector3 resultPostion, float radius = 10)
     {
-        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
         randomDirection += center;
         resultPostion = Vector3.zero;
         NavMeshHit anonymous;
@@ -316,7 +317,34 @@ public class BattleManager
 
     #region Development Convenience
 
+    public NPC m_npc;
 
+    public IEnumerator NPCInteractionEventFunction()
+    {
+        while (true)
+        {
+            //if (Console.KeyAvailable == false)
+                yield return null;
+            
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                m_npc.StartInteraction();
+                yield break;
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                m_npc.NextInteraction();
+                yield break;
+            }
+            else if (Input.GetKey(KeyCode.Escape))
+            {
+                m_npc.EndInteraction();
+                m_npc = null;
+                yield break;
+            }
+
+        }
+    }
 
     public void CreateCreatureContainer()
     {

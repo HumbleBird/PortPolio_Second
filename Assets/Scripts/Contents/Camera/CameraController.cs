@@ -20,7 +20,7 @@ public partial class CameraController : MonoBehaviour
         m_CameraEffect = GetComponentInParent<CameraEffectController>();
         Managers.Camera.m_CameraEffect = m_CameraEffect;
 
-        player = Managers.Object.MyPlayer.gameObject;
+        player = Managers.Object.myPlayer.gameObject;
 		m_FollwTarget = player.GetComponent<MyPlayer>().m_FollwTarget;
 
 		m_CinemachineFreeLook.Follow = m_FollwTarget.transform;

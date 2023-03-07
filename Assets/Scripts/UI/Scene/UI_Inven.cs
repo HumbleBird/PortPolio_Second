@@ -33,7 +33,7 @@ public class UI_Inven : UI_Base
         UIInvenMain.RefreshUI();
         UIItemDes.RefreshUI();
 
-        UICharacterData.SetInfo(Managers.Object.MyPlayer.gameObject);
+        UICharacterData.SetInfo(Managers.Object.myPlayer.gameObject);
         UICharacterData.RefreshUI();
     }
 }

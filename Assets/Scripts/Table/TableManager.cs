@@ -19,6 +19,7 @@ public class TableManager
     public Table_Reward               m_Reward = new Table_Reward();
     public Table_MonsterSpawnPos      m_MonsterSpawnPos = new Table_MonsterSpawnPos();
     public Table_Sound                m_Sound = new Table_Sound();
+    public Table_Dialogue             m_Dialogue = new Table_Dialogue();
 
     public void Init()
     {
@@ -37,6 +38,7 @@ public class TableManager
         m_Reward.Init_CSV("Reward", 2, 0);
         m_MonsterSpawnPos.Init_CSV("MonsterSpawnPos", 2, 0);
         m_Sound.Init_CSV("Sound", 2, 0);
+        m_Dialogue.Init_CSV("Dialogue", 2, 0);
 #else
         m_Camera.Init_Binary("Camera");
 #endif
@@ -58,6 +60,7 @@ public class TableManager
         m_Reward.Save_Binary("Reward");
         m_MonsterSpawnPos.Save_Binary("MonsterSpawnPos");
         m_Sound.Save_Binary("Sound");
+        m_Dialogue.Save_Binary("Dialogue");
 
 
 #if UNITY_EDITOR

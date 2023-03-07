@@ -10,7 +10,7 @@ public partial class Character : Base
     public ActionState eActionState = ActionState.None;
     public MoveState eMoveState = MoveState.None;
     private CreatureState state = CreatureState.Idle;
-    public CharacterClass eCharacterClass = CharacterClass.None;
+    protected CharacterClass eCharacterClass = CharacterClass.None;
 
     public virtual CreatureState eState
     {

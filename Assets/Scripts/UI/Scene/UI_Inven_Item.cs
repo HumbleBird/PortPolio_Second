@@ -9,7 +9,8 @@ public class UI_Inven_Item : UI_Base
 {
     enum Texts
     {
-        ItemCountText
+        ItemCountText,
+        ItemPriceText
     }
 
     enum Images
@@ -17,6 +18,8 @@ public class UI_Inven_Item : UI_Base
         InventoryItemIcon,
         UsingItemCheckIcon
     }
+
+    public TextMeshProUGUI m_iItemPrice { get; private set; }
 
     TextMeshProUGUI itemCount;
     Image itemIcon;
@@ -39,6 +42,9 @@ public class UI_Inven_Item : UI_Base
         itemCount = GetText((int)Texts.ItemCountText);
         itemCount.gameObject.SetActive(false);
 
+        m_iItemPrice = GetText((int)Texts.ItemPriceText);
+        m_iItemPrice.enabled = false;
+
         itemIcon = GetImage((int)Images.InventoryItemIcon);
 
         itemIcon.gameObject.BindEvent(() =>
@@ -50,7 +56,7 @@ public class UI_Inven_Item : UI_Base
 
             newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
 
-            Managers.Battle.EquipItem(Managers.Object.MyPlayer, newitem);
+            Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
         });
 
         itemIcon.gameObject.SetActive(false);

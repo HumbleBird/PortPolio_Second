@@ -19,7 +19,7 @@ public partial class MyPlayer : Player
 		base.Init();
 		SetKey();
 
-		Managers.Object.MyPlayer = this;
+		Managers.Object.myPlayer = this;
 	}
 
 	protected override void UpdateController()
@@ -42,10 +42,12 @@ public partial class MyPlayer : Player
 	void IdleAndMoveState()
     {
 		GetMoveInput();
-		GetInputAttack();
+		AmbientDetection();
 
 		if (m_bWaiting == false)
         {
+			GetInputAttack();
+
 			InputMaintainKey();
 			InputOnekey();
 		}
@@ -112,6 +114,29 @@ public partial class MyPlayer : Player
 			eState = CreatureState.Idle;
 	}
 
-	
+	public bool m_bIsNPCInteracting = false;	
+	void AmbientDetection()
+    {
+		if (m_bIsNPCInteracting == true)
+			return;
+
+		float viewRadius = 1.0f;
+		int m_iNPCLayer = 11;
+		LayerMask NPCMask = (1 << m_iNPCLayer);
+		Collider[] NPCInRange = Physics.OverlapSphere(transform.position, viewRadius, NPCMask);   //  Make an overlap sphere around the enemy to detect the playermask in the view radius
+
+        for (int i = 0; i < NPCInRange.Length; i++)
+        {
+			NPC npc = NPCInRange[i].GetComponent<NPC>();
+
+			// event¿¡ npc ÇÒ´ç
+			Managers.Battle.m_npc = npc;
+
+			npc.StartInteraction();
+			m_bIsNPCInteracting = true;
+			return;
+        }
+
+	}
 }
 
