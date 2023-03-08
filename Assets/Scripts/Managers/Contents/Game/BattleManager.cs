@@ -289,7 +289,7 @@ public class BattleManager
         //player.Inven.add(item);
 
         Managers.Inventory.Add(newItem);
-        Managers.UIBattle.InvenRefreshUI();
+        Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIInven);
     }
 
     #endregion
@@ -302,7 +302,7 @@ public class BattleManager
             return;
 
         player.EquipItem(equipItem);
-        Managers.UIBattle.EquipmentRefreshUI();
+        Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIEquipment);
     }
 
     // 소모품 아이템

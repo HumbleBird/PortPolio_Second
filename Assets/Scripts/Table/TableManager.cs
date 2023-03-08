@@ -20,6 +20,7 @@ public class TableManager
     public Table_MonsterSpawnPos      m_MonsterSpawnPos = new Table_MonsterSpawnPos();
     public Table_Sound                m_Sound = new Table_Sound();
     public Table_Dialogue             m_Dialogue = new Table_Dialogue();
+    public Table_Shop                 m_Shop = new Table_Shop();
 
     public void Init()
     {
@@ -39,6 +40,7 @@ public class TableManager
         m_MonsterSpawnPos.Init_CSV("MonsterSpawnPos", 2, 0);
         m_Sound.Init_CSV("Sound", 2, 0);
         m_Dialogue.Init_CSV("Dialogue", 2, 0);
+        m_Shop.Init_CSV("Shop", 2, 0);
 #else
         m_Camera.Init_Binary("Camera");
 #endif
@@ -61,7 +63,7 @@ public class TableManager
         m_MonsterSpawnPos.Save_Binary("MonsterSpawnPos");
         m_Sound.Save_Binary("Sound");
         m_Dialogue.Save_Binary("Dialogue");
-
+        m_Shop.Save_Binary("Shop");
 
 #if UNITY_EDITOR
         AssetDatabase.Refresh();

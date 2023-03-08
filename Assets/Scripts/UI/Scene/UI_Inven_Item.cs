@@ -67,6 +67,23 @@ public class UI_Inven_Item : UI_Base
         return true;
     }
 
+    public void Shop(bool OnOff)
+    {
+        if(OnOff == true)
+        {
+            m_iItemPrice.enabled = true;
+
+            itemCount.text = m_iCount.ToString();
+            itemCount.gameObject.SetActive(true);
+        }
+        else
+        {
+            m_iItemPrice.enabled= false;
+            itemCount.gameObject.SetActive(true);
+
+        }
+    }
+
     public void SetItem(Item item)
     {
         if(item == null)
@@ -78,6 +95,7 @@ public class UI_Inven_Item : UI_Base
 
             itemIcon.gameObject.SetActive(false);
             itemCount.gameObject.SetActive(false);
+            m_iItemPrice.text = "";
         }
         else
         {
@@ -85,6 +103,7 @@ public class UI_Inven_Item : UI_Base
             m_iSlot = item.InventorySlot;
             m_iCount = item.Count;
             m_bEquipped = item.m_bEquipped;
+            m_iItemPrice.text = item.m_iPrice.ToString();
 
             Table_Item.Info itemData = null;
             itemData = Managers.Table.m_Item.Get(m_iItemID);
@@ -92,11 +111,11 @@ public class UI_Inven_Item : UI_Base
             itemIcon.sprite = Managers.Resource.Load<Sprite>(itemData.m_sIconPath);
             itemIcon.gameObject.SetActive(true);
 
-            if (item.eItemType == ItemType.Consumable)
-            {
-                itemCount.text = m_iCount.ToString();
-                itemCount.gameObject.SetActive(true);
-            }
+            //if (item.eItemType == ItemType.Consumable)
+            //{
+            //    itemCount.text = m_iCount.ToString();
+            //    itemCount.gameObject.SetActive(true);
+            //}
 
             itemUseIcon.gameObject.SetActive(m_bEquipped);
         }

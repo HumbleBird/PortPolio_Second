@@ -24,9 +24,10 @@ public partial class MyPlayer : Player
 
         OptionKeyDic = new Dictionary<KeyCode, Action>
         {
-            { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], m_cOption.ShowInputKeySetting},
-            { Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], m_cOption.ShowInventory},
-            { Managers.InputKey._binding.Bindings[UserAction.UI_Equipment], m_cOption.ShowEquipment},
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], () => { Managers.UIBattle.ShowAndClose(Managers.UIBattle.UIGameScene.UISetting);}},
+            //{ Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], () => { Managers.UIBattle.ShowAndClose(Managers.UIBattle.UIGameScene.UIInven);}},
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], () => { Managers.UIBattle.ShowandCloas(UI_Popup); }},
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Equipment], () => { Managers.UIBattle.ShowAndClose(Managers.UIBattle.UIGameScene.UIEquipment);}},
         };
     }
 

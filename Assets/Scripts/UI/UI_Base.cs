@@ -87,4 +87,12 @@ public abstract class UI_Base : MonoBehaviour
 				break;
 		}
 	}
+
+	public virtual void RefreshUI()
+    {
+		if (_init == false)
+			return;
+
+
+	}
 }

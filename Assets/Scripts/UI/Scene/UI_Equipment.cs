@@ -110,10 +110,9 @@ public class UI_Equipment : UI_Base
         }
     }
 
-    public void RefreshUI()
+    public override void RefreshUI()
     {
-        if (_init == false)
-            return;
+        base.RefreshUI();
 
         // 장비칸에 아이템 넣기
         foreach (Item item in Managers.Inventory.m_Items)
@@ -215,6 +214,9 @@ public class UI_Equipment : UI_Base
                 }
             }
         }
+
+        Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIPlayerInfo);
+
     }
 
     private void ItemAllReset()

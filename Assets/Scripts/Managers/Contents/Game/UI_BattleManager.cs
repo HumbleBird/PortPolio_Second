@@ -6,39 +6,70 @@ using UnityEngine.EventSystems;
 public class UI_BattleManager
 {
     public UI_GameScene UIGameScene;
+    int m_count = 0;
 
     public void Init()
     {
         UIGameScene = Managers.UI.SceneUI as UI_GameScene;
     }
 
-    // 인베토리
-    public void InvenRefreshUI()
+    public void RefreshUI(UI_Base ui)
     {
-        Init();
-        UI_Inven UIInven = UIGameScene.UIInven;
-        UIInven.RefreshUI();
+        ui.RefreshUI();
     }
 
-    // 플레이어 HP/MP/Stamina
-    public void StatRefershUI()
+    public void RefreshUIAll()
     {
-        UI_PlayerInfo UIPlayerInfo = UIGameScene.UIPlayerInfo;
-        UIPlayerInfo.RefreshUI();
+        UIGameScene.UIPlayerInfo.RefreshUI();
+        UIGameScene.UIInven.RefreshUI();
+        UIGameScene.UISetting.RefreshUI();
+        UIGameScene.UIEquipment.RefreshUI();
+        UIGameScene.UIShop.RefreshUI();
     }
 
-    // 장비창
-    public void EquipmentRefreshUI()
+    public void ShowAndClose(UI_Base scene)
     {
-        UI_Equipment UIEquipment = UIGameScene.UIEquipment;
-        UIEquipment.RefreshUI();
+        bool B = scene.gameObject.activeSelf;
+        scene.gameObject.SetActive(!B);
 
-        StatRefershUI();
+        //  UI창을 켰다면
+        if (B == false)
+        {
+            scene.RefreshUI();
+
+            m_count += 1;
+
+            if (m_count == 1)
+            {
+                // 마우스 커서 Lock Off
+                CursorController.MouseCurserLockOnOff(true);
+            }
+        }
+        else
+        {
+            m_count -= 1;
+
+            if (m_count == 0)
+            {
+                // 마우스 커서 Lock on
+                CursorController.MouseCurserLockOnOff(false);
+            }
+        }
     }
 
-    public bool AreTheSlotsForThatItemFull(Item item)
+    List<UI_Base> UIList = new List<UI_Base>();
+    public void ShowandCloas<T>(T scene)
     {
-        UI_Equipment UIEquipment = UIGameScene.UIEquipment;
-        return UIEquipment.AreTheSlotsForThatItemFull(item);
+        // 만약 처음 키는 거라면
+        if (UIList.Contains(scene))
+        {
+            scene.TryGetComponent
+            Managers.UI.ShowPopupUI<scene>;
+        }
+        // 만약 이미 켜져 있다면
+        else
+        {
+
+        }
     }
 }

@@ -37,10 +37,9 @@ public class UI_InvenMain : UI_Base
         return true;
     }
 
-    public void RefreshUI()
+    public override void RefreshUI()
     {
-        if (_init == false)
-            return;
+        base.RefreshUI();
 
         // 아이템 창 아이템
         //List<Item> items = Managers.Inventory.m_dicItem.Values.ToList();
@@ -53,6 +52,7 @@ public class UI_InvenMain : UI_Base
                 continue;
 
             Items[item.InventorySlot].SetItem(item);
+            Items[item.InventorySlot].Shop(false);
         }
     }
 }

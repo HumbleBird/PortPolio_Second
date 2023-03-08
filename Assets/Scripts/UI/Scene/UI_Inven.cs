@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UI_Inven : UI_Base
+public class UI_Inven : UI_Popup
 {
     public UI_InvenMain UIInvenMain { get; set; }
     public UI_ItemDes UIItemDes { get; set; }
@@ -19,21 +19,19 @@ public class UI_Inven : UI_Base
         UIItemDes = GetComponentInChildren<UI_ItemDes>();
         UICharacterData = GetComponentInChildren<UI_CharacterData>();
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         return true;
     }
 
 
-    public void RefreshUI()
+    public override void RefreshUI()
     {
-        if (_init == false)
-            return;
+        base.RefreshUI();
 
         UIInvenMain.RefreshUI();
         UIItemDes.RefreshUI();
 
-        UICharacterData.SetInfo(Managers.Object.myPlayer.gameObject);
         UICharacterData.RefreshUI();
     }
 }

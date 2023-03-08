@@ -10,7 +10,6 @@ using static Define;
 public partial class MyPlayer : Player
 {
 	public Vector3 m_MovementDirection;
-	Option m_cOption = new Option();
 	public GameObject m_FollwTarget = null;
 	public float m_fRotationSpeed = 10f;
 
@@ -20,6 +19,7 @@ public partial class MyPlayer : Player
 		SetKey();
 
 		Managers.Object.myPlayer = this;
+
 	}
 
 	protected override void UpdateController()

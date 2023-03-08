@@ -19,6 +19,7 @@ public class Item
     public string iconPath { get; set; }
 
     public int Count { get; set; }
+    public int m_iPrice { get; set; }
     public int InventorySlot { get; set; }
     public int EquipmentSlot { get; set; } = -1;
 

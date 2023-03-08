@@ -24,16 +24,13 @@ public class UI_Shop : UI_Base
         return true;
     }
 
-
-    public void RefreshUI()
+    public override void RefreshUI()
     {
-        if (_init == false)
-            return;
+        base.RefreshUI();
 
         UIShopInven.RefreshUI();
         UIItemDes.RefreshUI();
 
-        UICharacterData.SetInfo(Managers.Object.myPlayer.gameObject);
         UICharacterData.RefreshUI();
     }
 }

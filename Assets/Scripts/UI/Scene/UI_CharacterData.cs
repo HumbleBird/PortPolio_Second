@@ -60,22 +60,16 @@ public class UI_CharacterData : UI_Base
         BindText(typeof(Texts));
 
         _init = true;
+        _player = Managers.Object.myPlayer;
+
         RefreshUI();
 
         return true;
     }
 
-    public void SetInfo(GameObject player)
+    public override void RefreshUI()
     {
-        _player = player.GetComponent<Player>();
-
-        RefreshUI();
-    }
-
-    public void RefreshUI()
-    {
-        if (_init == false)
-            return;
+        base.RefreshUI();
 
         // 캐릭터 데이터
         TextMeshProUGUI HPValueText = GetText((int)Texts.HPValueText);

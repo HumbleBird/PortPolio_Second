@@ -12,9 +12,8 @@ public class UI_ItemDes : UI_Base
         return true;
     }
 
-    public void RefreshUI()
+    public override void RefreshUI()
     {
-        if (_init == false)
-            return;
+        base.RefreshUI();
     }
 }
