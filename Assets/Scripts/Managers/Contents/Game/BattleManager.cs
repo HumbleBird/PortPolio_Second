@@ -337,7 +337,7 @@ public class BattleManager
                 m_npc.Interaction();
                 yield break;
             }
-            else if (Input.GetKey(KeyCode.Escape))
+            else if (Input.GetKeyDown(KeyCode.Q))
             {
                 m_npc.EndInteraction();
                 yield break;

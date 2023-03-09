@@ -16,10 +16,9 @@ public class UI_SelectWindow : UI_Popup
 	enum Images
 	{
 		TalkButtonImage,
-		InteractionImage
+		InteractionButtonImage
 	}
-
-	Image m_InteractionImage;
+	
 
 	public override bool Init()
 	{

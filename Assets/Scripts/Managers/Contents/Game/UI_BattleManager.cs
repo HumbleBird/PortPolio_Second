@@ -34,10 +34,10 @@ public class UI_BattleManager
     {
         while (true)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 action.Invoke();
-                break;
+                yield break;
             }
 
             yield return null;
@@ -49,5 +49,40 @@ public class UI_BattleManager
     {
         UI_Equipment equipment = Managers.Resource.Load<UI_Equipment>("Prefabs/UI/Popup/UI_Equipment");
         return equipment.AreTheSlotsForThatItemFull(item);
+    }
+
+    Dictionary<string, UI_Popup> UIDic = new Dictionary<string, UI_Popup>();
+    public T ShowAndClosePopup<T>(string name = null) where T : UI_Popup
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        T pop;
+
+        // 처음 키는 거라면
+        if (UIDic.ContainsKey(name) == false)
+        {
+            pop = Managers.UI.ShowPopupUI<T>();
+
+            // 마우스
+            if (UIDic.Count == 0)
+                CursorController.MouseCurserLockOnOff(true);
+
+            UIDic.Add(name, pop);
+        }
+        // 이미 켜져 있다면
+        else
+        {
+            pop = (T)UIDic[name];
+
+            Managers.UI.ClosePopupUI(pop);
+            UIDic.Remove(name);
+
+            // 마우스
+            if (UIDic.Count == 0)
+                CursorController.MouseCurserLockOnOff(false);
+        }
+
+        return pop;
     }
 }

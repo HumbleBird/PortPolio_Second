@@ -7,6 +7,14 @@ public class NPC : MonoBehaviour
     // Diarogue
     protected Dialogue m_dialogue = new Dialogue();
 
+    public UI_Popup MeetPlayer()
+    {
+        Managers.Battle.m_npc = this;
+
+        StartCoroutine(Managers.Battle.NPCInteractionEventFunction());
+        return Managers.UI.ShowPopupUI<UI_SelectWindow>();
+    }
+
     public virtual void Talk()
     {
         Managers.UI.ClosePopupUI();
@@ -16,7 +24,12 @@ public class NPC : MonoBehaviour
     {
         Managers.UI.ClosePopupUI();
 
-        StartCoroutine(Managers.UIBattle.DelegateShowAndClose(() => { EndInteraction(); }));
+        StartCoroutine(Managers.UIBattle.DelegateShowAndClose(() 
+            => { 
+                Managers.UI.ClosePopupUI();
+                Managers.UI.ShowPopupUI<UI_SelectWindow>();
+                StartCoroutine(Managers.Battle.NPCInteractionEventFunction());
+            }));
     }
 
     // 모든 상호작용이 끝나면
@@ -25,7 +38,6 @@ public class NPC : MonoBehaviour
         Managers.UI.ClosePopupUI();
 
         Managers.Object.myPlayer.m_bWaiting = false;
-        Managers.Object.myPlayer.m_bIsNPCInteracting = false;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -33,5 +45,4 @@ public class NPC : MonoBehaviour
         Managers.UI.ClosePopupUI();
         Managers.Battle.m_npc = null;
     }
-
 }
