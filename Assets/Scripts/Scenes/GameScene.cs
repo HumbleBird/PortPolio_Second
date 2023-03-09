@@ -30,6 +30,9 @@ public class GameScene : BaseScene
         // Sound
         Managers.Sound.Play("Sounds/Bgm/Game/Dungeon", 0, Sound.Bgm);
 
+        // 기타
+        //StartCoroutine(Managers.InputKey.Update());
+
 #if DEBUG
         ClearLog();
 #endif

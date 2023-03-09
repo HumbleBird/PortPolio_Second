@@ -47,18 +47,7 @@ public class Managers : MonoBehaviour
     void Start()
     {
         Init();
-        StartCoroutine(C_Update());
 	}
-
-    IEnumerator C_Update()
-    {
-        while (true)
-        {
-            s_instance._inputkey.Update();
-
-            yield return null;
-        }
-    }
 
     static void Init()
     {

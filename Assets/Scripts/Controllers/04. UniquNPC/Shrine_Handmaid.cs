@@ -8,23 +8,18 @@ using UnityEngine;
 public class Shrine_Handmaid : NPC
 {
     // 상점 기능 NPC
-    public override void StartInteraction()
+    public override void Talk()
     {
-        base.StartInteraction();
+        base.Talk();
+
+        m_dialogue.StartDialogue(1);
     }
 
-    public override void NextInteraction()
+    public override void Interaction()
     {
-        base.NextInteraction();
+        base.Interaction();
 
-        Debug.Log("상점 오픈");
-        Managers.UIBattle.ShowAndClose(Managers.UIBattle.UIGameScene.UIShop);
+        Managers.UI.ShowPopupUI<UI_Shop>();
 
-        // 이제 esc를 감지하여 팝업창 닫기
-    }
-
-    public override void EndInteraction()
-    {
-        base.EndInteraction();
     }
 }

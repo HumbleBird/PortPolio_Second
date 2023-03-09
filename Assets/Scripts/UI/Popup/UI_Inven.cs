@@ -19,8 +19,6 @@ public class UI_Inven : UI_Popup
         UIItemDes = GetComponentInChildren<UI_ItemDes>();
         UICharacterData = GetComponentInChildren<UI_CharacterData>();
 
-        //gameObject.SetActive(false);
-
         return true;
     }
 

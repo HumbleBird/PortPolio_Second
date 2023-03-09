@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UI_Shop : UI_Base
+public class UI_Shop : UI_Popup
 {
     public UI_ShopInven UIShopInven { get; set; }
     public UI_ItemDes UIItemDes { get; set; }
@@ -18,8 +18,6 @@ public class UI_Shop : UI_Base
         UIShopInven = GetComponentInChildren<UI_ShopInven>();
         UIItemDes = GetComponentInChildren<UI_ItemDes>();
         UICharacterData = GetComponentInChildren<UI_CharacterData>();
-
-        gameObject.SetActive(false);
 
         return true;
     }

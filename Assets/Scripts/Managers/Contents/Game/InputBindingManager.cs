@@ -50,18 +50,23 @@ namespace Rito.InputBindings
         #endregion
 
         #region Unity Callbacks
-        public void Update()
+        public IEnumerator Update()
         {
-            if (_isListening)
+            while (true)
             {
-                if (ListenInput(out var keyCode))
+                if (_isListening)
                 {
-                    SetKeyBinding(_curKeyAction, keyCode);
-                    _isListening = false;
+                    if (ListenInput(out var keyCode))
+                    {
+                        SetKeyBinding(_curKeyAction, keyCode);
+                        _isListening = false;
+                    }
                 }
-            }
 
-            _waitingInputGo.SetActive(_isListening);
+                _waitingInputGo.SetActive(_isListening);
+
+                yield return null;
+            }
         }
         #endregion
 

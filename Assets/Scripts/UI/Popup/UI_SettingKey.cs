@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_SettingKey : UI_Base
+public class UI_SettingKey : UI_Popup
 {
     enum Buttons
     {
@@ -35,16 +35,6 @@ public class UI_SettingKey : UI_Base
         Managers.InputKey._waitingInputGo = GetObject((int)GameObjects.InputWatingImage);
         Managers.InputKey._verticalLayoutTr = GetObject((int)GameObjects.VerticalLayout).transform;
 
-        Managers.InputKey.Init();
-
-        gameObject.SetActive(false);
-
         return true;
-    }
-
-    public void RefreshUI()
-    {
-        if (_init == false)
-            return;
     }
 }

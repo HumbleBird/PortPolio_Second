@@ -39,9 +39,13 @@ public class UI_Equipment_Item : UI_Base
 
         GetText((int)Texts.ProjectileCountText).enabled = false;
 
+        UI_Equipment pop = transform.GetComponentInParent<UI_Equipment>();
+        if (pop == null)
+            Debug.Break();
+
         m_itemIcon.gameObject.BindEvent(() =>
         {
-            Managers.UIBattle.UIGameScene.UIEquipment.equipmentNameText.text = m_sName;
+            pop.equipmentNameText.text = m_sName;
         });
 
         return true;

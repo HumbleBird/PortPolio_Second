@@ -5,35 +5,33 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     // Diarogue
-    Dialogue m_dialogue = new Dialogue();
+    protected Dialogue m_dialogue = new Dialogue();
 
-    // 무조건 첫 대화
-    public virtual void StartInteraction()
+    public virtual void Talk()
     {
-        m_dialogue.CloseDialogue();
-        m_dialogue.StartDialogue(1);
+        Managers.UI.ClosePopupUI();
     }
 
-    // 첫 대사 끝나면 상호작용
-    public virtual void NextInteraction()
+    public virtual void Interaction()
     {
-        // NPC 값에 따라 상점, 퀘스트, 업그레이드
+        Managers.UI.ClosePopupUI();
 
-        // 여기서는 상점 오픈
-
-        m_dialogue.CloseDialogue();
+        StartCoroutine(Managers.UIBattle.DelegateShowAndClose(() => { EndInteraction(); }));
     }
 
     // 모든 상호작용이 끝나면
     public virtual void EndInteraction()
     {
-        m_dialogue.CloseDialogue();
+        Managers.UI.ClosePopupUI();
 
         Managers.Object.myPlayer.m_bWaiting = false;
         Managers.Object.myPlayer.m_bIsNPCInteracting = false;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        Managers.UI.ClosePopupUI();
+        Managers.Battle.m_npc = null;
     }
 
 }

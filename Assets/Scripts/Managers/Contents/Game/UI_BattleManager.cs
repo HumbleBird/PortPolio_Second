@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,70 +7,47 @@ using UnityEngine.EventSystems;
 public class UI_BattleManager
 {
     public UI_GameScene UIGameScene;
-    int m_count = 0;
 
     public void Init()
     {
         UIGameScene = Managers.UI.SceneUI as UI_GameScene;
+
+        UI_SettingKey popup =Managers.UI.ShowPopupUI<UI_SettingKey>();
+        popup.ClosePopupUI();
+
+        Managers.InputKey.Init();
     }
 
-    public void RefreshUI(UI_Base ui)
+    public void RefreshPopupUI<T>(string name = null)
     {
-        ui.RefreshUI();
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        UI_Popup popup = Managers.Resource.Load<UI_Popup>($"Prefabs/UI/Popup/{name}");
+
+        popup.RefreshUI();
     }
 
-    public void RefreshUIAll()
-    {
-        UIGameScene.UIPlayerInfo.RefreshUI();
-        UIGameScene.UIInven.RefreshUI();
-        UIGameScene.UISetting.RefreshUI();
-        UIGameScene.UIEquipment.RefreshUI();
-        UIGameScene.UIShop.RefreshUI();
-    }
+    
 
-    public void ShowAndClose(UI_Base scene)
+    public IEnumerator DelegateShowAndClose(Action action)
     {
-        bool B = scene.gameObject.activeSelf;
-        scene.gameObject.SetActive(!B);
-
-        //  UI창을 켰다면
-        if (B == false)
+        while (true)
         {
-            scene.RefreshUI();
-
-            m_count += 1;
-
-            if (m_count == 1)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                // 마우스 커서 Lock Off
-                CursorController.MouseCurserLockOnOff(true);
+                action.Invoke();
+                break;
             }
-        }
-        else
-        {
-            m_count -= 1;
 
-            if (m_count == 0)
-            {
-                // 마우스 커서 Lock on
-                CursorController.MouseCurserLockOnOff(false);
-            }
+            yield return null;
         }
+
     }
 
-    List<UI_Base> UIList = new List<UI_Base>();
-    public void ShowandCloas<T>(T scene)
+    public bool AreTheSlotsForThatItemFull(Item item)
     {
-        // 만약 처음 키는 거라면
-        if (UIList.Contains(scene))
-        {
-            scene.TryGetComponent
-            Managers.UI.ShowPopupUI<scene>;
-        }
-        // 만약 이미 켜져 있다면
-        else
-        {
-
-        }
+        UI_Equipment equipment = Managers.Resource.Load<UI_Equipment>("Prefabs/UI/Popup/UI_Equipment");
+        return equipment.AreTheSlotsForThatItemFull(item);
     }
 }

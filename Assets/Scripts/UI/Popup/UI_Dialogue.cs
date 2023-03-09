@@ -10,19 +10,14 @@ public class UI_Dialogue : UI_Popup
 	enum Texts
     {
 		DialogueText,
-		TalkText,
-		InteractionText
 	}
 
 	enum Images
     {
 		DialoguePanelImage,
-		TalkButtonImage,
-		InteractionImage
 	}
 
 	Queue<string> m_sentences = new Queue<string>();
-	Image m_InteractionImage;
 	Image m_DialoguePannelImage;
 	TextMeshProUGUI m_DialogueText;
 
@@ -36,7 +31,6 @@ public class UI_Dialogue : UI_Popup
 
 		m_DialogueText = GetText((int)Texts.DialogueText);
 		m_DialoguePannelImage = GetImage((int)Images.DialoguePanelImage);
-		m_InteractionImage = GetImage((int)Images.InteractionImage);
 
 		m_DialoguePannelImage.gameObject.BindEvent(() =>
 		{
@@ -49,10 +43,6 @@ public class UI_Dialogue : UI_Popup
 	public void DisplayNextSentence(Queue<string> sentences)
 	{
 		m_sentences = sentences;
-
-		m_DialogueText.gameObject.SetActive(true);
-		m_DialoguePannelImage.gameObject.SetActive(true);
-		m_InteractionImage.gameObject.SetActive(false);
 
 		DisplayNextSentence();
 	}
@@ -82,12 +72,14 @@ public class UI_Dialogue : UI_Popup
 
 	public void EndDialogue()
 	{
-		Debug.Log("다음 상태로");
-
-		m_DialogueText.gameObject.SetActive(false);
-		m_DialoguePannelImage.gameObject.SetActive(false);
-		m_InteractionImage.gameObject.SetActive(true);
+		TalkStart(false);
 
 		StartCoroutine(Managers.Battle.NPCInteractionEventFunction());
+	}
+
+	void TalkStart(bool isTalk = true)
+    {
+		m_DialogueText.enabled = isTalk;
+		m_DialoguePannelImage.enabled = isTalk;
 	}
 }

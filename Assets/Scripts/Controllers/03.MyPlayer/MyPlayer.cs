@@ -16,9 +16,10 @@ public partial class MyPlayer : Player
 	protected override void Init()
 	{
 		base.Init();
-		SetKey();
 
 		Managers.Object.myPlayer = this;
+
+		SetKey();
 
 	}
 
@@ -132,7 +133,9 @@ public partial class MyPlayer : Player
 			// event¿¡ npc ÇÒ´ç
 			Managers.Battle.m_npc = npc;
 
-			npc.StartInteraction();
+			Managers.UI.ShowPopupUI<UI_SelectWindow>();
+			StartCoroutine(Managers.Battle.NPCInteractionEventFunction());
+
 			m_bIsNPCInteracting = true;
 			return;
         }

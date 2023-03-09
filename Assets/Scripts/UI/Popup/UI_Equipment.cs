@@ -5,7 +5,7 @@ using static Define;
 using System.Linq;
 using TMPro;
 
-public class UI_Equipment : UI_Base
+public class UI_Equipment : UI_Popup
 {
     enum GameObjects
     {
@@ -59,8 +59,6 @@ public class UI_Equipment : UI_Base
             CreateEquipmentInventory(EquipmentInventoryCount[i], i);
         }
 
-        gameObject.SetActive(false);
-
         return true;
     }
 
@@ -72,7 +70,7 @@ public class UI_Equipment : UI_Base
 
         for (int i = 0; i < count; i++)
         {
-            GameObject go = Managers.Resource.Instantiate("UI/Scene/UI_Equipment_Item", gridPannel.transform);
+            GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_Equipment_Item", gridPannel.transform);
             UI_Equipment_Item item = go.GetOrAddComponent<UI_Equipment_Item>();
             item.m_iSlot = i;
 
@@ -215,7 +213,7 @@ public class UI_Equipment : UI_Base
             }
         }
 
-        Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIPlayerInfo);
+        //Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIPlayerInfo);
 
     }
 

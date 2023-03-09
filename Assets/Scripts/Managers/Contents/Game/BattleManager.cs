@@ -238,7 +238,6 @@ public class BattleManager
 
     }
 
-
     public bool GetRandomNavmeshLocation(Vector3 center, out Vector3 resultPostion, float radius = 10)
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
@@ -289,7 +288,8 @@ public class BattleManager
         //player.Inven.add(item);
 
         Managers.Inventory.Add(newItem);
-        Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIInven);
+        Managers.UIBattle.RefreshPopupUI<UI_Inven>();
+
     }
 
     #endregion
@@ -302,7 +302,8 @@ public class BattleManager
             return;
 
         player.EquipItem(equipItem);
-        Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIEquipment);
+        Managers.UIBattle.RefreshPopupUI<UI_Equipment>();
+
     }
 
     // 소모품 아이템
@@ -328,18 +329,17 @@ public class BattleManager
             
             if (Input.GetKeyDown(KeyCode.A))
             {
-                m_npc.StartInteraction();
+                m_npc.Talk();
                 yield break;
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
-                m_npc.NextInteraction();
+                m_npc.Interaction();
                 yield break;
             }
             else if (Input.GetKey(KeyCode.Escape))
             {
                 m_npc.EndInteraction();
-                m_npc = null;
                 yield break;
             }
 

@@ -45,7 +45,7 @@ public partial class MyPlayer : Player
 	{
 		base.SetHp(NewHp, attacker);
 
-		Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIPlayerInfo);
+		Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshUI();
 		StartCoroutine(Managers.UIBattle.UIGameScene.UIPlayerInfo.DownHP());
 	}
 
@@ -53,7 +53,6 @@ public partial class MyPlayer : Player
 	{
 		base.SetStemina(NewSetStamina);
 
-		Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIPlayerInfo);
-
+		Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshUI();
 	}
 }

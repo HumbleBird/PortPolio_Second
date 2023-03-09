@@ -30,10 +30,9 @@ public class UI_PlayerInfo : UI_Scene
         return true;
     }
 
-    public void RefreshUI()
+    public override void RefreshUI()
     {
-        if (_init == false)
-            return;
+        base.RefreshUI();
 
         GameObject player = Managers.Object.Find(1);
         _player = player.GetComponent<Player>();

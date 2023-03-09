@@ -34,7 +34,7 @@ public partial class Player : Character
             return;
 
         // 아이템 해제
-        if (Managers.UIBattle.UIGameScene.UIEquipment.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
+        if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
         {
             Debug.Log("장비 창의 빈 칸이 없습니다. 장비 창의 아이템을 비워주세요.");
             return;
@@ -43,7 +43,7 @@ public partial class Player : Character
         {
             item.m_bEquipped = equipItem.m_bEquipped;
 
-            Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIInven);
+            Managers.UIBattle.RefreshPopupUI<UI_Inven>();
         }
 
 
@@ -76,7 +76,7 @@ public partial class Player : Character
             {
                 unequipItem.m_bEquipped = false;
 
-                Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIInven);
+                Managers.UIBattle.RefreshPopupUI<UI_Inven>();
 
             }
         }

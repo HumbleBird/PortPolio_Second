@@ -36,7 +36,7 @@ public class UI_ShopInven : UI_Base
 
         for (int i = 0; i < Managers.Table.m_Shop.m_Dictionary.Count; i++)
         {
-            GameObject go = Managers.Resource.Instantiate("UI/Scene/UI_Inven_Item", gridPannel.transform);
+            GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_Inven_Item", gridPannel.transform);
             UI_Inven_Item item = go.GetOrAddComponent<UI_Inven_Item>();
             Items.Add(item);
         }

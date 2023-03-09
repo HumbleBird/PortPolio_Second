@@ -24,10 +24,9 @@ public partial class MyPlayer : Player
 
         OptionKeyDic = new Dictionary<KeyCode, Action>
         {
-            { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], () => { Managers.UIBattle.ShowAndClose(Managers.UIBattle.UIGameScene.UISetting);}},
-            //{ Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], () => { Managers.UIBattle.ShowAndClose(Managers.UIBattle.UIGameScene.UIInven);}},
-            { Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], () => { Managers.UIBattle.ShowandCloas(UI_Popup); }},
-            { Managers.InputKey._binding.Bindings[UserAction.UI_Equipment], () => { Managers.UIBattle.ShowAndClose(Managers.UIBattle.UIGameScene.UIEquipment);}},
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Setting], () => {    ShowAndClosePopup<UI_SettingKey>(); }},
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], () => {  ShowAndClosePopup<UI_Inven>(); }},
+            { Managers.InputKey._binding.Bindings[UserAction.UI_Equipment], () => {  ShowAndClosePopup<UI_Equipment>(); }},
         };
     }
 
@@ -130,6 +129,40 @@ public partial class MyPlayer : Player
                     SoundPlay("UI On Off Sound");
                 }
             }
+        }
+    }
+
+    Dictionary<string, UI_Popup> UIDic = new Dictionary<string, UI_Popup>();
+    public T ShowAndClosePopup<T>(string name = null) where T : UI_Popup
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        // 이미 켜져 있다면 -> 끄기
+        if (UIDic.ContainsKey(name))
+        {
+            UI_Popup newpopup = UIDic[name];
+            Managers.UI.ClosePopupUI(newpopup);
+            UIDic.Remove(name);
+
+            // 마우스
+            if (UIDic.Count == 0)
+                CursorController.MouseCurserLockOnOff(false);
+
+            return null;
+        }
+        // 처음 키는 거라면 -> 켜기
+        else
+        {
+            T pop = Managers.UI.ShowPopupUI<T>();
+
+            // 마우스
+            if (UIDic.Count == 0)
+                CursorController.MouseCurserLockOnOff(true);
+
+            UIDic.Add(name, pop);
+
+            return pop;
         }
     }
 
