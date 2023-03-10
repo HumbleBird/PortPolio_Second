@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using static Define;
 
 public class UI_ShopInven : UI_Base
 {
@@ -38,6 +39,10 @@ public class UI_ShopInven : UI_Base
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_Inven_Item", gridPannel.transform);
             UI_Inven_Item item = go.GetOrAddComponent<UI_Inven_Item>();
+
+            item.eOpenWhat = OpenWhat.Shop;
+            //item.gameObject.BindEvent(() => { Managers.Battle.SellItem(item.m_iItemID); });
+
             Items.Add(item);
         }
 

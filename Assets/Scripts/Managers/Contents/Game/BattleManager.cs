@@ -314,6 +314,25 @@ public class BattleManager
 
         player.UseItem(useItem);
     }
+
+    public void SelectItem(int id)
+    {
+        Debug.Log("인벤토리 창에서 아이템을 선택함" + id);
+    }
+
+    public void SellItem(int id)
+    {
+        ShopNPC npc = m_npc.GetComponent<ShopNPC>();
+        npc.SellItem(id);
+    }
+
+    public void ButItem(int id)
+    {
+        ShopNPC npc = m_npc.GetComponent<ShopNPC>();
+        npc.BuyItem(id);
+    }
+
+
     #endregion
 
     #region Development Convenience
@@ -324,9 +343,6 @@ public class BattleManager
     {
         while (true)
         {
-            //if (Console.KeyAvailable == false)
-                yield return null;
-            
             if (Input.GetKeyDown(KeyCode.A))
             {
                 m_npc.Talk();
@@ -342,6 +358,8 @@ public class BattleManager
                 m_npc.EndInteraction();
                 yield break;
             }
+
+            yield return null;
 
         }
     }

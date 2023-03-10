@@ -12,10 +12,6 @@ public class UI_BattleManager
     {
         UIGameScene = Managers.UI.SceneUI as UI_GameScene;
 
-        UI_SettingKey popup =Managers.UI.ShowPopupUI<UI_SettingKey>();
-        popup.ClosePopupUI();
-
-        Managers.InputKey.Init();
     }
 
     public void RefreshPopupUI<T>(string name = null)
@@ -51,38 +47,35 @@ public class UI_BattleManager
         return equipment.AreTheSlotsForThatItemFull(item);
     }
 
-    Dictionary<string, UI_Popup> UIDic = new Dictionary<string, UI_Popup>();
-    public T ShowAndClosePopup<T>(string name = null) where T : UI_Popup
+    int m_iCount = 0;
+    public T ShowAndCloseUI<T>(string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        T pop;
+        T uibase = (T)UIGameScene.UIDic[name];
+        bool b = uibase.gameObject.activeSelf;
+        uibase.gameObject.SetActive(!b);
+        uibase.RefreshUI();
 
-        // 처음 키는 거라면
-        if (UIDic.ContainsKey(name) == false)
+        // UI를 끄는 거라면
+        if (b)
         {
-            pop = Managers.UI.ShowPopupUI<T>();
+            m_iCount--;
 
-            // 마우스
-            if (UIDic.Count == 0)
-                CursorController.MouseCurserLockOnOff(true);
+            if(m_iCount == 0)
+                CursorController.MouseCurserLockOnOff(false);
 
-            UIDic.Add(name, pop);
         }
-        // 이미 켜져 있다면
+        // UI를 키는 거라면
         else
         {
-            pop = (T)UIDic[name];
+            m_iCount++;
 
-            Managers.UI.ClosePopupUI(pop);
-            UIDic.Remove(name);
-
-            // 마우스
-            if (UIDic.Count == 0)
-                CursorController.MouseCurserLockOnOff(false);
+            if (m_iCount == 1)
+                CursorController.MouseCurserLockOnOff(true);
         }
 
-        return pop;
+        return uibase;
     }
 }

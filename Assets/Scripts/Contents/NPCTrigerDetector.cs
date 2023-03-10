@@ -12,7 +12,9 @@ public class NPCTrigerDetector : MonoBehaviour
         if (other.tag == "Player")
         {
             NPC npc = transform.GetComponentInParent<NPC>();
-            popup = npc.MeetPlayer();
+
+            popup = npc.ShowSelectWindow();
+            Managers.Battle.m_npc = npc;
         }
     }
 
@@ -21,6 +23,7 @@ public class NPCTrigerDetector : MonoBehaviour
         if(popup != null)
         {
             Managers.UI.ClosePopupUI(popup);
+            Managers.Battle.m_npc = null;
             StopCoroutine(Managers.Battle.NPCInteractionEventFunction());
         }
     }

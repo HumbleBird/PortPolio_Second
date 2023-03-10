@@ -35,6 +35,9 @@ public class UI_SettingKey : UI_Popup
         Managers.InputKey._waitingInputGo = GetObject((int)GameObjects.InputWatingImage);
         Managers.InputKey._verticalLayoutTr = GetObject((int)GameObjects.VerticalLayout).transform;
 
+        Managers.InputKey.Init();
+        gameObject.SetActive(false);
+
         return true;
     }
 }

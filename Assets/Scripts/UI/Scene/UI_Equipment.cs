@@ -5,7 +5,7 @@ using static Define;
 using System.Linq;
 using TMPro;
 
-public class UI_Equipment : UI_Popup
+public class UI_Equipment : UI_Base
 {
     enum GameObjects
     {
@@ -58,6 +58,8 @@ public class UI_Equipment : UI_Popup
         {
             CreateEquipmentInventory(EquipmentInventoryCount[i], i);
         }
+
+        gameObject.SetActive(false);
 
         return true;
     }

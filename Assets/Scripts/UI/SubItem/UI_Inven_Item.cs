@@ -20,6 +20,7 @@ public class UI_Inven_Item : UI_Base
     }
 
     public TextMeshProUGUI m_iItemPrice { get; private set; }
+    public OpenWhat eOpenWhat = OpenWhat.None;
 
     TextMeshProUGUI itemCount;
     Image itemIcon;
@@ -29,7 +30,6 @@ public class UI_Inven_Item : UI_Base
     public int m_iSlot { get; private set; }
     public int m_iCount { get; private set; }
     public bool m_bEquipped { get; private set; }
-
 
     public override bool Init()
     {
@@ -47,23 +47,13 @@ public class UI_Inven_Item : UI_Base
 
         itemIcon = GetImage((int)Images.InventoryItemIcon);
 
-        itemIcon.gameObject.BindEvent(() =>
-        {
-            Item newitem = new Item(Define.ItemType.None);
-            newitem.Id = m_iItemID;
-            newitem.InventorySlot = m_iSlot;
-            newitem.m_bEquipped = !m_bEquipped;
-
-            newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
-
-            Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
-        });
-
         itemIcon.gameObject.SetActive(false);
 
         itemUseIcon = GetImage((int)Images.UsingItemCheckIcon);
         itemUseIcon.gameObject.SetActive(false);
-        
+
+        gameObject.BindEvent(() => { Debug.Log(eOpenWhat); });
+
         return true;
     }
 
@@ -118,6 +108,49 @@ public class UI_Inven_Item : UI_Base
             //}
 
             itemUseIcon.gameObject.SetActive(m_bEquipped);
+        }
+    }
+
+    public void asdf()
+    {
+        // 현재 열려있는 창을 보고
+
+        if (eOpenWhat == OpenWhat.Inventory)
+        {
+            itemIcon.gameObject.BindEvent(() =>
+            {
+                Item newitem = new Item(Define.ItemType.None);
+                newitem.Id = m_iItemID;
+                newitem.InventorySlot = m_iSlot;
+                newitem.m_bEquipped = !m_bEquipped;
+
+                newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
+
+                Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
+            });
+        }
+        else if (eOpenWhat == OpenWhat.Shop)
+        {
+            itemIcon.gameObject.BindEvent(() =>
+            {
+                //Item newitem = new Item(Define.ItemType.None);
+                //newitem.Id = m_iItemID;
+                //newitem.InventorySlot = m_iSlot;
+                //newitem.m_bEquipped = !m_bEquipped;
+
+                //newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
+
+                //Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
+
+                Debug.Log("상점에서 열엇음.");
+            });
+        }
+        else
+        {
+            itemIcon.gameObject.BindEvent(() =>
+            {
+                Debug.Log("아무것도 정해지지 않았음.");
+            });
         }
     }
 }

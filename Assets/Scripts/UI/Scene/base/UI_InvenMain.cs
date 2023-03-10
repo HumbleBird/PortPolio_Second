@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Define;
 
 public class UI_InvenMain : UI_Base
 {
@@ -28,6 +29,10 @@ public class UI_InvenMain : UI_Base
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_Inven_Item", gridPannel.transform);
             UI_Inven_Item item = go.GetOrAddComponent<UI_Inven_Item>();
+
+            item.eOpenWhat = OpenWhat.Inventory;
+            //item.gameObject.BindEvent(() => { Managers.Battle.SelectItem(item.m_iItemID); });
+
             Items.Add(item);
         }
 

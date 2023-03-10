@@ -72,15 +72,7 @@ public class UI_Dialogue : UI_Popup
 
 	public void EndDialogue()
 	{
-		TalkStart(false);
 		Managers.UI.ClosePopupUI();
-		Managers.UI.ShowPopupUI<UI_SelectWindow>();
-		StartCoroutine(Managers.Battle.NPCInteractionEventFunction());
-	}
-
-	void TalkStart(bool isTalk = true)
-    {
-		m_DialogueText.enabled = isTalk;
-		m_DialoguePannelImage.enabled = isTalk;
+		Managers.Battle.m_npc.ShowSelectWindow();
 	}
 }

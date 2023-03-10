@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 277616998028852167}
   - component: {fileID: 277616998028852161}
   - component: {fileID: 277616998028852166}
-  - component: {fileID: 2526324087755940684}
+  - component: {fileID: 3399217588880057261}
   m_Layer: 5
   m_Name: UI_ShopInven
   m_TagString: Untagged
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2526324087755940684
+--- !u!114 &3399217588880057261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 277616998028852164}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a15d98acdc374dd449251dce7b44d174, type: 3}
+  m_Script: {fileID: 11500000, guid: fdec6b0bc3aa0674f9f06203fb5bfdba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &277616998527678283

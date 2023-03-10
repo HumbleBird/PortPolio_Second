@@ -152,6 +152,13 @@ public class Define
 
     #region Other
 
+    public enum OpenWhat
+    {
+        None,
+        Inventory,
+        Shop
+    }
+
     public enum Layer
     {
         UI = 5,
