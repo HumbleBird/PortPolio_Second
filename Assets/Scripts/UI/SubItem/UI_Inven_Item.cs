@@ -111,46 +111,40 @@ public class UI_Inven_Item : UI_Base
         }
     }
 
-    public void asdf()
+    public void SetPurposeofUse()
     {
-        // 현재 열려있는 창을 보고
+        Item newitem = new Item(Define.ItemType.None);
+        newitem.Id = m_iItemID;
+        newitem.InventorySlot = m_iSlot;
 
-        if (eOpenWhat == OpenWhat.Inventory)
+        newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
+
+        itemIcon.gameObject.BindEvent(() =>
         {
-            itemIcon.gameObject.BindEvent(() =>
+            // 인벤토리에서 창을 클릭하면 아이템을 착용
+            if (eOpenWhat == OpenWhat.Inventory)
             {
-                Item newitem = new Item(Define.ItemType.None);
-                newitem.Id = m_iItemID;
-                newitem.InventorySlot = m_iSlot;
                 newitem.m_bEquipped = !m_bEquipped;
-
-                newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
-
                 Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
-            });
-        }
-        else if (eOpenWhat == OpenWhat.Shop)
-        {
-            itemIcon.gameObject.BindEvent(() =>
+            }
+            else if (eOpenWhat == OpenWhat.Shop)
             {
-                //Item newitem = new Item(Define.ItemType.None);
-                //newitem.Id = m_iItemID;
-                //newitem.InventorySlot = m_iSlot;
-                //newitem.m_bEquipped = !m_bEquipped;
+                UI_UseQuestions popup = Managers.UI.ShowPopupUI<UI_UseQuestions>();
+                popup.SetQeustion($"아이템을 구매하시겠습니까? \n {newitem.Name} \n 가격 {m_iItemPrice.text}");
+                Coroutine co = StartCoroutine( Managers.Battle.IStandAction(() => 
+                {
+                    if(Input.GetKeyDown(KeyCode.Y))
+                        
+                }));
+                // 살지 말지 Yes Or No 창을 띄우고
+                // Yes면 배틀매니저에서 ButItem을 띄움.
 
                 //newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
 
                 //Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
 
                 Debug.Log("상점에서 열엇음.");
-            });
-        }
-        else
-        {
-            itemIcon.gameObject.BindEvent(() =>
-            {
-                Debug.Log("아무것도 정해지지 않았음.");
-            });
-        }
+            }
+        });
     }
 }

@@ -3071,6 +3071,7 @@ GameObject:
   - component: {fileID: 3559418610857334226}
   - component: {fileID: 3600539063304237693}
   - component: {fileID: -338566029567978467}
+  - component: {fileID: 1276748591471134167}
   m_Layer: 0
   m_Name: SkeletonShieldWarrior
   m_TagString: Untagged
@@ -3225,6 +3226,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1276748591471134167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840314116422849810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bffddf5a64c7ab479ecd6a45c505720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 201
+  eActionState: 0
+  eMoveState: 0
+  m_bWaiting: 0
+  eAIPatrolMode: 0
+  waypoints: []
 --- !u!1 &8106643011711580281
 GameObject:
   m_ObjectHideFlags: 0

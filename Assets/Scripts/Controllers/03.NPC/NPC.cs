@@ -12,35 +12,58 @@ public class NPC : MonoBehaviour
 {
     // Diarogue
     protected Dialogue m_dialogue = new Dialogue();
+    protected Coroutine m_coInteraction = null;
 
     public UI_Popup ShowSelectWindow()
     {
-        StartCoroutine(Managers.Battle.NPCInteractionEventFunction());
+        NPCInteraction();
+
         return Managers.UI.ShowPopupUI<UI_SelectWindow>();
     }
 
     public virtual void Talk()
     {
-        Managers.UI.ClosePopupUI();
     }
 
-    public virtual void Interaction()
+    public virtual void StartInteraction()
     {
-        Managers.UI.ClosePopupUI();
-
-
     }
 
     // 모든 상호작용이 끝나면
     public virtual void EndInteraction()
     {
-        Managers.UI.ClosePopupUI();
 
-        Managers.Object.myPlayer.m_bWaiting = false;
+        Managers.Battle.PlayerCanMove();
+    }
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+    protected void NPCInteraction()
+    {
+        m_coInteraction = StartCoroutine(Managers.Battle.IStandAction(
+            () => {
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    Talk();
+                    Managers.UI.ClosePopupUI();
+                    StopStandInputkey();
+                }
+                else if (Input.GetKeyDown(KeyCode.S))
+                {
+                    StartInteraction();
+                    Managers.UI.ClosePopupUI();
+                    StopStandInputkey();
 
-        Managers.Battle.m_npc = null;
+                }
+                else if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    EndInteraction();
+                    Managers.UI.ClosePopupUI();
+                    StopStandInputkey();
+                }
+            }));
+    }
+
+    public void StopStandInputkey()
+    {
+        StopCoroutine(m_coInteraction);
     }
 }

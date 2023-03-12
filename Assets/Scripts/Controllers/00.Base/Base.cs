@@ -9,7 +9,7 @@ public class Base : MonoBehaviour
     protected Collider m_Collider { get; set; }
     protected Animator Animator { get; set; }
 
-    public int ID { get; set; }
+    public int ID;
     public ObjectType eObjectType { get; set; }
     public Transform Pos { get; set; } = null;
 

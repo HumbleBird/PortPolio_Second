@@ -21,6 +21,24 @@ public partial class Player : Character
         cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
     }
 
+    protected override void SetInfo()
+    {
+        base.SetInfo();
+
+        Table_Player.Info pinfo = Managers.Table.m_Player.Get(ID);
+
+        if (pinfo == null)
+        {
+            Debug.LogError("해당하는 Id의 플레이어가 없습니다.");
+            return;
+        }
+
+        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(pinfo.m_iStat);
+        eObjectType = ObjectType.Player;
+
+        ChangeClass(pinfo.m_sClass);
+    }
+
     public void EquipItem(Item equipItem)
     {
         if (equipItem == null)

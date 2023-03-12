@@ -24,14 +24,11 @@ public class Dialogue
 			info = Managers.Table.m_Dialogue.Get(info.m_iNextIdx);
 			sentences.Enqueue(info.m_iTextEnglish);
 		}
+		Managers.Battle.PlayerCanMove(false);
 
 		uiDialogue = Managers.UI.ShowPopupUI<UI_Dialogue>();
 		uiDialogue.DisplayNextSentence(sentences);
 
-		Managers.Object.myPlayer.m_bWaiting = true;
-		Managers.Object.myPlayer.eState = Define.CreatureState.Idle;
-		Cursor.lockState = CursorLockMode.None;
-		Cursor.visible = true;
 	}
 
 	public void CloseDialogue()

@@ -24,23 +24,6 @@ public class UI_BattleManager
         popup.RefreshUI();
     }
 
-    
-
-    public IEnumerator DelegateShowAndClose(Action action)
-    {
-        while (true)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                action.Invoke();
-                yield break;
-            }
-
-            yield return null;
-        }
-
-    }
-
     public bool AreTheSlotsForThatItemFull(Item item)
     {
         UI_Equipment equipment = Managers.Resource.Load<UI_Equipment>("Prefabs/UI/Popup/UI_Equipment");

@@ -43,11 +43,21 @@ public partial class Character : Base
     {
         base.Init();
 
+        SetAudio();
+
+        Managers.Object.Add(ID, gameObject);
+
+        SetInfo();
+
         m_strAttack.SetInfo(this);
         m_strStat.Init();
 
         AttackColliderInit();
 
+    }
+
+    private void SetAudio()
+    {
         // Audio
         audioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
         audioSource.spatialBlend = 1;
@@ -180,6 +190,11 @@ public partial class Character : Base
 
         // 애니메이션 실행전까지 대기
         StartCoroutine(CoGetAnimationTimeAndWait(animName));
+
+    }
+
+    protected virtual void SetInfo()
+    {
 
     }
 }

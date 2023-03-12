@@ -270,8 +270,8 @@ GameObject:
   - component: {fileID: 662347745478704761}
   - component: {fileID: 4597673734399790262}
   - component: {fileID: 2141164795}
-  - component: {fileID: 8248375790130339655}
   - component: {fileID: -3509180163188868673}
+  - component: {fileID: 1091377872695040969}
   m_Layer: 0
   m_Name: Orc
   m_TagString: Monster
@@ -332,42 +332,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8248375790130339655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342959200176554030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bffddf5a64c7ab479ecd6a45c505720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eMoveState: 0
-  m_bWaiting: 0
-  m_GoAttackItem:
-  - {fileID: 0}
-  m_fNormalizeTransitionDuration: 0.14
-  m_fCoolTime: 0
-  m_bCanAttack: 1
-  m_bNextAttack: 0
-  eActionState: 0
-  startWaitTime: 4
-  timeToRotate: 2
-  radius: 0.3
-  viewRadius: 15
-  viewAngle: 90
-  waypoints:
-  - {fileID: 1679679053231344983, guid: 72b0741b639e3a34d9eea189b31234df, type: 3}
-  - {fileID: 895486329094271305, guid: 13c0621ff42488b47bcbe9099a43a4b8, type: 3}
-  - {fileID: 2291071769702744843, guid: 854aee99536f6c1428a40ff07a27ec14, type: 3}
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!54 &-3509180163188868673
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -384,6 +348,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1091377872695040969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342959200176554030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 214ca386c8ae91546b4085143f81b417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 101
+  eActionState: 0
+  eMoveState: 0
+  m_bWaiting: 0
+  eAIPatrolMode: 0
+  waypoints: []
 --- !u!1 &1576848682820892603
 GameObject:
   m_ObjectHideFlags: 0

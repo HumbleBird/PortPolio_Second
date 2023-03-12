@@ -19,7 +19,7 @@ public class BattleManager
     public void Init()
     {
         CreateCreatureContainer();
-        InitMonsterSpawn();
+        //InitMonsterSpawn();
     }
 
     #region CheckPoint
@@ -322,14 +322,16 @@ public class BattleManager
 
     public void SellItem(int id)
     {
-        ShopNPC npc = m_npc.GetComponent<ShopNPC>();
-        npc.SellItem(id);
+        
     }
 
-    public void ButItem(int id)
+    public void Buytem(Item buyItem, int count)
     {
-        ShopNPC npc = m_npc.GetComponent<ShopNPC>();
-        npc.BuyItem(id);
+
+        // 아이템 정보를 받아옴
+        // 가격은 아이템에서 뽑아오고
+        // 수량은 정해진 한도 내에서
+        // 구매하면 판매 수량 깍고, 플레이어 소지 돈 감소, 인벤에 아이템 추가
     }
 
 
@@ -337,30 +339,12 @@ public class BattleManager
 
     #region Development Convenience
 
-    public NPC m_npc;
-
-    public IEnumerator NPCInteractionEventFunction()
+    public IEnumerator IStandAction(Action action = null)
     {
         while (true)
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                m_npc.Talk();
-                yield break;
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                m_npc.Interaction();
-                yield break;
-            }
-            else if (Input.GetKeyDown(KeyCode.Q))
-            {
-                m_npc.EndInteraction();
-                yield break;
-            }
-
+            action();
             yield return null;
-
         }
     }
 
@@ -392,6 +376,28 @@ public class BattleManager
                 break;
             default:
                 break;
+        }
+    }
+
+    #endregion
+
+    #region Player
+
+    public void PlayerCanMove(bool can = true)
+    {
+        if(can)
+        {
+            Managers.Object.myPlayer.m_bWaiting = false;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Managers.Object.myPlayer.m_bWaiting = true;
+            Managers.Object.myPlayer.eState = Define.CreatureState.Idle;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 

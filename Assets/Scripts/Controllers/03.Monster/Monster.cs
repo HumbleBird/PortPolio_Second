@@ -74,4 +74,22 @@ public partial class Monster : AI
     }
 
 
+    protected override void SetInfo()
+    {
+        base.SetInfo();
+
+        Table_Monster.Info minfo = Managers.Table.m_Monster.Get(ID);
+
+        if (minfo == null)
+        {
+            Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
+            return;
+        }
+
+        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(minfo.m_iStat);
+        eObjectType = ObjectType.Monster;
+
+        // 클래스
+        ChangeClass(minfo.m_sClass);
+    }
 }

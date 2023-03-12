@@ -73,6 +73,7 @@ public class UI_Dialogue : UI_Popup
 	public void EndDialogue()
 	{
 		Managers.UI.ClosePopupUI();
-		Managers.Battle.m_npc.ShowSelectWindow();
+        Managers.Battle.PlayerCanMove();
+
 	}
 }

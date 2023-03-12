@@ -13,19 +13,24 @@ public class ShopNPC : NPC, IShop
         base.Talk();
 
         m_dialogue.StartDialogue(1);
+        StopCoroutine(Managers.Battle.IStandAction());
     }
 
-    public override void Interaction()
+    public override void StartInteraction()
     {
-        base.Interaction();
+        base.StartInteraction();
 
         Managers.UIBattle.ShowAndCloseUI<UI_Shop>();
+        Managers.Battle.PlayerCanMove(false);
 
-        StartCoroutine(Managers.UIBattle.DelegateShowAndClose(() => 
-        {
-            Managers.UIBattle.ShowAndCloseUI<UI_Shop>();
-            Managers.UI.ShowPopupUI<UI_SelectWindow>();
-            StartCoroutine(Managers.Battle.NPCInteractionEventFunction());
+        StartCoroutine(Managers.Battle.IStandAction(
+        () => {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                EndInteraction();
+                Managers.UIBattle.ShowAndCloseUI<UI_Shop>();
+                StopStandInputkey();
+            }
         }));
     }
 

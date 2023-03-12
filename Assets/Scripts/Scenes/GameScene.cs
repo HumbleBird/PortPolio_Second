@@ -20,8 +20,8 @@ public class GameScene : BaseScene
         Managers.Battle.Init();
 
         // 캐릭터
-        GameObject go = Managers.Battle.Spawn(ObjectType.Player, 1, 0, true);
-        Managers.Battle.CheckPointLoad(go);
+        //GameObject go = Managers.Battle.Spawn(ObjectType.Player, 1, 0, true);
+        //Managers.Battle.CheckPointLoad(go);
         
         // UI
         Managers.UI.ShowSceneUI<UI_GameScene>();
