@@ -15,7 +15,10 @@ public class Dialogue
 
 		info = Managers.Table.m_Dialogue.Get(id);
 		if (info == null)
+        {
+			Managers.Battle.PlayerCanMove(true);
 			return;
+		}
 
 		sentences.Enqueue(info.m_iTextEnglish);
 
@@ -24,11 +27,9 @@ public class Dialogue
 			info = Managers.Table.m_Dialogue.Get(info.m_iNextIdx);
 			sentences.Enqueue(info.m_iTextEnglish);
 		}
-		Managers.Battle.PlayerCanMove(false);
 
 		uiDialogue = Managers.UI.ShowPopupUI<UI_Dialogue>();
 		uiDialogue.DisplayNextSentence(sentences);
-
 	}
 
 	public void CloseDialogue()

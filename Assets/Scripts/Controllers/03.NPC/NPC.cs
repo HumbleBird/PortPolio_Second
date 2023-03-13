@@ -2,68 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IShop
-{
-    void BuyItem(int id);
-    void SellItem(int id);
-}
-
 public class NPC : MonoBehaviour
 {
     // Diarogue
     protected Dialogue m_dialogue = new Dialogue();
-    protected Coroutine m_coInteraction = null;
 
-    public UI_Popup ShowSelectWindow()
+    // 코루틴 정보 set
+    public void InputButtonSelect()
     {
-        NPCInteraction();
-
-        return Managers.UI.ShowPopupUI<UI_SelectWindow>();
+        StartCoroutine(IInputFunction());
     }
 
+    IEnumerator IInputFunction()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                Talk();
+                yield break;
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                Interaction();
+                yield break;
+            }
+            else if (Input.GetKeyDown(KeyCode.Q))
+            {
+                EndMeetPlayer();
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
+
+    // 대화 선택시
     public virtual void Talk()
     {
+        Managers.UI.ClosePopupUI();
+        Managers.Battle.PlayerCanMove(false);
+
     }
 
-    public virtual void StartInteraction()
+    // 상호작용 선택시
+    public virtual void Interaction()
     {
+        Managers.UI.ClosePopupUI();
+        Managers.Battle.PlayerCanMove(false);
+
     }
 
-    // 모든 상호작용이 끝나면
-    public virtual void EndInteraction()
+    // NPC와의 상호작용을 다 끝낸다면 (나가기)
+    public virtual void EndMeetPlayer()
     {
-
+        Managers.UI.ClosePopupUI();
         Managers.Battle.PlayerCanMove();
-    }
-
-    protected void NPCInteraction()
-    {
-        m_coInteraction = StartCoroutine(Managers.Battle.IStandAction(
-            () => {
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    Talk();
-                    Managers.UI.ClosePopupUI();
-                    StopStandInputkey();
-                }
-                else if (Input.GetKeyDown(KeyCode.S))
-                {
-                    StartInteraction();
-                    Managers.UI.ClosePopupUI();
-                    StopStandInputkey();
-
-                }
-                else if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    EndInteraction();
-                    Managers.UI.ClosePopupUI();
-                    StopStandInputkey();
-                }
-            }));
-    }
-
-    public void StopStandInputkey()
-    {
-        StopCoroutine(m_coInteraction);
     }
 }

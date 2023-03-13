@@ -131,11 +131,19 @@ public class UI_Inven_Item : UI_Base
             {
                 UI_UseQuestions popup = Managers.UI.ShowPopupUI<UI_UseQuestions>();
                 popup.SetQeustion($"아이템을 구매하시겠습니까? \n {newitem.Name} \n 가격 {m_iItemPrice.text}");
-                Coroutine co = StartCoroutine( Managers.Battle.IStandAction(() => 
-                {
-                    if(Input.GetKeyDown(KeyCode.Y))
-                        
-                }));
+                //Coroutine co = StartCoroutine( Managers.Battle.IWaitAction(() => 
+                //{
+                //    if(Input.GetKeyDown(KeyCode.Y))
+                //    {
+
+                //    }
+                //    else if (Input.GetKeyDown(KeyCode.N))
+                //    {
+                //        Managers.UI.ClosePopupUI();
+                //        //StopCoroutine(co);
+                //    }
+
+                //}));
                 // 살지 말지 Yes Or No 창을 띄우고
                 // Yes면 배틀매니저에서 ButItem을 띄움.
 

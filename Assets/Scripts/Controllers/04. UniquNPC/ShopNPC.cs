@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ShopNPC : NPC, IShop
+public class ShopNPC : NPC
 {
     // 상점 기능 NPC
     public override void Talk()
@@ -13,34 +14,32 @@ public class ShopNPC : NPC, IShop
         base.Talk();
 
         m_dialogue.StartDialogue(1);
-        StopCoroutine(Managers.Battle.IStandAction());
+
+        // TODO Q를 누르면 대화에서 나가 선택창으로 변경
     }
 
-    public override void StartInteraction()
+    public override void Interaction()
     {
-        base.StartInteraction();
+        base.Interaction();
 
         Managers.UIBattle.ShowAndCloseUI<UI_Shop>();
-        Managers.Battle.PlayerCanMove(false);
 
-        StartCoroutine(Managers.Battle.IStandAction(
-        () => {
+        StartCoroutine(IDownShop());
+    }
+
+    public IEnumerator IDownShop()
+    {
+        while (true)
+        {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                EndInteraction();
                 Managers.UIBattle.ShowAndCloseUI<UI_Shop>();
-                StopStandInputkey();
+                Managers.UI.ShowPopupUI<UI_SelectWindow>();
+                Managers.Battle.EVENTFunction();
+                yield break;
             }
-        }));
-    }
 
-    public void BuyItem(int id)
-    {
-        throw new NotImplementedException();
-    }
-    
-    public void SellItem(int id)
-    {
-        throw new NotImplementedException();
+            yield return null;
+        }
     }
 }

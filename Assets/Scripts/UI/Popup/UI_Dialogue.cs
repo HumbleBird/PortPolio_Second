@@ -72,8 +72,11 @@ public class UI_Dialogue : UI_Popup
 
 	public void EndDialogue()
 	{
+		// 대화창 UI 닫기
 		Managers.UI.ClosePopupUI();
-        Managers.Battle.PlayerCanMove();
 
+		// 선택창 켜기
+		Managers.UI.ShowPopupUI<UI_SelectWindow>();
+		Managers.Battle.EVENTFunction();
 	}
 }

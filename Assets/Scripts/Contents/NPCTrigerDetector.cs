@@ -11,9 +11,10 @@ public class NPCTrigerDetector : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            npc = transform.GetComponentInParent<NPC>();
+            popup = Managers.UI.ShowPopupUI<UI_SelectWindow>();
 
-            popup = npc.ShowSelectWindow();
+            npc = transform.GetComponentInParent<NPC>();
+            Managers.Battle.EVENTFunction += npc.InputButtonSelect();
         }
     }
 
@@ -23,7 +24,9 @@ public class NPCTrigerDetector : MonoBehaviour
         {
             Managers.UI.ClosePopupUI(popup);
         }
-        npc.StopStandInputkey();
+
+        Managers.Battle.EVENTFunction -= npc.InputButtonSelect();
+
     }
 
 }

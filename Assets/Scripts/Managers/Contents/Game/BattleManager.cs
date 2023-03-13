@@ -339,14 +339,8 @@ public class BattleManager
 
     #region Development Convenience
 
-    public IEnumerator IStandAction(Action action = null)
-    {
-        while (true)
-        {
-            action();
-            yield return null;
-        }
-    }
+    public delegate void ChainFunction();
+    public event ChainFunction EVENTFunction;
 
     public void CreateCreatureContainer()
     {
