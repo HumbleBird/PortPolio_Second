@@ -58,5 +58,6 @@ public class NPC : MonoBehaviour
     {
         Managers.UI.ClosePopupUI();
         Managers.Battle.PlayerCanMove();
+        Managers.Battle.EVENTFunction -= InputButtonSelect;
     }
 }

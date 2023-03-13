@@ -14,7 +14,7 @@ public class NPCTrigerDetector : MonoBehaviour
             popup = Managers.UI.ShowPopupUI<UI_SelectWindow>();
 
             npc = transform.GetComponentInParent<NPC>();
-            Managers.Battle.EVENTFunction += npc.InputButtonSelect();
+            Managers.Battle.EVENTFunction += npc.InputButtonSelect;
         }
     }
 
@@ -25,7 +25,7 @@ public class NPCTrigerDetector : MonoBehaviour
             Managers.UI.ClosePopupUI(popup);
         }
 
-        Managers.Battle.EVENTFunction -= npc.InputButtonSelect();
+        Managers.Battle.EVENTFunction -= npc.InputButtonSelect;
 
     }
 

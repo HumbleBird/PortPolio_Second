@@ -342,6 +342,12 @@ public class BattleManager
     public delegate void ChainFunction();
     public event ChainFunction EVENTFunction;
 
+    public void ExecutionEventFunction()
+    {
+        if (EVENTFunction != null)
+            EVENTFunction();
+    }
+
     public void CreateCreatureContainer()
     {
         root = Util.FindOrCreateGameObject("CreatureContainer");

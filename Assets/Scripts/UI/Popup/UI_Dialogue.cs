@@ -77,6 +77,6 @@ public class UI_Dialogue : UI_Popup
 
 		// 선택창 켜기
 		Managers.UI.ShowPopupUI<UI_SelectWindow>();
-		Managers.Battle.EVENTFunction();
+		Managers.Battle.ExecutionEventFunction();
 	}
 }
