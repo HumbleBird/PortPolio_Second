@@ -71,10 +71,10 @@ public class UI_Equipment_Item : UI_Base
         RefreshUI();
     }
 
-	public void RefreshUI()
+	public override void RefreshUI()
 	{
-		if (_init == false)
-			return;
+        base.RefreshUI();
+
 	}
 
     public void UnEquipItem()

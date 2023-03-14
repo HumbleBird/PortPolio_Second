@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class UI_Inven : UI_Base
 {
-    public UI_InvenMain UIInvenMain { get; set; }
-    public UI_ItemDes UIItemDes { get; set; }
-    public UI_CharacterData UICharacterData { get; set; }
+
+    public UI_InvenMain UIInvenMain { get; private set; }
+    public UI_ItemDes UIItemDes { get; private set; }
+    public UI_CharacterData UICharacterData { get; private set; }
+    public UI_BGGameInfo UIBGGameInfo { get; private set; }
+
 
     public override bool Init()
     {
@@ -18,12 +21,12 @@ public class UI_Inven : UI_Base
         UIInvenMain = GetComponentInChildren<UI_InvenMain>();
         UIItemDes = GetComponentInChildren<UI_ItemDes>();
         UICharacterData = GetComponentInChildren<UI_CharacterData>();
+        UIBGGameInfo = GetComponentInChildren<UI_BGGameInfo>();
 
         gameObject.SetActive(false);
 
         return true;
     }
-
 
     public override void RefreshUI()
     {
@@ -32,5 +35,6 @@ public class UI_Inven : UI_Base
         UIInvenMain.RefreshUI();
         UIItemDes.RefreshUI();
         UICharacterData.RefreshUI();
+        UIBGGameInfo.RefreshUI();
     }
 }

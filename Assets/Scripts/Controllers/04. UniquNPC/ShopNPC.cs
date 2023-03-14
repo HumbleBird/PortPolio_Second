@@ -35,6 +35,9 @@ public class ShopNPC : NPC
             {
                 Managers.UIBattle.ShowAndCloseUI<UI_Shop>();
                 Managers.UI.ShowPopupUI<UI_SelectWindow>();
+
+                yield return new WaitForSeconds(0.1f);
+                Managers.Battle.PlayerCanMove();
                 Managers.Battle.ExecutionEventFunction();
                 yield break;
             }

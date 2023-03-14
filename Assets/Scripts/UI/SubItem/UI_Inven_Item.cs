@@ -39,20 +39,15 @@ public class UI_Inven_Item : UI_Base
         BindText(typeof(Texts));
         BindImage(typeof(Images));
 
-        itemCount = GetText((int)Texts.ItemCountText);
-        itemCount.gameObject.SetActive(false);
-
+        itemCount    = GetText((int)Texts.ItemCountText);
         m_iItemPrice = GetText((int)Texts.ItemPriceText);
+        itemIcon     = GetImage((int)Images.InventoryItemIcon);
+        itemUseIcon  = GetImage((int)Images.UsingItemCheckIcon);
+
+        itemCount.enabled    = false;
         m_iItemPrice.enabled = false;
-
-        itemIcon = GetImage((int)Images.InventoryItemIcon);
-
-        itemIcon.gameObject.SetActive(false);
-
-        itemUseIcon = GetImage((int)Images.UsingItemCheckIcon);
-        itemUseIcon.gameObject.SetActive(false);
-
-        gameObject.BindEvent(() => { Debug.Log(eOpenWhat); });
+        itemIcon.enabled     = false;
+        itemUseIcon.enabled  = false;
 
         return true;
     }
@@ -64,12 +59,12 @@ public class UI_Inven_Item : UI_Base
             m_iItemPrice.enabled = true;
 
             itemCount.text = m_iCount.ToString();
-            itemCount.gameObject.SetActive(true);
+            itemCount.enabled = true;
         }
         else
         {
             m_iItemPrice.enabled= false;
-            itemCount.gameObject.SetActive(true);
+            itemCount.enabled = true;
 
         }
     }
@@ -83,8 +78,8 @@ public class UI_Inven_Item : UI_Base
             m_iCount = 0;
             m_bEquipped = false;
 
-            itemIcon.gameObject.SetActive(false);
-            itemCount.gameObject.SetActive(false);
+            itemIcon.enabled = false;
+            itemCount.enabled = false;
             m_iItemPrice.text = "";
         }
         else
@@ -99,7 +94,7 @@ public class UI_Inven_Item : UI_Base
             itemData = Managers.Table.m_Item.Get(m_iItemID);
 
             itemIcon.sprite = Managers.Resource.Load<Sprite>(itemData.m_sIconPath);
-            itemIcon.gameObject.SetActive(true);
+            itemIcon.enabled = true;
 
             //if (item.eItemType == ItemType.Consumable)
             //{
@@ -107,8 +102,10 @@ public class UI_Inven_Item : UI_Base
             //    itemCount.gameObject.SetActive(true);
             //}
 
-            itemUseIcon.gameObject.SetActive(m_bEquipped);
+            itemUseIcon.enabled = m_bEquipped;
         }
+
+        SetPurposeofUse();
     }
 
     public void SetPurposeofUse()
@@ -127,32 +124,47 @@ public class UI_Inven_Item : UI_Base
                 newitem.m_bEquipped = !m_bEquipped;
                 Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
             }
+            // 상점 창에서 아이템을 클릭하면 사기
             else if (eOpenWhat == OpenWhat.Shop)
             {
                 UI_UseQuestions popup = Managers.UI.ShowPopupUI<UI_UseQuestions>();
-                popup.SetQeustion($"아이템을 구매하시겠습니까? \n {newitem.Name} \n 가격 {m_iItemPrice.text}");
-                //Coroutine co = StartCoroutine( Managers.Battle.IWaitAction(() => 
-                //{
-                //    if(Input.GetKeyDown(KeyCode.Y))
-                //    {
+                popup.SetQeustion($"Do you Buy Item? \n {newitem.Name} \n Price {m_iItemPrice.text}");
+                // 버튼 누름
+                //Coroutine co = StartCoroutine(InputButton());
 
-                //    }
-                //    else if (Input.GetKeyDown(KeyCode.N))
-                //    {
-                //        Managers.UI.ClosePopupUI();
-                //        //StopCoroutine(co);
-                //    }
+                // 클릭
+                popup.m_sYesText.gameObject.BindEvent(() => 
+                {
+                    // 나중에 수량 추가 가능하게
+                    Managers.Battle.Buytem(Managers.Object.myPlayer, newitem, 1);
+                    //StopCoroutine(co);
+                });
 
-                //}));
-                // 살지 말지 Yes Or No 창을 띄우고
-                // Yes면 배틀매니저에서 ButItem을 띄움.
-
-                //newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
-
-                //Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
-
-                Debug.Log("상점에서 열엇음.");
+                popup.m_sNoText.gameObject.BindEvent(() => 
+                { 
+                    Managers.UI.ClosePopupUI(); 
+                    //StopCoroutine(co);
+                });
             }
         });
     }
+
+    //IEnumerator InputButton()
+    //{
+    //    while (true)
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.Y))
+    //        {
+    //            Managers.Battle.Buytem(Managers.Object.myPlayer, newitem, 1);
+    //            yield break;
+    //        }
+    //        else if (Input.GetKeyDown(KeyCode.N))
+    //        {
+    //            popup.m_sNoText.gameObject.BindEvent(() => { Managers.UI.ClosePopupUI(); });
+    //            yield break;
+    //        }
+
+    //        yield return null;
+    //    }
+    //}
 }

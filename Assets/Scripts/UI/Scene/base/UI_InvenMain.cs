@@ -31,24 +31,29 @@ public class UI_InvenMain : UI_Base
             UI_Inven_Item item = go.GetOrAddComponent<UI_Inven_Item>();
 
             item.eOpenWhat = OpenWhat.Inventory;
-            //item.gameObject.BindEvent(() => { Managers.Battle.SelectItem(item.m_iItemID); });
 
             Items.Add(item);
         }
 
-        _init = true;
-        RefreshUI();
+        b = true;
 
         return true;
     }
+
+    bool b = false;
 
     public override void RefreshUI()
     {
         base.RefreshUI();
 
+        if(!b)
+        {
+            Managers.UIBattle.ShowAndCloseUI<UI_Inven>();
+            Managers.UIBattle.ShowAndCloseUI<UI_Inven>();
+        }
+
         // 아이템 창 아이템
-        //List<Item> items = Managers.Inventory.m_dicItem.Values.ToList();
-        List<Item> items = Managers.Inventory.m_Items.ToList();
+        List<Item> items = Managers.Inventory.m_Items;
         items.Sort((left, right) => { return left.InventorySlot - right.InventorySlot; });
 
         foreach (Item item in items)

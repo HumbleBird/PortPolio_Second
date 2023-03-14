@@ -288,8 +288,25 @@ public class BattleManager
         //player.Inven.add(item);
 
         Managers.Inventory.Add(newItem);
-        Managers.UIBattle.RefreshPopupUI<UI_Inven>();
+        Managers.UIBattle.RefreshUI<UI_Inven>();
+    }
 
+    public void AddItemtoPlayer(Player player, Item newItem)
+    {
+        if (player == null || newItem == null)
+            return;
+
+        int? slot = Managers.Inventory.GetEmptySlot();
+        if (slot == null)
+            return;
+
+        newItem.InventorySlot = slot.Value;
+
+        // TODO
+        //player.Inven.add(item);
+
+        Managers.Inventory.Add(newItem);
+        Managers.UIBattle.RefreshUI<UI_Inven>();
     }
 
     #endregion
@@ -302,7 +319,7 @@ public class BattleManager
             return;
 
         player.EquipItem(equipItem);
-        Managers.UIBattle.RefreshPopupUI<UI_Equipment>();
+        Managers.UIBattle.RefreshUI<UI_Equipment>();
 
     }
 
@@ -322,16 +339,24 @@ public class BattleManager
 
     public void SellItem(int id)
     {
-        
+        // 플레이어한테 넣는게 낫겠음.
+        // 조건 따지고
+
+        // 구매 했으면
+        // 구매할 건지 묻는 창 닫고
+        Managers.UI.ClosePopupUI();
+
+        // 돈 차감
+
+        // 인벤토리에 넣기
     }
 
-    public void Buytem(Item buyItem, int count)
+    public void Buytem(Player player, Item buyItem, int count)
     {
+        if (buyItem == null || count <= 0)
+            return;
 
-        // 아이템 정보를 받아옴
-        // 가격은 아이템에서 뽑아오고
-        // 수량은 정해진 한도 내에서
-        // 구매하면 판매 수량 깍고, 플레이어 소지 돈 감소, 인벤에 아이템 추가
+        player.BuyItem(buyItem, count);
     }
 
 

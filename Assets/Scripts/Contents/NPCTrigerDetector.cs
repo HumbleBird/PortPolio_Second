@@ -5,28 +5,25 @@ using static Define;
 
 public class NPCTrigerDetector : MonoBehaviour
 {
-    UI_Popup popup;
     NPC npc;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            popup = Managers.UI.ShowPopupUI<UI_SelectWindow>();
+            Managers.UI.ShowPopupUI<UI_SelectWindow>();
 
             npc = transform.GetComponentInParent<NPC>();
             Managers.Battle.EVENTFunction += npc.InputButtonSelect;
+            Managers.Battle.ExecutionEventFunction();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(popup != null)
-        {
-            Managers.UI.ClosePopupUI(popup);
-        }
+        Managers.UI.ClosePopupUI();
 
         Managers.Battle.EVENTFunction -= npc.InputButtonSelect;
-
+        npc.EndButtonSelect();
     }
 
 }

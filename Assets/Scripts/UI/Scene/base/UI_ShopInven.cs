@@ -41,7 +41,6 @@ public class UI_ShopInven : UI_Base
             UI_Inven_Item item = go.GetOrAddComponent<UI_Inven_Item>();
 
             item.eOpenWhat = OpenWhat.Shop;
-            //item.gameObject.BindEvent(() => { Managers.Battle.SellItem(item.m_iItemID); });
 
             Items.Add(item);
         }

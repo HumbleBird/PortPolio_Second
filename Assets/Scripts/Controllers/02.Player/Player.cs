@@ -8,6 +8,7 @@ public partial class Player : Character
 {
     public int m_iWeaponDamage { get; private set; }
     public int m_iArmorDefence { get; private set; }
+    public int m_iHaveMoeny { get; private set; }
 
     public override int m_TotalAttack { get { return m_strStat.m_iAtk + m_iWeaponDamage; } }
     public override int m_TotalDefence { get { return m_strStat.m_iDef + m_iArmorDefence; } }
@@ -19,6 +20,7 @@ public partial class Player : Character
         base.Init();
 
         cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
+        m_iHaveMoeny = 10000;
     }
 
     protected override void SetInfo()
@@ -61,7 +63,7 @@ public partial class Player : Character
         {
             item.m_bEquipped = equipItem.m_bEquipped;
 
-            Managers.UIBattle.RefreshPopupUI<UI_Inven>();
+            Managers.UIBattle.RefreshUI<UI_Inven>();
         }
 
 
@@ -94,7 +96,7 @@ public partial class Player : Character
             {
                 unequipItem.m_bEquipped = false;
 
-                Managers.UIBattle.RefreshPopupUI<UI_Inven>();
+                Managers.UIBattle.RefreshUI<UI_Inven>();
 
             }
         }
@@ -108,6 +110,39 @@ public partial class Player : Character
         // TODO 아이템 효과에 따라
         // 대분류 : consumable (포션, 퀘스트 아이템 등)
         // 분류 : potionEffect (포션 종류에 따라)
+    }
+
+    public void BuyItem(Item item, int count)
+    {
+        // 조건
+        if(item.m_iPrice * count > m_iHaveMoeny)
+        {
+            Debug.Log("돈이 부족합니다.");
+            Managers.UI.ClosePopupUI();
+            return;
+        }
+
+        if(Managers.Inventory.GetEmptySlot() == null)
+        {
+            Debug.Log("인벤토리에 빈 공간이 없습니다.");
+            Managers.UI.ClosePopupUI();
+            return;
+        }
+
+
+
+        // 구입 성공!
+        m_iHaveMoeny -= item.m_iPrice * count;
+        item.Count = count;
+        Managers.Battle.AddItemtoPlayer(this, item);
+        Managers.UI.ClosePopupUI();
+        Managers.UIBattle.RefreshUI<UI_Shop>();
+        Debug.Log("아이템 구입");
+
+        // 아이템 정보를 받아옴
+        // 가격은 아이템에서 뽑아오고
+        // 수량은 정해진 한도 내에서
+        // 구매하면 판매 수량 깍고, 플레이어 소지 돈 감소, 인벤
     }
 
     public void RefreshAdditionalStat()

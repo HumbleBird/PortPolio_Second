@@ -14,14 +14,13 @@ public class UI_BattleManager
 
     }
 
-    public void RefreshPopupUI<T>(string name = null)
+    public void RefreshUI<T>(string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        UI_Popup popup = Managers.Resource.Load<UI_Popup>($"Prefabs/UI/Popup/{name}");
-
-        popup.RefreshUI();
+        T uibase = (T)UIGameScene.UIDic[name];
+        uibase.RefreshUI();
     }
 
     public bool AreTheSlotsForThatItemFull(Item item)

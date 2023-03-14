@@ -6,11 +6,18 @@ public class NPC : MonoBehaviour
 {
     // Diarogue
     protected Dialogue m_dialogue = new Dialogue();
+    IEnumerator m_IEnumerator = null;
 
     // 코루틴 정보 set
     public void InputButtonSelect()
     {
-        StartCoroutine(IInputFunction());
+        m_IEnumerator = IInputFunction();
+        StartCoroutine(m_IEnumerator);
+    }
+
+    public void EndButtonSelect()
+    {
+        StopCoroutine(m_IEnumerator);
     }
 
     IEnumerator IInputFunction()
@@ -59,5 +66,6 @@ public class NPC : MonoBehaviour
         Managers.UI.ClosePopupUI();
         Managers.Battle.PlayerCanMove();
         Managers.Battle.EVENTFunction -= InputButtonSelect;
+        Debug.Log("NPC 상호작용 끝");
     }
 }
