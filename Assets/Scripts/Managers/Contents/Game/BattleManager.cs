@@ -76,8 +76,8 @@ public class BattleManager
                 {
                     if(pos.Key == info.Value.m_iMonsterSpawnPosId)
                     {
-                        GameObject go =  Spawn(ObjectType.Monster, info.Value.m_iMonsterId);
-                        Base goBase = go.GetComponent<Base>();
+                        List<GameObject> go =  Spawn(info.Value.m_iMonsterId, ObjectType.Monster);
+                        Base goBase = go[0].GetComponent<Base>();
                         goBase.Pos = pos.Value;
                     }
                 }
@@ -85,138 +85,62 @@ public class BattleManager
         }
     }
 
-    public GameObject CreatePlayer(int id, bool myPlayer = false)
+    public GameObject CreateCharacter(int id, ObjectType type)
     {
-        Table_Player.Info pinfo = Managers.Table.m_Player.Get(id);
+        string prefabPath = null;
 
-        if (pinfo == null)
+        if(type == ObjectType.Player)
         {
-            Debug.LogError("해당하는 Id의 플레이어가 없습니다.");
-            return null;
+            Table_Player.Info info = Managers.Table.m_Player.Get(id);
+
+            if (info == null)
+            {
+                Debug.LogError("해당하는 Id의 플레이어가 없습니다.");
+                return null;
+            }
+
+            prefabPath = info.m_sPrefabPath;
+        }
+        else if (type == ObjectType.Monster)
+        {
+            Table_Monster.Info info = Managers.Table.m_Monster.Get(id);
+
+            if (info == null)
+            {
+                Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
+                return null;
+            }
+
+            prefabPath = info.m_sPrefabPath;
+
+        }
+        else if (type == ObjectType.Boss)
+        {
+            Table_Boss.Info info = Managers.Table.m_Boss.Get(id);
+
+            if (info == null)
+            {
+                Debug.LogError("해당하는 Id의 보스가 없습니다.");
+                return null;
+            }
+
+            prefabPath = info.m_sPrefabPath;
         }
 
-        // 소환
-        GameObject go = Managers.Resource.Instantiate(pinfo.m_sPrefabPath);
-        Managers.Object.Add(pinfo.m_nID, go);
+        GameObject go = Managers.Resource.Instantiate(prefabPath);
+        Character character = Util.GetOrAddComponent<Character>(go);
+        character.ID = id;
 
-        // 스탯
-        Player pc = Util.GetOrAddComponent<Player>(go);
-        pc.ID = id;
-        pc.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(pinfo.m_iStat);
-        pc.eObjectType = ObjectType.Player;
-
-        // 클래스
-        pc.ChangeClass(pinfo.m_sClass);
-
-        if (myPlayer == true)
-        {
-            Managers.Object.myPlayer = pc.GetComponent<MyPlayer>();
-            MyPlayer myplayer = pc.GetComponent<MyPlayer>();
-            Managers.Camera.Init();
-            myplayer.m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", go.transform);
-        }
-
-        return go;
+        return character.gameObject;
     }
 
-    public GameObject CreateMonster(int id)
-    {
-        Table_Monster.Info minfo = Managers.Table.m_Monster.Get(id);
-
-        if (minfo == null)
-        {
-            Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
-            return null;
-        }
-
-        // 소환
-        GameObject go = Managers.Resource.Instantiate(minfo.m_sPrefabPath);
-        Managers.Object.Add(minfo.m_nID, go);
-
-        // 스탯
-        Monster monster = Util.GetOrAddComponent<Monster>(go);
-        monster.ID = id;
-        monster.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(minfo.m_iStat);
-        monster.eObjectType = ObjectType.Monster;
-
-        // 클래스
-        monster.ChangeClass(minfo.m_sClass);
-        return go;
-    }
-
-    public GameObject CreateBossMonster(int id)
-    {
-        Table_Boss.Info binfo = Managers.Table.m_Boss.Get(id);
-
-        if (binfo == null)
-        {
-            Debug.LogError("해당하는 Id의 보스가 없습니다.");
-            return null;
-        }
-
-        // 소환
-        GameObject go = Managers.Resource.Instantiate(binfo.m_sPrefabPath);
-        Managers.Object.Add(binfo.m_nID, go);
-
-        // 스탯
-        Monster boss = go.GetComponent<Monster>();
-        boss.ID = id;
-        boss.m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(binfo.m_iStat);
-        boss.eObjectType = ObjectType.Monster;
-
-        // 클래스
-        boss.ChangeClass(binfo.m_sClass);
-        return go;
-    }
-
-    public GameObject Spawn(ObjectType type, int id, int delay = 0, bool myplayer = false)
-    {
-        GameObject go;
-
-        switch (type)
-        {
-            case ObjectType.Player:
-                go = CreatePlayer(id, myplayer);
-                break;
-            case ObjectType.Monster:
-                go = CreateMonster(id);
-                break;
-            case ObjectType.Boss:
-                go = CreateBossMonster(id);
-                break;
-            default:
-                go = null;
-                break;
-        }
-
-        CreatureInputContainer(go);
-
-        return go;
-    }
-    
-    public List<GameObject> Spawns(ObjectType type, int id, int count = 1, int delay = 0, bool myplayer = false)
+    public List<GameObject> Spawn(int id, ObjectType type, int count = 1)
     {
         List<GameObject> list = new List<GameObject>();
-        GameObject go;
 
         for (int i = 0; i < count; i++)
         {
-            switch (type)
-            {
-                case ObjectType.Player:
-                    go = CreatePlayer(id, myplayer);
-                    break;
-                case ObjectType.Monster:
-                    go = CreateMonster(id);
-                    break;
-                case ObjectType.Boss:
-                    go = CreateBossMonster(id);
-                    break;
-                default:
-                    go = null;
-                    break;
-            }
-
+            GameObject go = CreateCharacter(id, type);
             CreatureInputContainer(go);
             list.Add(go);
         }
