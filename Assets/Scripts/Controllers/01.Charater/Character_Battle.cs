@@ -32,9 +32,7 @@ public partial class Character : Base
 
     protected virtual void AttackEvent(int id)
     {
-        // TODO 공격별 쿨타임 체크 - 스킬 같은 경우
-        //if (CheckCooltime() == false)
-        //return;
+        // TODO 공격 쿨타임 체크
 
         m_strAttack.info = Managers.Table.m_Attack.Get(id);
 
@@ -66,27 +64,15 @@ public partial class Character : Base
         // Sound
         SoundPlay(m_strAttack.info.m_sAnimName);
 
-        // 콜라이더 활성화
-        AttackCollider tempAttackCollider = AttackCollider.None;
+        // 근거리
+        // 애니메이션 자체에서 함수를 실행 -> 무기 콜라이더 활성화
 
-        if (m_strAttack.info.m_nID == m_strAttack.m_iKickNum)
-            tempAttackCollider = AttackCollider.CharacterFront;
-        else
-            tempAttackCollider = AttackCollider.Weapon;
-
-        foreach (var DetectorCollider in m_GoAttackItem)
-        {
-            if (DetectorCollider.eAttackCollider == tempAttackCollider)
-            {
-                DetectorCollider.AttackCanOn();
-                return;
-            }
-        }
-
+        // 원거리
+        // 공격 준비 중, 공격 시작을 공격자에서 알림 -> 오브젝트 소환
     }
 
     // 피격
-    public virtual void HitEvent(GameObject attacker, int dmg)
+    public virtual void HitEvent(Character attacker, int dmg)
     {
         // 특수 동장으로 인한 데미지 처리
         if (eActionState == ActionState.Invincible || eState == CreatureState.Dead)
@@ -108,17 +94,17 @@ public partial class Character : Base
         // HP 관리
         dmg = Mathf.Max(0, dmg - m_TotalDefence);
         int NewHp = m_strStat.m_iHp - dmg;
-        SetHp(NewHp, attacker);
+        SetHp(NewHp, attacker.gameObject);
 
         // 공격 별 특수 효과
-        attacker.GetComponent<Character>().m_strAttack.SpecialAddAttackInfo();
+        attacker.m_strAttack.SpecialAddAttackInfo();
 
         // 애니메이션
         if(m_strStat.m_iHp > 0)
         {
             HitAnimation();
 
-            // 일시정지 히트 애니메이션이 된 후에 idle로
+            // 히트 후 Idle로
             float time = GetAnimationTime(m_sCurrentAnimationName);
             Stop(time);
             eState = CreatureState.Idle;

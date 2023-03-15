@@ -22,12 +22,12 @@ public class TrigerDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Base goBase = other.GetComponent<Base>();
+        Character character = other.GetComponent<Character>();
 
-        if (goBase != null)
+        if (character != null)
         {
-            CAttacker.m_goTarget = other.GetComponent<Character>();
-            CAttacker.m_goTarget.HitEvent(CAttacker.gameObject, CAttacker.m_TotalAttack);
+            CAttacker.m_goTarget = character;
+            CAttacker.m_goTarget.HitEvent(character, CAttacker.m_TotalAttack);
         }
     }
 
