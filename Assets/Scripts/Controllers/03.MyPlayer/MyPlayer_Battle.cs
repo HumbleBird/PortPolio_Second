@@ -23,41 +23,15 @@ public partial class MyPlayer : Player
         {
 			// 근접
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.BasicAttack]))
-				AttackEvent(m_iBasicAttackNum);
-			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
-				AttackEvent(m_iStrongAttackNum);
-			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Kick]))
-				AttackEvent(m_iKickNum);
-
-			// 원거리
-			// 조준
-			if(Input.GetMouseButton(2))
             {
-				bool AttackRedey = false;
-
-				// 조준 애니메이션
-				//AttackRedey() -> AttackRedey = true;
-
-				// 시위 겨누기 1번 -> 완료되면 AttackRedey = true
-				// 시위 겨누는 중 무한 반복
-
-				// 공격 준비가 완료가 되었다면
-				if (AttackRedey)
-                {
-					// 마우스 왼쪽 클릭 발사
-					if (Input.GetMouseButtonUp(0))
-					{
-						AttackEvent(FireArrow - m_iBasicAttackNum);
-						AttackRedey = false;
-					}
-					// 조준 취소
-					else if (Input.GetMouseButtonUp(2))
-                    {
-						CancelAttack();
-						AttackRedey = false;
-					}
-				}
+				Managers.Battle.EventDelegateAttack += m_strAttack.BasicAttack;
+				AttackEvent(m_iBasicAttackNum);
             }
+			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
+            {
+				Managers.Battle.EventDelegateAttack += m_strAttack.StrongAttack;
+				AttackEvent(m_iStrongAttackNum);
+			}
 		}
 	}
 

@@ -91,6 +91,7 @@ public class BattleManager
 
         if(type == ObjectType.Player)
         {
+
             Table_Player.Info info = Managers.Table.m_Player.Get(id);
 
             if (info == null)
@@ -231,6 +232,20 @@ public class BattleManager
 
         Managers.Inventory.Add(newItem);
         Managers.UIBattle.RefreshUI<UI_Inven>();
+    }
+
+    public delegate void DelegateAttack();
+    public event DelegateAttack EventDelegateAttack;
+
+
+    public void ExecuteEventDelegateAttack()
+    {
+        EventDelegateAttack();
+    }
+
+    public void ClearEventDelegateAttack()
+    {
+        EventDelegateAttack = null;
     }
 
     #endregion

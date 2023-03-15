@@ -64,6 +64,8 @@ public partial class Character : Base
         // Sound
         SoundPlay(m_strAttack.info.m_sAnimName);
 
+        // 이건 battle manager에서 delegate로 하기
+
         // 근거리
         // 애니메이션 자체에서 함수를 실행 -> 무기 콜라이더 활성화
 
@@ -96,7 +98,7 @@ public partial class Character : Base
         int NewHp = m_strStat.m_iHp - dmg;
         SetHp(NewHp, attacker.gameObject);
 
-        // 공격 별 특수 효과
+        // TODO 공격 별 특수 효과
         attacker.m_strAttack.SpecialAddAttackInfo();
 
         // 애니메이션
@@ -124,6 +126,8 @@ public partial class Character : Base
         m_strStat.m_iAtk = m_strStat.m_fOriginalAtk;
 
         eState = CreatureState.Idle;
+
+        Managers.Battle.ClearEventDelegateAttack();
     }
 
     public bool CheckCooltime()

@@ -12,28 +12,14 @@ public abstract class Attack : Strategy
     public Table_Attack.Info info;
 
     public override void Init() { }
-    protected abstract void BasicAttack();
-    protected abstract void StrongAttack();
+    public abstract void BasicAttack();
+    public abstract void StrongAttack();
 
     // 넉백 효과
     void Kick()
     {
         Vector3 moveDirection = m_cGo.transform.position - m_cTarget.gameObject.transform.position;
         m_cTarget.Rigid.AddForce(moveDirection.normalized * -100f);
-    }
-
-    public void SpecialAddAttackInfo()
-    {
-        RefreshTargetSet();
-
-        int id = info.m_nID;
-
-        if (id == m_iKickNum)
-            Kick();
-        else if (id == m_iBasicAttackNum)
-            BasicAttack();
-        else if (id == m_iStrongAttackNum)
-            StrongAttack();
     }
 
     void RefreshTargetSet()

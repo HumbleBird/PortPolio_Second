@@ -9,12 +9,12 @@ using static Define;
 
 public class Blow : Attack
 {
-    protected override void BasicAttack()
+    public override void BasicAttack()
     {
         WeaponColliderOn();
     }
 
-    protected override void StrongAttack()
+    public override void StrongAttack()
     {
         WeaponColliderOn();
     }
