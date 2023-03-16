@@ -8,13 +8,12 @@ using UnityEngine;
 
 public class Range : Attack
 {
-	public override void BasicAttack()
+    public override void AttackEnd()
     {
-        // 프로젝타일 오브젝트 소환
-
+        throw new NotImplementedException();
     }
 
-	public override void StrongAttack()
+    public override void NormalAttack()
     {
         // 프로젝타일 오브젝트 소환
 

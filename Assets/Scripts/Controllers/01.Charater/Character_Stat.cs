@@ -21,18 +21,6 @@ public partial class Character : Base
         m_strStat.m_fStemina= Mathf.Clamp(NewSetStamina, 0, m_strStat.m_fMaxStemina );
     }
 
-    protected IEnumerator UpdateCoolTime()
-    {
-        while (true)
-        {
-            m_fCoolTime -= Time.deltaTime;
-            if (m_fCoolTime < 0)
-                m_fCoolTime = 0;
-
-            yield return null;
-        }
-    }
-
     public virtual void SetMoveState(MoveState state)
     {
         if (eMoveState == state)

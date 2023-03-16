@@ -22,8 +22,7 @@ public partial class Player : Character
     {
 		base.AttackEnd();
 
-		StartCoroutine(StaminaGraduallyFillingUp());
-		m_goTarget = null;
+		cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
 	}
 
 	protected virtual IEnumerator StaminaGraduallyFillingUp()
@@ -35,13 +34,5 @@ public partial class Player : Character
 
 			yield return null;
 		}
-	}
-
-	protected override void HowNextAttack()
-	{
-		base.HowNextAttack();
-
-		// 플레이어라면 직접 할지 말지를 결정함.
-		m_bNextAttack = true;
 	}
 }

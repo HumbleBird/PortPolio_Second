@@ -87,6 +87,10 @@ public class BattleManager
 
     public GameObject CreateCharacter(int id, ObjectType type)
     {
+        // pool pattern
+        if (Managers.Object.Find(id) != null)
+            return Managers.Object.Find(id);
+
         string prefabPath = null;
 
         if(type == ObjectType.Player)
@@ -234,18 +238,35 @@ public class BattleManager
         Managers.UIBattle.RefreshUI<UI_Inven>();
     }
 
+    // 공격 했을 때
     public delegate void DelegateAttack();
     public event DelegateAttack EventDelegateAttack;
+
+    // 피격 효과
+    public delegate void DelegateHitEffect();
+    public event DelegateHitEffect EventDelegateHitEffect;
 
 
     public void ExecuteEventDelegateAttack()
     {
-        EventDelegateAttack();
+        if(EventDelegateAttack != null)
+            EventDelegateAttack();
     }
 
     public void ClearEventDelegateAttack()
     {
         EventDelegateAttack = null;
+    }
+
+    public void ExecuteEventDelegateHitEffect()
+    {
+        if(EventDelegateHitEffect != null)
+           EventDelegateHitEffect();
+    }
+
+    public void ClearEventDelegateHitEffect()
+    {
+        EventDelegateHitEffect = null;
     }
 
     #endregion

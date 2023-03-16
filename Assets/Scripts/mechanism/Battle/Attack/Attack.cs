@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static Define;
 
+
 public abstract class Attack : Strategy
 {
     public Table_Attack.Info info;
 
     public override void Init() { }
-    public abstract void BasicAttack();
-    public abstract void StrongAttack();
+    public abstract void NormalAttack();
+    public abstract void AttackEnd();
+
 
     // 넉백 효과
     void Kick()
@@ -38,6 +40,7 @@ public abstract class Attack : Strategy
         m_cGo.eActionState = ActionState.Shield;
     }
 
+    // Action
     public void Crouch()
     {
         m_cGo.SetMoveState(MoveState.Crouch);

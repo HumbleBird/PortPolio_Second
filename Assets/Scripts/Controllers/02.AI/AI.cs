@@ -7,14 +7,20 @@ using static Define;
 
 public partial class AI : Character
 {
-    public enum AIPatrolMode
+    public enum AIMode
+    {
+        Stay, // 플레이어 감지 시 RandomMove로
+        RandomMove, // 랜덤 이동
+        WayPointMove // 지정 좌표 이동
+    }
+
+    protected enum AIPatrolMode
     {
         Random,
         WayPoint
     }
 
-    [HideInInspector]
-    public AIPatrolMode eAIPatrolMode = AIPatrolMode.Random;
+    public AIMode eAIMode = AIMode.Stay;
 
     protected override void Init()
     {

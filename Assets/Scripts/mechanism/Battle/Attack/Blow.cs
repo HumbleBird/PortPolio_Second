@@ -9,12 +9,12 @@ using static Define;
 
 public class Blow : Attack
 {
-    public override void BasicAttack()
+    public override void AttackEnd()
     {
-        WeaponColliderOn();
+        WeaponColliderOff();
     }
 
-    public override void StrongAttack()
+    public override void NormalAttack()
     {
         WeaponColliderOn();
     }
@@ -29,6 +29,15 @@ public class Blow : Attack
                 DetectorCollider.AttackCanOn();
                 return;
             }
+        }
+    }
+
+    protected void WeaponColliderOff()
+    {
+        // 콜라이더 활성화
+        foreach (var DetectorCollider in m_cGo.m_GoAttackItem)
+        {
+            DetectorCollider.AttackCanOff();
         }
     }
 }

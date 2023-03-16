@@ -31,9 +31,6 @@ public partial class AI : Character
         // AI는 확률적으로 공격할지 아니면 끝을 낼지를 함.
         int rand = Random.Range(0, 101);
         if (rand >= 50)
-        {
-            AttackEvent(m_strAttack.info.m_iNextNum);
-            StopCoroutine(m_coAttackCheck);
-        }
+            ExcuteNextAttack(m_strAttack.info.m_iNextNum);
     }
 }

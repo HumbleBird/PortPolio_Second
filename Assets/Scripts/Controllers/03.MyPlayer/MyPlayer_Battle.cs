@@ -19,17 +19,17 @@ public partial class MyPlayer : Player
 
 	void GetInputAttack()
 	{
-		if (m_bCanAttack == true)
+		if (m_bCanAttack == true && m_strStat.m_fStemina != 0)
         {
 			// ±Ÿ¡¢
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.BasicAttack]))
             {
-				Managers.Battle.EventDelegateAttack += m_strAttack.BasicAttack;
+				Managers.Battle.EventDelegateAttack += m_strAttack.NormalAttack;
 				AttackEvent(m_iBasicAttackNum);
             }
 			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
             {
-				Managers.Battle.EventDelegateAttack += m_strAttack.StrongAttack;
+				Managers.Battle.EventDelegateAttack += m_strAttack.NormalAttack;
 				AttackEvent(m_iStrongAttackNum);
 			}
 		}
@@ -39,18 +39,18 @@ public partial class MyPlayer : Player
 	{
 		base.UpdateSkill();
 
-		if (m_bNextAttack == true)
+		if (m_bNextAttack == true && m_strStat.m_fStemina != 0)
 		{
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.BasicAttack]))
             {
-				StopCoroutine(m_coAttackCheck);
-				AttackEvent(m_strAttack.info.m_iNextNum);
+				Managers.Battle.EventDelegateAttack += m_strAttack.NormalAttack;
+				ExcuteNextAttack(m_strAttack.info.m_iNextNum);
 				return;
 			}
 			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
             {
-				StopCoroutine(m_coAttackCheck);
-				AttackEvent(m_strAttack.info.m_iNextNum);
+				Managers.Battle.EventDelegateAttack += m_strAttack.NormalAttack;
+				ExcuteNextAttack(m_strAttack.info.m_iNextNum);
 				return;
 			}
 		}
