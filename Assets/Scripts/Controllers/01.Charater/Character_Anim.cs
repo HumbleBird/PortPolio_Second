@@ -77,15 +77,7 @@ public partial class Character : Base
         AnimationLayers animLayer = SetLayer(animName);
 
         // 상태에 따른 애니메이션 이름 결정
-        if (animName == UserAction.Shield.ToString())
-        {
-            if (eMoveState == MoveState.Crouch)
-            {
-                animName = "Crouch Shield";
-            }
-        }
-
-        else if (animName == UserAction.Roll.ToString())
+         if (animName == UserAction.Roll.ToString())
         {
             if (eState == CreatureState.Idle)
                 animName = "Stand To Roll";
@@ -103,20 +95,11 @@ public partial class Character : Base
 
     private AnimationLayers SetLayer(string animName)
     {
-        AnimationLayers animLayer;
-        if (animName == UserAction.Shield.ToString())
-        {
-            animLayer = AnimationLayers.UpperLayer;
+        // TODO
+        AnimationLayers animLayer = AnimationLayers.BaseLayer;
 
-            if (eMoveState == MoveState.Crouch)
-            {
-                animLayer = AnimationLayers.BaseLayer;
-            }
-        }
-        else
-        {
-            animLayer = AnimationLayers.BaseLayer;
-        }
+        if (animName == "Shield")
+            animLayer = AnimationLayers.UpperLayer;
 
         return animLayer;
     }

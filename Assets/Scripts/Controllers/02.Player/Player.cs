@@ -38,7 +38,7 @@ public partial class Player : Character
         m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(pinfo.m_iStat);
         eObjectType = ObjectType.Player;
 
-        ChangeClass(pinfo.m_sClass);
+        ChangeClass(pinfo.m_iClass);
     }
 
     public void EquipItem(Item equipItem)
@@ -188,10 +188,18 @@ public partial class Player : Character
             SoundPlay("Player" + eState.ToString());
     }
 
-    protected override void SpeicialAction(Action action, bool wating = true)
+    #region PlayerAction
+    // Action
+    public void Crouch()
     {
-        base.SpeicialAction(action);
-
-        m_bWaiting = wating;
+        SetMoveState(MoveState.Crouch);
     }
+
+    public IEnumerator Roll()
+    {
+        string name = ActionAnimation("Roll");
+        float time = GetAnimationTime(name);
+        yield return new WaitForSeconds(time);
+    }
+    #endregion
 }

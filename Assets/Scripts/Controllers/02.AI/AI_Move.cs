@@ -79,9 +79,9 @@ public partial class AI : Character
                 Move();
                 m_TimeToRotate = timeToRotate;
                 m_WaitTime = startWaitTime;
-                if (eAIPatrolMode == AIPatrolMode.WayPoint)
+                if (eAIMode == AIMode.WayPointMove)
                     navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
-                else if (eAIPatrolMode == AIPatrolMode.Random)
+                else if (eAIMode == AIMode.RandomMove)
                     Patroling_RandomMove();
             }
             else
@@ -117,7 +117,7 @@ public partial class AI : Character
             m_PlayerNear = false;           //  The player is no near when the enemy is platroling
             playerLastPosition = Vector3.zero;
 
-            if (eAIPatrolMode == AIPatrolMode.WayPoint)
+            if (eAIMode == AIMode.WayPointMove)
                 navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the enemy destination to the next waypoint
 
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
@@ -125,9 +125,9 @@ public partial class AI : Character
                 //  If the enemy arrives to the waypoint position then wait for a moment and go to the next
                 if (m_WaitTime <= 0)
                 {
-                    if (eAIPatrolMode == AIPatrolMode.WayPoint)
+                    if (eAIMode == AIMode.WayPointMove)
                         NextPoint();
-                    else if (eAIPatrolMode == AIPatrolMode.Random)
+                    else if (eAIMode == AIMode.RandomMove)
                         Patroling_RandomMove();
 
                     Move();

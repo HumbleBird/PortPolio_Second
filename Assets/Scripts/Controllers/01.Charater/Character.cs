@@ -49,7 +49,7 @@ public partial class Character : Base
 
         SetInfo();
 
-        m_strAttack.SetInfo(this);
+        m_cAttack.SetInfo(this);
         m_strStat.Init();
 
         AttackColliderInit();
@@ -162,39 +162,6 @@ public partial class Character : Base
         return clip.length * time;
     }
 
-    public IEnumerator CoGetAnimationTimeAndWait(string animName, float time = 1f, AnimationLayers layer = AnimationLayers.BaseLayer)
-    {
-        while (true)
-        {
-            float getTime = GetAnimationTime(animName, time);
 
-            if (getTime != 0)
-            {
-                getTime *= 0.7f;
-                StartCoroutine(Wait(getTime));
-                yield break;
-            }
-
-            yield return null;
-        }
-    }
-
-    protected virtual void SpeicialAction(Action action, bool wating = true)
-    {
-        // Action 실행
-        string animName = action.Method.Name;
-        action.Invoke();
-
-        // 애니메이션 실행
-        animName = ActionAnimation(animName);
-
-        // 애니메이션 실행전까지 대기
-        StartCoroutine(CoGetAnimationTimeAndWait(animName));
-
-    }
-
-    protected virtual void SetInfo()
-    {
-
-    }
+    protected virtual void SetInfo() { }
 }

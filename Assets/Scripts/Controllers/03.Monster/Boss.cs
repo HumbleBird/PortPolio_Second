@@ -20,6 +20,6 @@ public partial class Boss : Monster
        eObjectType = ObjectType.Monster;
 
         // 클래스
-        ChangeClass(binfo.m_sClass);
+        ChangeClass(binfo.m_iClass);
     }
 }

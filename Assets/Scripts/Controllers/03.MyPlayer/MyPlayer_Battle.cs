@@ -22,16 +22,17 @@ public partial class MyPlayer : Player
 		if (m_bCanAttack == true && m_strStat.m_fStemina != 0)
         {
 			// 근접
-			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.BasicAttack]))
+			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
             {
-				Managers.Battle.EventDelegateAttack += m_strAttack.NormalAttack;
+				Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
 				AttackEvent(m_iBasicAttackNum);
             }
-			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
-            {
-				Managers.Battle.EventDelegateAttack += m_strAttack.NormalAttack;
-				AttackEvent(m_iStrongAttackNum);
-			}
+		}
+
+		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.SpecialAction]))
+		{
+			Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.SpeacialAction()); };
+			AttackEvent(m_iStrongAttackNum);
 		}
 	}
 
@@ -41,16 +42,11 @@ public partial class MyPlayer : Player
 
 		if (m_bNextAttack == true && m_strStat.m_fStemina != 0)
 		{
-			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.BasicAttack]))
+			// 일반 공격
+			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
             {
-				Managers.Battle.EventDelegateAttack += m_strAttack.NormalAttack;
-				ExcuteNextAttack(m_strAttack.info.m_iNextNum);
-				return;
-			}
-			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.StrongAttack]))
-            {
-				Managers.Battle.EventDelegateAttack += m_strAttack.NormalAttack;
-				ExcuteNextAttack(m_strAttack.info.m_iNextNum);
+				Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
+				ExcuteNextAttack(info.m_iNextNum);
 				return;
 			}
 		}

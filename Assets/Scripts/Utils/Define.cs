@@ -18,8 +18,9 @@ public class Define
     {
         None = 0,
         Warior = 1,
-        Archer = 2,
-        Wizard = 3
+        Knight = 2,
+        Archer = 3,
+        Wizard = 4
     }
 
     public enum CreatureState
@@ -130,15 +131,12 @@ public class Define
     public enum UserAction
     {
         //Battle
-        BasicAttack,
-        StrongAttack,
-        Kick,
-        Shield,
+        NormalAction,
+        SpecialAction,
 
         //Action
         //Jump,
         Roll,
-        Crouch,
 
         // UI
         UI_Inventory,

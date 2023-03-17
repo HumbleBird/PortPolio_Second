@@ -14,12 +14,6 @@ public partial class AI : Character
         WayPointMove // 지정 좌표 이동
     }
 
-    protected enum AIPatrolMode
-    {
-        Random,
-        WayPoint
-    }
-
     public AIMode eAIMode = AIMode.Stay;
 
     protected override void Init()

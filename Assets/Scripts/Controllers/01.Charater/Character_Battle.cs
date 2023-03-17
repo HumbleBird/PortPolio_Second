@@ -6,7 +6,8 @@ using static Define;
 
 public partial class Character : Base
 {
-    public Attack m_strAttack;
+    protected Table_Attack.Info info;
+    public Attack m_cAttack;
     public Character m_goTarget { get; set; } // 타겟
 
     protected bool  m_bCanAttack = true;
@@ -14,15 +15,25 @@ public partial class Character : Base
 
     protected Coroutine m_coAttackCheck;
 
-    public void ChangeClass(string typeClass)
+    public void ChangeClass(int ClassId)
     {
-        switch (typeClass)
+        CharacterClass type = (CharacterClass)ClassId;
+
+        switch (type)
         {
-            case "Blow":
-                m_strAttack = new Blow();
+            case CharacterClass.None:
                 break;
-            case "Range":
-                m_strAttack = new Range();
+            case CharacterClass.Warior:
+                m_cAttack = new Warior();
+                break;
+            case CharacterClass.Knight:
+                m_cAttack = new Knight();
+                break;
+            case CharacterClass.Archer:
+                m_cAttack = new Archer();
+                break;
+            case CharacterClass.Wizard:
+                m_cAttack = new Wizard();
                 break;
             default:
                 break;
@@ -33,9 +44,9 @@ public partial class Character : Base
     {
         // TODO 공격 쿨타임 체크
 
-        m_strAttack.info = Managers.Table.m_Attack.Get(id);
+        info = Managers.Table.m_Attack.Get(id);
 
-        if (m_strAttack.info == null)
+        if (info == null)
         {
             Debug.LogError($"해당하는 {id}의 스킬이 없습니다.");
             return;
@@ -46,10 +57,10 @@ public partial class Character : Base
         m_bCanAttack = false;
 
         // 애니메이션 실행
-        ActionAnimation(m_strAttack.info.m_sAnimName);
+        ActionAnimation(info.m_sAnimName);
 
         // 공격 데미지 더해주기
-        m_strStat.m_iAtk += m_strAttack.info.m_iDmg;
+        m_strStat.m_iAtk += info.m_iDmg;
 
         // 공격 종료 체크
         m_coAttackCheck = StartCoroutine(CoAttackCheck());
@@ -58,7 +69,7 @@ public partial class Character : Base
     void Attack()
     {
         // Sound
-        SoundPlay(m_strAttack.info.m_sAnimName);
+        SoundPlay(info.m_sAnimName);
 
         // 등록된 이벤트를 실행
         // 근거리라면 애니메이션에 무기 콜라이더를 활성화를 시켜주고
@@ -69,18 +80,18 @@ public partial class Character : Base
     // 공격 애니메이션을 기점으로 다음 콤보 공격을 할지, 공격을 끝마칠지 결정함.
     IEnumerator CoAttackCheck()
     {
-        float time = GetAnimationTime(m_strAttack.info.m_sAnimName, 0.6f);
+        float time = GetAnimationTime(info.m_sAnimName, 0.6f);
 
         yield return new WaitForSeconds(time);
 
-        if (m_strAttack.info.m_iNextNum != 0)
+        if (info.m_iNextNum != 0)
         {
             // AI 와 Player를 나눔
             m_bNextAttack = true;
             HowNextAttack();
         }
 
-        time = GetAnimationTime(m_strAttack.info.m_sAnimName, 0.4f);
+        time = GetAnimationTime(info.m_sAnimName, 0.4f);
 
         yield return new WaitForSeconds(time);
 
@@ -138,7 +149,7 @@ public partial class Character : Base
     {
         // 근거리는 트리거 비활성화
         // 원거리는 몰?루
-        m_strAttack.AttackEnd();
+        m_cAttack.AttackEnd();
 
         m_bCanAttack = true;
         m_bNextAttack = false;

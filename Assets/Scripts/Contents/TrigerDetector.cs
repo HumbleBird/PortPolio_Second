@@ -31,14 +31,9 @@ public class TrigerDetector : MonoBehaviour
         }
     }
 
-    public void AttackCanOn()
+    public void AttackCan(bool b)
     {
-        m_cAttackCollider.enabled = true;
+        m_cAttackCollider.enabled = b;
 
-    }
-
-    public void AttackCanOff()
-    {
-        m_cAttackCollider.enabled = false;
     }
 }

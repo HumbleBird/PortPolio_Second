@@ -1,4 +1,4 @@
-Idx,#Name,class,Level,Stat,#Prefab_Path,#icon
-아이디,이름,직업,레벨,스텟,프리팹,아이콘
-1,팔라딘,Blow,1,1,Player/Paladin,
-2,궁수,Range,1,2,Player/Archer,
+Idx,#Name,class,Level,#Prefab_Path
+아이디,이름,직업,레벨,프리팹
+1,팔라딘,2,1,Player/Paladin
+2,궁수,3,1,Player/Archer

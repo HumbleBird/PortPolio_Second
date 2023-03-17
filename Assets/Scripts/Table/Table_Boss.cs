@@ -8,7 +8,7 @@ public class Table_Boss : Table_Base
     {
         public int    m_nID;
         public string m_sName;
-        public string m_sClass;
+        public int m_iClass;
         public int    m_iStageType;
         public int    m_iStat;
         public int    m_iLevel;
@@ -62,7 +62,7 @@ public class Table_Boss : Table_Base
 
         _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_sName);
-        _reader.get(_nRow, ref _info.m_sClass);
+        _reader.get(_nRow, ref _info.m_iClass);
         _reader.get(_nRow, ref _info.m_iStageType);
         _reader.get(_nRow, ref _info.m_iStat);
         _reader.get(_nRow, ref _info.m_iLevel);

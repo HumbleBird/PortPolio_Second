@@ -91,14 +91,11 @@ namespace Rito.InputBindings
         /// <summary> 초기 상태로 설정 </summary>
         public void ResetAll()
         {
-            Bind(UserAction.BasicAttack,  KeyCode.Mouse0);
-            Bind(UserAction.StrongAttack, KeyCode.Mouse1);
-            Bind(UserAction.Kick,         KeyCode.V);
-            Bind(UserAction.Shield,       KeyCode.C);
+            Bind(UserAction.NormalAction,  KeyCode.Mouse0);
+            Bind(UserAction.SpecialAction, KeyCode.Mouse1);
 
             //Bind(UserAction.Jump,         KeyCode.Space);
             Bind(UserAction.Roll,         KeyCode.Space);
-            Bind(UserAction.Crouch,       KeyCode.LeftControl);
 
             Bind(UserAction.UI_Inventory, KeyCode.I);
             Bind(UserAction.UI_Equipment, KeyCode.U);

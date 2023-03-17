@@ -55,11 +55,16 @@ public partial class MyPlayer : Player
 		if (m_bWaiting == false)
         {
 			GetInputAttack();
-
-			InputMaintainKey();
-			InputOnekey();
 		}
 	}
+
+	void GetKeyAction()
+    {
+		if(Input.GetKeyDown( Managers.InputKey._binding.Bindings[UserAction.Roll]))
+        {
+			Roll();
+		}
+    }
 
 	bool m_bMoveInput = false;
 	void GetMoveInput()

@@ -90,6 +90,6 @@ public partial class Monster : AI
         eObjectType = ObjectType.Monster;
 
         // 클래스
-        ChangeClass(minfo.m_sClass);
+        ChangeClass(minfo.m_iClass);
     }
 }

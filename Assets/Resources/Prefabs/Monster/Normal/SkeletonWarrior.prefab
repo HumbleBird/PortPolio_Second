@@ -3073,7 +3073,7 @@ GameObject:
   - component: {fileID: -338566029567978467}
   - component: {fileID: 1276748591471134167}
   m_Layer: 0
-  m_Name: SkeletonShieldWarrior
+  m_Name: SkeletonWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
