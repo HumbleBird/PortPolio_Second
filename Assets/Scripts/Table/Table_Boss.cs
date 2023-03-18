@@ -8,10 +8,7 @@ public class Table_Boss : Table_Base
     {
         public int    m_nID;
         public string m_sName;
-        public int m_iClass;
-        public int    m_iStageType;
-        public int    m_iStat;
-        public int    m_iLevel;
+        public int    m_iClass;
         public int    m_iRewardGold;
         public int    m_iRewardItem;
         public string m_sPrefabPath;
@@ -63,9 +60,6 @@ public class Table_Boss : Table_Base
         _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_sName);
         _reader.get(_nRow, ref _info.m_iClass);
-        _reader.get(_nRow, ref _info.m_iStageType);
-        _reader.get(_nRow, ref _info.m_iStat);
-        _reader.get(_nRow, ref _info.m_iLevel);
         _reader.get(_nRow, ref _info.m_iRewardGold);
         _reader.get(_nRow, ref _info.m_iRewardItem);
         _reader.get(_nRow, ref _info.m_sPrefabPath);

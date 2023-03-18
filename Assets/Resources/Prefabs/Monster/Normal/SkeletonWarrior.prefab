@@ -3238,11 +3238,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bffddf5a64c7ab479ecd6a45c505720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 201
+  ID: 101
   eActionState: 0
   eMoveState: 0
   m_bWaiting: 0
-  eAIPatrolMode: 0
+  eAIMode: 0
   waypoints: []
 --- !u!1 &8106643011711580281
 GameObject:

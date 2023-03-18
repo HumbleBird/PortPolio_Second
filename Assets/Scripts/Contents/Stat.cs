@@ -8,21 +8,19 @@ public class Stat
 {
     public Table_Stat.Info m_tStatInfo { get; set; } = new Table_Stat.Info();
 
-    public int   m_iLevel { get; set; }
-    public int   m_iHp               { get; set; }           
+    public int   m_iLevel        { get; set; }
+    public int   m_iHp           { get; set; }           
     public int   m_iMaxHp        { get; set; }
-    public int   m_iMp               { get; set; }           
+    public int   m_iMp           { get; set; }           
     public int   m_iMaxMp        { get; set; }
-    public float m_fStemina       { get; set; }
+    public float m_fStemina      { get; set; }
     public float m_fMaxStemina      { get; set; }
     public int   m_iAtk         { get; set; }
     public int   m_fOriginalAtk         { get; set; }
     public int   m_iDef         { get; set; }
-    public float m_fJumpPower       { get; set; }
     public float m_fMoveSpeed { get; set; }
     public float m_fWalkSpeed       { get; set; } 
     public float m_fRunSpeed        { get; set; }
-    public float m_fCrouchSpeed  { get; set; }
     public float m_fAttackSpeed     { get; set; }
 
     public void Init()
@@ -37,11 +35,9 @@ public class Stat
         m_iAtk = m_tStatInfo.m_iAtk;
         m_fOriginalAtk = m_iAtk;
         m_iDef = m_tStatInfo.m_iDef;
-        m_fJumpPower = m_tStatInfo.m_fJumpPower;
         m_fMoveSpeed = 0;
         m_fWalkSpeed = m_tStatInfo.m_fWalkSpeed;
         m_fRunSpeed = m_tStatInfo.m_fRunSpeed;
-        m_fCrouchSpeed = m_tStatInfo.m_fCrouchSpeed;
         m_fAttackSpeed = m_tStatInfo.m_fAttackSpeed;
     }
 }

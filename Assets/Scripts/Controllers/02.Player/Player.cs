@@ -35,7 +35,7 @@ public partial class Player : Character
             return;
         }
 
-        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(pinfo.m_iStat);
+        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
         eObjectType = ObjectType.Player;
 
         ChangeClass(pinfo.m_iClass);
@@ -189,12 +189,6 @@ public partial class Player : Character
     }
 
     #region PlayerAction
-    // Action
-    public void Crouch()
-    {
-        SetMoveState(MoveState.Crouch);
-    }
-
     public IEnumerator Roll()
     {
         string name = ActionAnimation("Roll");

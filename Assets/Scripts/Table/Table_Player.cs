@@ -10,7 +10,6 @@ public class Table_Player : Table_Base
         public string m_sName;
         public int    m_iClass;
         public int    m_iLevel;
-        public int    m_iStat;
         public string m_sPrefabPath;
     }
 
@@ -60,7 +59,6 @@ public class Table_Player : Table_Base
         _reader.get(_nRow, ref _info.m_sName);
         _reader.get(_nRow, ref _info.m_iClass);
         _reader.get(_nRow, ref _info.m_iLevel);
-        _reader.get(_nRow, ref _info.m_iStat);
         _reader.get(_nRow, ref _info.m_sPrefabPath);
 
         return true;

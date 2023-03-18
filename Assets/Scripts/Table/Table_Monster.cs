@@ -9,8 +9,6 @@ public class Table_Monster : Table_Base
         public int    m_nID;
         public string m_sName;
         public int m_iClass;
-        public int    m_iStat;
-        public int    m_iLevel;
         public string m_sPrefabPath;
         public int    m_iAI;
     }
@@ -60,8 +58,6 @@ public class Table_Monster : Table_Base
         _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_sName);
         _reader.get(_nRow, ref _info.m_iClass);
-        _reader.get(_nRow, ref _info.m_iStat);
-        _reader.get(_nRow, ref _info.m_iLevel);
         _reader.get(_nRow, ref _info.m_sPrefabPath);
         _reader.get(_nRow, ref _info.m_iAI);
 

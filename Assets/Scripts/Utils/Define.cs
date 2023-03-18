@@ -109,7 +109,6 @@ public class Define
         None,
         Walk,
         Run,
-        Crouch,
     }
 
     public enum AttackCollider

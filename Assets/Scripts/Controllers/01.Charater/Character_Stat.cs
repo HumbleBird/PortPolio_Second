@@ -40,12 +40,6 @@ public partial class Character : Base
                 eMoveState = MoveState.Run;
                 m_strStat.m_fMoveSpeed = m_strStat.m_fRunSpeed;
                 break;
-            case MoveState.Crouch:
-                eMoveState = MoveState.Crouch;
-                m_strStat.m_fMoveSpeed = m_strStat.m_fCrouchSpeed;
-                break;
-            default:
-                break;
         }
 
         //navMeshAgent.speed = m_strStat.m_fMoveSpeed;

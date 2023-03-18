@@ -4133,11 +4133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214ca386c8ae91546b4085143f81b417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 101
+  ID: 1002
   eActionState: 0
   eMoveState: 0
   m_bWaiting: 0
-  eAIPatrolMode: 0
+  eAIMode: 0
   waypoints: []
 --- !u!95 &2735173177814402104
 Animator:

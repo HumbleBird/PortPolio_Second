@@ -43,9 +43,6 @@ public partial class Character : Base
             case MoveState.Run:
                 Animator.CrossFade("Run", m_fNormalizeTransitionDuration);
                 break;
-            case MoveState.Crouch:
-                Animator.CrossFade("Crouch Walk Forward", m_fNormalizeTransitionDuration);
-                break;
             default:
                 break;
         }
@@ -58,10 +55,6 @@ public partial class Character : Base
 
         if (eActionState == ActionState.Shield)
             hitAnimName = HitMotion.ShieldHit.ToString();
-        else if (eMoveState == MoveState.Crouch && eActionState == ActionState.Shield)
-            hitAnimName = HitMotion.CrouchShieldHit.ToString();
-        else if (eMoveState == MoveState.Crouch)
-            hitAnimName = HitMotion.CrouchingHit.ToString();
 
         m_sCurrentAnimationName = hitAnimName;
 

@@ -107,8 +107,6 @@ public partial class MyPlayer : Player
 		// 이동 상태 결정 : 걷기, 뛰기
 		if (Input.GetKey(KeyCode.LeftShift))
 			SetMoveState(MoveState.Run);
-		else if (eMoveState != MoveState.Crouch)
-			SetMoveState(MoveState.Walk);
 
 		// 카메라를 향해 캐릭터 이동 방향 결정
 		Camera camera = Managers.Camera.m_Camera;
@@ -122,9 +120,6 @@ public partial class MyPlayer : Player
 				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
 			}
 		}
-
-		if (m_bMoveInput == false && eMoveState != MoveState.Crouch)
-			eState = CreatureState.Idle;
 	}
 }
 

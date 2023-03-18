@@ -86,7 +86,7 @@ public partial class Monster : AI
             return;
         }
 
-        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(minfo.m_iStat);
+        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
         eObjectType = ObjectType.Monster;
 
         // 클래스
