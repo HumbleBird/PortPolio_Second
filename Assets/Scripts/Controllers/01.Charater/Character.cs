@@ -66,7 +66,8 @@ public partial class Character : Base
         AnimationClip[] clips = Animator.runtimeAnimatorController.animationClips;
         foreach (var clip in clips)
         {
-            m_DicAniactionclip.Add(clip.name, clip);
+            if(!m_DicAniactionclip.ContainsKey(clip.name))
+                m_DicAniactionclip.Add(clip.name, clip);
         }
     }
 

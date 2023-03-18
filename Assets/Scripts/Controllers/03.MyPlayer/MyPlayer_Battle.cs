@@ -29,11 +29,11 @@ public partial class MyPlayer : Player
             }
 		}
 
-		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.SpecialAction]))
-		{
-			Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.SpeacialAction()); };
-			AttackEvent(m_iStrongAttackNum);
-		}
+		//if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.SpecialAction]))
+		//{
+		//	Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.SpeacialAction()); };
+		//	AttackEvent(m_iStrongAttackNum);
+		//}
 	}
 
     protected override void UpdateSkill() 
@@ -46,7 +46,7 @@ public partial class MyPlayer : Player
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
             {
 				Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
-				ExcuteNextAttack(info.m_iNextNum);
+				ExcuteNextAttack(m_cAttack.m_AttackInfo.m_iNextNum);
 				return;
 			}
 		}

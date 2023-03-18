@@ -9,7 +9,7 @@ using static Define;
 
 #region BlowPattern
 
-public interface ISheild
+public interface IShield
 {
     IEnumerator Shield();
 }
@@ -22,12 +22,13 @@ public class Blow : Attack
     {
         Debug.Log("Blow 일반 공격");
         WeaponColliderOnOff(true);
-        yield return null;
+        yield break;
     }
 
-    public override void AttackEnd()
+    public override IEnumerator AttackEnd()
     {
         WeaponColliderOnOff(false);
+        yield break;
     }
 
     protected void WeaponColliderOnOff(bool OnOff)
@@ -53,6 +54,12 @@ public class Blow : Attack
 
     public override IEnumerator SpeacialAction()
     {
-        throw new NotImplementedException();
+        yield  break;
+
+    }
+
+    public override IEnumerator SpeacialActionEnd()
+    {
+        yield  break;
     }
 }

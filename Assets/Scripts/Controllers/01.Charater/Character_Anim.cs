@@ -7,7 +7,7 @@ using static Define;
 public partial class Character : Base
 {
 	float m_fNormalizeTransitionDuration = 0.15f;
-    string m_sCurrentAnimationName = null;
+    protected string m_sCurrentAnimationName = null;
 
 	public virtual void UpdateAnimation()
     {
@@ -62,28 +62,14 @@ public partial class Character : Base
     }
 
     // 공격 및 특수 액션 애니메이션
-    public string ActionAnimation(string animName, bool bStart = true)
+    public void PlayAnimation(string animName)
     {
         if (animName == null)
-            return null;
+            return;
 
-        AnimationLayers animLayer = SetLayer(animName);
+        AnimationLayers layer = SetLayer(animName);
 
-        // 상태에 따른 애니메이션 이름 결정
-         if (animName == UserAction.Roll.ToString())
-        {
-            if (eState == CreatureState.Idle)
-                animName = "Stand To Roll";
-            else if (eState == CreatureState.Move)
-                animName = "Run To Roll";
-        }
-
-        if (bStart == false)
-            animName = animName + " End";
-
-        Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)animLayer);
-
-        return animName;
+        Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)layer);
     }
 
     private AnimationLayers SetLayer(string animName)

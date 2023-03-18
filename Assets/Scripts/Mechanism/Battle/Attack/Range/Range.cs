@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Range : Attack
 {
-    public override void AttackEnd()
+    public override IEnumerator AttackEnd()
     {
         throw new NotImplementedException();
     }
@@ -20,6 +20,11 @@ public class Range : Attack
     }
 
     public override IEnumerator SpeacialAction()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerator SpeacialActionEnd()
     {
         throw new NotImplementedException();
     }

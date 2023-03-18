@@ -6,9 +6,9 @@ using static Define;
 
 public partial class Character : Base
 {
-    protected Table_Attack.Info info;
     public Attack m_cAttack;
-    public Character m_goTarget { get; set; } // 타겟
+
+    public Character m_goTarget = null;
 
     protected bool  m_bCanAttack = true;
     protected bool  m_bNextAttack = false;
@@ -44,9 +44,9 @@ public partial class Character : Base
     {
         // TODO 공격 쿨타임 체크
 
-        info = Managers.Table.m_Attack.Get(id);
+        m_cAttack.m_AttackInfo = Managers.Table.m_Attack.Get(id);
 
-        if (info == null)
+        if (m_cAttack.m_AttackInfo == null)
         {
             Debug.LogError($"해당하는 {id}의 스킬이 없습니다.");
             return;
@@ -57,10 +57,10 @@ public partial class Character : Base
         m_bCanAttack = false;
 
         // 애니메이션 실행
-        ActionAnimation(info.m_sAnimName);
+        PlayAnimation(m_cAttack.m_AttackInfo.m_sAnimName);
 
         // 공격 데미지 더해주기
-        m_strStat.m_iAtk += info.m_iDmg;
+        m_strStat.m_iAtk += m_cAttack.m_AttackInfo.m_iDmg;
 
         // 공격 종료 체크
         m_coAttackCheck = StartCoroutine(CoAttackCheck());
@@ -69,7 +69,7 @@ public partial class Character : Base
     void Attack()
     {
         // Sound
-        SoundPlay(info.m_sAnimName);
+        SoundPlay(m_cAttack.m_AttackInfo.m_sAnimName);
 
         // 등록된 이벤트를 실행
         // 근거리라면 애니메이션에 무기 콜라이더를 활성화를 시켜주고
@@ -80,18 +80,18 @@ public partial class Character : Base
     // 공격 애니메이션을 기점으로 다음 콤보 공격을 할지, 공격을 끝마칠지 결정함.
     IEnumerator CoAttackCheck()
     {
-        float time = GetAnimationTime(info.m_sAnimName, 0.6f);
+        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName, 0.6f);
 
         yield return new WaitForSeconds(time);
 
-        if (info.m_iNextNum != 0)
+        if (m_cAttack.m_AttackInfo.m_iNextNum != 0)
         {
             // AI 와 Player를 나눔
             m_bNextAttack = true;
             HowNextAttack();
         }
 
-        time = GetAnimationTime(info.m_sAnimName, 0.4f);
+        time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName, 0.4f);
 
         yield return new WaitForSeconds(time);
 

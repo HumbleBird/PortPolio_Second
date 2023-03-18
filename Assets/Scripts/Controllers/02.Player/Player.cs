@@ -191,9 +191,21 @@ public partial class Player : Character
     #region PlayerAction
     public IEnumerator Roll()
     {
-        string name = ActionAnimation("Roll");
-        float time = GetAnimationTime(name);
-        yield return new WaitForSeconds(time);
+        string animName = null;
+
+        if (eState == CreatureState.Idle)
+            animName = "Stand To Roll";
+        else if (eState == CreatureState.Move)
+            animName = "Run To Roll";
+
+        PlayAnimation(animName);
+        float time = GetAnimationTime(animName);
+        Stop(time * 0.8f);
+        eActionState = ActionState.Invincible;
+
+        yield return new WaitForSeconds(time * 0.8f);
+        PlayAnimation("Idle");
+        yield break;
     }
     #endregion
 }

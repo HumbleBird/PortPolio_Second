@@ -11,7 +11,6 @@ public class UI_BattleManager
     public void Init()
     {
         UIGameScene = Managers.UI.SceneUI as UI_GameScene;
-
     }
 
     public void RefreshUI<T>(string name = null) where T : UI_Base
@@ -25,7 +24,7 @@ public class UI_BattleManager
 
     public bool AreTheSlotsForThatItemFull(Item item)
     {
-        UI_Equipment equipment = Managers.Resource.Load<UI_Equipment>("Prefabs/UI/Popup/UI_Equipment");
+        UI_Equipment equipment = (UI_Equipment)UIGameScene.UIDic["UI_Equipment"];
         return equipment.AreTheSlotsForThatItemFull(item);
     }
 

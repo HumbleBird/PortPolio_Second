@@ -36,8 +36,25 @@ public class UI_SettingKey : UI_Popup
         Managers.InputKey._verticalLayoutTr = GetObject((int)GameObjects.VerticalLayout).transform;
 
         Managers.InputKey.Init();
+
         gameObject.SetActive(false);
 
         return true;
+    }
+
+    Coroutine co = null;
+
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
+        // 켜졌다면
+        if(gameObject.activeSelf)
+            co =  StartCoroutine(Managers.InputKey.Update());
+        else
+        {
+            if(co != null)
+                StopCoroutine(co);
+        } 
+            
     }
 }

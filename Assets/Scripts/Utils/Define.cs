@@ -159,9 +159,11 @@ public class Define
     public enum Layer
     {
         UI = 5,
+        Player = 7,
         Monster = 8,
         Ground = 9,
         Block = 10,
+        Obstacle = 11,
     }
 
 

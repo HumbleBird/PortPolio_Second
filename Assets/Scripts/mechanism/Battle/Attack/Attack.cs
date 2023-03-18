@@ -20,6 +20,7 @@ public interface IMonsterSpawn
 public abstract class Attack
 {
     public Character m_cGo;
+    public Table_Attack.Info m_AttackInfo;
 
     public void SetInfo(Character cha)
     {
@@ -28,7 +29,7 @@ public abstract class Attack
 
     public abstract IEnumerator NormalAttack();
     public abstract IEnumerator SpeacialAction();
-    public abstract void AttackEnd();
-
+    public abstract IEnumerator AttackEnd();
+    public abstract IEnumerator SpeacialActionEnd();
 
 }

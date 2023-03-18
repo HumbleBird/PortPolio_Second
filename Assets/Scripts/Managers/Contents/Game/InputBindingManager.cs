@@ -44,7 +44,7 @@ namespace Rito.InputBindings
         private List<GameObject> _bindingPairGoList                   = new List<GameObject>();
         private Dictionary<UserAction, BindingPairUI> _bindingPairDict = new Dictionary<UserAction, BindingPairUI>();
 
-        private bool _isListening;
+        private bool _isListening = false;
         private UserAction _curKeyAction;
 
         #endregion
@@ -95,7 +95,6 @@ namespace Rito.InputBindings
         #region Init Methods
         public void Init()
         {
-            _isListening = false;
             _waitingInputGo.SetActive(false);
 
             InitButtonListeners();
@@ -165,6 +164,7 @@ namespace Rito.InputBindings
                 var pairUI = pairGo.GetComponent<BindingPairUI>();
 
                 pairUI.InitLabels($"{pair.Key}", $"{pair.Value}");
+
                 pairUI.AddButtonListener(() =>
                 {
                     pairUI.Select();

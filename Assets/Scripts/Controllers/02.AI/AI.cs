@@ -7,14 +7,7 @@ using static Define;
 
 public partial class AI : Character
 {
-    public enum AIMode
-    {
-        Stay, // 플레이어 감지 시 RandomMove로
-        RandomMove, // 랜덤 이동
-        WayPointMove // 지정 좌표 이동
-    }
 
-    public AIMode eAIMode = AIMode.Stay;
 
     protected override void Init()
     {
@@ -28,8 +21,16 @@ public partial class AI : Character
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = m_strStat.m_fMoveSpeed;             //  Set the navemesh speed with the normal speed of the enemy
 
-        playerMask = (1 << m_iPlayerLayer);
-        obstacleMask = (1 << m_iObstacleLayer);
+        if (eCharacterClass == CharacterClass.Knight || eCharacterClass == CharacterClass.Warior)
+        {
+            m_MinAttackRange = 2;
+            m_iNotChasePlayerRange = 10;
+        }
+        else if (eCharacterClass == CharacterClass.Archer || eCharacterClass == CharacterClass.Wizard)
+        {
+            m_MinAttackRange = 10;
+            m_iNotChasePlayerRange = 15;
+        }
     }
 
     protected override void UpdateController()
@@ -47,7 +48,6 @@ public partial class AI : Character
         }
     }
 
-    float ChangeNextPatroltime = 3f;
     protected override void UpdateIdle()
     {
         base.UpdateIdle();
@@ -57,20 +57,11 @@ public partial class AI : Character
             eState = CreatureState.Move;
             return;
         }
-
-        ChangeNextPatroltime -= Time.deltaTime;
-
-        if (ChangeNextPatroltime <= 0)
-        {
-            ChangeNextPatroltime = 3f;
-            eState = CreatureState.Move;
-        }
     }
 
     protected override void UpdateMove()
     {
         base.UpdateMove();
-
 
         if (!m_IsPatrol)
             Chasing();

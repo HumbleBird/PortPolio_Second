@@ -3,10 +3,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public partial class SkeletonKnight : Monster, ISheild
+public partial class SkeletonKnight : Monster, IShield
 {
-    // 
-
     void Attack()
     {
         m_cAttack.NormalAttack();

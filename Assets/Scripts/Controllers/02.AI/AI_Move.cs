@@ -9,7 +9,31 @@ using Random = UnityEngine.Random;
 public partial class AI : Character
 {
     #region 변수
+
+    // 공통
+    enum AIMoveMode
+    {
+        RandomMove, // 랜덤 이동
+        WayPointMove // 지정 좌표 이동
+    }
+
+    AIMoveMode eAIMoveMode = AIMoveMode.RandomMove;
+
     NavMeshAgent navMeshAgent;                      //  Nav mesh agent component
+    LayerMask playerMask = (1 << (int)Layer.Player);
+    LayerMask obstacleMask = (1 << (int)Layer.Obstacle);
+
+    Vector3 playerLastPosition = Vector3.zero;      //  Last position of the player when was near the enemy
+    Vector3 m_PlayerPosition = Vector3.zero;        //  Last position of the player when the player is seen by the enemy
+
+    bool m_playerInRange = false;                //  플레이어가 시야 각 안에 있는가?
+    bool m_IsPatrol = true;                      //  순찰 중인가?
+    bool m_CaughtPlayer = false;                 //  if the enemy has caught the player
+
+    int m_MinAttackRange = 0; // 최소 공격 거리
+    int m_iNotChasePlayerRange = 0;
+
+    // WayPoint
     float startWaitTime = 4;                 //  Wait time of every action
     float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
     float m_WaitTime;                               //  딜레이 대기 시간
@@ -18,70 +42,49 @@ public partial class AI : Character
     float viewRadius = 5;                   //  Radius of the enemy view
     float viewAngle = 90;                    //  Angle of the enemy view
 
-    public Transform[] waypoints;                   //  All the waypoints where the enemy patrols
-    int m_CurrentWaypointIndex = 0;                     //  Current waypoint where the enemy is going to
+    public Transform[] waypoints;                   // 경로
+    int m_CurrentWaypointIndex = 0;                 //  현재 경로
 
-    LayerMask playerMask;                    //  To detect the player with the raycast
-    LayerMask obstacleMask;                  //  To detect the obstacules with the raycast
-    int m_iPlayerLayer = 7;
-    int m_iObstacleLayer = 11;
+    // Random
+    float m_RandomMoveRange = 10f;
 
-    Vector3 playerLastPosition = Vector3.zero;      //  Last position of the player when was near the enemy
-    Vector3 m_PlayerPosition = Vector3.zero;        //  Last position of the player when the player is seen by the enemy
-
-    bool m_playerInRange= false;                  //  If the player is in range of vision, eState of chasing
-    bool m_PlayerNear  = false;               //  If the player is near, eState of hearing
-    bool m_IsPatrol    = true;             //  If the enemy is patrol, eState of patroling
-
-    protected bool m_CaughtPlayer= false;                 //  if the enemy has caught the player
-
-    float range = 10f;
     #endregion
 
     private void Chasing()
     {
         //  The enemy is chasing the player
-        m_PlayerNear = false;                       //  Set false that hte player is near beacause the enemy already sees the player
         playerLastPosition = Vector3.zero;          //  Reset the player near position
-
-        if (m_goTarget == null)
-            return;
 
         float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
 
-        if (!m_CaughtPlayer)
+        if (dis < m_MinAttackRange)
         {
-            Move();
-            navMeshAgent.SetDestination(m_PlayerPosition);          //  set the destination of the enemy to the player location
-        }
-
-        // 적이 사정거리에 들면 공격
-        // TODO
-        if (dis < 2)
-        {
+            // 사정 거리 안에 들어왔으면 배틀 상태로 변경
             CaughtPlayer();
             return;
         }
         else
         {
+            Move();
+            navMeshAgent.SetDestination(m_PlayerPosition);
             m_CaughtPlayer = false;
         }
 
-        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    //  Control if the enemy arrive to the player location
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    //  플레이어의 위치까지 쫓아왔는데
         {
-            // 플레이어를 놓쳤을 경우
-            if (m_WaitTime <= 0 && !m_CaughtPlayer && dis >= 6f)
+            // 플레이어의 마지막 위치에서 대기 시간이 끝났고, 플레이어를 못 잡았고, 인식 범위 밖으로 넘어갔다면
+            // = 플레이어를 놓쳤을 경우
+            if (m_WaitTime <= 0 && !m_CaughtPlayer && dis >= m_iNotChasePlayerRange)
             {
-                //  Check if the enemy is not near to the player, returns to patrol after the wait time delay
+                //  초기화
                 m_IsPatrol = true;
-                m_PlayerNear = false;
                 m_goTarget = null;
                 Move();
                 m_TimeToRotate = timeToRotate;
                 m_WaitTime = startWaitTime;
-                if (eAIMode == AIMode.WayPointMove)
+                if (eAIMoveMode == AIMoveMode.WayPointMove)
                     navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
-                else if (eAIMode == AIMode.RandomMove)
+                else if (eAIMoveMode == AIMoveMode.RandomMove)
                     Patroling_RandomMove();
             }
             else
@@ -96,53 +99,33 @@ public partial class AI : Character
 
     private void Patroling()
     {
-        //m_PlayerNear 가 true인 경우는 hearing 함수를 만들었을 때
-        if (m_PlayerNear)
+        playerLastPosition = Vector3.zero;
+
+        if (eAIMoveMode == AIMoveMode.WayPointMove)
+            navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the enemy destination to the next waypoint
+
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            //  Check if the enemy detect near the player, so the enemy will move to that position
-            if (m_TimeToRotate <= 0)
+            //  If the enemy arrives to the waypoint position then wait for a moment and go to the next
+            if (m_WaitTime <= 0)
             {
+                if (eAIMoveMode == AIMoveMode.WayPointMove)
+                    NextPoint();
+                else if (eAIMoveMode == AIMoveMode.RandomMove)
+                    Patroling_RandomMove();
+
                 Move();
-                LookingPlayer(playerLastPosition);
+                m_WaitTime = startWaitTime;
             }
             else
             {
-                //  The enemy wait for a moment and then go to the last player position
                 Stop();
-                m_TimeToRotate -= Time.deltaTime;
+                m_WaitTime -= Time.deltaTime;
             }
         }
         else
         {
-            m_PlayerNear = false;           //  The player is no near when the enemy is platroling
-            playerLastPosition = Vector3.zero;
-
-            if (eAIMode == AIMode.WayPointMove)
-                navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the enemy destination to the next waypoint
-
-            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
-            {
-                //  If the enemy arrives to the waypoint position then wait for a moment and go to the next
-                if (m_WaitTime <= 0)
-                {
-                    if (eAIMode == AIMode.WayPointMove)
-                        NextPoint();
-                    else if (eAIMode == AIMode.RandomMove)
-                        Patroling_RandomMove();
-
-                    Move();
-                    m_WaitTime = startWaitTime;
-                }
-                else
-                {
-                    Stop();
-                    m_WaitTime -= Time.deltaTime;
-                }
-            }
-            else
-            {
-                Move();
-            }
+            Move();
         }
     }
 
@@ -151,7 +134,7 @@ public partial class AI : Character
         Vector3 point;
         Vector3 centrePoint = transform.position;
 
-        if (RandomPoint(centrePoint, range, out point)) //pass in our centre point and radius of area
+        if (RandomPoint(centrePoint, m_RandomMoveRange, out point)) //pass in our centre point and radius of area
         {
             navMeshAgent.SetDestination(point);
         }
@@ -200,7 +183,6 @@ public partial class AI : Character
         {
             if (m_WaitTime <= 0)
             {
-                m_PlayerNear = false;
                 Move();
                 navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
                 m_WaitTime = startWaitTime;

@@ -50,20 +50,23 @@ public partial class MyPlayer : Player
 
 	void IdleAndMoveState()
     {
+		if (m_bWaiting)
+			return;
+
 		GetMoveInput();
-		
-		if (m_bWaiting == false)
-        {
-			GetInputAttack();
-		}
+		GetInputAttack();
+		GetKeyAction();
 	}
 
 	void GetKeyAction()
     {
 		if(Input.GetKeyDown( Managers.InputKey._binding.Bindings[UserAction.Roll]))
-        {
-			Roll();
-		}
+			StartCoroutine(Roll());
+
+		if (Input.GetMouseButton(1))
+			StartCoroutine(m_cAttack.SpeacialAction());
+		else if (Input.GetMouseButtonUp(1))
+			StartCoroutine(m_cAttack.SpeacialActionEnd());
     }
 
 	bool m_bMoveInput = false;
@@ -75,7 +78,9 @@ public partial class MyPlayer : Player
 			m_bMoveInput = true;
 		}
 		else
+        {
 			m_bMoveInput = false;
+		}
 	}
 
 	protected override void UpdateIdle()
@@ -87,6 +92,7 @@ public partial class MyPlayer : Player
 			if (m_bWaiting)
 				return;
 
+			SetMoveState(MoveState.Walk);
 			eState = CreatureState.Move;
 			return;
 		}
@@ -103,10 +109,13 @@ public partial class MyPlayer : Player
 		float horizontal = Input.GetAxis("Horizontal");
 
 		m_MovementDirection = new Vector3(horizontal, 0, vertical);
+		
 
 		// 이동 상태 결정 : 걷기, 뛰기
 		if (Input.GetKey(KeyCode.LeftShift))
 			SetMoveState(MoveState.Run);
+		else if (Input.GetKeyUp(KeyCode.LeftShift))
+			SetMoveState(MoveState.Walk);
 
 		// 카메라를 향해 캐릭터 이동 방향 결정
 		Camera camera = Managers.Camera.m_Camera;
@@ -120,6 +129,9 @@ public partial class MyPlayer : Player
 				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
 			}
 		}
+
+		if (m_bMoveInput == false)
+			eState = CreatureState.Idle;
 	}
 }
 
