@@ -12,7 +12,6 @@ public partial class Monster : AI
     {
         base.Init();
 
-        eObjectType = ObjectType.Monster;
         m_strStat.m_iHp = 30;
     }
 
@@ -78,9 +77,9 @@ public partial class Monster : AI
     {
         base.SetInfo();
 
-        Table_Monster.Info minfo = Managers.Table.m_Monster.Get(ID);
+        Table_Monster.Info info = Managers.Table.m_Monster.Get(ID);
 
-        if (minfo == null)
+        if (info == null)
         {
             Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
             return;
@@ -90,6 +89,6 @@ public partial class Monster : AI
         eObjectType = ObjectType.Monster;
 
         // 클래스
-        ChangeClass(minfo.m_iClass);
+        ChangeClass(info.m_iClass);
     }
 }

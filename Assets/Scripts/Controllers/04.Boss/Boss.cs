@@ -17,7 +17,7 @@ public partial class Boss : Monster
         }
         
        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
-       eObjectType = ObjectType.Monster;
+       eObjectType = ObjectType.Boss;
 
         // 클래스
         ChangeClass(binfo.m_iClass);

@@ -1,4 +1,19 @@
-Idx,Name,WeaponType,Damage,AttackSpeed
-아이디,이름,무기 타입,데미지,공격 속도
-1,LongSword,1,10,1
-2,LongBow,2,15,0.8
+Idx,Name,WeaponType,Damage,AttackSpeed,,,
+아이디,이름,무기 타입,데미지,공격 속도,,,
+1,LongSword,1,10,0,,,
+2,LongBow,2,15,0,,,
+,,,,0,,,
+,,,,0,,,
+,,,,0,,,
+,,,,0,,,
+,,,,0,,,
+,,,,0,,,
+,,,,0,,,
+,,,,0,,,Attack
+,,,,0,,,
+,,,,0,,,
+,,,,0,,,
+,,,,0,,,
+,,5,1,0,,,Blow Skeleton Attack 1
+,,7,0.8,0,,,Blow Skeleton Attack 2
+,,,,,,,Skeleton Shiled

@@ -20,7 +20,6 @@ public class Blow : Attack
 {
     public override IEnumerator NormalAttack()
     {
-        Debug.Log("Blow 일반 공격");
         WeaponColliderOnOff(true);
         yield break;
     }

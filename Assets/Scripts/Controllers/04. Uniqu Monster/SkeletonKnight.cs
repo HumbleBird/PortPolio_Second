@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public partial class SkeletonKnight : Monster, IShield
+public  class SkeletonKnight : Monster
 {
     void Attack()
     {

@@ -17,9 +17,9 @@ public partial class Character : Base
 
     public void ChangeClass(int ClassId)
     {
-        CharacterClass type = (CharacterClass)ClassId;
+        eCharacterClass = (CharacterClass)ClassId;
 
-        switch (type)
+        switch (eCharacterClass)
         {
             case CharacterClass.None:
                 break;
@@ -52,7 +52,6 @@ public partial class Character : Base
             return;
         }
 
-        eState = CreatureState.Skill;
 
         m_bCanAttack = false;
 

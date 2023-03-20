@@ -7,14 +7,11 @@ using static Define;
 
 public partial class AI : Character
 {
-
-
     protected override void Init()
     {
         base.Init();
 
         m_WaitTime = startWaitTime;                 //  Set the wait time variable that will change
-        m_TimeToRotate = timeToRotate;
 
         navMeshAgent = gameObject.GetOrAddComponent<NavMeshAgent>();
 
@@ -23,7 +20,7 @@ public partial class AI : Character
 
         if (eCharacterClass == CharacterClass.Knight || eCharacterClass == CharacterClass.Warior)
         {
-            m_MinAttackRange = 2;
+            m_MinAttackRange = 1;
             m_iNotChasePlayerRange = 10;
         }
         else if (eCharacterClass == CharacterClass.Archer || eCharacterClass == CharacterClass.Wizard)
@@ -67,5 +64,15 @@ public partial class AI : Character
             Chasing();
         else
             Patroling();
+    }
+
+    protected bool DistanceMeasurementAttackRange()
+    {
+        float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
+        if (dis <= m_MinAttackRange)
+            return true;
+        
+
+        return false;
     }
 }

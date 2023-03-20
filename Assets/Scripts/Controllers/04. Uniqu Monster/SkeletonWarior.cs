@@ -3,27 +3,48 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public partial class SkeletonWarior : Monster
+public class SkeletonWarior : Monster
 {
-    // 이새퀴는 공격 패턴이 2개임
-    // 달려가면서 공격하거나
-    // 공격 타이밍이 1개 있는 단일 공격, 확률적으로 튀어 나오는 콤보 공격 2개
+    protected override IEnumerator ThinkAttackPattern()
+    {
+        Debug.Log("공격 생각 중");
+        while (true)
+        {
+            int rand = Random.Range(0, 2);
+            if(rand == 0)
+                yield return StartCoroutine(NormalAttack());
+            else if (rand == 1)
+                yield return StartCoroutine(ComboAttack());
+
+            // 거리 측정
+            if(DistanceMeasurementAttackRange())
+            {
+                yield return null;
+            }
+            else
+            {
+                eState = CreatureState.Move;
+                yield break;
+            }
+        }
+    }
 
     // 단일 공격
-    void Attack()
+    IEnumerator NormalAttack()
     {
-        m_cAttack.NormalAttack();
+        AttackEvent(1011);
+        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
+        // m_cAttack.NormalAttack(); // 함수 등록
+        yield return new WaitForSeconds(time);
     }
-
-    // 달려가면서 공격 - 일정 거리에서 떨어진 상태에서
-    void ForwardRunAttack()
-    {
-
-    }
+    
 
     // 콤보 공격
-    void ComboAttack()
+    IEnumerator ComboAttack()
     {
-        m_cAttack.SpeacialAction();
+        AttackEvent(1012);
+        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
+        // m_cAttack.NormalAttack(); // 함수 등록
+        yield return new WaitForSeconds(time);
     }
 }

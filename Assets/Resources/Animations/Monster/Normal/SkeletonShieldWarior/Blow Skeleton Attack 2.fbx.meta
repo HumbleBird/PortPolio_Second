@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: e84a076d9203e7349bee9a8a5a9df67f
+guid: 3134fa9bcd3bf014bb73fdc51872c056
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Skeleton Warior Attack 1
+    second: Blow Skeleton Attack 2
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -40,11 +40,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Skeleton Warior Attack 1
+      name: Blow Skeleton Attack 2
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 136
+      lastFrame: 144
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -64,7 +64,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.40070072
+      - time: 0.3827151
         functionName: Attack
         data: 
         objectReferenceParameter: {instanceID: 0}
