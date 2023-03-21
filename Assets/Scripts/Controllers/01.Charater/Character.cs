@@ -7,11 +7,11 @@ using static Define;
 
 public partial class Character : Base
 {
+    #region Character State Enum
     public ActionState eActionState = ActionState.None;
     public MoveState eMoveState = MoveState.None;
     private CreatureState state = CreatureState.Idle;
     protected CharacterClass eCharacterClass = CharacterClass.None;
-
     public virtual CreatureState eState
     {
         get { return state; }
@@ -25,7 +25,9 @@ public partial class Character : Base
             UpdateSound();
         }
     }
+    #endregion
 
+    #region Variable
     public List<TrigerDetector> m_GoAttackItem { get; set; } = new List<TrigerDetector>();
     public Table_Attack.Info m_tAttackInfo { get; set; } = new Table_Attack.Info();
     public Stat m_strStat { get; set; } = new Stat();
@@ -38,22 +40,39 @@ public partial class Character : Base
     public bool m_bWaiting = false;
 
     protected Dictionary<string, AnimationClip> m_DicAniactionclip = new Dictionary<string, AnimationClip>();
+    #endregion
 
     protected override void Init()
     {
         base.Init();
 
         SetAudio();
-
-        Managers.Object.Add(ID, gameObject);
-
+        SetAnimation();
+        SetAttackInfo();
         SetInfo();
-
-        m_cAttack.SetInfo(this);
         m_strStat.Init();
+        m_cAttack.SetInfo(this);
+    }
 
-        AttackColliderInit();
+    void Update()
+    {
+        UpdateController();
+    }
 
+    #region SetInfo
+    protected virtual void SetInfo()
+    {
+        Managers.Object.Add(ID, gameObject);
+    }
+
+    void SetAnimation()
+    {
+        AnimationClip[] clips = m_Animator.runtimeAnimatorController.animationClips;
+        foreach (var clip in clips)
+        {
+            if (!m_DicAniactionclip.ContainsKey(clip.name))
+                m_DicAniactionclip.Add(clip.name, clip);
+        }
     }
 
     private void SetAudio()
@@ -62,68 +81,9 @@ public partial class Character : Base
         audioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
         audioSource.spatialBlend = 1;
         audioSource.rolloffMode = AudioRolloffMode.Linear;
-
-        AnimationClip[] clips = m_Animator.runtimeAnimatorController.animationClips;
-        foreach (var clip in clips)
-        {
-            if(!m_DicAniactionclip.ContainsKey(clip.name))
-                m_DicAniactionclip.Add(clip.name, clip);
-        }
     }
 
-    void Update()
-    {
-        UpdateController();
-    }
-
-    protected virtual void UpdateController()
-    {
-        switch (eState)
-        {
-            case CreatureState.Idle:
-                UpdateIdle();
-                break;
-            case CreatureState.Move:
-                UpdateMove();
-                break;
-            case CreatureState.Skill:
-                UpdateSkill();
-                break;
-            case CreatureState.Dead:
-                UpdateDead();
-                break;
-        }
-    }
-
-    protected virtual void UpdateIdle() { }
-    protected virtual void UpdateMove() { }
-    protected virtual void UpdateSkill() { }
-
-    protected virtual void UpdateDead() 
-    {
-        m_Rigid.isKinematic = true;
-        Managers.Object.Remove(ID);
-
-        m_Collider.isTrigger = true;
-
-    }
-
-    public void Stop(float duration)
-    {
-        if (m_bWaiting)
-            return;
-
-        StartCoroutine(Wait(duration));
-    }
-
-    IEnumerator Wait(float duration)
-    {
-        m_bWaiting = true;
-        yield return new WaitForSecondsRealtime(duration);
-        m_bWaiting = false;
-    }
-
-    void AttackColliderInit()
+    void SetAttackInfo()
     {
         GameObject weapon = Util.FindChild(gameObject, "WeaponAttackCollider", true);
         if (weapon != null)
@@ -144,6 +104,60 @@ public partial class Character : Base
 
             front.GetComponent<Collider>().isTrigger = true;
         }
+
+    }
+
+    #endregion
+
+    #region Creature State Controller
+
+    protected virtual void UpdateController()
+    {
+        switch (eState)
+        {
+            case CreatureState.Idle:
+                UpdateIdle();
+                break;
+            case CreatureState.Move:
+                UpdateMove();
+                break;
+            case CreatureState.Skill:
+                UpdateSkill();
+                break;
+            case CreatureState.Dead:
+                UpdateDead();
+                break;
+        }
+    }
+    protected virtual void UpdateIdle() { }
+    protected virtual void UpdateMove() { }
+    protected virtual void UpdateSkill() { }
+    protected virtual void UpdateDead() 
+    {
+        m_Rigid.isKinematic = true;
+        Managers.Object.Remove(ID);
+
+        m_Collider.isTrigger = true;
+
+    }
+
+    #endregion
+
+    #region Order
+
+    public void Stop(float duration)
+    {
+        if (m_bWaiting)
+            return;
+
+        StartCoroutine(Wait(duration));
+    }
+
+    IEnumerator Wait(float duration)
+    {
+        m_bWaiting = true;
+        yield return new WaitForSecondsRealtime(duration);
+        m_bWaiting = false;
     }
 
     public virtual void OnDead(GameObject Attacker)
@@ -151,18 +165,7 @@ public partial class Character : Base
         eState = Define.CreatureState.Dead;
     }
 
-    public float GetAnimationTime(string animName, float time = 1f)
-    {
-        if (m_DicAniactionclip.ContainsKey(animName) == false)
-        {
-            Debug.Log("해당 애니메이션 클립이 없습니다." + animName);
-            return 0;
-        }
-
-        AnimationClip clip = m_DicAniactionclip[animName];
-        return clip.length * time;
-    }
 
 
-    protected virtual void SetInfo() { }
+    #endregion
 }

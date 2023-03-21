@@ -84,4 +84,15 @@ public partial class Character : Base
         return animLayer;
     }
 
+    public float GetAnimationTime(string animName, float time = 1f)
+    {
+        if (m_DicAniactionclip.ContainsKey(animName) == false)
+        {
+            Debug.Log("해당 애니메이션 클립이 없습니다." + animName);
+            return 0;
+        }
+
+        AnimationClip clip = m_DicAniactionclip[animName];
+        return clip.length * time;
+    }
 }

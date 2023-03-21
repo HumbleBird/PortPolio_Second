@@ -30,26 +30,29 @@ public class SkeletonWarior : Monster
     // 단일 공격
     IEnumerator NormalAttack()
     {
-        AttackEvent(1011);
-        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
-        Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
+        int rand = Random.Range(1011, 1013);
+        float time = SkeletonWariorAttack(rand);
         yield return new WaitForSeconds(time);
+        yield break;
     }
-    
+
 
     // 콤보 공격
     IEnumerator ComboAttack()
     {
-        Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
-        AttackEvent(1011);
-        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
-        // m_cAttack.NormalAttack(); // 함수 등록
+        int rand = Random.Range(1014, 1016);
+        float time = SkeletonWariorAttack(rand);
         yield return new WaitForSeconds(time);
+        yield break;
+    }
 
+    float SkeletonWariorAttack(int id)
+    {
         Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
-        AttackEvent(1012);
-        time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
-        // m_cAttack.NormalAttack(); // 함수 등록
-        yield return new WaitForSeconds(time);
+        AttackEvent(id);
+        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
+        Debug.Log($"현재 애니메이션 : {m_cAttack.m_AttackInfo.m_sAnimName}, 애니메이션 길이 {time}");
+        Debug.Log(m_bCanAttack);
+        return time;
     }
 }

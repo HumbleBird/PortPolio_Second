@@ -42,7 +42,6 @@ public partial class Character : Base
                 break;
         }
 
-        //navMeshAgent.speed = m_strStat.m_fMoveSpeed;
         UpdateAnimation();
     }
 

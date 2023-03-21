@@ -86,7 +86,6 @@ public partial class Character : Base
         {
             // AI 와 Player를 나눔
             m_bNextAttack = true;
-            HowNextAttack();
         }
 
         time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName, 0.4f);
@@ -95,11 +94,6 @@ public partial class Character : Base
 
         AttackEnd();
         yield break;
-    }
-
-    protected virtual void HowNextAttack()
-    {
-
     }
 
     // 피격 판정과 데미지 처리
@@ -153,8 +147,6 @@ public partial class Character : Base
         m_bNextAttack = false;
 
         m_strStat.m_iAtk = m_strStat.m_fOriginalAtk;
-
-        eState = CreatureState.Idle;
 
         Managers.Battle.ClearEventDelegateAttack();
         Managers.Battle.ClearEventDelegateHitEffect();

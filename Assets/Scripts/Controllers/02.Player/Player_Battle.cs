@@ -23,7 +23,7 @@ public partial class Player : Character
 	protected override void AttackEnd()
     {
 		base.AttackEnd();
-
+		eState = CreatureState.Idle;
 		cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
 	}
 

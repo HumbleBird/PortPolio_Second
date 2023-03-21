@@ -17,3 +17,5 @@ Idx,Name,Dmg,Speed,CoolTime,Range,NextNum,AnimName
 1011,스켈레톤의 횡베기,5,1,5,1,0,Blow Skeleton Attack 1
 1012,스켈레톤의 대각선 베기,7,1,5,1,0,Blow Skeleton Attack 2
 1013,스켈레톤 방패병의 방패 들기,0,1,0,1,0,Shiled
+1014,스켈레톤 워리어의 콤보 공격 1,5,1,0,1,0,Blow Skeleton Warior Combo Attack 1
+1015,스켈레톤 워리어의 콤보 공격 2,5,1,0,1,0,Blow Skeleton Warior Combo Attack 2

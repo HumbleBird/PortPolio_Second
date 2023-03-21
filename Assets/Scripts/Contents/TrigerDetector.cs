@@ -28,6 +28,7 @@ public class TrigerDetector : MonoBehaviour
         {
             CAttacker.m_goTarget = character;
             CAttacker.m_goTarget.HitEvent(character, CAttacker.m_TotalAttack);
+            AttackCan(false);
         }
     }
 

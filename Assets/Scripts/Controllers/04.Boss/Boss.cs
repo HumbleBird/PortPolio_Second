@@ -8,6 +8,7 @@ public partial class Boss : Monster
 {
     protected override void SetInfo()
     {
+        Managers.Object.Add(ID, gameObject);
         Table_Boss.Info binfo = Managers.Table.m_Boss.Get(ID);
 
         if (binfo == null)
