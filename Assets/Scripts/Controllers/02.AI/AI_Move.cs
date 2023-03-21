@@ -27,7 +27,7 @@ public partial class AI : Character
 
     bool m_playerInRange = false;                //  플레이어가 시야 각 안에 있는가?
     bool m_IsPatrol = true;                      //  순찰 중인가?
-    bool m_CaughtPlayer = false;                 //  if the enemy has caught the player
+    protected bool m_CaughtPlayer = false;                 //  if the enemy has caught the player
 
     float m_iAbsPlayerToAIRange = 2.5f;
     protected int m_MinAttackRange; // 최소 공격 거리
@@ -172,6 +172,7 @@ public partial class AI : Character
                 if (!Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
                 {
                     m_playerInRange = true;             //  The player has been seeing by the enemy and then the nemy starts to chasing the player
+                    m_goTarget = player.GetComponent<Player>();
                     m_IsPatrol = false;                 //  Change the eState to chasing the player
                 }
                 else //If the player is behind a obstacle the player position will not be registered
@@ -184,10 +185,7 @@ public partial class AI : Character
             if (m_playerInRange)
             {
                 m_PlayerPosition = player.transform.position;       //  Save the player's current position if the player is in range of vision
-                m_goTarget = player.GetComponent<Player>();
             }
-            else
-                m_goTarget = null;
         }
     }
 

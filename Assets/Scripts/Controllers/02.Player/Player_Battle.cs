@@ -10,9 +10,11 @@ public partial class Player : Character
     {
         base.AttackEvent(id);
 
+		eState = CreatureState.Skill;
+
 		// 스테미너 감소
-		m_strStat.m_fStemina -= 10;
-		SetStemina(m_strStat.m_fStemina);
+		float newStemina = m_strStat.m_fStemina - 10;
+		SetStemina(newStemina);
 
 		// 스테미너 일시 정지
 		StopCoroutine(cStaminaGraduallyFillingUp);

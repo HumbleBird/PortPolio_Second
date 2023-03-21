@@ -7,9 +7,10 @@ public class SkeletonWarior : Monster
 {
     protected override IEnumerator ThinkAttackPattern()
     {
-        Debug.Log("공격 생각 중");
         while (true)
         {
+            Debug.Log("공격 생각 중");
+
             int rand = Random.Range(0, 2);
             if(rand == 0)
                 yield return StartCoroutine(NormalAttack());
@@ -18,12 +19,11 @@ public class SkeletonWarior : Monster
 
             // 거리 측정
             if(DistanceMeasurementAttackRange())
-            {
                 yield return null;
-            }
             else
             {
                 eState = CreatureState.Move;
+                m_CaughtPlayer = false;
                 yield break;
             }
         }
@@ -42,8 +42,12 @@ public class SkeletonWarior : Monster
     // 콤보 공격
     IEnumerator ComboAttack()
     {
-        AttackEvent(1012);
+        AttackEvent(1011);
         float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
+        // m_cAttack.NormalAttack(); // 함수 등록
+        yield return new WaitForSeconds(time);
+        AttackEvent(1012);
+        time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
         // m_cAttack.NormalAttack(); // 함수 등록
         yield return new WaitForSeconds(time);
     }

@@ -14,14 +14,14 @@ public class Stat
     public int   m_iMp           { get; set; }           
     public int   m_iMaxMp        { get; set; }
     public float m_fStemina      { get; set; }
-    public float m_fMaxStemina      { get; set; }
-    public int   m_iAtk         { get; set; }
-    public int   m_fOriginalAtk         { get; set; }
-    public int   m_iDef         { get; set; }
-    public float m_fMoveSpeed { get; set; }
-    public float m_fWalkSpeed       { get; set; } 
-    public float m_fRunSpeed        { get; set; }
-    public float m_fAttackSpeed     { get; set; }
+    public float m_fMaxStemina   { get; set; }
+    public int   m_iAtk          { get; set; }
+    public int   m_fOriginalAtk  { get; set; }
+    public int   m_iDef          { get; set; }
+    public float m_fMoveSpeed    { get; set; }
+    public float m_fWalkSpeed    { get; set; } 
+    public float m_fRunSpeed     { get; set; }
+    public float m_fAttackSpeed  { get; set; }
 
     public void Init()
     {
