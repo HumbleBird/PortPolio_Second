@@ -5,9 +5,10 @@ using static Define;
 
 public class Base : MonoBehaviour
 {
-    public Rigidbody Rigid { get; set; }
+    public Rigidbody m_Rigid { get; set; }
     protected Collider m_Collider { get; set; }
-    protected Animator Animator { get; set; }
+    protected Animator m_Animator { get; set; }
+    protected Animation m_Animaion { get; private set; }
 
     public int ID;
     public ObjectType eObjectType { get; set; }
@@ -20,11 +21,11 @@ public class Base : MonoBehaviour
 
     protected virtual void Init()
     {
-        Animator = Util.GetOrAddComponent<Animator>(gameObject);
-        Rigid = Util.GetOrAddComponent<Rigidbody>(gameObject);
+        m_Animator = Util.GetOrAddComponent<Animator>(gameObject);
+        m_Rigid = Util.GetOrAddComponent<Rigidbody>(gameObject);
         m_Collider = Util.GetOrAddComponent<Collider>(gameObject);
 
-        Rigid.constraints = RigidbodyConstraints.FreezeRotation;
+        m_Rigid.constraints = RigidbodyConstraints.FreezeRotation;
 
         if(Pos != null)
             transform.position = Pos.position;

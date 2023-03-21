@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public partial class Monster : AI
+public abstract  partial class Monster : AI
 {
     protected override void UpdateSkill()
     {
@@ -13,8 +13,5 @@ public partial class Monster : AI
             StartCoroutine(ThinkAttackPattern());
     }
 
-    protected virtual IEnumerator ThinkAttackPattern()
-    {
-        yield return null;
-    }
+    protected abstract IEnumerator ThinkAttackPattern();
 }

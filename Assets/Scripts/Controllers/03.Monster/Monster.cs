@@ -4,15 +4,27 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public partial class Monster : AI
+public abstract  partial class Monster : AI
 {
     List<Table_Reward.Info> m_rewards = new List<Table_Reward.Info>();
 
-    protected override void Init()
+    protected override void SetInfo()
     {
-        base.Init();
+        base.SetInfo();
 
-        m_strStat.m_iHp = 30;
+        Table_Monster.Info info = Managers.Table.m_Monster.Get(ID);
+
+        if (info == null)
+        {
+            Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
+            return;
+        }
+
+        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
+        eObjectType = ObjectType.Monster;
+
+        // 클래스
+        ChangeClass(info.m_iClass);
     }
 
     public override void OnDead(GameObject attacker)
@@ -70,25 +82,5 @@ public partial class Monster : AI
         {
             m_rewards.Add(Managers.Table.m_Reward.Get(tempIds[i]));
         }
-    }
-
-
-    protected override void SetInfo()
-    {
-        base.SetInfo();
-
-        Table_Monster.Info info = Managers.Table.m_Monster.Get(ID);
-
-        if (info == null)
-        {
-            Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
-            return;
-        }
-
-        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
-        eObjectType = ObjectType.Monster;
-
-        // 클래스
-        ChangeClass(info.m_iClass);
     }
 }

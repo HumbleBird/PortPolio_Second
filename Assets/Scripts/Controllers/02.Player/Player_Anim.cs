@@ -20,7 +20,7 @@ public partial class Player : Character
                 break;
             case CreatureState.Dead:
                 int deadId = UnityEngine.Random.Range(0, 2);
-                Animator.Play($"Dead{deadId}");
+                m_Animator.Play($"Dead{deadId}");
                 break;
             default:
                 break;

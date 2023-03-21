@@ -16,4 +16,9 @@ public  class SkeletonKnight : Monster
 
         yield return null;
     }
+
+    protected override IEnumerator ThinkAttackPattern()
+    {
+        yield return null;
+    }
 }

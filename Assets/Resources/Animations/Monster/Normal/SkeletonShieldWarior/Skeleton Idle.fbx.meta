@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: b7eb479d591f4b046ba772f60e3063e5
+guid: 63a9661ed344fa04a8978779abd95059
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: NormalHit
+    second: Skeleton Idle
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -40,18 +40,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: NormalHit
+      name: Skeleton Idle
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 45
+      lastFrame: 560
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -63,14 +63,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.17197452
-        functionName: SoundPlay
-        data: 'Skeleton Hit '
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

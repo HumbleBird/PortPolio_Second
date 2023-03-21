@@ -29,9 +29,7 @@ public partial class AI : Character
     bool m_IsPatrol = true;                      //  순찰 중인가?
     protected bool m_CaughtPlayer = false;                 //  if the enemy has caught the player
 
-    float m_iAbsPlayerToAIRange = 2.5f;
-    protected int m_MinAttackRange; // 최소 공격 거리
-    int m_iNotChasePlayerRange;
+    int m_iNotChasePlayerRange = 10;
 
     // WayPoint
     float startWaitTime = 4;                 //  Wait time of every action
@@ -48,27 +46,28 @@ public partial class AI : Character
 
     #endregion
 
+    protected void AIMoveInit()
+    {
+        m_playerInRange = false;
+        m_IsPatrol = true;
+        m_CaughtPlayer = false;
+    }
+
     private void Chasing()
     {
         //  The enemy is chasing the player
         playerLastPosition = Vector3.zero;          //  Reset the player near position
 
-        float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
+        float dis = Vector3.Distance(transform.position, m_PlayerPosition);
 
-        if (dis < m_MinAttackRange)
-        {
-            // 사정 거리 안에 들어왔으면 배틀 상태로 변경
-            CaughtPlayer();
-            return;
-        }
-        else
+        if (!m_CaughtPlayer)
         {
             Move();
-            navMeshAgent.SetDestination(m_PlayerPosition);
-            m_CaughtPlayer = false;
+            navMeshAgent.SetDestination(m_PlayerPosition);   
         }
 
-        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    //  플레이어의 위치까지 쫓아왔는데
+        // 목표 위치 거리 안에 도달했다면
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    
         {
             // 플레이어의 마지막 위치에서 대기 시간이 끝났고, 플레이어를 못 잡았고, 인식 범위 밖으로 넘어갔다면
             // = 플레이어를 놓쳤을 경우
@@ -82,10 +81,11 @@ public partial class AI : Character
             }
             else
             {
-                //  Wait if the current position is not the player position
-                if (dis >= m_iAbsPlayerToAIRange)
+                //  현재 위치가 플레이어 위치가 아닌 경우 기다리십시오
+                if (dis >= 2.5f)
                     Stop();
                 m_WaitTime -= Time.deltaTime;
+                CaughtPlayer();
             }
         }
     }
@@ -166,7 +166,7 @@ public partial class AI : Character
         {
             Transform player = playerInRange[i].transform;
             Vector3 dirToPlayer = (player.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2 && Vector3.Distance(transform.position, player.position) <= viewRadius) // 시야 각도&거리 안으로
             {
                 float dstToPlayer = Vector3.Distance(transform.position, player.position);          //  Distance of the enmy and the player
                 if (!Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
@@ -175,17 +175,15 @@ public partial class AI : Character
                     m_goTarget = player.GetComponent<Player>();
                     m_IsPatrol = false;                 //  Change the eState to chasing the player
                 }
-                else //If the player is behind a obstacle the player position will not be registered
+                else // 플레이어가 장애물 뒤에 있다면
+                {
+                    m_goTarget = null;
                     m_playerInRange = false;
+                }
             }
-
-            if (Vector3.Distance(transform.position, player.position) > viewRadius) // 시야각 밖으로
-                m_playerInRange = false;
 
             if (m_playerInRange)
-            {
                 m_PlayerPosition = player.transform.position;       //  Save the player's current position if the player is in range of vision
-            }
         }
     }
 

@@ -22,4 +22,9 @@ public partial class Boss : Monster
         // 클래스
         ChangeClass(binfo.m_iClass);
     }
+
+    protected override IEnumerator ThinkAttackPattern()
+    {
+        throw new System.NotImplementedException();
+    }
 }

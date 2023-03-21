@@ -63,7 +63,7 @@ public partial class Character : Base
         audioSource.spatialBlend = 1;
         audioSource.rolloffMode = AudioRolloffMode.Linear;
 
-        AnimationClip[] clips = Animator.runtimeAnimatorController.animationClips;
+        AnimationClip[] clips = m_Animator.runtimeAnimatorController.animationClips;
         foreach (var clip in clips)
         {
             if(!m_DicAniactionclip.ContainsKey(clip.name))
@@ -101,7 +101,7 @@ public partial class Character : Base
 
     protected virtual void UpdateDead() 
     {
-        Rigid.isKinematic = true;
+        m_Rigid.isKinematic = true;
         Managers.Object.Remove(ID);
 
         m_Collider.isTrigger = true;

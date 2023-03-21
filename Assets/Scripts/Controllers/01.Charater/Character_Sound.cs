@@ -21,7 +21,7 @@ public partial class Character : Base
 
         if (info == null)
         {
-            Debug.Log("Not Sound " + gameObject.name + " "+ soundName);
+            //Debug.Log("Not Sound " + gameObject.name + " "+ soundName);
             return;
         }
 

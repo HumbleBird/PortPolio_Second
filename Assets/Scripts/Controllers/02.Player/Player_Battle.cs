@@ -27,7 +27,7 @@ public partial class Player : Character
 		cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
 	}
 
-	protected virtual IEnumerator StaminaGraduallyFillingUp()
+	protected IEnumerator StaminaGraduallyFillingUp()
 	{
         while (true)
         {

@@ -275,6 +275,7 @@ MonoBehaviour:
   eActionState: 0
   eMoveState: 0
   m_bWaiting: 0
+  m_goTarget: {fileID: 0}
   m_MovementDirection: {x: 0, y: 0, z: 0}
   m_FollwTarget: {fileID: 0}
   m_fRotationSpeed: 10
@@ -2915,7 +2916,7 @@ GameObject:
   - component: {fileID: 7555751848557005202}
   - component: {fileID: 2056428751166852154}
   - component: {fileID: 3234748966453461130}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: WeaponAttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

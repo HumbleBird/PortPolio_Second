@@ -17,7 +17,6 @@ public partial class MyPlayer : Player
 	{
 		base.Init();
 
-
 		SetKey();
 
 		m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", transform);

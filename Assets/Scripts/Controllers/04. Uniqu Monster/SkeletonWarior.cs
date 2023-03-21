@@ -9,21 +9,19 @@ public class SkeletonWarior : Monster
     {
         while (true)
         {
-            Debug.Log("공격 생각 중");
-
             int rand = Random.Range(0, 2);
-            if(rand == 0)
+            if (rand == 0)
                 yield return StartCoroutine(NormalAttack());
             else if (rand == 1)
                 yield return StartCoroutine(ComboAttack());
 
             // 거리 측정
-            if(DistanceMeasurementAttackRange())
+            if (DistanceMeasurementAttackRange())
                 yield return null;
             else
             {
                 eState = CreatureState.Move;
-                m_CaughtPlayer = false;
+                AIMoveInit();
                 yield break;
             }
         }
@@ -34,7 +32,7 @@ public class SkeletonWarior : Monster
     {
         AttackEvent(1011);
         float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
-        // m_cAttack.NormalAttack(); // 함수 등록
+        Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
         yield return new WaitForSeconds(time);
     }
     
@@ -42,10 +40,13 @@ public class SkeletonWarior : Monster
     // 콤보 공격
     IEnumerator ComboAttack()
     {
+        Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
         AttackEvent(1011);
         float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
         // m_cAttack.NormalAttack(); // 함수 등록
         yield return new WaitForSeconds(time);
+
+        Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
         AttackEvent(1012);
         time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
         // m_cAttack.NormalAttack(); // 함수 등록

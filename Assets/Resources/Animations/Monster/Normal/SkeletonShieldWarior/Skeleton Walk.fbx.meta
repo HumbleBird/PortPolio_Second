@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: bd98670604e86bb4a9788432c0d66318
+guid: c56df0d04f64dab449d230a7d1dab22f
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Shield
+    second: Skeleton Walk
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -31,7 +31,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -40,18 +40,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Shield
+      name: Skeleton Walk
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 83
+      lastFrame: 79
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

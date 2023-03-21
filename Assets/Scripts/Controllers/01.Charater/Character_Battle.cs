@@ -52,7 +52,6 @@ public partial class Character : Base
             return;
         }
 
-
         m_bCanAttack = false;
 
         // 애니메이션 실행

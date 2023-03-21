@@ -20,14 +20,15 @@ public partial class AI : Character
 
         if (eCharacterClass == CharacterClass.Knight || eCharacterClass == CharacterClass.Warior)
         {
-            m_MinAttackRange = 1;
-            m_iNotChasePlayerRange = 10;
+            navMeshAgent.stoppingDistance = 1.5f;
         }
         else if (eCharacterClass == CharacterClass.Archer || eCharacterClass == CharacterClass.Wizard)
         {
-            m_MinAttackRange = 10;
-            m_iNotChasePlayerRange = 15;
+            navMeshAgent.stoppingDistance = 10f;
+
         }
+
+        AIMoveInit();
     }
 
     protected override void UpdateController()
@@ -68,8 +69,12 @@ public partial class AI : Character
 
     protected bool DistanceMeasurementAttackRange()
     {
+        if (m_goTarget == null)
+            return false;
+
+        // 몬스터 뒤에 플레이어가 있는 것을 알아야 되기 때문에 Target으로 
         float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
-        if (dis <= m_MinAttackRange)
+        if (dis <= navMeshAgent.stoppingDistance)
             return true;
         
 

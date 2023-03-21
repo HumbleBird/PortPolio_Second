@@ -14,7 +14,7 @@ public partial class Character : Base
         switch (eState)
         {
             case CreatureState.Idle:
-                Animator.CrossFade("Idle", m_fNormalizeTransitionDuration);
+                m_Animator.CrossFade("Idle", m_fNormalizeTransitionDuration);
                 break;
             case CreatureState.Move:
                 MoveAnim();
@@ -22,7 +22,7 @@ public partial class Character : Base
             case CreatureState.Skill:
                 break;
             case CreatureState.Dead:
-                Animator.CrossFade("Dead", m_fNormalizeTransitionDuration);
+                m_Animator.CrossFade("Dead", m_fNormalizeTransitionDuration);
                 break;
             default:
                 break;
@@ -35,13 +35,13 @@ public partial class Character : Base
         switch (eMoveState)
         {
             case MoveState.None:
-                Animator.CrossFade("Idle", m_fNormalizeTransitionDuration);
+                m_Animator.CrossFade("Idle", m_fNormalizeTransitionDuration);
                 break;
             case MoveState.Walk:
-                Animator.CrossFade("Walk", m_fNormalizeTransitionDuration);
+                m_Animator.CrossFade("Walk", m_fNormalizeTransitionDuration);
                 break;
             case MoveState.Run:
-                Animator.CrossFade("Run", m_fNormalizeTransitionDuration);
+                m_Animator.CrossFade("Run", m_fNormalizeTransitionDuration);
                 break;
             default:
                 break;
@@ -58,8 +58,9 @@ public partial class Character : Base
 
         m_sCurrentAnimationName = hitAnimName;
 
-        Animator.CrossFade(hitAnimName, m_fNormalizeTransitionDuration);
+        m_Animator.CrossFade(hitAnimName, m_fNormalizeTransitionDuration);
     }
+
 
     // 공격 및 특수 액션 애니메이션
     public void PlayAnimation(string animName)
@@ -69,7 +70,7 @@ public partial class Character : Base
 
         AnimationLayers layer = SetLayer(animName);
 
-        Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)layer);
+        m_Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)layer);
     }
 
     private AnimationLayers SetLayer(string animName)
