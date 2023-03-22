@@ -8,33 +8,35 @@ public class TrigerDetector : MonoBehaviour
     // 무기에 부착하는 컴포넌트
     // 무기가 타겟과 공격시 피격 함수 호출
     Character CAttacker = null;
-    public Collider m_cAttackCollider;
-    public AttackCollider eAttackCollider = AttackCollider.None;
+    Character m_goTarget = null;
+    Collider m_Collider = null;
 
-    public void Init()
+    private void Start()
     {
-        CAttacker = transform.GetComponentInParent<Character>();
-        CAttacker.m_GoAttackItem.Add(GetComponent<TrigerDetector>());
+        CAttacker = GetComponentInParent<Character>();
+        CAttacker.m_GoAttackItem = this;
 
-        m_cAttackCollider = GetComponent<Collider>();
-        m_cAttackCollider.enabled = false;
+        m_Collider = GetComponent<Collider>();
+        m_Collider.isTrigger = false;
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Character character = other.GetComponent<Character>();
+        m_goTarget = other.GetComponent<Character>();
 
-        if (character != null)
+        if (m_goTarget != null)
         {
-            CAttacker.m_goTarget = character;
-            CAttacker.m_goTarget.HitEvent(character, CAttacker.m_TotalAttack);
-            AttackCan(false);
+            CAttacker.m_goTarget = m_goTarget;
+            CAttacker.m_goTarget.HitEvent(m_goTarget, CAttacker.m_TotalAttack);
+            m_goTarget = null;
+            m_Collider.isTrigger = false;
+            Managers.Battle.EventDelegateAttackEnd += () => { m_Collider.isTrigger = false; };
         }
     }
 
-    public void AttackCan(bool b)
+    public void Attack()
     {
-        m_cAttackCollider.enabled = b;
-
+        m_Collider.isTrigger = true;
     }
 }

@@ -28,7 +28,7 @@ public partial class Character : Base
     #endregion
 
     #region Variable
-    public List<TrigerDetector> m_GoAttackItem { get; set; } = new List<TrigerDetector>();
+    public TrigerDetector m_GoAttackItem ;
     public Table_Attack.Info m_tAttackInfo { get; set; } = new Table_Attack.Info();
     public Stat m_strStat { get; set; } = new Stat();
     protected AudioSource audioSource { get; private set; }
@@ -48,7 +48,6 @@ public partial class Character : Base
 
         SetAudio();
         SetAnimation();
-        SetAttackInfo();
         SetInfo();
         m_strStat.Init();
         m_cAttack.SetInfo(this);
@@ -82,31 +81,6 @@ public partial class Character : Base
         audioSource.spatialBlend = 1;
         audioSource.rolloffMode = AudioRolloffMode.Linear;
     }
-
-    void SetAttackInfo()
-    {
-        GameObject weapon = Util.FindChild(gameObject, "WeaponAttackCollider", true);
-        if (weapon != null)
-        {
-            TrigerDetector weaponTD = Util.GetOrAddComponent<TrigerDetector>(weapon);
-            weaponTD.eAttackCollider = AttackCollider.Weapon;
-            weaponTD.Init();
-
-            weapon.GetComponent<Collider>().isTrigger = true;
-        }
-
-        GameObject front = Util.FindChild(gameObject, "FrontAttackCollider");
-        if (front != null)
-        {
-            TrigerDetector frontTD = Util.GetOrAddComponent<TrigerDetector>(front);
-            frontTD.eAttackCollider = AttackCollider.CharacterFront;
-            frontTD.Init();
-
-            front.GetComponent<Collider>().isTrigger = true;
-        }
-
-    }
-
     #endregion
 
     #region Creature State Controller

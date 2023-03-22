@@ -8,12 +8,7 @@ using UnityEngine;
 
 public class Range : Attack
 {
-    public override IEnumerator AttackEnd()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IEnumerator NormalAttack()
+    public override void NormalAttack()
     {
 		// 장전되 있다면 Fire();
         throw new NotImplementedException();

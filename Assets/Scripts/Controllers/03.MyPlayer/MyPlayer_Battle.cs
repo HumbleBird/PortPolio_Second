@@ -6,10 +6,6 @@ using static Define;
 
 public partial class MyPlayer : Player
 {
-	public int m_iBasicAttackNum = 1;
-	public int m_iStrongAttackNum = 4;
-	public int m_iKickNum = 501;
-
 	protected override void AttackEvent(int id)
     {
         base.AttackEvent(id);
@@ -20,20 +16,15 @@ public partial class MyPlayer : Player
 	void GetInputAttack()
 	{
 		if (m_bCanAttack == true && m_strStat.m_fStemina != 0)
-        {
+		{
 			// 근접
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
-            {
-				Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
-				AttackEvent(m_iBasicAttackNum);
-            }
+			{
+				Debug.Log(eCharacterClass);
+				Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
+				AttackEvent(1);
+			}
 		}
-
-		//if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.SpecialAction]))
-		//{
-		//	Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.SpeacialAction()); };
-		//	AttackEvent(m_iStrongAttackNum);
-		//}
 	}
 
     protected override void UpdateSkill() 
@@ -45,7 +36,7 @@ public partial class MyPlayer : Player
 			// 일반 공격
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
             {
-				Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
+				Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
 				ExcuteNextAttack(m_cAttack.m_AttackInfo.m_iNextNum);
 				return;
 			}

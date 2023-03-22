@@ -18,7 +18,7 @@ public partial class AI : Character
 
     AIMoveMode eAIMoveMode = AIMoveMode.RandomMove;
 
-    NavMeshAgent navMeshAgent;                      
+    protected NavMeshAgent navMeshAgent;                      
     LayerMask playerMask = (1 << (int)Layer.Player);
     LayerMask obstacleMask = (1 << (int)Layer.Obstacle);
 
@@ -29,7 +29,7 @@ public partial class AI : Character
     bool m_IsPatrol = true;                      //  순찰 중인가?
     protected bool m_CaughtPlayer = false;                 //  if the enemy has caught the player
 
-    int m_iNotChasePlayerRange = 10;
+    protected int m_iNotChasePlayerRange = 10;
 
     // WayPoint
     float startWaitTime = 4;                 //  Wait time of every action
@@ -65,6 +65,9 @@ public partial class AI : Character
             Move();
             navMeshAgent.SetDestination(m_PlayerPosition);   
         }
+
+        if (navMeshAgent.pathPending)
+            return;
 
         // 목표 위치 거리 안에 도달했다면
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    
@@ -133,8 +136,8 @@ public partial class AI : Character
         navMeshAgent.isStopped = true;
         SetMoveState(MoveState.None);
     }
-    
-    void Move()
+
+    protected void Move()
     {
         navMeshAgent.isStopped = false;
 
@@ -152,10 +155,14 @@ public partial class AI : Character
         eState = CreatureState.Skill;
     }
 
-    void LookingPlayer(Vector3 player)
+    protected void LookingPlayer(Vector3 player)
     {
+        Vector3 dir = player - transform.position;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
+
+
         // 플레이어를 바라봄
-        transform.LookAt(player);
+        //transform.LookAt(player);
     }
 
     void EnviromentView()

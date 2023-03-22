@@ -111,13 +111,6 @@ public class Define
         Run,
     }
 
-    public enum AttackCollider
-    {
-        None,
-        Weapon,
-        CharacterFront,
-    }
-
     public enum ActionState
     {
         None,

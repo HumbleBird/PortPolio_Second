@@ -6,7 +6,6 @@ using static Define;
 
 public partial class Character : Base
 {
-    // character의 Idle 혹은 Dead 상태의 Sound Effect
     public virtual void UpdateSound()
     {
         if (eState == CreatureState.Skill || eState == CreatureState.Move)

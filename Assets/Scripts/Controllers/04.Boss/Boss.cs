@@ -24,7 +24,7 @@ public partial class Boss : Monster
         ChangeClass(binfo.m_iClass);
     }
 
-    protected override IEnumerator ThinkAttackPattern()
+    protected override IEnumerator AttackPattern()
     {
         throw new System.NotImplementedException();
     }

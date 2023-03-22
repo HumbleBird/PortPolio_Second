@@ -246,16 +246,15 @@ public class BattleManager
     public delegate void DelegateHitEffect();
     public event DelegateHitEffect EventDelegateHitEffect;
 
+    // 공격끝 났을 때 - Blow의 무기 콜라이더 끄기
+    public delegate void DelegateAttackEnd();
+    public event DelegateAttackEnd EventDelegateAttackEnd;
+
 
     public void ExecuteEventDelegateAttack()
     {
         if(EventDelegateAttack != null)
             EventDelegateAttack();
-    }
-
-    public void ClearEventDelegateAttack()
-    {
-        EventDelegateAttack = null;
     }
 
     public void ExecuteEventDelegateHitEffect()
@@ -264,9 +263,22 @@ public class BattleManager
            EventDelegateHitEffect();
     }
 
-    public void ClearEventDelegateHitEffect()
+    public void ExecuteEventDelegateAttackEnd()
     {
+        if(EventDelegateAttackEnd != null)
+            EventDelegateAttackEnd();
+    }
+
+    public void ClearExecuteEventDelegateAttackEnd()
+    {
+        EventDelegateAttackEnd = null;
+    }
+
+    public void ClearAllEvnetDelegate()
+    {
+        EventDelegateAttack = null;
         EventDelegateHitEffect = null;
+        EventDelegateAttackEnd = null;
     }
 
     #endregion

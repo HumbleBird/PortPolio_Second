@@ -86,14 +86,7 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'root'\n\tTransform 'lowerarm_l'\n\tTransform
-    'root'\n\tTransform 'neck_01'\n\tTransform 'clavicle_l'\n\tTransform 'ring_02_l'\n\tTransform
-    'hand_l'\n\tTransform 'middle_01_l'\n\tTransform 'ring_01_r'\n\tTransform 'spine_02'\n\tand
-    more ...\n\tFrom animation clip 'Skeleton Run'\n\tFrom animation clip 'Skeleton
-    Walk'\n\tFrom animation clip 'Skeleton NormalHit'\n\tFrom animation clip 'Skeleton
-    Shield'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -126,6 +119,7 @@ MonoBehaviour:
   ID: 102
   eActionState: 0
   eMoveState: 0
+  m_GoAttackItem: {fileID: 0}
   m_bWaiting: 0
   m_goTarget: {fileID: 0}
   waypoints: []
@@ -3316,6 +3310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3492427070351921160}
   - component: {fileID: 6912870621057586011}
+  - component: {fileID: 6883872417940793310}
   m_Layer: 0
   m_Name: WeaponCollider
   m_TagString: Untagged
@@ -3351,6 +3346,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6883872417940793310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863675383424779956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae42adb2e09204b46a112ec1cb188008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8895675676803844083
 GameObject:
   m_ObjectHideFlags: 0

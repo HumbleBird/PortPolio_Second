@@ -9,7 +9,8 @@ public partial class Character : Base
 	float m_fNormalizeTransitionDuration = 0.15f;
     protected string m_sCurrentAnimationName = null;
 
-	public virtual void UpdateAnimation()
+    #region Character State Anim
+    public virtual void UpdateAnimation()
     {
         switch (eState)
         {
@@ -20,6 +21,8 @@ public partial class Character : Base
                 MoveAnim();
                 break;
             case CreatureState.Skill:
+                if(eMoveState == MoveState.Run)
+                    m_Animator.CrossFade("Run", m_fNormalizeTransitionDuration);
                 break;
             case CreatureState.Dead:
                 m_Animator.CrossFade("Dead", m_fNormalizeTransitionDuration);
@@ -29,7 +32,6 @@ public partial class Character : Base
         }
     }
 
-    #region CharacterStandAnim
     void MoveAnim()
     {
         switch (eMoveState)
@@ -61,8 +63,6 @@ public partial class Character : Base
         m_Animator.CrossFade(hitAnimName, m_fNormalizeTransitionDuration);
     }
 
-
-    // 공격 및 특수 액션 애니메이션
     public void PlayAnimation(string animName)
     {
         if (animName == null)

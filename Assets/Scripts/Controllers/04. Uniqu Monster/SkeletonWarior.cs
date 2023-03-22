@@ -5,26 +5,15 @@ using static Define;
 
 public class SkeletonWarior : Monster
 {
-    protected override IEnumerator ThinkAttackPattern()
+    protected override IEnumerator AttackPattern()
     {
-        while (true)
-        {
-            int rand = Random.Range(0, 2);
-            if (rand == 0)
-                yield return StartCoroutine(NormalAttack());
-            else if (rand == 1)
-                yield return StartCoroutine(ComboAttack());
+        int rand = Random.Range(0, 2);
+        if (rand == 0)
+            yield return StartCoroutine(NormalAttack());
+        else if (rand == 1)
+            yield return StartCoroutine(ComboAttack());
 
-            // 거리 측정
-            if (DistanceMeasurementAttackRange())
-                yield return null;
-            else
-            {
-                eState = CreatureState.Move;
-                AIMoveInit();
-                yield break;
-            }
-        }
+        yield break;
     }
 
     // 단일 공격
@@ -48,11 +37,9 @@ public class SkeletonWarior : Monster
 
     float SkeletonWariorAttack(int id)
     {
-        Managers.Battle.EventDelegateAttack += () => { StartCoroutine(m_cAttack.NormalAttack()); };
+        Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
         AttackEvent(id);
         float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
-        Debug.Log($"현재 애니메이션 : {m_cAttack.m_AttackInfo.m_sAnimName}, 애니메이션 길이 {time}");
-        Debug.Log(m_bCanAttack);
         return time;
     }
 }

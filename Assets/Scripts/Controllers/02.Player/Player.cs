@@ -6,14 +6,17 @@ using static Define;
 
 public partial class Player : Character
 {
+    #region Variable
+
     public int m_iWeaponDamage { get; private set; }
     public int m_iArmorDefence { get; private set; }
-    public int m_iHaveMoeny { get; private set; }
 
     public override int m_TotalAttack { get { return m_strStat.m_iAtk + m_iWeaponDamage; } }
     public override int m_TotalDefence { get { return m_strStat.m_iDef + m_iArmorDefence; } }
 
+    public int m_iHaveMoeny { get; private set; }
     protected Coroutine cStaminaGraduallyFillingUp;
+    #endregion
 
     protected override void Init()
     {
@@ -41,6 +44,18 @@ public partial class Player : Character
         ChangeClass(pinfo.m_iClass);
     }
 
+    public override void OnDead(GameObject Attacker)
+    {
+        base.OnDead(Attacker);
+
+        m_strStat.m_iHp = m_strStat.m_iMaxHp;
+        m_strStat.m_iMp = m_strStat.m_iMaxMp;
+        eState = CreatureState.Idle;
+
+        Managers.Battle.CheckPointLoad(gameObject);
+    }
+
+    #region Item
     public void EquipItem(Item equipItem)
     {
         if (equipItem == null)
@@ -129,8 +144,6 @@ public partial class Player : Character
             return;
         }
 
-
-
         // 구입 성공!
         m_iHaveMoeny -= item.m_iPrice * count;
         item.Count = count;
@@ -144,6 +157,7 @@ public partial class Player : Character
         // 수량은 정해진 한도 내에서
         // 구매하면 판매 수량 깍고, 플레이어 소지 돈 감소, 인벤
     }
+    #endregion
 
     public void RefreshAdditionalStat()
     {
@@ -169,17 +183,6 @@ public partial class Player : Character
                     break;
             }
         }
-    }
-
-    public override void OnDead(GameObject Attacker)
-    {
-        base.OnDead(Attacker);
-
-        m_strStat.m_iHp = m_strStat.m_iMaxHp;
-        m_strStat.m_iMp = m_strStat.m_iMaxMp;
-        eState = CreatureState.Idle;
-
-        Managers.Battle.CheckPointLoad(gameObject);
     }
 
     public override void UpdateSound()

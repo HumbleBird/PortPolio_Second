@@ -20,7 +20,7 @@ public partial class AI : Character
 
         if (eCharacterClass == CharacterClass.Knight || eCharacterClass == CharacterClass.Warior)
         {
-            navMeshAgent.stoppingDistance = 1.5f;
+            navMeshAgent.stoppingDistance = 1.3f;
         }
         else if (eCharacterClass == CharacterClass.Archer || eCharacterClass == CharacterClass.Wizard)
         {
@@ -69,15 +69,21 @@ public partial class AI : Character
 
     protected bool DistanceMeasurementAttackRange()
     {
-        if (m_goTarget == null)
-            return false;
-
-        // 몬스터 뒤에 플레이어가 있는 것을 알아야 되기 때문에 Target으로 
+        // Skill 상태에서 타겟이 뒤에 있어도 거리가 가깝다면 탐지 가능
         float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
         if (dis <= navMeshAgent.stoppingDistance)
             return true;
-        
 
         return false;
+    }
+
+    protected override IEnumerator CoAttackCheck()
+    {
+        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
+
+        yield return new WaitForSeconds(time);
+
+        AttackEnd();
+        yield break;
     }
 }

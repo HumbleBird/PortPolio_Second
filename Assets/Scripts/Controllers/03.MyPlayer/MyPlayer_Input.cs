@@ -7,6 +7,8 @@ using static Define;
 
 public partial class MyPlayer : Player
 {
+    Dictionary<KeyCode, Action> OptionKeyDic; // 단발성
+
     public void SetKey()
     {
         OptionKeyDic = new Dictionary<KeyCode, Action>
@@ -16,10 +18,6 @@ public partial class MyPlayer : Player
             { Managers.InputKey._binding.Bindings[UserAction.UI_Equipment], () => {  Managers.UIBattle.ShowAndCloseUI<UI_Equipment>(); }},
         };
     }
-
-    #region Option
-
-    Dictionary<KeyCode, Action> OptionKeyDic; // 단발성
 
     public void InputOptionKey()
     {
@@ -37,9 +35,4 @@ public partial class MyPlayer : Player
             }
         }
     }
-
-    
-
-    #endregion
-
 }

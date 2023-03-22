@@ -9,7 +9,7 @@ using static Define;
 
 public class Wizard : Range
 {
-    public override IEnumerator NormalAttack()
+    public override void NormalAttack()
     {
         // 장전되 있다면 Fire();
         throw new NotImplementedException();

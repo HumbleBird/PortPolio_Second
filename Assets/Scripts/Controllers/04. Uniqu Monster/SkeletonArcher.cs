@@ -15,7 +15,7 @@ public class SkeletonArcher : Monster
         m_cAttack.SpeacialAction();
     }
 
-    protected override IEnumerator ThinkAttackPattern()
+    protected override IEnumerator AttackPattern()
     {
         yield return null;
     }

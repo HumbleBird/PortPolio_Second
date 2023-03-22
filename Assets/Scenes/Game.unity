@@ -7281,22 +7281,22 @@ PrefabInstance:
     - target: {fileID: 694269049580337368, guid: b6024b9825e273b4391b94d192611435,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 694269049580337368, guid: b6024b9825e273b4391b94d192611435,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 694269049580337368, guid: b6024b9825e273b4391b94d192611435,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 694269049580337368, guid: b6024b9825e273b4391b94d192611435,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 694269049580337368, guid: b6024b9825e273b4391b94d192611435,
         type: 3}
@@ -7306,12 +7306,17 @@ PrefabInstance:
     - target: {fileID: 694269049580337368, guid: b6024b9825e273b4391b94d192611435,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 694269049580337368, guid: b6024b9825e273b4391b94d192611435,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6864232199377740450, guid: b6024b9825e273b4391b94d192611435,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6024b9825e273b4391b94d192611435, type: 3}
@@ -7461,6 +7466,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6864232199377740450, guid: 4d39bcd57cb95e940b557398ab6043e6,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912870621057586011, guid: 4d39bcd57cb95e940b557398ab6043e6,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d39bcd57cb95e940b557398ab6043e6, type: 3}
