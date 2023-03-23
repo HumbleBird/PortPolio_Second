@@ -73,12 +73,12 @@ public class UI_CharacterData : UI_Base
 
         // 캐릭터 데이터
         TextMeshProUGUI HPValueText = GetText((int)Texts.HPValueText);
-        HPValueText.text = _player.m_strStat.m_iHp.ToString() + "/  " + _player.m_strStat.m_iMaxHp.ToString();
+        HPValueText.text = _player.m_Stat.m_iHp.ToString() + "/  " + _player.m_Stat.m_iMaxHp.ToString();
 
         TextMeshProUGUI FPValueText = GetText((int)Texts.FPValueText);
-        FPValueText.text = _player.m_strStat.m_iMp.ToString() + "/  " + _player.m_strStat.m_iMaxMp.ToString();
+        FPValueText.text = _player.m_Stat.m_iMp.ToString() + "/  " + _player.m_Stat.m_iMaxMp.ToString();
 
         TextMeshProUGUI StaminaValueText = GetText((int)Texts.StaminaValueText);
-        StaminaValueText.text = ((int)_player.m_strStat.m_fStemina).ToString();
+        StaminaValueText.text = ((int)_player.m_Stat.m_fStemina).ToString();
     }
 }

@@ -20,7 +20,6 @@ public abstract  partial class Monster : AI
             return;
         }
 
-        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
         eObjectType = ObjectType.Monster;
 
         // 클래스
@@ -82,5 +81,12 @@ public abstract  partial class Monster : AI
         {
             m_rewards.Add(Managers.Table.m_Reward.Get(tempIds[i]));
         }
+    }
+
+    public override void HitEvent(Character attacker, int dmg)
+    {
+        base.HitEvent(attacker, dmg);
+
+        UIBar.RefreshUI();
     }
 }

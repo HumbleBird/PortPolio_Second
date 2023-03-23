@@ -14,7 +14,6 @@ public class TrigerDetector : MonoBehaviour
     private void Start()
     {
         CAttacker = GetComponentInParent<Character>();
-        CAttacker.m_GoAttackItem = this;
 
         m_Collider = GetComponent<Collider>();
         m_Collider.isTrigger = false;

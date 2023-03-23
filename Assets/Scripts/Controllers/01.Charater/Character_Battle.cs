@@ -33,6 +33,8 @@ public abstract  partial class Character : Base
             default:
                 break;
         }
+
+        m_cAttack.SetInfo(this);
     }
 
     protected virtual void AttackEvent(int id)
@@ -56,7 +58,7 @@ public abstract  partial class Character : Base
         SoundPlay(m_cAttack.m_AttackInfo.m_sAnimName);
 
         // 공격 데미지 더해주기
-        m_strStat.m_iAtk += m_cAttack.m_AttackInfo.m_iDmg;
+        m_Stat.m_iAtk += m_cAttack.m_AttackInfo.m_iDmg;
     }
 
     void Attack()
@@ -75,14 +77,14 @@ public abstract  partial class Character : Base
 
         // HP 관리
         dmg = Mathf.Max(0, dmg - m_TotalDefence);
-        int NewHp = m_strStat.m_iHp - dmg;
+        int NewHp = m_Stat.m_iHp - dmg;
         SetHp(NewHp, attacker.gameObject);
 
         // 등록된 공격 피격 효과 (슬로우, 넉백 등)
         Managers.Battle.ExecuteEventDelegateHitEffect();
 
         // 애니메이션
-        if (m_strStat.m_iHp > 0)
+        if (m_Stat.m_iHp > 0)
         {
             HitAnimation();
 
@@ -103,20 +105,20 @@ public abstract  partial class Character : Base
             int ShiledHitStamina = 10;
             int shiledHitHpDef = 1;
 
-            float NewStemina = m_strStat.m_fStemina - ShiledHitStamina;
+            float NewStemina = m_Stat.m_fStemina - ShiledHitStamina;
             SetStemina(NewStemina);
 
             // TODO
             // 나중에 방패 버티기 만큼 감소량 증가 시키기
 
-            m_strStat.m_iDef += shiledHitHpDef;
+            m_Stat.m_iDef += shiledHitHpDef;
         }
     }
 
     // 공격 끝
     protected virtual void AttackEnd()
     {
-        m_strStat.m_iAtk = m_strStat.m_fOriginalAtk;
+        m_Stat.m_iAtk = m_Stat.m_fOriginalAtk;
 
         Managers.Battle.ExecuteEventDelegateAttackEnd(); // Blow의 경우 무기 콜라이더 꺼주기
         Managers.Battle.ClearAllEvnetDelegate();

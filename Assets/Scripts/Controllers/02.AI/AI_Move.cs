@@ -198,7 +198,7 @@ public partial class AI : Character
     {
         base.SetMoveState(state);
 
-        navMeshAgent.speed = m_strStat.m_fMoveSpeed;
+        navMeshAgent.speed = m_Stat.m_fMoveSpeed;
     }
 
     bool RandomPoint(Vector3 center, float range, out Vector3 result)

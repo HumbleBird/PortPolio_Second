@@ -7,6 +7,8 @@ using static Define;
 
 public partial class AI : Character
 {
+    protected UI_HpBar UIBar;
+
     protected override void Init()
     {
         base.Init();
@@ -16,7 +18,7 @@ public partial class AI : Character
         navMeshAgent = gameObject.GetOrAddComponent<NavMeshAgent>();
 
         navMeshAgent.isStopped = false;
-        navMeshAgent.speed = m_strStat.m_fMoveSpeed;             //  Set the navemesh speed with the normal speed of the enemy
+        navMeshAgent.speed = m_Stat.m_fMoveSpeed;             //  Set the navemesh speed with the normal speed of the enemy
 
         if (eCharacterClass == CharacterClass.Knight || eCharacterClass == CharacterClass.Warior)
         {
@@ -65,6 +67,14 @@ public partial class AI : Character
             Chasing();
         else
             Patroling();
+    }
+
+    protected override void SetInfo()
+    {
+        base.SetInfo();
+
+        UIBar = Managers.UI.MakeWorldSpaceUI<UI_HpBar>(transform);
+
     }
 
     protected bool DistanceMeasurementAttackRange()

@@ -11,8 +11,8 @@ public partial class Player : Character
     public int m_iWeaponDamage { get; private set; }
     public int m_iArmorDefence { get; private set; }
 
-    public override int m_TotalAttack { get { return m_strStat.m_iAtk + m_iWeaponDamage; } }
-    public override int m_TotalDefence { get { return m_strStat.m_iDef + m_iArmorDefence; } }
+    public override int m_TotalAttack { get { return m_Stat.m_iAtk + m_iWeaponDamage; } }
+    public override int m_TotalDefence { get { return m_Stat.m_iDef + m_iArmorDefence; } }
 
     public int m_iHaveMoeny { get; private set; }
     protected Coroutine cStaminaGraduallyFillingUp;
@@ -38,7 +38,6 @@ public partial class Player : Character
             return;
         }
 
-        m_strStat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
         eObjectType = ObjectType.Player;
 
         ChangeClass(pinfo.m_iClass);
@@ -48,8 +47,8 @@ public partial class Player : Character
     {
         base.OnDead(Attacker);
 
-        m_strStat.m_iHp = m_strStat.m_iMaxHp;
-        m_strStat.m_iMp = m_strStat.m_iMaxMp;
+        m_Stat.m_iHp = m_Stat.m_iMaxHp;
+        m_Stat.m_iMp = m_Stat.m_iMaxMp;
         eState = CreatureState.Idle;
 
         Managers.Battle.CheckPointLoad(gameObject);

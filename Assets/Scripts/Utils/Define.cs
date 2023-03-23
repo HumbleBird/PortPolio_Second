@@ -155,8 +155,8 @@ public class Define
         Player = 7,
         Monster = 8,
         Ground = 9,
-        Block = 10,
-        Obstacle = 11,
+        Obstacle = 10,
+        NPC = 11,
     }
 
 

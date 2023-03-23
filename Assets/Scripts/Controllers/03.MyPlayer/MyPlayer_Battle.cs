@@ -15,7 +15,7 @@ public partial class MyPlayer : Player
 
 	void GetInputAttack()
 	{
-		if (m_bCanAttack == true && m_strStat.m_fStemina != 0)
+		if (m_bCanAttack == true && m_Stat.m_fStemina != 0)
 		{
 			// 근접
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
@@ -31,7 +31,7 @@ public partial class MyPlayer : Player
 	{
 		base.UpdateSkill();
 
-		if (m_bNextAttack == true && m_strStat.m_fStemina != 0)
+		if (m_bNextAttack == true && m_Stat.m_fStemina != 0)
 		{
 			// 일반 공격
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))

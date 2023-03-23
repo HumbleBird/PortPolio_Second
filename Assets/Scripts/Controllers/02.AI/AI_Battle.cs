@@ -59,4 +59,5 @@ public abstract partial class AI : Character
         StartCoroutine(CoAttackCheck());
     }
 
+
 }

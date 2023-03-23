@@ -20,7 +20,8 @@ public class Blow : Attack
 {
     public override void NormalAttack()
     {
-        m_cGo.m_GoAttackItem.Attack();
+        TrigerDetector td = m_cGo.GetComponentInChildren<TrigerDetector>();
+        td.Attack();
     }
 
     public override IEnumerator SpeacialAction()

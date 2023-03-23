@@ -34,15 +34,14 @@ public class UI_PlayerInfo : UI_Scene
     {
         base.RefreshUI();
 
-        GameObject player = Managers.Object.Find(1);
-        _player = player.GetComponent<Player>();
+        _player = Managers.Object.myPlayer;
 
         Image HpBariamge = GetImage((int)Images.HPBar);
-        HpBariamge.fillAmount = _player.m_strStat.m_iHp / (float)_player.m_strStat.m_iMaxHp;
+        HpBariamge.fillAmount = _player.m_Stat.m_iHp / (float)_player.m_Stat.m_iMaxHp;
         Image StaminaBariamge = GetImage((int)Images.STAMINABar);
-        StaminaBariamge.fillAmount = _player.m_strStat.m_fStemina / (float)_player.m_strStat.m_fMaxStemina;
+        StaminaBariamge.fillAmount = _player.m_Stat.m_fStemina / (float)_player.m_Stat.m_fMaxStemina;
         Image MpBariamge = GetImage((int)Images.MPBar);
-        MpBariamge.fillAmount = _player.m_strStat.m_iMp / (float)_player.m_strStat.m_iMaxMp;
+        MpBariamge.fillAmount = _player.m_Stat.m_iMp / (float)_player.m_Stat.m_iMaxMp;
 
     }
 
@@ -55,9 +54,9 @@ public class UI_PlayerInfo : UI_Scene
         while (true)
         {
             HpBarBGHitiamge.fillAmount -= Time.deltaTime;
-            if (HpBarBGHitiamge.fillAmount <= _player.m_strStat.m_iHp / _player.m_strStat.m_iMaxHp)
+            if (HpBarBGHitiamge.fillAmount <= _player.m_Stat.m_iHp / _player.m_Stat.m_iMaxHp)
             {
-                HpBarBGHitiamge.fillAmount = _player.m_strStat.m_iHp / _player.m_strStat.m_iMaxHp;
+                HpBarBGHitiamge.fillAmount = _player.m_Stat.m_iHp / _player.m_Stat.m_iMaxHp;
                 break;
             }
 

@@ -28,13 +28,11 @@ public partial class Character : Base
     #endregion
 
     #region Variable
-    public TrigerDetector m_GoAttackItem ;
-    public Table_Attack.Info m_tAttackInfo { get; set; } = new Table_Attack.Info();
-    public Stat m_strStat { get; set; } = new Stat();
-    protected AudioSource audioSource { get; private set; }
+    public Stat m_Stat { get; set; } = new Stat();
+    protected AudioSource m_AudioSource { get; private set; }
 
-    public virtual int m_TotalAttack { get { return m_strStat.m_iAtk; } }
-    public virtual int m_TotalDefence { get { return m_strStat.m_iDef; } }
+    public virtual int m_TotalAttack { get { return m_Stat.m_iAtk; } }
+    public virtual int m_TotalDefence { get { return m_Stat.m_iDef; } }
 
     [HideInInspector] 
     public bool m_bWaiting = false;
@@ -49,8 +47,6 @@ public partial class Character : Base
         SetAudio();
         SetAnimation();
         SetInfo();
-        m_strStat.Init();
-        m_cAttack.SetInfo(this);
     }
 
     void Update()
@@ -62,6 +58,8 @@ public partial class Character : Base
     protected virtual void SetInfo()
     {
         Managers.Object.Add(ID, gameObject);
+        m_Stat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
+        m_Stat.Init();
     }
 
     void SetAnimation()
@@ -77,9 +75,9 @@ public partial class Character : Base
     private void SetAudio()
     {
         // Audio
-        audioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
-        audioSource.spatialBlend = 1;
-        audioSource.rolloffMode = AudioRolloffMode.Linear;
+        m_AudioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
+        m_AudioSource.spatialBlend = 1;
+        m_AudioSource.rolloffMode = AudioRolloffMode.Linear;
     }
     #endregion
 
