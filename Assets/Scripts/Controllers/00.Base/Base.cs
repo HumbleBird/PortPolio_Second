@@ -11,7 +11,7 @@ public class Base : MonoBehaviour
     protected Animation m_Animaion { get; private set; }
 
     public int ID;
-    public ObjectType eObjectType { get; set; }
+    public ObjectType eObjectType  = ObjectType.None;
     public Transform Pos { get; set; } = null;
 
     private void Start()

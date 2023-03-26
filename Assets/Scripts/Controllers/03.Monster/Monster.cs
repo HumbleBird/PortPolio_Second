@@ -6,24 +6,22 @@ using static Define;
 
 public abstract  partial class Monster : AI
 {
-    List<Table_Reward.Info> m_rewards = new List<Table_Reward.Info>();
+    public new ObjectType eObjectType = ObjectType.Monster;
+
+    protected List<RewardItemInfo> m_rewards = new List<RewardItemInfo>();
+
+    public class RewardItemInfo
+    {
+        public Item m_Item;
+        public int m_iCount;
+        public float m_fProbability;
+    }
 
     protected override void SetInfo()
     {
         base.SetInfo();
 
-        Table_Monster.Info info = Managers.Table.m_Monster.Get(ID);
-
-        if (info == null)
-        {
-            Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
-            return;
-        }
-
-        eObjectType = ObjectType.Monster;
-
-        // 클래스
-        ChangeClass(info.m_iClass);
+        UIBar = Managers.UI.MakeWorldSpaceUI<UI_HpBar>(transform);
     }
 
     public override void OnDead(GameObject attacker)
@@ -33,54 +31,41 @@ public abstract  partial class Monster : AI
 
         if(ba.eObjectType == ObjectType.Player)
         {
-            Table_Reward.Info rewardData = GetRandomReward();
-            if(rewardData != null)
+            List<Item> rewardData = GetRandomRewards();
+            if (rewardData != null)
             {
-                Player player = (Player)ba.GetOwner();
-                Managers.Battle.RewardPlayer(player, rewardData);
+                foreach (Item item in rewardData)
+                {
+                    Player player = (Player)ba.GetOwner();
+                    Managers.Battle.RewardPlayer(player, item);
+                }
             }
         }
 
         eState = CreatureState.Dead;
     }
 
-    Table_Reward.Info GetRandomReward()
+    List<Item> GetRandomRewards()
     {
-        GetMonsterRewardItemIdsList();
+        SetRewardItemInfo();
 
         int rand = Random.Range(0, 101);
+        List<Item> items  = new List<Item>();
 
-        float sum = 0f;
         foreach (var rewardData in m_rewards)
         {
-            sum += rewardData.m_fProbability;
-            if(rand <= sum)
+            if(rand <= rewardData.m_fProbability)
             {
-                return rewardData;
+                items.Add(rewardData.m_Item);
             }
         }
 
-        return null;
+        return items;
     }
 
-    void GetMonsterRewardItemIdsList()
+    protected virtual void SetRewardItemInfo()
     {
         m_rewards.Clear();
-        int[] tempIds = null;
-
-        // Monster Reward Ids
-        int[] SkeletonRewardIds = { 1, 2, 3 };
-
-
-        if (ID == 201)
-        {
-            tempIds = SkeletonRewardIds;
-        }
-
-        for (int i = 0; i < tempIds.Length; i++)
-        {
-            m_rewards.Add(Managers.Table.m_Reward.Get(tempIds[i]));
-        }
     }
 
     public override void HitEvent(Character attacker, int dmg)

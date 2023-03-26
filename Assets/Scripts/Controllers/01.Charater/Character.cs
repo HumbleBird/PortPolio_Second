@@ -60,6 +60,42 @@ public partial class Character : Base
         Managers.Object.Add(ID, gameObject);
         m_Stat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
         m_Stat.Init();
+
+        if(eObjectType == ObjectType.Player)
+        {
+            Table_Player.Info info = Managers.Table.m_Player.Get(ID);
+
+            if (info == null)
+            {
+                Debug.LogError("해당하는 Id의 플레이어가 없습니다.");
+                return;
+            }
+
+            ChangeClass(info.m_iClass);
+        }
+        else if (eObjectType == ObjectType.Monster)
+        {
+            Table_Monster.Info info = Managers.Table.m_Monster.Get(ID);
+            if (info == null)
+            {
+                Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
+                return;
+            }
+
+            ChangeClass(info.m_iClass);
+        }
+        else if (eObjectType == ObjectType.Boss)
+        {
+            Table_Boss.Info info = Managers.Table.m_Boss.Get(ID);
+
+            if (info == null)
+            {
+                Debug.LogError("해당하는 Id의 보스가 없습니다.");
+                return;
+            }
+
+            ChangeClass(info.m_iClass);
+        }
     }
 
     void SetAnimation()

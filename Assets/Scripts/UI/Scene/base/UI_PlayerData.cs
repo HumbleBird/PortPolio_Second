@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UI_CharacterData : UI_Base
+public class UI_PlayerData : UI_Base
 {
     enum Texts
     {
@@ -49,9 +49,7 @@ public class UI_CharacterData : UI_Base
         ItemDiscoveryValueText,
         AttunementSlotsValueText,
     }
-
     Player _player;
-
     public override bool Init()
     {
         if (base.Init() == false)
@@ -59,10 +57,8 @@ public class UI_CharacterData : UI_Base
 
         BindText(typeof(Texts));
 
-        _init = true;
         _player = Managers.Object.myPlayer;
 
-        RefreshUI();
 
         return true;
     }
@@ -70,6 +66,7 @@ public class UI_CharacterData : UI_Base
     public override void RefreshUI()
     {
         base.RefreshUI();
+
 
         // 캐릭터 데이터
         TextMeshProUGUI HPValueText = GetText((int)Texts.HPValueText);

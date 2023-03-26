@@ -198,25 +198,21 @@ public class BattleManager
 
     #region Battle
 
-    public void RewardPlayer(Player player, Table_Reward.Info rewardData)
+    public void RewardPlayer(Player player, Item rewardItem)
     {
-        if (player == null || rewardData == null)
+        if (player == null || rewardItem == null)
             return;
 
         int? slot = Managers.Inventory.GetEmptySlot();
         if (slot == null)
             return;
 
-        Table_Item.Info info = Managers.Table.m_Item.Get(rewardData.m_iItemId);
-
-        Item newItem =  Item.MakeItem(info);
-        newItem.Count = rewardData.m_iCount;
-        newItem.InventorySlot = slot.Value;
+        rewardItem.InventorySlot = slot.Value;
 
         // TODO
         //player.Inven.add(item);
 
-        Managers.Inventory.Add(newItem);
+        Managers.Inventory.Add(rewardItem);
         Managers.UIBattle.RefreshUI<UI_Inven>();
     }
 

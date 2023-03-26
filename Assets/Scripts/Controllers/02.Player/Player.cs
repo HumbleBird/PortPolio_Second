@@ -16,6 +16,8 @@ public partial class Player : Character
 
     public int m_iHaveMoeny { get; private set; }
     protected Coroutine cStaminaGraduallyFillingUp;
+
+    public new ObjectType eObjectType = ObjectType.Player;
     #endregion
 
     protected override void Init()
@@ -24,23 +26,6 @@ public partial class Player : Character
 
         cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
         m_iHaveMoeny = 10000;
-    }
-
-    protected override void SetInfo()
-    {
-        base.SetInfo();
-
-        Table_Player.Info pinfo = Managers.Table.m_Player.Get(ID);
-
-        if (pinfo == null)
-        {
-            Debug.LogError("해당하는 Id의 플레이어가 없습니다.");
-            return;
-        }
-
-        eObjectType = ObjectType.Player;
-
-        ChangeClass(pinfo.m_iClass);
     }
 
     public override void OnDead(GameObject Attacker)

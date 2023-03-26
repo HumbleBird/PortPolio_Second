@@ -19,15 +19,10 @@ public partial class MyPlayer : Player
 
 		SetKey();
 
-		m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", transform);
-	}
-
-    protected override void SetInfo()
-    {
-        base.SetInfo();
-
 		Managers.Object.myPlayer = this;
 		Managers.Camera.Init();
+
+		m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", transform);
 	}
 
 	protected override void UpdateController()

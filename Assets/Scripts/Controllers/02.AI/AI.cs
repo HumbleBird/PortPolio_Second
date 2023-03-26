@@ -69,14 +69,6 @@ public partial class AI : Character
             Patroling();
     }
 
-    protected override void SetInfo()
-    {
-        base.SetInfo();
-
-        UIBar = Managers.UI.MakeWorldSpaceUI<UI_HpBar>(transform);
-
-    }
-
     protected bool DistanceMeasurementAttackRange()
     {
         // Skill 상태에서 타겟이 뒤에 있어도 거리가 가깝다면 탐지 가능

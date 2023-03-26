@@ -27,15 +27,15 @@ public class TrigerDetector : MonoBehaviour
         if (m_goTarget != null)
         {
             CAttacker.m_goTarget = m_goTarget;
-            CAttacker.m_goTarget.HitEvent(m_goTarget, CAttacker.m_TotalAttack);
+            CAttacker.m_goTarget.HitEvent(CAttacker, CAttacker.m_TotalAttack);
             m_goTarget = null;
             m_Collider.isTrigger = false;
-            Managers.Battle.EventDelegateAttackEnd += () => { m_Collider.isTrigger = false; };
         }
     }
 
     public void Attack()
     {
         m_Collider.isTrigger = true;
+        Managers.Battle.EventDelegateAttackEnd += () => { m_Collider.isTrigger = false; };
     }
 }

@@ -20,7 +20,6 @@ public partial class MyPlayer : Player
 			// ±Ÿ¡¢
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
 			{
-				Debug.Log(eCharacterClass);
 				Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
 				AttackEvent(1);
 			}

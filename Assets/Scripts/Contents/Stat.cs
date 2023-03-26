@@ -8,7 +8,7 @@ public class Stat
 {
     public Table_Stat.Info m_tStatInfo { get; set; } = new Table_Stat.Info();
 
-    public int   m_iLevel        { get; set; }
+    public int   m_iLevel        { get; set; } 
     public int   m_iHp           { get; set; }           
     public int   m_iMaxHp        { get; set; }
     public int   m_iMp           { get; set; }           
