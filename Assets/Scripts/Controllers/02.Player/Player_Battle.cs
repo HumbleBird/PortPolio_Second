@@ -68,8 +68,6 @@ public partial class Player : Character
 
 	protected void ExcuteNextAttack(int id)
     {
-		Managers.Battle.ExecuteEventDelegateAttackEnd();
-		Managers.Battle.ClearAllEvnetDelegate();
 		StopCoroutine(m_coAttackCheck);
 		AttackEvent(id);
 		m_bNextAttack = false;

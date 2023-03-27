@@ -15,11 +15,12 @@ public partial class MyPlayer : Player
 
 	protected override void Init()
 	{
+		Managers.Object.myPlayer = this;
+
 		base.Init();
 
 		SetKey();
 
-		Managers.Object.myPlayer = this;
 		Managers.Camera.Init();
 
 		m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", transform);
@@ -40,6 +41,10 @@ public partial class MyPlayer : Player
 		}
 
 		InputOptionKey();
+		if(Input.GetKeyDown(KeyCode.P)) //¿ø·¡´Â Q
+        {
+			Managers.Battle.TargetLock();
+        }
 	}
 
 	void IdleAndMoveState()

@@ -17,11 +17,12 @@ public partial class Player : Character
     public int m_iHaveMoeny { get; private set; }
     protected Coroutine cStaminaGraduallyFillingUp;
 
-    public new ObjectType eObjectType = ObjectType.Player;
     #endregion
 
     protected override void Init()
     {
+        eObjectType = ObjectType.Player;
+
         base.Init();
 
         cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());

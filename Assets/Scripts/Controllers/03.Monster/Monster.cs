@@ -6,7 +6,11 @@ using static Define;
 
 public abstract  partial class Monster : AI
 {
-    public new ObjectType eObjectType = ObjectType.Monster;
+    public Monster()
+    {
+        eObjectType = ObjectType.Monster;
+        gameObject.tag = "Monster";
+    }
 
     protected List<RewardItemInfo> m_rewards = new List<RewardItemInfo>();
 
@@ -21,6 +25,7 @@ public abstract  partial class Monster : AI
     {
         base.SetInfo();
 
+        gameObject.layer = (int)Layer.Monster;
         UIBar = Managers.UI.MakeWorldSpaceUI<UI_HpBar>(transform);
     }
 

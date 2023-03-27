@@ -35,6 +35,8 @@ public partial class MyPlayer : Player
 			// 일반 공격
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
             {
+				Managers.Battle.ExecuteEventDelegateAttackEnd();
+				Managers.Battle.ClearAllEvnetDelegate();
 				Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
 				ExcuteNextAttack(m_cAttack.m_AttackInfo.m_iNextNum);
 				return;

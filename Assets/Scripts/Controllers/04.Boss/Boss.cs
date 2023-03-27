@@ -7,8 +7,11 @@ using static Define;
 
 public partial class Boss : Monster
 {
-    public new ObjectType eObjectType= ObjectType.Boss;
-
+    public Boss()
+    {
+        eObjectType = ObjectType.Boss;
+        gameObject.tag = "Boss";
+    }
 
     protected override IEnumerator AttackPattern()
     {

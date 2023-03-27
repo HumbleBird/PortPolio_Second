@@ -38,6 +38,8 @@ public partial class Character : Base
     public bool m_bWaiting = false;
 
     protected Dictionary<string, AnimationClip> m_DicAniactionclip = new Dictionary<string, AnimationClip>();
+    
+    public Transform m_LockOnTransform { get; private set; }
     #endregion
 
     protected override void Init()
@@ -115,6 +117,15 @@ public partial class Character : Base
         m_AudioSource.spatialBlend = 1;
         m_AudioSource.rolloffMode = AudioRolloffMode.Linear;
     }
+
+    void CreateLockOnTransform()
+    {
+        // transform.position = parent.position + Vector3.up * (parent.GetComponent<Collider>().bounds.size.y);
+
+        m_LockOnTransform = transform + Vector3.one * (gameObject.GetComponent<Collider>().bounds.size.y)
+
+    }
+
     #endregion
 
     #region Creature State Controller
@@ -137,15 +148,19 @@ public partial class Character : Base
                 break;
         }
     }
+
     protected virtual void UpdateIdle() { }
     protected virtual void UpdateMove() { }
     protected virtual void UpdateSkill() { }
     protected virtual void UpdateDead() 
     {
+        // 죽으면 연기처럼 사라짐.
+        // 시체 아이템 드롭은 그냥 줌.
+        
         m_Rigid.isKinematic = true;
         Managers.Object.Remove(ID);
 
-        m_Collider.isTrigger = true;
+        m_Collider.enabled = false; 
 
     }
 
