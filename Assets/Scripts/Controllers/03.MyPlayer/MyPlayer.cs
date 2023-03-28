@@ -13,6 +13,9 @@ public partial class MyPlayer : Player
 	public GameObject m_FollwTarget = null;
 	public float m_fRotationSpeed = 10f;
 
+	float mouseX;
+	float mouseY;
+
 	protected override void Init()
 	{
 		Managers.Object.myPlayer = this;
@@ -21,12 +24,22 @@ public partial class MyPlayer : Player
 
 		SetKey();
 
-		Managers.Camera.Init();
-
 		m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", transform);
 	}
 
-	protected override void UpdateController()
+    private void FixedUpdate()
+    {
+		float delta = Time.fixedDeltaTime;
+		CameraController cc = Managers.Camera.m_Camera.GetComponentInParent<CameraController>();
+
+		if (cc != null)
+        {
+			cc.FollwTarget(delta);
+			cc.HandleCameraRotation(delta, mouseX, mouseY);
+		}
+    }
+
+    protected override void UpdateController()
     {
         base.UpdateController();
 
@@ -41,11 +54,18 @@ public partial class MyPlayer : Player
 		}
 
 		InputOptionKey();
+		UpdateMouse();
 		if(Input.GetKeyDown(KeyCode.P)) //¿ø·¡´Â Q
         {
-			Managers.Battle.TargetLock();
-        }
+			Managers.Camera.HandleLockOn();
+		}
 	}
+
+	void UpdateMouse()
+    {
+		mouseX = Input.GetAxis("Mouse X");
+		mouseY = Input.GetAxis("Mouse Y");
+    }
 
 	void IdleAndMoveState()
     {

@@ -6,13 +6,6 @@ using static Define;
 
 public partial class MyPlayer : Player
 {
-	protected override void AttackEvent(int id)
-    {
-        base.AttackEvent(id);
-
-		Managers.Camera.m_CameraEffect.Shake(1);
-	}
-
 	void GetInputAttack()
 	{
 		if (m_bCanAttack == true && m_Stat.m_fStemina != 0)

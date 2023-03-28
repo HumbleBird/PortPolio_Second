@@ -188,5 +188,19 @@ public partial class Player : Character
 
         yield break;
     }
+
+    public IEnumerator BackStep()
+    {
+        string animName = "BackStep";
+
+        PlayAnimation(animName);
+        float time = GetAnimationTime(animName);
+        Stop(time * 0.8f);
+        eActionState = ActionState.Invincible;
+
+        yield break;
+    }
+
+
     #endregion
 }

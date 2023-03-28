@@ -11,6 +11,14 @@ public class CameraManager
     {
         m_Camera = Camera.main;
 
-
+        m_CameraEffect = m_Camera.GetComponentInParent<CameraEffectController>();
     }
+
+    public void HandleLockOn()
+    {
+        CameraController cc = m_Camera.GetComponent<CameraController>();
+        cc.HandleLockOn();
+    }
+
+
 }

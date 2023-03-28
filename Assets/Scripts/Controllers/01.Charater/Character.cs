@@ -38,8 +38,8 @@ public partial class Character : Base
     public bool m_bWaiting = false;
 
     protected Dictionary<string, AnimationClip> m_DicAniactionclip = new Dictionary<string, AnimationClip>();
-    
-    public Transform m_LockOnTransform { get; private set; }
+
+    public Transform m_LockOnTransform;
     #endregion
 
     protected override void Init()
@@ -116,14 +116,6 @@ public partial class Character : Base
         m_AudioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
         m_AudioSource.spatialBlend = 1;
         m_AudioSource.rolloffMode = AudioRolloffMode.Linear;
-    }
-
-    void CreateLockOnTransform()
-    {
-        // transform.position = parent.position + Vector3.up * (parent.GetComponent<Collider>().bounds.size.y);
-
-        m_LockOnTransform = transform + Vector3.one * (gameObject.GetComponent<Collider>().bounds.size.y)
-
     }
 
     #endregion

@@ -6,12 +6,6 @@ using static Define;
 
 public abstract  partial class Monster : AI
 {
-    public Monster()
-    {
-        eObjectType = ObjectType.Monster;
-        gameObject.tag = "Monster";
-    }
-
     protected List<RewardItemInfo> m_rewards = new List<RewardItemInfo>();
 
     public class RewardItemInfo
@@ -23,6 +17,9 @@ public abstract  partial class Monster : AI
 
     protected override void SetInfo()
     {
+        eObjectType = ObjectType.Monster;
+        gameObject.tag = "Monster";
+
         base.SetInfo();
 
         gameObject.layer = (int)Layer.Monster;

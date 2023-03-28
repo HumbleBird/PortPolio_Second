@@ -18,7 +18,7 @@ public class BattleManager
 
     public void Init()
     {
-        CreateCreatureContainer();
+        //CreateCreatureContainer();
         //InitMonsterSpawn();
     }
 
@@ -275,35 +275,6 @@ public class BattleManager
         EventDelegateAttack = null;
         EventDelegateHitEffect = null;
         EventDelegateAttackEnd = null;
-    }
-
-    public Transform m_tLockOnTransform;
-    // Monster Transform Lock
-    
-    public void HandleLockOn()
-    {
-        MyPlayer player = Managers.Object.myPlayer;
-
-        m_tLockOnTransform = player.m_FollwTarget.transform;
-
-        float shortDistance = Mathf.Infinity;
-
-        Collider[] colliders = Physics.OverlapSphere(player.transform.position, 26);
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            Monster monster = colliders[i].GetComponent<Monster>();
-
-            if(monster != null)
-            {
-                Vector3 lockTargetDirection  = monster
-            }
-        }
-    }
-
-    public void TargetLockMove()
-    {
-
     }
 
     #endregion

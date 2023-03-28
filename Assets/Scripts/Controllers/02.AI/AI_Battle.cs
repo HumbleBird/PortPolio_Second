@@ -18,6 +18,9 @@ public abstract partial class AI : Character
     {
         while (true)
         {
+            if (m_goTarget == null)
+                yield break;
+
             float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
             LookingPlayer(m_goTarget.transform.position);
 
