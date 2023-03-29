@@ -40,6 +40,8 @@ public partial class Character : Base
     protected Dictionary<string, AnimationClip> m_DicAniactionclip = new Dictionary<string, AnimationClip>();
 
     public Transform m_LockOnTransform;
+
+
     #endregion
 
     protected override void Init()
@@ -51,7 +53,7 @@ public partial class Character : Base
         SetInfo();
     }
 
-    void Update()
+    protected virtual void Update()
     {
         UpdateController();
     }
@@ -149,7 +151,7 @@ public partial class Character : Base
         // 죽으면 연기처럼 사라짐.
         // 시체 아이템 드롭은 그냥 줌.
         
-        m_Rigid.isKinematic = true;
+        m_Rigidbody.isKinematic = true;
         Managers.Object.Remove(ID);
 
         m_Collider.enabled = false; 

@@ -5,7 +5,7 @@ using static Define;
 
 public class Base : MonoBehaviour
 {
-    public Rigidbody m_Rigid { get; set; }
+    public Rigidbody m_Rigidbody { get; set; }
     protected Collider m_Collider { get; set; }
     protected Animator m_Animator { get; set; }
     protected Animation m_Animaion { get; private set; }
@@ -22,10 +22,10 @@ public class Base : MonoBehaviour
     protected virtual void Init()
     {
         m_Animator = Util.GetOrAddComponent<Animator>(gameObject);
-        m_Rigid = Util.GetOrAddComponent<Rigidbody>(gameObject);
+        m_Rigidbody = Util.GetOrAddComponent<Rigidbody>(gameObject);
         m_Collider = Util.GetOrAddComponent<Collider>(gameObject);
 
-        m_Rigid.constraints = RigidbodyConstraints.FreezeRotation;
+        m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
         if(Pos != null)
             transform.position = Pos.position;

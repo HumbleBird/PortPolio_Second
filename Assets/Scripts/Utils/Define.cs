@@ -109,6 +109,7 @@ public class Define
         None,
         Walk,
         Run,
+        Falling,
     }
 
     public enum ActionState

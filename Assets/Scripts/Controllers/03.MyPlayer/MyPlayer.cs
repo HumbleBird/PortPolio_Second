@@ -9,8 +9,6 @@ using static Define;
 
 public partial class MyPlayer : Player
 {
-	public Vector3 m_MovementDirection;
-	public GameObject m_FollwTarget = null;
 	public float m_fRotationSpeed = 10f;
 
 	float mouseX;
@@ -23,8 +21,6 @@ public partial class MyPlayer : Player
 		base.Init();
 
 		SetKey();
-
-		m_FollwTarget = Managers.Resource.Instantiate("Objects/Camera/FollwTarget", transform);
 	}
 
     private void FixedUpdate()
@@ -124,7 +120,7 @@ public partial class MyPlayer : Player
 			return;
 
 		// 이동 입력
-		float vertical = Input.GetAxis("Vertical");
+		float vertical   = Input.GetAxis("Vertical");
 		float horizontal = Input.GetAxis("Horizontal");
 
 		m_MovementDirection = new Vector3(horizontal, 0, vertical);

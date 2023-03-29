@@ -7,6 +7,10 @@ using static Define;
 public partial class Player : Character
 {
     #region Variable
+    protected Vector3 m_MovementDirection;
+    bool m_bFalling = false;
+
+    System.Diagnostics.Stopwatch m_FallingWatch = new System.Diagnostics.Stopwatch();
 
     public int m_iWeaponDamage { get; private set; }
     public int m_iArmorDefence { get; private set; }
@@ -17,6 +21,16 @@ public partial class Player : Character
     public int m_iHaveMoeny { get; private set; }
     protected Coroutine cStaminaGraduallyFillingUp;
 
+    [Header("Ground & Air Detection State")]
+    [SerializeField]
+    float minimunDistanceNeededToBeginFall = 1f;
+    [SerializeField]
+    float groundDirectionRayDistance = 0.2f;
+    LayerMask ignorForGroundCheck = ~(1 << 8 | 1 << 11);
+    public float inAirTimer = 0;
+
+    [SerializeField]
+    float fallingSpeed = 45f;
     #endregion
 
     protected override void Init()
@@ -27,6 +41,15 @@ public partial class Player : Character
 
         cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
         m_iHaveMoeny = 10000;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        float delta = Time.deltaTime;
+
+        HandleFalling(delta);
     }
 
     public override void OnDead(GameObject Attacker)
@@ -203,4 +226,59 @@ public partial class Player : Character
 
 
     #endregion
+
+    public void HandleFalling(float delta)
+    {
+        // 바닥으로 레이 캐스트를 쏴서 바닥에 부딪히면 착지, 아무것도 없으면 낙하 중.
+        // 낙하 시간의 비례하여 데미지 받음, 2초? 정도 낙하라면 사망 처리함.
+
+        Vector3 origin = transform.position;
+
+        // Ray를 싸서 밑에 바닥이 있는지 체크하는 원리
+        RaycastHit hit;
+
+        if(Physics.Raycast(origin, transform.forward, out hit, 0.4f))
+        {
+            m_MovementDirection = Vector3.zero;
+        }
+
+        Debug.DrawRay(origin, -Vector3.up * minimunDistanceNeededToBeginFall, Color.red, 0.1f, false);
+
+        // 땅에 착지
+        if(Physics.Raycast(origin, -Vector3.up, out hit, minimunDistanceNeededToBeginFall, ~(int)Layer.Obstacle))
+        {
+            if(eMoveState == MoveState.Falling)
+            {
+                if (m_FallingWatch.Elapsed.TotalSeconds >= 2)
+                {
+                    Debug.Log("사망");
+                }
+                else if (m_FallingWatch.Elapsed.TotalSeconds >= 0.5)
+                {
+                    Debug.Log("you are flying the time : " + inAirTimer);
+                    PlayAnimation("Falling To Landing");
+                    eMoveState = MoveState.None;
+                    m_bFalling = false;
+                }
+            }
+        }
+        // 낙하 중
+        else
+        {
+            if (m_bFalling == false)
+            {
+                m_bFalling = true;
+                eMoveState = MoveState.Falling;
+                PlayAnimation("Falling Idle");
+                m_FallingWatch.Start();
+            }
+
+            m_Rigidbody.AddForce(-Vector3.up * fallingSpeed);
+            m_Rigidbody.AddForce(m_MovementDirection * fallingSpeed / 10f);
+            Vector3 vel = m_Rigidbody.velocity;
+            vel.Normalize();
+            m_Rigidbody.velocity = vel * (m_Stat.m_fWalkSpeed / 2);
+
+        }
+    }
 }
