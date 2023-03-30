@@ -8,7 +8,6 @@ public partial class Player : Character
 {
     #region Variable
     protected Vector3 m_MovementDirection;
-    bool m_bFalling = false;
 
     System.Diagnostics.Stopwatch m_FallingWatch = new System.Diagnostics.Stopwatch();
 
@@ -21,13 +20,9 @@ public partial class Player : Character
     public int m_iHaveMoeny { get; private set; }
     protected Coroutine cStaminaGraduallyFillingUp;
 
-    [Header("Ground & Air Detection State")]
-    [SerializeField]
+    float goundDetectionRayStartPoint = 0.5f;
     float minimunDistanceNeededToBeginFall = 1f;
-    [SerializeField]
     float groundDirectionRayDistance = 0.2f;
-    LayerMask ignorForGroundCheck = ~(1 << 8 | 1 << 11);
-    public float inAirTimer = 0;
 
     [SerializeField]
     float fallingSpeed = 45f;
@@ -230,51 +225,67 @@ public partial class Player : Character
     public void HandleFalling(float delta)
     {
         // 바닥으로 레이 캐스트를 쏴서 바닥에 부딪히면 착지, 아무것도 없으면 낙하 중.
-        // 낙하 시간의 비례하여 데미지 받음, 2초? 정도 낙하라면 사망 처리함.
+        // 낙하 시간의 비례하여 데미지 받음, 2초? 정도 낙하라면 사망 처리 함.
 
         Vector3 origin = transform.position;
-
-        // Ray를 싸서 밑에 바닥이 있는지 체크하는 원리
+        origin.y += m_Collider.bounds.center.y;
         RaycastHit hit;
 
-        if(Physics.Raycast(origin, transform.forward, out hit, 0.4f))
+        // 앞에 장애물이 있다면 움직이지 못하게
+        if (Physics.Raycast(transform.position, transform.forward, 0.4f))
         {
             m_MovementDirection = Vector3.zero;
         }
+
+        if(eMoveState == MoveState.Falling)
+        {
+            m_Rigidbody.AddForce(-Vector3.up * fallingSpeed);
+            m_Rigidbody.AddForce(m_MovementDirection * fallingSpeed / 10f);
+        }
+
+        Vector3 targetPotion = transform.position;
 
         Debug.DrawRay(origin, -Vector3.up * minimunDistanceNeededToBeginFall, Color.red, 0.1f, false);
 
         // 땅에 착지
         if(Physics.Raycast(origin, -Vector3.up, out hit, minimunDistanceNeededToBeginFall, ~(int)Layer.Obstacle))
         {
+            Vector3 tp = hit.point;
+            targetPotion.y = tp.y;
+
             if(eMoveState == MoveState.Falling)
             {
-                if (m_FallingWatch.Elapsed.TotalSeconds >= 2)
+                //if (m_FallingWatch.Elapsed.TotalSeconds >= 2)
+                //{
+                //    Debug.Log("사망");
+                //}
+                //else
+                if (m_FallingWatch.Elapsed.TotalSeconds >= 0.5)
                 {
-                    Debug.Log("사망");
-                }
-                else if (m_FallingWatch.Elapsed.TotalSeconds >= 0.5)
-                {
-                    Debug.Log("you are flying the time : " + inAirTimer);
+                    Debug.Log("you are flying the time : " + m_FallingWatch.Elapsed.TotalSeconds);
                     PlayAnimation("Falling To Landing");
                     eMoveState = MoveState.None;
-                    m_bFalling = false;
+                    float time = GetAnimationTime("Falling To Landing");
+                    StartCoroutine(WaitToState(time, CreatureState.Idle));
+                    m_FallingWatch.Stop();
                 }
             }
+
+            if (m_MovementDirection != Vector3.zero)
+                transform.position = Vector3.Lerp(targetPotion, transform.position, Time.deltaTime);
+            else
+                transform.position = targetPotion;
         }
         // 낙하 중
         else
         {
-            if (m_bFalling == false)
+            if (eMoveState != MoveState.Falling)
             {
-                m_bFalling = true;
-                eMoveState = MoveState.Falling;
-                PlayAnimation("Falling Idle");
+                SetMoveState(MoveState.Falling);
+                m_FallingWatch.Reset();
                 m_FallingWatch.Start();
             }
 
-            m_Rigidbody.AddForce(-Vector3.up * fallingSpeed);
-            m_Rigidbody.AddForce(m_MovementDirection * fallingSpeed / 10f);
             Vector3 vel = m_Rigidbody.velocity;
             vel.Normalize();
             m_Rigidbody.velocity = vel * (m_Stat.m_fWalkSpeed / 2);

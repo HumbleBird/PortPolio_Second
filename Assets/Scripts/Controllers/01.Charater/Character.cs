@@ -182,7 +182,14 @@ public partial class Character : Base
         eState = Define.CreatureState.Dead;
     }
 
+    protected IEnumerator WaitToState(float time, CreatureState state)
+    {
+        yield return new WaitForSeconds(time);
 
+        eState = state;
+
+        yield break;
+    }
 
     #endregion
 }

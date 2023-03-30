@@ -124,17 +124,19 @@ public partial class MyPlayer : Player
 		float horizontal = Input.GetAxis("Horizontal");
 
 		m_MovementDirection = new Vector3(horizontal, 0, vertical);
-		
+
+		// 카메라를 향해 캐릭터 이동 방향 결정
+		Camera camera = Managers.Camera.m_Camera;
+		m_MovementDirection = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
+
+		if (eMoveState == MoveState.Falling)
+			return;
 
 		// 이동 상태 결정 : 걷기, 뛰기
 		if (Input.GetKey(KeyCode.LeftShift))
 			SetMoveState(MoveState.Run);
 		else if (Input.GetKeyUp(KeyCode.LeftShift))
 			SetMoveState(MoveState.Walk);
-
-		// 카메라를 향해 캐릭터 이동 방향 결정
-		Camera camera = Managers.Camera.m_Camera;
-		m_MovementDirection = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
 
 		// 이동 및 회전
 		if (m_MovementDirection != Vector3.zero)
@@ -146,7 +148,10 @@ public partial class MyPlayer : Player
 		}
 
 		if (m_bMoveInput == false)
+        {
+			PlayAnimation("Empty");
 			eState = CreatureState.Idle;
+		}
 	}
 }
 
