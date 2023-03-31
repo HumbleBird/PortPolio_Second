@@ -13,6 +13,8 @@ public partial class MyPlayer : Player
 
 	float mouseX;
 	float mouseY;
+	float vertical;
+	float horizontal;
 
 	protected override void Init()
 	{
@@ -35,6 +37,20 @@ public partial class MyPlayer : Player
 		}
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+		InputOptionKey();
+
+		if (Input.GetKeyDown(KeyCode.P)) //원래는 Q
+		{
+			Managers.Camera.HandleLockOn();
+		}
+
+		InputHandler();
+	}
+
     protected override void UpdateController()
     {
         base.UpdateController();
@@ -48,27 +64,24 @@ public partial class MyPlayer : Player
 				IdleAndMoveState();
 				break;
 		}
-
-		InputOptionKey();
-		UpdateMouse();
-		if(Input.GetKeyDown(KeyCode.P)) //원래는 Q
-        {
-			Managers.Camera.HandleLockOn();
-		}
 	}
 
-	void UpdateMouse()
+	void InputHandler()
     {
+		vertical = Input.GetAxis("Vertical");
+		horizontal = Input.GetAxis("Horizontal");
+
 		mouseX = Input.GetAxis("Mouse X");
 		mouseY = Input.GetAxis("Mouse Y");
-    }
+
+		m_MovementDirection = new Vector3(horizontal, 0, vertical);
+	}
 
 	void IdleAndMoveState()
     {
 		if (m_bWaiting)
 			return;
 
-		GetMoveInput();
 		GetInputAttack();
 		GetKeyAction();
 	}
@@ -84,34 +97,7 @@ public partial class MyPlayer : Player
 			StartCoroutine(m_cAttack.SpeacialActionEnd());
     }
 
-	bool m_bMoveInput = false;
-	void GetMoveInput()
-    {
-		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
-			Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-		{
-			m_bMoveInput = true;
-		}
-		else
-        {
-			m_bMoveInput = false;
-		}
-	}
 
-	protected override void UpdateIdle()
-    {
-        base.UpdateIdle();
-
-		if (m_bMoveInput == true)
-        {
-			if (m_bWaiting)
-				return;
-
-			SetMoveState(MoveState.Walk);
-			eState = CreatureState.Move;
-			return;
-		}
-	}
 
     // 걷기, 달리기 등
     protected override void UpdateMove()
@@ -119,18 +105,15 @@ public partial class MyPlayer : Player
 		if (m_bWaiting)
 			return;
 
-		// 이동 입력
-		float vertical   = Input.GetAxis("Vertical");
-		float horizontal = Input.GetAxis("Horizontal");
-
-		m_MovementDirection = new Vector3(horizontal, 0, vertical);
-
 		// 카메라를 향해 캐릭터 이동 방향 결정
 		Camera camera = Managers.Camera.m_Camera;
 		m_MovementDirection = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
 
-		if (eMoveState == MoveState.Falling)
-			return;
+		// 앞에 장애물이 있다면 움직이지 못하게
+		if (Physics.Raycast(transform.position, transform.forward, 0.4f))
+		{
+			m_MovementDirection = Vector3.zero;
+		}
 
 		// 이동 상태 결정 : 걷기, 뛰기
 		if (Input.GetKey(KeyCode.LeftShift))
@@ -147,9 +130,8 @@ public partial class MyPlayer : Player
 			}
 		}
 
-		if (m_bMoveInput == false)
+		if (m_MovementDirection == Vector3.zero)
         {
-			PlayAnimation("Empty");
 			eState = CreatureState.Idle;
 		}
 	}

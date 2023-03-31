@@ -6,8 +6,8 @@ using static Define;
 
 public class CursorController : MonoBehaviour
 {
-	int _mask = (1 << (int)Layer.Ground) | (1 << (int)Layer.Monster);
-	int m_UIMask = ((int)Layer.UI);
+	int _mask = ((1 << (int)Layer.Obstacle) | (1 << (int)Layer.Monster));
+	int m_UIMask = (1 << ((int)Layer.UI));
 	Texture2D m_LootIcon;
 	Texture2D m_ArrowIcon;
 

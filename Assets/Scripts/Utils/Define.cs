@@ -155,7 +155,6 @@ public class Define
         UI = 5,
         Player = 7,
         Monster = 8,
-        Ground = 9,
         Obstacle = 10,
         NPC = 11,
     }

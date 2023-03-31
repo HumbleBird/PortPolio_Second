@@ -56,6 +56,7 @@ public partial class Character : Base
     protected virtual void Update()
     {
         UpdateController();
+
     }
 
     #region SetInfo

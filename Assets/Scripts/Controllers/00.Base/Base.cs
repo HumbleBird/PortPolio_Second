@@ -5,9 +5,9 @@ using static Define;
 
 public class Base : MonoBehaviour
 {
-    public Rigidbody m_Rigidbody { get; set; }
-    protected Collider m_Collider { get; set; }
-    protected Animator m_Animator { get; set; }
+    public Rigidbody m_Rigidbody { get;private set; }
+    protected Collider m_Collider { get; private set; }
+    protected Animator m_Animator { get; private set; }
     protected Animation m_Animaion { get; private set; }
 
     public int ID;

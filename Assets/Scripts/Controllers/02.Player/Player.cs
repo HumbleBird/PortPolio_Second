@@ -20,12 +20,6 @@ public partial class Player : Character
     public int m_iHaveMoeny { get; private set; }
     protected Coroutine cStaminaGraduallyFillingUp;
 
-    float goundDetectionRayStartPoint = 0.5f;
-    float minimunDistanceNeededToBeginFall = 1f;
-    float groundDirectionRayDistance = 0.2f;
-
-    [SerializeField]
-    float fallingSpeed = 45f;
     #endregion
 
     protected override void Init()
@@ -41,10 +35,22 @@ public partial class Player : Character
     protected override void Update()
     {
         base.Update();
+        HandleFalling();
+    }
 
-        float delta = Time.deltaTime;
+    protected override void UpdateIdle()
+    {
+        base.UpdateIdle();
 
-        HandleFalling(delta);
+        if (m_MovementDirection != Vector3.zero)
+        {
+            if (m_bWaiting)
+                return;
+
+            SetMoveState(MoveState.Walk);
+            eState = CreatureState.Move;
+            return;
+        }
     }
 
     public override void OnDead(GameObject Attacker)
@@ -214,22 +220,21 @@ public partial class Player : Character
         PlayAnimation(animName);
         float time = GetAnimationTime(animName);
         Stop(time * 0.8f);
-        eActionState = ActionState.Invincible;
 
         yield break;
     }
 
-
     #endregion
 
-    public void HandleFalling(float delta)
+    public void HandleFalling()
     {
-        // 바닥으로 레이 캐스트를 쏴서 바닥에 부딪히면 착지, 아무것도 없으면 낙하 중.
-        // 낙하 시간의 비례하여 데미지 받음, 2초? 정도 낙하라면 사망 처리 함.
-
-        Vector3 origin = transform.position;
+       Vector3 origin = transform.position;
         origin.y += m_Collider.bounds.center.y;
         RaycastHit hit;
+
+        float fallingSpeed = 45f;
+
+        float minimunDistanceNeededToBeginFall = origin.y - transform.position.y  +0.1f;
 
         // 앞에 장애물이 있다면 움직이지 못하게
         if (Physics.Raycast(transform.position, transform.forward, 0.4f))
@@ -237,30 +242,30 @@ public partial class Player : Character
             m_MovementDirection = Vector3.zero;
         }
 
-        if(eMoveState == MoveState.Falling)
+        if (eMoveState == MoveState.Falling)
         {
             m_Rigidbody.AddForce(-Vector3.up * fallingSpeed);
             m_Rigidbody.AddForce(m_MovementDirection * fallingSpeed / 10f);
         }
+
+        Vector3 dir = m_MovementDirection;
+        dir.Normalize();
+        origin = origin + dir;
 
         Vector3 targetPotion = transform.position;
 
         Debug.DrawRay(origin, -Vector3.up * minimunDistanceNeededToBeginFall, Color.red, 0.1f, false);
 
         // 땅에 착지
-        if(Physics.Raycast(origin, -Vector3.up, out hit, minimunDistanceNeededToBeginFall, ~(int)Layer.Obstacle))
+        if(Physics.Raycast(origin, -Vector3.up, out hit, minimunDistanceNeededToBeginFall, 1 << (int)Layer.Obstacle))
         {
+
             Vector3 tp = hit.point;
             targetPotion.y = tp.y;
 
             if(eMoveState == MoveState.Falling)
             {
-                //if (m_FallingWatch.Elapsed.TotalSeconds >= 2)
-                //{
-                //    Debug.Log("사망");
-                //}
-                //else
-                if (m_FallingWatch.Elapsed.TotalSeconds >= 0.5)
+               if (m_FallingWatch.Elapsed.TotalSeconds >= 0.5)
                 {
                     Debug.Log("you are flying the time : " + m_FallingWatch.Elapsed.TotalSeconds);
                     PlayAnimation("Falling To Landing");
@@ -271,25 +276,29 @@ public partial class Player : Character
                 }
             }
 
-            if (m_MovementDirection != Vector3.zero)
-                transform.position = Vector3.Lerp(targetPotion, transform.position, Time.deltaTime);
-            else
-                transform.position = targetPotion;
         }
         // 낙하 중
         else
         {
             if (eMoveState != MoveState.Falling)
             {
-                SetMoveState(MoveState.Falling);
+                Vector3 vel = m_Rigidbody.velocity;
+                vel.Normalize();
+                m_Rigidbody.velocity = vel * (m_Stat.m_fWalkSpeed / 2);
+
                 m_FallingWatch.Reset();
                 m_FallingWatch.Start();
+
+                SetMoveState(MoveState.Falling);
             }
+        }
 
-            Vector3 vel = m_Rigidbody.velocity;
-            vel.Normalize();
-            m_Rigidbody.velocity = vel * (m_Stat.m_fWalkSpeed / 2);
-
+        if (eMoveState != MoveState.Falling)
+        {
+            if (m_MovementDirection != Vector3.zero)
+                transform.position = Vector3.Lerp(targetPotion, transform.position, Time.deltaTime);
+            else
+                transform.position = targetPotion;
         }
     }
 }
