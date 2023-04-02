@@ -22,7 +22,6 @@ public abstract  partial class Monster : AI
 
         base.SetInfo();
 
-        gameObject.layer = (int)Layer.Monster;
         UIBar = Managers.UI.MakeWorldSpaceUI<UI_HpBar>(transform);
     }
 

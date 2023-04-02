@@ -59,6 +59,9 @@ public abstract  partial class Character : Base
 
         // 공격 데미지 더해주기
         m_Stat.m_iAtk += m_cAttack.m_AttackInfo.m_iDmg;
+
+        // 어택 이벤트 추가
+        Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
     }
 
     void Attack()

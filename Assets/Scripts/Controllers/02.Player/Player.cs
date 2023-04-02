@@ -9,7 +9,11 @@ public partial class Player : Character
     #region Variable
     protected Vector3 m_MovementDirection;
 
-    System.Diagnostics.Stopwatch m_FallingWatch = new System.Diagnostics.Stopwatch();
+    System.Diagnostics.Stopwatch m_FallingWatch =     new System.Diagnostics.Stopwatch();
+    System.Diagnostics.Stopwatch m_AttackCheckWatch = new System.Diagnostics.Stopwatch();
+
+    float m_fMiddleAttackTime = 0;
+    float m_fEndAttackTime = 0;
 
     public int m_iWeaponDamage { get; private set; }
     public int m_iArmorDefence { get; private set; }
@@ -17,8 +21,9 @@ public partial class Player : Character
     public override int m_TotalAttack { get { return m_Stat.m_iAtk + m_iWeaponDamage; } }
     public override int m_TotalDefence { get { return m_Stat.m_iDef + m_iArmorDefence; } }
 
-    public int m_iHaveMoeny { get; private set; }
-    protected Coroutine cStaminaGraduallyFillingUp;
+    public int m_iHaveMoeny { get; private set; } = 10000;
+
+    float m_fRotationSpeed = 10f;
 
     #endregion
 
@@ -27,15 +32,13 @@ public partial class Player : Character
         eObjectType = ObjectType.Player;
 
         base.Init();
-
-        cStaminaGraduallyFillingUp = StartCoroutine(StaminaGraduallyFillingUp());
-        m_iHaveMoeny = 10000;
     }
 
     protected override void Update()
     {
         base.Update();
         HandleFalling();
+        StaminaGraduallyFillingUp();
     }
 
     protected override void UpdateIdle()
@@ -50,6 +53,74 @@ public partial class Player : Character
             SetMoveState(MoveState.Walk);
             eState = CreatureState.Move;
             return;
+        }
+    }
+
+    // 걷기, 달리기 등
+    protected override void UpdateMove()
+    {
+        if (m_bWaiting)
+            return;
+
+        // 앞에 장애물이 있다면 움직이지 못하게
+        if (Physics.Raycast(transform.position, transform.forward, 0.4f))
+        {
+            m_MovementDirection = Vector3.zero;
+        }
+
+        // 이동 및 회전
+        if (m_MovementDirection != Vector3.zero)
+        {
+            {
+                transform.position += Time.deltaTime * m_Stat.m_fMoveSpeed * m_MovementDirection;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            eState = CreatureState.Idle;
+        }
+    }
+
+    protected override void UpdateSkill()
+    {
+        base.UpdateSkill();
+
+        // 공격 시간 체크
+
+        // 첫 공격이라면
+        if (m_AttackCheckWatch.Elapsed.Seconds == 0)
+        {
+            m_AttackCheckWatch.Start();
+            m_fMiddleAttackTime = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName, 0.6f);
+            m_fEndAttackTime = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
+        }
+        else
+        {
+            // 공격이 끝났다면
+            if(m_AttackCheckWatch.Elapsed.Seconds >= m_fEndAttackTime)
+            {
+                eState = CreatureState.Idle;
+                m_bCanAttack = true;
+                m_bNextAttack = false;
+                m_AttackCheckWatch.Reset();
+                return;
+            }
+            // 다음 콤보 공격이 가능한 시간대
+            else if(m_AttackCheckWatch.Elapsed.Seconds >= m_fMiddleAttackTime)
+            {
+                // 다음 콤보 공격
+                if (m_bNextAttack == true && m_Stat.m_fStemina != 0)
+                {
+                    Managers.Battle.ExecuteEventDelegateAttackEnd();
+                    Managers.Battle.ClearAllEvnetDelegate();
+                    Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
+                    m_AttackCheckWatch.Reset();
+                    m_AttackCheckWatch.Start();
+                    AttackEvent(m_cAttack.m_AttackInfo.m_iNextNum);
+                    m_bNextAttack = false;
+                }
+            }
         }
     }
 
@@ -200,32 +271,6 @@ public partial class Player : Character
             SoundPlay("Player" + eState.ToString());
     }
 
-    #region PlayerAction
-    public IEnumerator Roll()
-    {
-        string animName = "Run To Roll";
-
-        PlayAnimation(animName);
-        float time = GetAnimationTime(animName);
-        Stop(time * 0.8f);
-        eActionState = ActionState.Invincible;
-
-        yield break;
-    }
-
-    public IEnumerator BackStep()
-    {
-        string animName = "BackStep";
-
-        PlayAnimation(animName);
-        float time = GetAnimationTime(animName);
-        Stop(time * 0.8f);
-
-        yield break;
-    }
-
-    #endregion
-
     public void HandleFalling()
     {
        Vector3 origin = transform.position;
@@ -300,5 +345,28 @@ public partial class Player : Character
             else
                 transform.position = targetPotion;
         }
+    }
+
+    void StaminaGraduallyFillingUp()
+    {
+        float statValue = 0f;
+        if (eState == CreatureState.Idle)
+            statValue = 0.2f;
+        else if (eState == CreatureState.Move)
+        {
+            if (eMoveState == MoveState.Walk)
+                statValue = 0.15f;
+            else if (eMoveState == MoveState.Run)
+                statValue = -0.01f;
+        }
+
+        float newStemina = m_Stat.m_fStemina + statValue;
+
+        SetStemina(newStemina);
+    }
+
+    protected override IEnumerator CoAttackCheck()
+    {
+        throw new NotImplementedException();
     }
 }

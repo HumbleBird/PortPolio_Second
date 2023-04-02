@@ -77,6 +77,7 @@ public partial class Character : Base
             }
 
             ChangeClass(info.m_iClass);
+            gameObject.layer = (int)Layer.Player;
         }
         else if (eObjectType == ObjectType.Monster)
         {
@@ -88,6 +89,7 @@ public partial class Character : Base
             }
 
             ChangeClass(info.m_iClass);
+            gameObject.layer = (int)Layer.Monster;
         }
         else if (eObjectType == ObjectType.Boss)
         {
@@ -100,6 +102,7 @@ public partial class Character : Base
             }
 
             ChangeClass(info.m_iClass);
+            gameObject.layer = (int)Layer.Monster;
         }
     }
 

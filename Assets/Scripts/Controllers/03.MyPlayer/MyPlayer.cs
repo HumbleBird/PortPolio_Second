@@ -7,14 +7,16 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
+// Input Handler
+// MyPlayer UI
 public partial class MyPlayer : Player
 {
-	public float m_fRotationSpeed = 10f;
-
 	float mouseX;
 	float mouseY;
 	float vertical;
 	float horizontal;
+
+	Dictionary<KeyCode, Action> OptionKeyDic; // 단발성
 
 	protected override void Init()
 	{
@@ -22,7 +24,12 @@ public partial class MyPlayer : Player
 
 		base.Init();
 
-		SetKey();
+		OptionKeyDic = new Dictionary<KeyCode, Action>
+		{
+			{ Managers.InputKey._binding.Bindings[UserAction.UI_Setting], () => {    Managers.UIBattle.ShowAndCloseUI<UI_SettingKey>(); }},
+			{ Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], () => {  Managers.UIBattle.ShowAndCloseUI<UI_Inven>(); }},
+			{ Managers.InputKey._binding.Bindings[UserAction.UI_Equipment], () => {  Managers.UIBattle.ShowAndCloseUI<UI_Equipment>(); }},
+		};
 	}
 
     private void FixedUpdate()
@@ -40,34 +47,73 @@ public partial class MyPlayer : Player
     protected override void Update()
     {
         base.Update();
-
-		InputOptionKey();
-
-		if (Input.GetKeyDown(KeyCode.P)) //원래는 Q
-		{
-			Managers.Camera.HandleLockOn();
-		}
-
 		InputHandler();
+
+		// 카메라를 향해 캐릭터 이동 방향 결정
+		Camera camera = Managers.Camera.m_Camera;
+		m_MovementDirection = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
 	}
 
-    protected override void UpdateController()
+	protected override void UpdateIdle()
     {
-        base.UpdateController();
+        base.UpdateIdle();
 
-		switch (eState)
+		IdleAndMoveInput();
+	}
+
+    protected override void UpdateMove()
+    {
+		base.UpdateMove();
+
+		IdleAndMoveInput();
+
+		// 이동 상태 결정 : 걷기, 뛰기
+		if (Input.GetKey(KeyCode.LeftShift))
+			SetMoveState(MoveState.Run);
+		else if (Input.GetKeyUp(KeyCode.LeftShift))
+			SetMoveState(MoveState.Walk);
+	}
+
+    protected override void UpdateSkill()
+	{
+		base.UpdateSkill();
+
+		// 일반 공격
+		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
 		{
-			case CreatureState.Idle:
-				IdleAndMoveState();
-				break;
-			case CreatureState.Move:
-				IdleAndMoveState();
-				break;
+			m_bNextAttack = true;
 		}
+	}
+
+	void IdleAndMoveInput()
+	{
+		if (m_bWaiting)
+			return;
+
+		//GetInputAttack
+		if (m_bCanAttack == true && m_Stat.m_fStemina != 0)
+		{
+			// 근접
+			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
+			{
+				AttackEvent(1);
+			}
+		}
+
+		//GetKeyAction
+		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Roll]))
+			Roll();
+
+		// Attack And Special Action
+		if (Input.GetMouseButton(1))
+			StartCoroutine(m_cAttack.SpeacialAction());
+		else if (Input.GetMouseButtonUp(1))
+			StartCoroutine(m_cAttack.SpeacialActionEnd());
 	}
 
 	void InputHandler()
     {
+		// Move
 		vertical = Input.GetAxis("Vertical");
 		horizontal = Input.GetAxis("Horizontal");
 
@@ -75,65 +121,45 @@ public partial class MyPlayer : Player
 		mouseY = Input.GetAxis("Mouse Y");
 
 		m_MovementDirection = new Vector3(horizontal, 0, vertical);
+
+		// Option
+		InputOptionKey();
+
+		//GetInputAttack
+		if (Input.GetKeyDown(KeyCode.P)) //원래는 Q
+			Managers.Camera.HandleLockOn();
 	}
 
-	void IdleAndMoveState()
-    {
-		if (m_bWaiting)
-			return;
-
-		GetInputAttack();
-		GetKeyAction();
-	}
-
-	void GetKeyAction()
-    {
-		if(Input.GetKeyDown( Managers.InputKey._binding.Bindings[UserAction.Roll]))
-			StartCoroutine(Roll());
-
-		if (Input.GetMouseButton(1))
-			StartCoroutine(m_cAttack.SpeacialAction());
-		else if (Input.GetMouseButtonUp(1))
-			StartCoroutine(m_cAttack.SpeacialActionEnd());
-    }
-
-
-
-    // 걷기, 달리기 등
-    protected override void UpdateMove()
-    {
-		if (m_bWaiting)
-			return;
-
-		// 카메라를 향해 캐릭터 이동 방향 결정
-		Camera camera = Managers.Camera.m_Camera;
-		m_MovementDirection = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
-
-		// 앞에 장애물이 있다면 움직이지 못하게
-		if (Physics.Raycast(transform.position, transform.forward, 0.4f))
+	public void InputOptionKey()
+	{
+		if (Input.anyKeyDown)
 		{
-			m_MovementDirection = Vector3.zero;
-		}
-
-		// 이동 상태 결정 : 걷기, 뛰기
-		if (Input.GetKey(KeyCode.LeftShift))
-			SetMoveState(MoveState.Run);
-		else if (Input.GetKeyUp(KeyCode.LeftShift))
-			SetMoveState(MoveState.Walk);
-
-		// 이동 및 회전
-		if (m_MovementDirection != Vector3.zero)
-        {
+			foreach (var dic in OptionKeyDic)
 			{
-				transform.position += Time.deltaTime * m_Stat.m_fMoveSpeed * m_MovementDirection;
-				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
+				if (Input.GetKeyDown(dic.Key))
+				{
+					dic.Value();
+
+					// Sound
+					SoundPlay("UI On Off Sound");
+				}
 			}
 		}
+	}
 
-		if (m_MovementDirection == Vector3.zero)
-        {
-			eState = CreatureState.Idle;
-		}
+	protected override void SetHp(int NewHp, GameObject attacker)
+	{
+		base.SetHp(NewHp, attacker);
+
+		Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshUI();
+		StartCoroutine(Managers.UIBattle.UIGameScene.UIPlayerInfo.DownHP());
+	}
+
+	protected override void SetStemina(float NewSetStamina)
+	{
+		base.SetStemina(NewSetStamina);
+
+		Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshUI();
 	}
 }
 
