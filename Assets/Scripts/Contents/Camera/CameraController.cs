@@ -51,6 +51,7 @@ public partial class CameraController : MonoBehaviour
 
         myTranform = transform;
         defaultPosition = cameraTransform.localPosition.z;
+        targetTransform =  Managers.Object.myPlayer.gameObject.transform;
         ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10 | 1 << 12);
     }
 

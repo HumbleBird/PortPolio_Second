@@ -110,7 +110,7 @@ public partial class Player : Character
             else if(m_AttackCheckWatch.Elapsed.Seconds >= m_fMiddleAttackTime)
             {
                 // 다음 콤보 공격
-                if (m_bNextAttack == true && m_Stat.m_fStemina != 0)
+                if (m_bNextAttack == true && m_Stat.m_fStemina != 0 && m_cAttack.m_AttackInfo.m_iNextNum != 0)
                 {
                     Managers.Battle.ExecuteEventDelegateAttackEnd();
                     Managers.Battle.ClearAllEvnetDelegate();
@@ -273,13 +273,14 @@ public partial class Player : Character
 
     public void HandleFalling()
     {
-       Vector3 origin = transform.position;
-        origin.y += m_Collider.bounds.center.y;
+        Vector3 origin = transform.position;
+        origin.y += m_Collider.bounds.size.y / 2;
+
         RaycastHit hit;
 
         float fallingSpeed = 45f;
 
-        float minimunDistanceNeededToBeginFall = origin.y - transform.position.y  +0.1f;
+        float minimunDistanceNeededToBeginFall = origin.y - transform.position.y + 0.04f;
 
         // 앞에 장애물이 있다면 움직이지 못하게
         if (Physics.Raycast(transform.position, transform.forward, 0.4f))
@@ -295,7 +296,7 @@ public partial class Player : Character
 
         Vector3 dir = m_MovementDirection;
         dir.Normalize();
-        origin = origin + dir;
+        origin = origin + dir * -0.2f;
 
         Vector3 targetPotion = transform.position;
 
@@ -310,14 +311,22 @@ public partial class Player : Character
 
             if(eMoveState == MoveState.Falling)
             {
-               if (m_FallingWatch.Elapsed.TotalSeconds >= 0.5)
+                Debug.Log("you are flying the time : " + m_FallingWatch.Elapsed.TotalSeconds);
+                PlayAnimation("Falling To Landing");
+                eMoveState = MoveState.None;
+                float time = GetAnimationTime("Falling To Landing");
+                StartCoroutine(WaitToState(time, CreatureState.Idle));
+                m_FallingWatch.Stop();
+
+                if (m_FallingWatch.Elapsed.TotalSeconds >= 0.5)
                 {
-                    Debug.Log("you are flying the time : " + m_FallingWatch.Elapsed.TotalSeconds);
-                    PlayAnimation("Falling To Landing");
-                    eMoveState = MoveState.None;
-                    float time = GetAnimationTime("Falling To Landing");
-                    StartCoroutine(WaitToState(time, CreatureState.Idle));
-                    m_FallingWatch.Stop();
+                    if (m_FallingWatch.Elapsed.TotalSeconds >= 3)
+                    {
+                        Debug.Log("사망");
+                        return;
+                    }
+
+                    HitEvent(this, (int)(m_FallingWatch.Elapsed.TotalSeconds * 10), false);
                 }
             }
 
@@ -329,7 +338,7 @@ public partial class Player : Character
             {
                 Vector3 vel = m_Rigidbody.velocity;
                 vel.Normalize();
-                m_Rigidbody.velocity = vel * (m_Stat.m_fWalkSpeed / 2);
+                m_Rigidbody.velocity = vel * (10 / 2);
 
                 m_FallingWatch.Reset();
                 m_FallingWatch.Start();

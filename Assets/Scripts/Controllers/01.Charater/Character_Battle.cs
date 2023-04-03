@@ -74,7 +74,7 @@ public abstract  partial class Character : Base
     protected abstract IEnumerator CoAttackCheck();
 
     // 피격 판정과 데미지 처리
-    public virtual void HitEvent(Character attacker, int dmg)
+    public virtual void HitEvent(Character attacker, int dmg, bool isAnimation = true)
     {
         HitEventBaseOnState();
 
@@ -89,12 +89,15 @@ public abstract  partial class Character : Base
         // 애니메이션
         if (m_Stat.m_iHp > 0)
         {
-            HitAnimation();
+            if(isAnimation)
+            {
+                HitAnimation();
 
-            // 히트 후 Idle로
-            float time = GetAnimationTime(m_sCurrentAnimationName);
-            Stop(time);
-            eState = CreatureState.Idle;
+                // 히트 후 Idle로
+                float time = GetAnimationTime(m_sCurrentAnimationName);
+                Stop(time);
+                eState = CreatureState.Idle;
+            }
         }
     }
 
