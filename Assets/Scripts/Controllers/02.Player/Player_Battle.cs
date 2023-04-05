@@ -19,6 +19,39 @@ public partial class Player : Character
 		SetStemina(newStemina);
 	}
 
+    #region Weapon
+    
+    void WeaponInit()
+    {
+        ItemSoket[] weaponHolderSlots = GetComponentsInChildren<ItemSoket>();
+        foreach (ItemSoket weaponslot in weaponHolderSlots)
+        {
+            if (weaponslot.isLeftHandSlot)
+            {
+                m_leftHandSlot = weaponslot;
+            }
+            else if (weaponslot.isRightHandSlot)
+            {
+                m_RightHandSlot = weaponslot;
+            }
+        }
+    }
+
+    public void LoadWeaponOnSlot(Weapon weaponItem, bool isLeft)
+    {
+        if(isLeft)
+        {
+            m_leftHandSlot.LoadWeaponModel(weaponItem);
+        }
+        else
+        {
+            m_RightHandSlot.LoadWeaponModel(weaponItem);
+
+        }
+    }
+
+    #endregion
+
     #region PlayerAction
     public void Roll()
     {

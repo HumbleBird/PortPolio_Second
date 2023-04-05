@@ -46,44 +46,6 @@ public class BattleManager
     #endregion
 
     #region Spawn
-    public void InitMonsterSpawn()
-    {
-        // 맵 이름 얻기
-        // 맵 이름에 맞는 몬스터 스폰 위치 전부 가져오기
-        if (Managers.Scene.CurrentScene.SceneType == Scene.Game)
-        {
-            string path = "Assets/Resources/Prefabs/Objects/MonsterSpawnPoint/Dungeon";
-            var files = Directory.GetFiles(path);
-            foreach (string file in files)
-            {
-                if (file.Contains(".meta"))
-                    continue;
-
-                path = file.Replace("\\", "/");
-                path = path.Replace(".prefab", "");
-                path = path.Replace("Assets/Resources/", "");
-                GameObject go = Managers.Resource.Load<GameObject>(path);
-                MonstersSpawnPos.Add(int.Parse(go.name), go.transform);
-            }
-
-            // 스폰할 위치랑 몬스터 매치하기
-            foreach (var info in Managers.Table.m_MonsterSpawnPos.m_Dictionary)
-            {
-                if (info.Value.m_iDungeonType != (int)Managers.Scene.CurrentScene.SceneType)
-                    return;
-
-                foreach (var pos in MonstersSpawnPos)
-                {
-                    if(pos.Key == info.Value.m_iMonsterSpawnPosId)
-                    {
-                        List<GameObject> go =  Spawn(info.Value.m_iMonsterId, ObjectType.Monster);
-                        Base goBase = go[0].GetComponent<Base>();
-                        goBase.Pos = pos.Value;
-                    }
-                }
-            }
-        }
-    }
 
     public GameObject CreateCharacter(int id, ObjectType type)
     {

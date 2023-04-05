@@ -1,19 +1,6 @@
-Idx,Name,Defense,MoveSpeed,ItemEquip,,,
-아이디,이름,방어력,이동 속도,장착부위,,,
-101,IonHelemt,3,-5,0,,,
-102,IonArmor,10,-10,0,,,
-103,IonBoots,2,-3,0,,,
-104,IonGloves,1,-2,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,Attack
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,5,1,0,,,Blow Skeleton Attack 1
-,,7,0.8,0,,,Blow Skeleton Attack 2
-,,,,,,,Skeleton Shiled
+Idx,Name,ArmorType,Physical Resitance
+아이디,이름,장착부위,물리 방어력
+101,Catarina Helm,1,5.4
+102,Catarina Armor,2,18.3
+103,Catarina Gauntlets,4,3.8
+104,Catarina Leggings,5,8.5

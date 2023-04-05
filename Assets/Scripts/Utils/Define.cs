@@ -79,6 +79,7 @@ public class Define
         Weapon = 1,
         Armor = 2,
         Consumable = 3,
+        Order = 4,
     }
 
     public enum EquimentItemCategory

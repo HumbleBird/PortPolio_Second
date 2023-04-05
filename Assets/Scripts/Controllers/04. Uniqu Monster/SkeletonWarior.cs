@@ -49,14 +49,14 @@ public class SkeletonWarior : Monster
 
         // 롱소드 1개 10%확률
         RewardItemInfo info1 = new RewardItemInfo();
-        info1.m_Item = Item.MakeItem(Managers.Table.m_Item.Get(1));
+        info1.m_Item = Item.MakeItem(1);
         info1.m_fProbability = 10f;
         info1.m_Item.Count = 1;
         m_rewards.Add(info1);
 
         // 체력 포션 20% (1개 80% 2개 20%)
         RewardItemInfo info2 = new RewardItemInfo();
-        info2.m_Item = Item.MakeItem(Managers.Table.m_Item.Get(201));
+        info2.m_Item = Item.MakeItem(201);
         info2.m_fProbability = 20f;
         int rand = Random.Range(0, 101);
         if(rand <= 80)

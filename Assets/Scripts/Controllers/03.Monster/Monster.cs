@@ -69,7 +69,7 @@ public abstract  partial class Monster : AI
         m_rewards.Clear();
     }
 
-    public override void HitEvent(Character attacker, int dmg, bool isAnimation = true)
+    public override void HitEvent(Character attacker, float dmg, bool isAnimation = true)
     {
         base.HitEvent(attacker, dmg, isAnimation);
 

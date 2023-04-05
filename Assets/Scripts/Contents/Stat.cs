@@ -38,6 +38,5 @@ public class Stat
         m_fMoveSpeed = 0;
         m_fWalkSpeed = m_tStatInfo.m_fWalkSpeed;
         m_fRunSpeed = m_tStatInfo.m_fRunSpeed;
-        m_fAttackSpeed = m_tStatInfo.m_fAttackSpeed;
     }
 }

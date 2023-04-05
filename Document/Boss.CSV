@@ -1,19 +1,4 @@
-Idx,Name,Class,RewardGold,RewardItem,#Prefab_Path,AI,
-아이디,이름,클래스,보상 골드,보상 아이템,프리팹,AI의 ID,
-1001,Orc,1,10000,0,Monster/Boss/Orc,1,
-1002,Artorias,1,10000,0,Monster/Boss/Artorias,1,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,Attack
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,5,1,0,,,Blow Skeleton Attack 1
-,,7,0.8,0,,,Blow Skeleton Attack 2
-,,,,,,,Skeleton Shiled
+Idx,Name,Class,RewardGold,RewardItem,#Prefab_Path,AI
+아이디,이름,클래스,보상 골드,보상 아이템,프리팹,AI의 ID
+1001,Orc,1,10000,0,Monster/Boss/Orc,1
+1002,Artorias,1,10000,4,Monster/Boss/Artorias,1

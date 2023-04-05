@@ -12,11 +12,8 @@ public class Table_Stat : Table_Base
         public int   m_fStemina;
         public int   m_iAtk;
         public int   m_iDef;
-        public float m_fJumpPower;
         public float m_fWalkSpeed;
         public float m_fRunSpeed;
-        public float m_fCrouchSpeed;
-        public float m_fAttackSpeed;
     }
 
     public Dictionary<int, Info> m_Dictionary = new Dictionary<int, Info>();
@@ -67,11 +64,8 @@ public class Table_Stat : Table_Base
         _reader.get(_nRow, ref _info.m_fStemina);
         _reader.get(_nRow, ref _info.m_iAtk);
         _reader.get(_nRow, ref _info.m_iDef);
-        _reader.get(_nRow, ref _info.m_fJumpPower);
         _reader.get(_nRow, ref _info.m_fWalkSpeed);
         _reader.get(_nRow, ref _info.m_fRunSpeed);
-        _reader.get(_nRow, ref _info.m_fCrouchSpeed);
-        _reader.get(_nRow, ref _info.m_fAttackSpeed);
 
         return true;
     }

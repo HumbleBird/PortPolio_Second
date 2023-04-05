@@ -61,8 +61,7 @@ public class UI_ShopInven : UI_Base
         // 1. 데이터 테이블 정보 모두 가져오기
         foreach (Table_Shop.Info itemInfo in Managers.Table.m_Shop.m_Dictionary.Values)
         {
-            Table_Item.Info info = Managers.Table.m_Item.Get(itemInfo.m_iItemIdx);
-            Item item = Item.MakeItem(info);
+            Item item = Item.MakeItem(itemInfo.m_iItemIdx);
             item.InventorySlot = slot;
             item.Count = itemInfo.m_iCount;
             item.m_iPrice = itemInfo.m_iPrice;

@@ -10,6 +10,12 @@ public abstract  partial class Character : Base
     public Character m_goTarget = null;
     protected bool  m_bCanAttack = true;
 
+    public float m_iWeaponDamage;
+    public float m_iArmorDefence;
+    public virtual float m_TotalAttack { get { return m_Stat.m_iAtk +  m_iWeaponDamage; } }
+    public virtual float m_TotalDefence { get { return m_Stat.m_iDef + m_iArmorDefence; } }
+
+
     public void ChangeClass(int ClassId)
     {
         eCharacterClass = (CharacterClass)ClassId;
@@ -58,6 +64,8 @@ public abstract  partial class Character : Base
         SoundPlay(m_cAttack.m_AttackInfo.m_sAnimName);
 
         // 공격 데미지 더해주기
+        // 공격 콤보를 가할수록 공격 데미지가 더해진다.
+        m_Stat.m_iAtk = m_Stat.m_fOriginalAtk;
         m_Stat.m_iAtk += m_cAttack.m_AttackInfo.m_iDmg;
 
         // 어택 이벤트 추가
@@ -74,13 +82,13 @@ public abstract  partial class Character : Base
     protected abstract IEnumerator CoAttackCheck();
 
     // 피격 판정과 데미지 처리
-    public virtual void HitEvent(Character attacker, int dmg, bool isAnimation = true)
+    public virtual void HitEvent(Character attacker, float dmg, bool isAnimation = true)
     {
         HitEventBaseOnState();
 
         // HP 관리
         dmg = Mathf.Max(0, dmg - m_TotalDefence);
-        int NewHp = m_Stat.m_iHp - dmg;
+        int NewHp = (int)(m_Stat.m_iHp - dmg);
         SetHp(NewHp, attacker.gameObject);
 
         // 등록된 공격 피격 효과 (슬로우, 넉백 등)
@@ -124,8 +132,6 @@ public abstract  partial class Character : Base
     // 공격 끝
     protected virtual void AttackEnd()
     {
-        m_Stat.m_iAtk = m_Stat.m_fOriginalAtk;
-
         Managers.Battle.ExecuteEventDelegateAttackEnd(); // Blow의 경우 무기 콜라이더 꺼주기
         Managers.Battle.ClearAllEvnetDelegate();
     }

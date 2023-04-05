@@ -1,19 +1,4 @@
-Idx,Name,ConsumableType,Value,MaxCount,,,
-아이디,이름,소비 타입,회복 수치?,최대 소지 개수,,,
-201,체력 포션,2,20,0,,,
-202,마나 포션,4,10,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,Attack
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,5,1,0,,,Blow Skeleton Attack 1
-,,7,0.8,0,,,Blow Skeleton Attack 2
-,,,,,,,Skeleton Shiled
+Idx,Name,ConsumableType,Value,MaxCount
+아이디,이름,소비 타입,회복 수치?,최대 소지 개수
+201,Estus Flask,2,250,1
+202,Ashen Estus Flask,4,10,3

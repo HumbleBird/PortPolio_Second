@@ -26,6 +26,4 @@ public partial class Player : Character
                 break;
         }
     }
-
-
 }

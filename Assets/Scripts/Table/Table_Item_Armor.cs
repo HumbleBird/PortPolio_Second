@@ -8,9 +8,8 @@ public class Table_Item_Armor : Table_Base
     {
         public int    m_nID;
         public string m_sName;
-        public int    m_fDefense;
-        public float  m_fMoveSpeed;
         public int    m_iArmorType;
+        public float  m_fPhysicalResitance;
     }
 
     public Dictionary<int, Info> m_Dictionary = new Dictionary<int, Info>();
@@ -57,9 +56,8 @@ public class Table_Item_Armor : Table_Base
 
         _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_sName);
-        _reader.get(_nRow, ref _info.m_fDefense);
-        _reader.get(_nRow, ref _info.m_fMoveSpeed);
         _reader.get(_nRow, ref _info.m_iArmorType);
+        _reader.get(_nRow, ref _info.m_fPhysicalResitance);
 
         return true;
     }

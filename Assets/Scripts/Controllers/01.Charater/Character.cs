@@ -31,9 +31,6 @@ public partial class Character : Base
     public Stat m_Stat { get; set; } = new Stat();
     protected AudioSource m_AudioSource { get; private set; }
 
-    public virtual int m_TotalAttack { get { return m_Stat.m_iAtk; } }
-    public virtual int m_TotalDefence { get { return m_Stat.m_iDef; } }
-
     [HideInInspector] 
     public bool m_bWaiting = false;
 

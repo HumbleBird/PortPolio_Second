@@ -16,7 +16,6 @@ public class TableManager
     public Table_Item_Weapon          m_Item_Weapon = new Table_Item_Weapon();
     public Table_Item_Armor           m_Item_Armor = new Table_Item_Armor();
     public Table_Item_Consumable      m_Item_Consumable = new Table_Item_Consumable();
-    public Table_MonsterSpawnPos      m_MonsterSpawnPos = new Table_MonsterSpawnPos();
     public Table_Sound                m_Sound = new Table_Sound();
     public Table_Dialogue             m_Dialogue = new Table_Dialogue();
     public Table_Shop                 m_Shop = new Table_Shop();
@@ -35,7 +34,6 @@ public class TableManager
         m_Item_Weapon.Init_CSV("Weapon", 2, 0);
         m_Item_Armor.Init_CSV("Armor", 2, 0);
         m_Item_Consumable.Init_CSV("Consumable", 2, 0);
-        m_MonsterSpawnPos.Init_CSV("MonsterSpawnPos", 2, 0);
         m_Sound.Init_CSV("Sound", 2, 0);
         m_Dialogue.Init_CSV("Dialogue", 2, 0);
         m_Shop.Init_CSV("Shop", 2, 0);
@@ -57,7 +55,6 @@ public class TableManager
         m_Item_Weapon.Save_Binary("Weapon");
         m_Item_Armor.Save_Binary("Armor");
         m_Item_Consumable.Save_Binary("Consumable");
-        m_MonsterSpawnPos.Save_Binary("MonsterSpawnPos");
         m_Sound.Save_Binary("Sound");
         m_Dialogue.Save_Binary("Dialogue");
         m_Shop.Save_Binary("Shop");

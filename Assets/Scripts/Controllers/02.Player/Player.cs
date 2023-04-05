@@ -15,16 +15,15 @@ public partial class Player : Character
     float m_fMiddleAttackTime = 0;
     float m_fEndAttackTime = 0;
 
-    public int m_iWeaponDamage { get; private set; }
-    public int m_iArmorDefence { get; private set; }
-
-    public override int m_TotalAttack { get { return m_Stat.m_iAtk + m_iWeaponDamage; } }
-    public override int m_TotalDefence { get { return m_Stat.m_iDef + m_iArmorDefence; } }
+    public override float m_TotalAttack { get { return m_Stat.m_iAtk + m_iWeaponDamage; } }
+    public override float m_TotalDefence { get { return m_Stat.m_iDef + m_iArmorDefence; } }
 
     public int m_iHaveMoeny { get; private set; } = 10000;
 
     float m_fRotationSpeed = 10f;
 
+    ItemSoket m_leftHandSlot;
+    ItemSoket m_RightHandSlot;
     #endregion
 
     protected override void Init()
@@ -32,7 +31,16 @@ public partial class Player : Character
         eObjectType = ObjectType.Player;
 
         base.Init();
+
+        WeaponInit();
+
+        Weapon weapon1 = Item.MakeItem(4) as Weapon;
+        Weapon weapon2 = Item.MakeItem(5) as Weapon;
+        LoadWeaponOnSlot(weapon1, true);
+        LoadWeaponOnSlot(weapon2, false);
     }
+
+
 
     protected override void Update()
     {
@@ -158,6 +166,8 @@ public partial class Player : Character
         {
             item.m_bEquipped = equipItem.m_bEquipped;
 
+            // 아이템 소켓에 아이템 장착
+
             Managers.UIBattle.RefreshUI<UI_Inven>();
         }
 
@@ -255,7 +265,7 @@ public partial class Player : Character
                     m_iWeaponDamage += ((Weapon)item).Damage;
                     break;
                 case ItemType.Armor:
-                    m_iArmorDefence += ((Armor)item).Defence;
+                    m_iArmorDefence += ((Armor)item).PhysicalResitance;
                     break;
                 case ItemType.Consumable:
                     break;

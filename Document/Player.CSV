@@ -1,4 +1,3 @@
-Idx,#Name,class,Level,#Prefab_Path
-아이디,이름,직업,레벨,프리팹
-1,팔라딘,2,1,Player/Paladin
-2,궁수,3,1,Player/Archer
+Idx,class,#Prefab_Path
+아이디,직업,프리팹
+1,2,Player/Paladin

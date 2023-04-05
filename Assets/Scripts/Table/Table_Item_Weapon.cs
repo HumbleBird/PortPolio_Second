@@ -6,11 +6,11 @@ public class Table_Item_Weapon : Table_Base
     [Serializable] 
     public class Info
     {
-        public int   m_nID;
+        public int      m_nID;
         public string   m_sName;
-        public int   m_iWeaponType;
-        public int   m_fDamage;
-        public float m_fAttackSpeed;
+        public int      m_iWeaponType;
+        public int      m_iPhysical;
+        public int      m_iDamageReduction;
     }
 
     public Dictionary<int, Info> m_Dictionary = new Dictionary<int, Info>();
@@ -58,8 +58,8 @@ public class Table_Item_Weapon : Table_Base
         _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_sName);
         _reader.get(_nRow, ref _info.m_iWeaponType);
-        _reader.get(_nRow, ref _info.m_fDamage);
-        _reader.get(_nRow, ref _info.m_fAttackSpeed);
+        _reader.get(_nRow, ref _info.m_iPhysical);
+        _reader.get(_nRow, ref _info.m_iDamageReduction);
 
         return true;
     }

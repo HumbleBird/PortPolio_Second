@@ -1,19 +1,2 @@
 Idx,Name,Dmg,Speed,CoolTime,Range,NextNum,AnimName
 아이디,기술 이름,공격력,공격 속도,후딜,사정거리,다음 연속기 번호,애니메이션 이름
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,Attack
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,,,0,,,
-,,5,1,0,,,Blow Skeleton Attack 1
-,,7,0.8,0,,,Blow Skeleton Attack 2
-,,,,,,,Skeleton Shiled
