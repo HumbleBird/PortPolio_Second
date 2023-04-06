@@ -35,22 +35,12 @@ public class UI_InvenMain : UI_Base
             Items.Add(item);
         }
 
-        b = true;
-
         return true;
     }
-
-    bool b = false;
 
     public override void RefreshUI()
     {
         base.RefreshUI();
-
-        //if(!b)
-        //{
-        //    Managers.UIBattle.ShowAndCloseUI<UI_Inven>();
-        //    Managers.UIBattle.ShowAndCloseUI<UI_Inven>();
-        //}
 
         // 아이템 창 아이템
         List<Item> items = Managers.Inventory.m_Items;

@@ -58,15 +58,15 @@ public abstract  partial class Character : Base
         m_bCanAttack = false;
 
         // 애니메이션 실행
-        PlayAnimation(m_cAttack.m_AttackInfo.m_sAnimName);
+        PlayAnimation(m_cAttack.m_AttackInfo.m_sName);
 
         // 사운드
-        SoundPlay(m_cAttack.m_AttackInfo.m_sAnimName);
+        SoundPlay(m_cAttack.m_AttackInfo.m_sName);
 
         // 공격 데미지 더해주기
         // 공격 콤보를 가할수록 공격 데미지가 더해진다.
         m_Stat.m_iAtk = m_Stat.m_fOriginalAtk;
-        m_Stat.m_iAtk += m_cAttack.m_AttackInfo.m_iDmg;
+        //m_Stat.m_iAtk += m_cAttack.m_AttackInfo.m_iDmg;
 
         // 어택 이벤트 추가
         Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;

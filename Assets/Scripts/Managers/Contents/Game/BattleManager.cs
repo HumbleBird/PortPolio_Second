@@ -249,8 +249,18 @@ public class BattleManager
             return;
 
         player.EquipItem(equipItem);
+        Managers.UIBattle.RefreshUI<UI_Inven>();
         Managers.UIBattle.RefreshUI<UI_Equipment>();
+    }
 
+    public void UnEquipItem(Player player, Item equipItem)
+    {
+        if (player == null)
+            return;
+
+        player.UnEquipItem(equipItem);
+        Managers.UIBattle.RefreshUI<UI_Inven>();
+        Managers.UIBattle.RefreshUI<UI_Equipment>();
     }
 
     // 소모품 아이템

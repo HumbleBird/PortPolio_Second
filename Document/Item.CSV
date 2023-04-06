@@ -1,13 +1,13 @@
 Idx,Name,ItemType,Icon,#Prefab,#Dec,,,,,,,
 아이디,이름,타입,아이콘,프리팹,설명,,,종류,경로,번호,,
-1,Dagger,1,Art/Textures/UI/Item/Weapon/Dagger,,가장 기본적인 론델검,,,무기,Art/Textures/UI/Item/Weapon/,1,,무기 경로
-2,Parrying Dagger,1,Art/Textures/UI/Item/Weapon/Parrying Dagger,,,,,아머,Art/Textures/UI/Item/Armor/,2,,아이템 경로
-3,Rotten Ghru Dagger,1,Art/Textures/UI/Item/Weapon/Rotten Ghru Dagger,,,,,소비,Art/Textures/UI/Item/Consumable/,3,,소비템 경로
-4,Shortsword,1,Art/Textures/UI/Item/Weapon/Shortsword,Item/Weapon/Katana,동양의 오래된 검,,,,,,,
-5,Broadsword,1,Art/Textures/UI/Item/Weapon/Broadsword,Item/Weapon/Broadsword,날카롭다,,,,,,,
-6,Broken Straight Sword,1,Art/Textures/UI/Item/Weapon/Broken Straight Sword,,,,,,,,,
-101,Catarina Helm,2,Art/Textures/UI/Item/Armor/Catarina Helm,Item/Shield/Crude Shield,낡은 방패,,,,,,,
-102,Catarina Armor,2,Art/Textures/UI/Item/Armor/Catarina Armor,,,,,,,,,
-103,Catarina Gauntlets,2,Art/Textures/UI/Item/Armor/Catarina Gauntlets,,,,,,,,,
-104,Catarina Leggings,2,Art/Textures/UI/Item/Armor/Catarina Leggings,,,,,,,,,
-201,Estus Flask,3,Art/Textures/UI/Item/Consumable/Estus Flask,,,,,,,,,
+1,Dagger,1,Art/Textures/UI/Item/Dagger,,가장 기본적인 론델검,,,무기,Art/Textures/UI/Item/,1,,무기 경로
+2,Parrying Dagger,1,Art/Textures/UI/Item/Parrying Dagger,,,,,아머,Art/Textures/UI/Item/,2,,아이템 경로
+3,Rotten Ghru Dagger,1,Art/Textures/UI/Item/Rotten Ghru Dagger,,,,,소비,Art/Textures/UI/Item/,3,,소비템 경로
+4,Shortsword,1,Art/Textures/UI/Item/Shortsword,Item/Weapon/Katana,동양의 오래된 검,,,,,,,
+5,Broadsword,1,Art/Textures/UI/Item/Broadsword,Item/Weapon/Broadsword,날카롭다,,,,,,,
+6,Broken Straight Sword,1,Art/Textures/UI/Item/Broken Straight Sword,,,,,,,,,
+101,Catarina Helm,2,Art/Textures/UI/Item/Catarina Helm,Item/Shield/Crude Shield,낡은 방패,,,,,,,
+102,Catarina Armor,2,Art/Textures/UI/Item/Catarina Armor,,,,,,,,,
+103,Catarina Gauntlets,2,Art/Textures/UI/Item/Catarina Gauntlets,,,,,,,,,
+104,Catarina Leggings,2,Art/Textures/UI/Item/Catarina Leggings,,,,,,,,,
+201,Estus Flask,3,Art/Textures/UI/Item/Estus Flask,,,,,,,,,

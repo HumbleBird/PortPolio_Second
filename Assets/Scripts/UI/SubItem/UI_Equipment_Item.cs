@@ -26,6 +26,8 @@ public class UI_Equipment_Item : UI_Base
 
     public int m_iSlot;
 
+    Dictionary<string, Sprite> m_dicSprite = new Dictionary<string, Sprite>();
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -48,6 +50,12 @@ public class UI_Equipment_Item : UI_Base
             pop.equipmentNameText.text = m_sName;
         });
 
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Art/Textures/UI/Item/Weapons");
+        foreach (var sprite in sprites)
+        {
+            m_dicSprite.Add(sprite.name, sprite);
+        }
+
         return true;
     }
 
@@ -57,7 +65,7 @@ public class UI_Equipment_Item : UI_Base
         m_iItemCount.text = item.Count.ToString();
         m_itemIcon.enabled = true;
         m_sName = item.Name;
-        m_itemIcon.sprite = Managers.Resource.Load<Sprite>(item.iconPath);
+        m_itemIcon.sprite = m_dicSprite[item.Name];
         item.EquipmentSlot = m_iSlot;
 
         m_bEquipped = true;

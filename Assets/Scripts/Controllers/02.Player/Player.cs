@@ -34,13 +34,9 @@ public partial class Player : Character
 
         WeaponInit();
 
-        Weapon weapon1 = Item.MakeItem(4) as Weapon;
-        Weapon weapon2 = Item.MakeItem(5) as Weapon;
-        LoadWeaponOnSlot(weapon1, true);
-        LoadWeaponOnSlot(weapon2, false);
+        Weapon weapon1 = Item.MakeItem(5) as Weapon;
+        Managers.Battle.RewardPlayer(this, weapon1);
     }
-
-
 
     protected override void Update()
     {
@@ -100,8 +96,8 @@ public partial class Player : Character
         if (m_AttackCheckWatch.Elapsed.Seconds == 0)
         {
             m_AttackCheckWatch.Start();
-            m_fMiddleAttackTime = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName, 0.6f);
-            m_fEndAttackTime = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
+            m_fMiddleAttackTime = GetAnimationTime(m_cAttack.m_AttackInfo.m_sName, 0.6f);
+            m_fEndAttackTime = GetAnimationTime(m_cAttack.m_AttackInfo.m_sName);
         }
         else
         {
@@ -159,6 +155,7 @@ public partial class Player : Character
         // 아이템 해제
         if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
         {
+            // TODO Item Switch
             Debug.Log("장비 창의 빈 칸이 없습니다. 장비 창의 아이템을 비워주세요.");
             return;
         }
@@ -166,45 +163,30 @@ public partial class Player : Character
         {
             item.m_bEquipped = equipItem.m_bEquipped;
 
+            if(item.eItemType == ItemType.Weapon)
+            {
+                LoadWeaponOnSlot((Weapon)item, false);
+            }
             // 아이템 소켓에 아이템 장착
 
-            Managers.UIBattle.RefreshUI<UI_Inven>();
         }
 
 
         RefreshAdditionalStat();
     }
 
-    public void UnEquipItem(Item equipItem)
+    public void UnEquipItem(Item unEquipItem)
     {
-        Item item = null;
-        // 장착 해제
-        if (equipItem.m_bEquipped)
-        {
-            Item unequipItem = null;
+        if (unEquipItem == null)
+            return;
 
-            if (item.eItemType == ItemType.Weapon)
-            {
-                unequipItem = Managers.Inventory.Find(i =>
-                i.m_bEquipped && i.eItemType == ItemType.Weapon);
-            }
-            else if (item.eItemType == ItemType.Armor)
-            {
-                ArmorType armorType = ((Armor)item).eArmorType;
+        // 해제하려는 아이템 인벤토리에서 리프레쉬
+        Item item = Managers.Inventory.Find(i =>
+                      i.m_bEquipped && i.InventorySlot == unEquipItem.InventorySlot &&
+                      i.eItemType == unEquipItem.eItemType);
 
-                unequipItem = Managers.Inventory.Find(i =>
-                      i.m_bEquipped && i.eItemType == ItemType.Armor
-                         && ((Armor)i).eArmorType == armorType);
-            }
-
-            if (unequipItem != null)
-            {
-                unequipItem.m_bEquipped = false;
-
-                Managers.UIBattle.RefreshUI<UI_Inven>();
-
-            }
-        }
+        item.m_bEquipped = false;
+        UnLoadWeaponOnSlot(false);
     }
 
     // 소모품 아이템

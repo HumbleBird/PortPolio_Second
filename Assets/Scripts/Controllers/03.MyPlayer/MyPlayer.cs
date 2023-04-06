@@ -18,9 +18,13 @@ public partial class MyPlayer : Player
 
 	Dictionary<KeyCode, Action> OptionKeyDic; // ´Ü¹ß¼º
 
+    private void Awake()
+    {
+		Managers.Object.myPlayer = this;
+	}
+
 	protected override void Init()
 	{
-		Managers.Object.myPlayer = this;
 
 		base.Init();
 

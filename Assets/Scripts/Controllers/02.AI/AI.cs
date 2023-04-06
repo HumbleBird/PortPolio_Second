@@ -81,7 +81,7 @@ public partial class AI : Character
 
     protected override IEnumerator CoAttackCheck()
     {
-        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sAnimName);
+        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sName);
 
         yield return new WaitForSeconds(time);
 

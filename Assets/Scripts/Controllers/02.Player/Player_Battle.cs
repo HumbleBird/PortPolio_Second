@@ -48,6 +48,19 @@ public partial class Player : Character
             m_RightHandSlot.LoadWeaponModel(weaponItem);
 
         }
+    }    
+    
+    public void UnLoadWeaponOnSlot(bool isLeft)
+    {
+        if(isLeft)
+        {
+            m_leftHandSlot.UnloadWeapon();
+        }
+        else
+        {
+            m_RightHandSlot.UnloadWeapon();
+
+        }
     }
 
     #endregion

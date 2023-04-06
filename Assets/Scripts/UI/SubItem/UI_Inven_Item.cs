@@ -31,6 +31,8 @@ public class UI_Inven_Item : UI_Base
     public int m_iCount { get; private set; }
     public bool m_bEquipped { get; private set; }
 
+    Dictionary<string, Sprite> m_dicSprite = new Dictionary<string, Sprite>();
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -48,6 +50,15 @@ public class UI_Inven_Item : UI_Base
         m_iItemPrice.enabled = false;
         itemIcon.enabled     = false;
         itemUseIcon.enabled  = false;
+
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Art/Textures/UI/Item/Weapons");
+        foreach (var sprite in sprites)
+        {
+            m_dicSprite.Add(sprite.name, sprite);
+        }
+
+        itemIcon.gameObject.BindEvent(() => { SetPurposeofUse(); });
+
 
         return true;
     }
@@ -90,22 +101,17 @@ public class UI_Inven_Item : UI_Base
             m_bEquipped = item.m_bEquipped;
             m_iItemPrice.text = item.m_iPrice.ToString();
 
-            Table_Item.Info itemData = null;
-            itemData = Managers.Table.m_Item.Get(m_iItemID);
-
-            itemIcon.sprite = Managers.Resource.Load<Sprite>(itemData.m_sIconPath);
+            itemIcon.sprite = m_dicSprite[item.Name];
             itemIcon.enabled = true;
 
-            //if (item.eItemType == ItemType.Consumable)
-            //{
-            //    itemCount.text = m_iCount.ToString();
-            //    itemCount.gameObject.SetActive(true);
-            //}
+            if (item.eItemType == ItemType.Consumable)
+            {
+                itemCount.text = m_iCount.ToString();
+                itemCount.gameObject.SetActive(true);
+            }
 
             itemUseIcon.enabled = m_bEquipped;
         }
-
-        SetPurposeofUse();
     }
 
     public void SetPurposeofUse()
@@ -116,37 +122,37 @@ public class UI_Inven_Item : UI_Base
 
         newitem.eItemType = (ItemType)Managers.Table.m_Item.Get(newitem.Id).m_iItemType;
 
-        itemIcon.gameObject.BindEvent(() =>
+        // 인벤토리에서 창을 클릭하면 아이템을 착용
+        if (eOpenWhat == OpenWhat.Inventory)
         {
-            // 인벤토리에서 창을 클릭하면 아이템을 착용
-            if (eOpenWhat == OpenWhat.Inventory)
+            newitem.m_bEquipped = !m_bEquipped;
+            if(newitem.m_bEquipped == true)
             {
-                newitem.m_bEquipped = !m_bEquipped;
                 Managers.Battle.EquipItem(Managers.Object.myPlayer, newitem);
             }
-            // 상점 창에서 아이템을 클릭하면 사기
-            else if (eOpenWhat == OpenWhat.Shop)
+            else
             {
-                UI_UseQuestions popup = Managers.UI.ShowPopupUI<UI_UseQuestions>();
-                popup.SetQeustion($"Do you Buy Item? \n {newitem.Name} \n Price {m_iItemPrice.text}");
-                // 버튼 누름
-                //Coroutine co = StartCoroutine(InputButton());
+                Managers.Battle.UnEquipItem(Managers.Object.myPlayer, newitem);
 
-                // 클릭
-                popup.m_sYesText.gameObject.BindEvent(() => 
-                {
-                    // 나중에 수량 추가 가능하게
-                    Managers.Battle.Buytem(Managers.Object.myPlayer, newitem, 1);
-                    //StopCoroutine(co);
-                });
-
-                popup.m_sNoText.gameObject.BindEvent(() => 
-                { 
-                    Managers.UI.ClosePopupUI(); 
-                    //StopCoroutine(co);
-                });
             }
-        });
+        }
+        // 상점 창에서 아이템을 클릭하면 사기
+        else if (eOpenWhat == OpenWhat.Shop)
+        {
+            UI_UseQuestions popup = Managers.UI.ShowPopupUI<UI_UseQuestions>();
+            popup.SetQeustion($"Do you Buy Item? \n {newitem.Name} \n Price {m_iItemPrice.text}");
+
+            // 클릭
+            popup.m_sYesText.gameObject.BindEvent(() => 
+            {
+                Managers.Battle.Buytem(Managers.Object.myPlayer, newitem, 1);
+            });
+
+            popup.m_sNoText.gameObject.BindEvent(() => 
+            { 
+                Managers.UI.ClosePopupUI(); 
+            });
+        }
     }
 
     //IEnumerator InputButton()

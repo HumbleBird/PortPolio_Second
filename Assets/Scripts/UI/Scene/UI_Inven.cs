@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class UI_Inven : UI_Base
 {
-
     public UI_InvenMain UIInvenMain { get; private set; }
     public UI_ItemDes UIItemDes { get; private set; }
     public UI_PlayerData UIPlayerData { get; private set; }
@@ -22,10 +21,13 @@ public class UI_Inven : UI_Base
         UIItemDes = GetComponentInChildren<UI_ItemDes>();
         UIPlayerData = GetComponentInChildren<UI_PlayerData>();
         UIBGGameInfo = GetComponentInChildren<UI_BGGameInfo>();
-
-        gameObject.SetActive(false);
-
+        
         return true;
+    }
+
+    private void Start()
+    {
+        gameObject.SetActive(false);
     }
 
     public override void RefreshUI()

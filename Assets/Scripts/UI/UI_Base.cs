@@ -92,7 +92,5 @@ public abstract class UI_Base : MonoBehaviour
     {
 		if (_init == false)
 			return;
-
-
 	}
 }

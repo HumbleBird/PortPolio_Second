@@ -8,12 +8,7 @@ public class Table_Attack : Table_Base
     {
         public int      m_nID;
         public string   m_sName;
-        public int      m_iDmg;
-        public float    m_fSpeed;
-        public float    m_fCoolTime;
-        public float    m_fAttackRange;
         public int      m_iNextNum;
-        public string   m_sAnimName;
     }
 
     public Dictionary<int, Info> m_Dictionary = new Dictionary<int, Info>();
@@ -60,12 +55,7 @@ public class Table_Attack : Table_Base
 
         _reader.get(_nRow, ref _info.m_nID);
         _reader.get(_nRow, ref _info.m_sName);
-        _reader.get(_nRow, ref _info.m_iDmg);
-        _reader.get(_nRow, ref _info.m_fSpeed);
-        _reader.get(_nRow, ref _info.m_fCoolTime);
-        _reader.get(_nRow, ref _info.m_fAttackRange);
         _reader.get(_nRow, ref _info.m_iNextNum);
-        _reader.get(_nRow, ref _info.m_sAnimName);
 
         return true;
     }

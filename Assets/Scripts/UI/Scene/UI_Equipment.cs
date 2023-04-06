@@ -122,40 +122,12 @@ public class UI_Equipment : UI_Base
             {
                 // 이 아이템이 등록 된 칸을 찾아서 아이템 해제하기
                 if (item.eItemType == ItemType.Weapon)
-                {
-                    foreach (UI_Equipment_Item itemInGrid in WeaponGrid)
-                    {
-                        if(itemInGrid.m_iSlot == item.EquipmentSlot)
-                        {
-                            itemInGrid.UnEquipItem();
-                            item.EquipmentSlot = -1;
-                        }
-                    }
-                }
-
+                    ItemInGridUnEquipItem(WeaponGrid, item);
                 else if (item.eItemType == ItemType.Armor)
-                {
-                    foreach (UI_Equipment_Item itemInGrid in ArmorGrid)
-                    {
-                        if (itemInGrid.m_iSlot == item.EquipmentSlot)
-                        {
-                            itemInGrid.UnEquipItem();
-                            item.EquipmentSlot = -1;
-                        }
-                    }
-                }
-
+                    ItemInGridUnEquipItem(ArmorGrid, item);
                 else if (item.eItemType == ItemType.Consumable)
-                {
-                    foreach (UI_Equipment_Item itemInGrid in ItemGrid)
-                    {
-                        if (itemInGrid.m_iSlot == item.EquipmentSlot)
-                        {
-                            itemInGrid.UnEquipItem();
-                            item.EquipmentSlot = -1;
-                        }
-                    }
-                }
+                    ItemInGridUnEquipItem(ItemGrid, item);
+
                 continue;
             }
 
@@ -214,9 +186,18 @@ public class UI_Equipment : UI_Base
                 }
             }
         }
+    }
 
-        //Managers.UIBattle.RefreshUI(Managers.UIBattle.UIGameScene.UIPlayerInfo);
-
+    void ItemInGridUnEquipItem(List<UI_Equipment_Item> Grid, Item item)
+    {
+        foreach (UI_Equipment_Item itemInGrid in Grid)
+        {
+            if (itemInGrid.m_iSlot == item.EquipmentSlot)
+            {
+                itemInGrid.UnEquipItem();
+                item.EquipmentSlot = -1;
+            }
+        }
     }
 
     private void ItemAllReset()
