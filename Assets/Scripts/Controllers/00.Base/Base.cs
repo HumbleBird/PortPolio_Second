@@ -12,7 +12,6 @@ public class Base : MonoBehaviour
 
     public int ID;
     public ObjectType eObjectType  = ObjectType.None;
-    public Transform Pos { get; set; } = null;
 
     private void Start()
     {
@@ -27,8 +26,6 @@ public class Base : MonoBehaviour
 
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
-        if(Pos != null)
-            transform.position = Pos.position;
     }
 
     public virtual Base GetOwner()

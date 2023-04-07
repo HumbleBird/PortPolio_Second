@@ -7680,6 +7680,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1586792192}
     m_Modifications:
+    - target: {fileID: 1903702304, guid: 662ceb14416b24744b85224a3c34de2a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903702304, guid: 662ceb14416b24744b85224a3c34de2a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.64401037
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903702304, guid: 662ceb14416b24744b85224a3c34de2a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.07140371
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903702304, guid: 662ceb14416b24744b85224a3c34de2a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.76166457
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903702304, guid: 662ceb14416b24744b85224a3c34de2a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.004381315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903702304, guid: 662ceb14416b24744b85224a3c34de2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 99.851
+      objectReference: {fileID: 0}
     - target: {fileID: 2884534262088372735, guid: 662ceb14416b24744b85224a3c34de2a,
         type: 3}
       propertyPath: m_Avatar

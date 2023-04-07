@@ -11,7 +11,6 @@ public partial class Character : Base
     public ActionState eActionState = ActionState.None;
     public MoveState eMoveState = MoveState.None;
     private CreatureState state = CreatureState.Idle;
-    protected CharacterClass eCharacterClass = CharacterClass.None;
     public virtual CreatureState eState
     {
         get { return state; }
@@ -31,14 +30,11 @@ public partial class Character : Base
     public Stat m_Stat { get; set; } = new Stat();
     protected AudioSource m_AudioSource { get; private set; }
 
-    [HideInInspector] 
-    public bool m_bWaiting = false;
+    protected bool m_bWaiting = false;
 
     protected Dictionary<string, AnimationClip> m_DicAniactionclip = new Dictionary<string, AnimationClip>();
 
     public Transform m_LockOnTransform;
-
-
     #endregion
 
     protected override void Init()
@@ -53,7 +49,6 @@ public partial class Character : Base
     protected virtual void Update()
     {
         UpdateController();
-
     }
 
     #region SetInfo
@@ -62,45 +57,6 @@ public partial class Character : Base
         Managers.Object.Add(ID, gameObject);
         m_Stat.m_tStatInfo = Managers.Table.m_Stat.Get(ID);
         m_Stat.Init();
-
-        if(eObjectType == ObjectType.Player)
-        {
-            Table_Player.Info info = Managers.Table.m_Player.Get(ID);
-
-            if (info == null)
-            {
-                Debug.LogError("해당하는 Id의 플레이어가 없습니다.");
-                return;
-            }
-
-            ChangeClass(info.m_iClass);
-            gameObject.layer = (int)Layer.Player;
-        }
-        else if (eObjectType == ObjectType.Monster)
-        {
-            Table_Monster.Info info = Managers.Table.m_Monster.Get(ID);
-            if (info == null)
-            {
-                Debug.LogError("해당하는 Id의 몬스터가 없습니다.");
-                return;
-            }
-
-            ChangeClass(info.m_iClass);
-            gameObject.layer = (int)Layer.Monster;
-        }
-        else if (eObjectType == ObjectType.Boss)
-        {
-            Table_Boss.Info info = Managers.Table.m_Boss.Get(ID);
-
-            if (info == null)
-            {
-                Debug.LogError("해당하는 Id의 보스가 없습니다.");
-                return;
-            }
-
-            ChangeClass(info.m_iClass);
-            gameObject.layer = (int)Layer.Monster;
-        }
     }
 
     void SetAnimation()
@@ -115,7 +71,6 @@ public partial class Character : Base
 
     private void SetAudio()
     {
-        // Audio
         m_AudioSource = Util.GetOrAddComponent<AudioSource>(gameObject);
         m_AudioSource.spatialBlend = 1;
         m_AudioSource.rolloffMode = AudioRolloffMode.Linear;
@@ -178,7 +133,12 @@ public partial class Character : Base
         m_bWaiting = false;
     }
 
-    public virtual void OnDead(GameObject Attacker)
+    public virtual void OnDead()
+    {
+        eState = Define.CreatureState.Dead;
+    }
+
+    public virtual void OnDead(GameObject attacker)
     {
         eState = Define.CreatureState.Dead;
     }

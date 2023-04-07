@@ -68,9 +68,31 @@ public class Define
 
     public enum WeaponType
     {
-        None = 0,
-        Sword = 1,
-        Bow = 2,
+        Daggers = 1,
+        StraightSwordsGreatswords = 2,
+        Greatswords,
+        UltraGreatswords,
+        CurvedSword,
+        Katanas,
+        CurvedGreatswords,
+        PiercingSwords,
+        Axes,
+        Greataxes,
+        Hammers,
+        GreatHammers,
+        FistAndClaws,
+        SpearsAndPikes,
+        Halberds,
+        Reapers,
+        Whips,
+        Bows,
+        Greatbows,
+        Crossbows,
+        Staves,
+        Flames,
+        Talismans,
+        SacredChimes,
+        Shield = 25
     }
 
     public enum ItemType

@@ -25,7 +25,6 @@ public partial class MyPlayer : Player
 
 	protected override void Init()
 	{
-
 		base.Init();
 
 		OptionKeyDic = new Dictionary<KeyCode, Action>
@@ -97,22 +96,19 @@ public partial class MyPlayer : Player
 		//GetInputAttack
 		if (m_bCanAttack == true && m_Stat.m_fStemina != 0)
 		{
-			// ±Ÿ¡¢
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
 			{
-				AttackEvent(1);
+				m_cAttack.NormalAction();
+			}
+			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.SpecialAction]))
+			{
+				m_cAttack.SpecialAction();
 			}
 		}
 
 		//GetKeyAction
 		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Roll]))
 			Roll();
-
-		// Attack And Special Action
-		if (Input.GetMouseButton(1))
-			StartCoroutine(m_cAttack.SpeacialAction());
-		else if (Input.GetMouseButtonUp(1))
-			StartCoroutine(m_cAttack.SpeacialActionEnd());
 	}
 
 	void InputHandler()
@@ -151,19 +147,38 @@ public partial class MyPlayer : Player
 		}
 	}
 
-	protected override void SetHp(int NewHp, GameObject attacker)
+	protected override void SetHp(int NewHp)
 	{
-		base.SetHp(NewHp, attacker);
+		base.SetHp(NewHp);
 
 		Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshUI();
 		StartCoroutine(Managers.UIBattle.UIGameScene.UIPlayerInfo.DownHP());
-	}
+    }
 
-	protected override void SetStemina(float NewSetStamina)
+    protected override void SetStemina(float NewSetStamina)
+    {
+        base.SetStemina(NewSetStamina);
+
+        Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshUI();
+    }
+
+	public void PlayerCanMove(bool can = true)
 	{
-		base.SetStemina(NewSetStamina);
+		if (can)
+		{
+			m_bWaiting = false;
 
-		Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshUI();
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+		}
+		else
+		{
+			m_bWaiting = true;
+			eState = CreatureState.Idle;
+
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+		}
 	}
 }
 

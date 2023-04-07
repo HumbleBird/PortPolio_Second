@@ -27,8 +27,6 @@ public abstract class Attack
         m_cGo = cha;
     }
 
-    public abstract void NormalAttack();
-    public abstract IEnumerator SpeacialAction();
-    public abstract IEnumerator SpeacialActionEnd();
-
+    public abstract void NormalAction();
+    public abstract void SpecialAction();
 }

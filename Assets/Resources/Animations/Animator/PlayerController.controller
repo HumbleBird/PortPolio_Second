@@ -62,39 +62,36 @@ AnimatorStateMachine:
   m_Name: Attack Combo
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -4482430936528443021}
-    m_Position: {x: 200, y: -80, z: 0}
+    m_State: {fileID: -1328487995218425640}
+    m_Position: {x: 370, y: -100, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -3519318446238052544}
-    m_Position: {x: 440, y: -80, z: 0}
+    m_State: {fileID: -1046839558450401155}
+    m_Position: {x: 370, y: -160, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -4721400486215451370}
-    m_Position: {x: 660, y: -80, z: 0}
+    m_State: {fileID: 4543658329652139503}
+    m_Position: {x: 580, y: -160, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -8258889842777498941}
-    m_Position: {x: 200, y: 120, z: 0}
+    m_State: {fileID: 7658826938713008938}
+    m_Position: {x: 370, y: 110, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 7495919027613869789}
-    m_Position: {x: 670, y: 20, z: 0}
+    m_State: {fileID: 302054445708710088}
+    m_Position: {x: 580, y: 110, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -771159688137847516}
-    m_Position: {x: 440, y: 20, z: 0}
+    m_State: {fileID: -8283162288002374368}
+    m_Position: {x: 370, y: 50, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -1978136783144179995}
-    m_Position: {x: 200, y: 20, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 5137881673802474494}
-    m_Position: {x: 440, y: 120, z: 0}
+    m_State: {fileID: 4148453813065504515}
+    m_Position: {x: 580, y: 50, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -70, y: -400, z: 0}
-  m_EntryPosition: {x: 300, y: -190, z: 0}
+  m_EntryPosition: {x: 80, y: -160, z: 0}
   m_ExitPosition: {x: 490, y: -300, z: 0}
   m_ParentStateMachinePosition: {x: -100, y: -70, z: 0}
-  m_DefaultState: {fileID: -4482430936528443021}
+  m_DefaultState: {fileID: -1328487995218425640}
 --- !u!1107 &-8850491808077693643
 AnimatorStateMachine:
   serializedVersion: 6
@@ -240,14 +237,14 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 710, y: 40, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -9092608021414934033}
---- !u!1102 &-8258889842777498941
+--- !u!1102 &-8283162288002374368
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sword and shield Jump Smesh Down
+  m_Name: Straight Swords Light Attack 1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -260,7 +257,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 6d0335ad9ee7d9b42aa02b255aea59ed,
+  m_Motion: {fileID: -203655887218126122, guid: d1eff9e02a9b55b469f08c7dbe60387d,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -531,33 +528,6 @@ BlendTree:
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
---- !u!1102 &-4721400486215451370
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: sword and shield slash3
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 8e7f7aa935f549f4b972fc74ffb89fa6,
-    type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!206 &-4540380495943343632
 BlendTree:
   m_ObjectHideFlags: 1
@@ -617,33 +587,6 @@ BlendTree:
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
---- !u!1102 &-4482430936528443021
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: sword and shield slash1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: d1eff9e02a9b55b469f08c7dbe60387d,
-    type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &-4337066494179904964
 AnimatorState:
   serializedVersion: 6
@@ -785,33 +728,6 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
---- !u!1102 &-3519318446238052544
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: sword and shield slash2
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 827b2ba06ec12294cac4a7a46045db20,
-    type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &-3025784655519358115
 AnimatorState:
   serializedVersion: 6
@@ -833,33 +749,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: 39f51d486ca0b884f846183e7a1fd313,
-    type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-1978136783144179995
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: sword and shield Spin Slash
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: ddee9b1a4a9ef164390ad12eac0e0fde,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -916,14 +805,14 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 7370855740442110044}
---- !u!1102 &-771159688137847516
+--- !u!1102 &-1328487995218425640
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sword and shield Spin Slash 2 Hand
+  m_Name: Small Weapon Heavy Attack 1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -936,7 +825,34 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: f4e434746e30b1d4cbcf73d9d33284a5,
+  m_Motion: {fileID: -203655887218126122, guid: c015a1bd8dccbc54faa11d25133e7175,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-1046839558450401155
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Small Weapon Light Attack 1
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -203655887218126122, guid: cf1c8fd5d1f385c4a86ab422da7b2f17,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -1134,6 +1050,33 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: c33cc7939e2a1304e9f88e4919e6cf58,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &302054445708710088
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Straight Swords Heavy Attack 2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -203655887218126122, guid: f4e434746e30b1d4cbcf73d9d33284a5,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -1448,6 +1391,33 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &4148453813065504515
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Straight Swords Light Attack 2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -203655887218126122, guid: 827b2ba06ec12294cac4a7a46045db20,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &4312089421669594250
 AnimatorState:
   serializedVersion: 6
@@ -1527,14 +1497,14 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 8073234679999054999}
---- !u!1102 &5137881673802474494
+--- !u!1102 &4543658329652139503
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sword and shield Light Head Hit
+  m_Name: Small Weapon Light Attack 2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1547,7 +1517,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 6d9205f8a787c0d4489caa1b0e6065b3,
+  m_Motion: {fileID: -203655887218126122, guid: e2b226678cae22a4996621c1d7637c3f,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -1770,14 +1740,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &7495919027613869789
+--- !u!1102 &7658826938713008938
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Standing Melee Attack Backhand (2)
+  m_Name: Straight Swords Heavy Attack 1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1790,7 +1760,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 6d13b3addd7d70a47a7cecb287ff61d1,
+  m_Motion: {fileID: -203655887218126122, guid: ddee9b1a4a9ef164390ad12eac0e0fde,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

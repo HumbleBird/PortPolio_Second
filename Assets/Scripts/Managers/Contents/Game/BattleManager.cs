@@ -350,20 +350,7 @@ public class BattleManager
 
     public void PlayerCanMove(bool can = true)
     {
-        if(can)
-        {
-            Managers.Object.myPlayer.m_bWaiting = false;
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
-        {
-            Managers.Object.myPlayer.m_bWaiting = true;
-            Managers.Object.myPlayer.eState = Define.CreatureState.Idle;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        Managers.Object.myPlayer.PlayerCanMove(can);
     }
 
     #endregion

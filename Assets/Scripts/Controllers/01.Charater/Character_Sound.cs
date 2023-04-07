@@ -6,6 +6,10 @@ using static Define;
 
 public partial class Character : Base
 {
+    // 캐릭터가 가지는 효과음
+    // Idle, Dead의 경우 해당 객체 이름 + 상태
+    // Skill과 Move의 경우 Skill Attack Name과 Move는 걸을때마다 애니메이션 이벤트로 틀어주기
+
     public virtual void UpdateSound()
     {
         if (eState == CreatureState.Skill || eState == CreatureState.Move)

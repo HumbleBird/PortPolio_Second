@@ -6,13 +6,13 @@ using static Define;
 
 public partial class Character : Base
 {
-    protected virtual void SetHp(int NewHp, GameObject attacker)
+    protected virtual void SetHp(int NewHp)
     {
         m_Stat.m_iHp = NewHp;
         if (m_Stat.m_iHp < 0)
         {
             m_Stat.m_iHp = 0;
-            OnDead(attacker);
+            OnDead();
         }
     }
 

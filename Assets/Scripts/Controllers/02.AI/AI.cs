@@ -9,6 +9,8 @@ public partial class AI : Character
 {
     protected UI_HpBar UIBar;
 
+    protected CharacterClass eCharacterClass = CharacterClass.None;
+
     protected override void Init()
     {
         base.Init();
@@ -20,6 +22,7 @@ public partial class AI : Character
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = m_Stat.m_fMoveSpeed;             //  Set the navemesh speed with the normal speed of the enemy
 
+        // 플레이어와의 공격 최소 거리
         if (eCharacterClass == CharacterClass.Knight || eCharacterClass == CharacterClass.Warior)
         {
             navMeshAgent.stoppingDistance = 1.3f;
@@ -27,7 +30,6 @@ public partial class AI : Character
         else if (eCharacterClass == CharacterClass.Archer || eCharacterClass == CharacterClass.Wizard)
         {
             navMeshAgent.stoppingDistance = 10f;
-
         }
 
         AIMoveInit();
@@ -69,23 +71,5 @@ public partial class AI : Character
             Patroling();
     }
 
-    protected bool DistanceMeasurementAttackRange()
-    {
-        // Skill 상태에서 타겟이 뒤에 있어도 거리가 가깝다면 탐지 가능
-        float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
-        if (dis <= navMeshAgent.stoppingDistance)
-            return true;
 
-        return false;
-    }
-
-    protected override IEnumerator CoAttackCheck()
-    {
-        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sName);
-
-        yield return new WaitForSeconds(time);
-
-        AttackEnd();
-        yield break;
-    }
 }

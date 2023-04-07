@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Projectile : Base
 {
-	public Base Owner { get; set; }
+	public Base Owner { get; private set; }
 
 	public Projectile()
 	{

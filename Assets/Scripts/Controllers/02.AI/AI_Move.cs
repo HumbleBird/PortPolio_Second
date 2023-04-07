@@ -12,13 +12,13 @@ public partial class AI : Character
 
     enum AIMoveMode
     {
-        RandomMove, // 랜덤 이동
+        RandomMove,  // 일정 구역 안에서 랜덤 이동
         WayPointMove // 지정 좌표 이동
     }
 
     AIMoveMode eAIMoveMode = AIMoveMode.RandomMove;
 
-    protected NavMeshAgent navMeshAgent;                      
+    NavMeshAgent navMeshAgent;                      
     LayerMask playerMask = (1 << (int)Layer.Player);
     LayerMask obstacleMask = (1 << (int)Layer.Obstacle);
 
@@ -27,9 +27,9 @@ public partial class AI : Character
 
     bool m_playerInRange = false;                //  플레이어가 시야 각 안에 있는가?
     bool m_IsPatrol = true;                      //  순찰 중인가?
-    protected bool m_CaughtPlayer = false;                 //  if the enemy has caught the player
+    bool m_CaughtPlayer = false;                 //  if the enemy has caught the player
 
-    protected int m_iNotChasePlayerRange = 10;
+    int m_iNotChasePlayerRange = 10;
 
     // WayPoint
     float startWaitTime = 4;                 //  Wait time of every action
@@ -159,10 +159,6 @@ public partial class AI : Character
     {
         Vector3 dir = player - transform.position;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
-
-
-        // 플레이어를 바라봄
-        //transform.LookAt(player);
     }
 
     void EnviromentView()

@@ -10,43 +10,12 @@ public abstract  partial class Character : Base
     public Character m_goTarget = null;
     protected bool  m_bCanAttack = true;
 
-    public float m_iWeaponDamage;
-    public float m_iArmorDefence;
-    public virtual float m_TotalAttack { get { return m_Stat.m_iAtk +  m_iWeaponDamage; } }
-    public virtual float m_TotalDefence { get { return m_Stat.m_iDef + m_iArmorDefence; } }
 
-
-    public void ChangeClass(int ClassId)
-    {
-        eCharacterClass = (CharacterClass)ClassId;
-
-        switch (eCharacterClass)
-        {
-            case CharacterClass.None:
-                break;
-            case CharacterClass.Warior:
-                m_cAttack = new Warior();
-                break;
-            case CharacterClass.Knight:
-                m_cAttack = new Knight();
-                break;
-            case CharacterClass.Archer:
-                m_cAttack = new Archer();
-                break;
-            case CharacterClass.Wizard:
-                m_cAttack = new Wizard();
-                break;
-            default:
-                break;
-        }
-
-        m_cAttack.SetInfo(this);
-    }
+    public virtual float m_TotalAttack { get { return m_Stat.m_iAtk; } }
+    public virtual float m_TotalDefence { get { return m_Stat.m_iDef; } }
 
     protected virtual void AttackEvent(int id)
     {
-        // TODO 공격 쿨타임 체크
-
         m_cAttack.m_AttackInfo = Managers.Table.m_Attack.Get(id);
 
         if (m_cAttack.m_AttackInfo == null)
@@ -63,13 +32,8 @@ public abstract  partial class Character : Base
         // 사운드
         SoundPlay(m_cAttack.m_AttackInfo.m_sName);
 
-        // 공격 데미지 더해주기
-        // 공격 콤보를 가할수록 공격 데미지가 더해진다.
-        m_Stat.m_iAtk = m_Stat.m_fOriginalAtk;
-        //m_Stat.m_iAtk += m_cAttack.m_AttackInfo.m_iDmg;
-
-        // 어택 이벤트 추가
-        Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
+        // 어택 이벤트 추가 //Blow면 무기 트리거 키기, Range면 화살 발사
+        //Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
     }
 
     void Attack()
@@ -78,18 +42,17 @@ public abstract  partial class Character : Base
         Managers.Battle.ExecuteEventDelegateAttack();
     }
 
-    // 공격 애니메이션의 길이를 체크해서 다음 콤보 공격의 허용과 공격 끝을 알림.
-    protected abstract IEnumerator CoAttackCheck();
-
     // 피격 판정과 데미지 처리
     public virtual void HitEvent(Character attacker, float dmg, bool isAnimation = true)
     {
-        HitEventBaseOnState();
+        // 특수 동작으로 인한 데미지 처리
+        if (eActionState == ActionState.Invincible || eState == CreatureState.Dead)
+            return;
 
-        // HP 관리
-        dmg = Mathf.Max(0, dmg - m_TotalDefence);
+        // 데미지 공식 = (무기 데미지 - 적 방어력) / 피해 감소율
+        dmg = Mathf.Max(0, dmg - m_TotalDefence); 
         int NewHp = (int)(m_Stat.m_iHp - dmg);
-        SetHp(NewHp, attacker.gameObject);
+        SetHp(NewHp);
 
         // 등록된 공격 피격 효과 (슬로우, 넉백 등)
         Managers.Battle.ExecuteEventDelegateHitEffect();
@@ -103,29 +66,8 @@ public abstract  partial class Character : Base
 
                 // 히트 후 Idle로
                 float time = GetAnimationTime(m_sCurrentAnimationName);
-                Stop(time);
-                eState = CreatureState.Idle;
+                WaitToState(time, CreatureState.Idle);
             }
-        }
-    }
-
-    void HitEventBaseOnState()
-    {
-        // 특수 동작으로 인한 데미지 처리
-        if (eActionState == ActionState.Invincible || eState == CreatureState.Dead)
-            return;
-        else if (eActionState == ActionState.Shield)
-        {
-            int ShiledHitStamina = 10;
-            int shiledHitHpDef = 1;
-
-            float NewStemina = m_Stat.m_fStemina - ShiledHitStamina;
-            SetStemina(NewStemina);
-
-            // TODO
-            // 나중에 방패 버티기 만큼 감소량 증가 시키기
-
-            m_Stat.m_iDef += shiledHitHpDef;
         }
     }
 

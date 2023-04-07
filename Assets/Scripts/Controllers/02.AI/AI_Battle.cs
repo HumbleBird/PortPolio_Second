@@ -22,11 +22,11 @@ public abstract partial class AI : Character
                 yield break;
 
             float dis = Vector3.Distance(transform.position, m_goTarget.transform.position);
-            LookingPlayer(m_goTarget.transform.position);
-
+                
             // 공격 사거리 안에 들었다면 공격
             if (dis <= navMeshAgent.stoppingDistance)
             {
+                LookingPlayer(m_goTarget.transform.position);
                 SetMoveState(MoveState.None);
                 yield return StartCoroutine(AttackPattern());
             }
@@ -62,5 +62,40 @@ public abstract partial class AI : Character
         StartCoroutine(CoAttackCheck());
     }
 
+    protected IEnumerator CoAttackCheck()
+    {
+        float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sName);
 
+        yield return new WaitForSeconds(time);
+
+        AttackEnd();
+        yield break;
+    }
+
+    public void ChangeClass(int ClassId)
+    {
+        eCharacterClass = (CharacterClass)ClassId;
+
+        switch (eCharacterClass)
+        {
+            case CharacterClass.None:
+                break;
+            case CharacterClass.Warior:
+                m_cAttack = new Warior();
+                break;
+            case CharacterClass.Knight:
+                m_cAttack = new Knight();
+                break;
+            case CharacterClass.Archer:
+                m_cAttack = new Archer();
+                break;
+            case CharacterClass.Wizard:
+                m_cAttack = new Wizard();
+                break;
+            default:
+                break;
+        }
+
+        m_cAttack.SetInfo(this);
+    }
 }

@@ -16,7 +16,7 @@ public class Stat
     public float m_fStemina      { get; set; }
     public float m_fMaxStemina   { get; set; }
     public int   m_iAtk          { get; set; }
-    public int   m_fOriginalAtk  { get; set; }
+    public int   m_iOriginalAtk  { get; set; }
     public int   m_iDef          { get; set; }
     public float m_fMoveSpeed    { get; set; }
     public float m_fWalkSpeed    { get; set; } 
@@ -33,7 +33,7 @@ public class Stat
         m_fStemina = m_tStatInfo.m_fStemina;
         m_fMaxStemina = m_fStemina;
         m_iAtk = m_tStatInfo.m_iAtk;
-        m_fOriginalAtk = m_iAtk;
+        m_iOriginalAtk = m_iAtk;
         m_iDef = m_tStatInfo.m_iDef;
         m_fMoveSpeed = 0;
         m_fWalkSpeed = m_tStatInfo.m_fWalkSpeed;
