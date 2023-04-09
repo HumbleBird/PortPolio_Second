@@ -8,7 +8,7 @@ public partial class Player : Character
 {
 	protected bool m_bNextAttack = false;
 
-	protected override void AttackEvent(int id)
+    public override void AttackEvent(int id)
     {
         base.AttackEvent(id);
 
@@ -273,12 +273,18 @@ public partial class Player : Character
         switch (weaponItem.eWeaponType)
         {
             case WeaponType.Daggers:
+                m_cAttack = new Blow();
+                m_cAttack.m_eWeaponType = WeaponType.Daggers;
                 break;
             case WeaponType.StraightSwordsGreatswords:
+                m_cAttack = new Blow();
+                m_cAttack.m_eWeaponType = WeaponType.StraightSwordsGreatswords;
                 break;
             case WeaponType.Shield:
                 break;
         }
+
+        m_cAttack.m_cGo = this;
     }
 
     public void UnLoadWeaponOnSlot(bool isLeft)
@@ -300,24 +306,22 @@ public partial class Player : Character
     #endregion
 
     #region PlayerAction
-    public void Roll()
+    public void RollAndBackStep()
     {
-        string animName = "Run To Roll";
+        string animName = null;
+        if (eState == CreatureState.Idle)
+        {
+            animName = "BackStep";
+        }
+        else if (eState == CreatureState.Move)
+        {
+            animName = "Run To Roll";
+            eActionState = ActionState.Invincible;
+        }
 
         PlayAnimation(animName);
         float time = GetAnimationTime(animName);
         Stop(time * 0.8f);
-        eActionState = ActionState.Invincible;
     }
-
-    public void BackStep()
-    {
-        string animName = "BackStep";
-
-        PlayAnimation(animName);
-        float time = GetAnimationTime(animName);
-        Stop(time * 0.8f);
-    }
-
     #endregion
 }

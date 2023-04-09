@@ -54,7 +54,7 @@ public abstract partial class AI : Character
 
     protected abstract IEnumerator AttackPattern();
 
-    protected override void AttackEvent(int id)
+    public override void AttackEvent(int id)
     {
         base.AttackEvent(id);
 

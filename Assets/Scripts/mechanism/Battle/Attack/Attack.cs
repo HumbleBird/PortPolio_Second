@@ -21,6 +21,7 @@ public abstract class Attack
 {
     public Character m_cGo;
     public Table_Attack.Info m_AttackInfo;
+    public WeaponType m_eWeaponType;
 
     public void SetInfo(Character cha)
     {

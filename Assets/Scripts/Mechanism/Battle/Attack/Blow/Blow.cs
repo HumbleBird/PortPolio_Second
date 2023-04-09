@@ -24,9 +24,15 @@ public class Blow : Attack
 
     public override void NormalAction()
     {
-        // 가벼운 공격
-        // 무기 종류에 따라
-        // AttackEvent인데.. AttackName(Animaion Name)과 Next Num 밖에 없음.
+        switch (m_eWeaponType)
+        {
+            case WeaponType.Daggers:
+                m_cGo.AttackEvent(1);
+                break;
+            case WeaponType.StraightSwordsGreatswords:
+                m_cGo.AttackEvent(4);
+                break;
+        }
 
         // 일반 무기의 경우(단검, 검) - 일반 공격
         TrigerDetector td = m_cGo.GetComponentInChildren<TrigerDetector>();

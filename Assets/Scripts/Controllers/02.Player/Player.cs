@@ -25,8 +25,8 @@ public partial class Player : Character
     public override float m_TotalAttack { get { return m_fWeaponDamage; } }
     public override float m_TotalDefence { get { return m_fArmorDefence; } }
 
-    ItemSoket m_leftHandSlot;
-    ItemSoket m_RightHandSlot;
+    public ItemSoket m_leftHandSlot { get; private set; }
+    public ItemSoket m_RightHandSlot { get; private set; }
 
     #endregion
 
@@ -82,7 +82,7 @@ public partial class Player : Character
         transform.position += Time.deltaTime * m_Stat.m_fMoveSpeed * m_MovementDirection;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
 
-        if (m_MovementDirection != Vector3.zero)
+        if (m_MovementDirection == Vector3.zero)
             eState = CreatureState.Idle;
     }
 
@@ -118,10 +118,10 @@ public partial class Player : Character
                 {
                     Managers.Battle.ExecuteEventDelegateAttackEnd();
                     Managers.Battle.ClearAllEvnetDelegate();
-                    Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
+                    Managers.Battle.EventDelegateAttack += m_cAttack.NormalAction;
 
                     m_AttackCheckWatch.Reset();
-                    m_AttackCheckWatch.Start();
+                    //m_AttackCheckWatch.Start();
 
                     // 2콤보 이상부터 기존 데미지 1%씩 증가 => 2타 = 1타 데미지 * 0.01%, 3타 데미지 = 2타 데미지 * 0.01%
                     // 플레이어 한정

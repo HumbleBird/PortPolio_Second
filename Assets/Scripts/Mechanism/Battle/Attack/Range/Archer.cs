@@ -10,13 +10,5 @@ using static Define;
 // 방패 + 검
 public class Archer : Range
 {
-    public override void NormalAttack()
-    {
-    }
 
-    public override IEnumerator SpeacialAction()
-    {
-        //Aim();
-        throw new NotImplementedException();
-    }
 }

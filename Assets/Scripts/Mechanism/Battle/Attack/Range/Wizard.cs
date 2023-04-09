@@ -9,15 +9,5 @@ using static Define;
 
 public class Wizard : Range
 {
-    public override void NormalAttack()
-    {
-        // 장전되 있다면 Fire();
-        throw new NotImplementedException();
-    }
 
-    public override IEnumerator SpeacialAction()
-    {
-        // 캐스팅
-        throw new NotImplementedException();
-    }
 }

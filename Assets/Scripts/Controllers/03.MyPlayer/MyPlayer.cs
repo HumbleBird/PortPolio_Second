@@ -94,7 +94,7 @@ public partial class MyPlayer : Player
 			return;
 
 		//GetInputAttack
-		if (m_bCanAttack == true && m_Stat.m_fStemina != 0)
+		if (m_bCanAttack == true && m_Stat.m_fStemina != 0 && m_cAttack != null)
 		{
 			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
 			{
@@ -108,7 +108,7 @@ public partial class MyPlayer : Player
 
 		//GetKeyAction
 		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Roll]))
-			Roll();
+			RollAndBackStep();
 	}
 
 	void InputHandler()

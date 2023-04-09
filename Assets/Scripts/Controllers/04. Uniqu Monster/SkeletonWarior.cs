@@ -37,7 +37,7 @@ public class SkeletonWarior : Monster
 
     float SkeletonWariorAttack(int id)
     {
-        Managers.Battle.EventDelegateAttack += m_cAttack.NormalAttack;
+        Managers.Battle.EventDelegateAttack += m_cAttack.NormalAction;
         AttackEvent(id);
         float time = GetAnimationTime(m_cAttack.m_AttackInfo.m_sName);
         return time;

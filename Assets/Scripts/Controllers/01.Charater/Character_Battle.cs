@@ -14,7 +14,7 @@ public abstract  partial class Character : Base
     public virtual float m_TotalAttack { get { return m_Stat.m_iAtk; } }
     public virtual float m_TotalDefence { get { return m_Stat.m_iDef; } }
 
-    protected virtual void AttackEvent(int id)
+    public virtual void AttackEvent(int id)
     {
         m_cAttack.m_AttackInfo = Managers.Table.m_Attack.Get(id);
 

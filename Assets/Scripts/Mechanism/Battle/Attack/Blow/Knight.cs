@@ -15,7 +15,7 @@ public class Knight : Blow
     bool m_bShield = false; 
 
     // 쉴드 상태 돌입
-    public override IEnumerator SpeacialAction()
+    public  IEnumerator SpeacialAction()
     {
         if(!m_bShield)
         {
@@ -41,7 +41,7 @@ public class Knight : Blow
     }
 
     // 쉴드 종료
-    public override IEnumerator SpeacialActionEnd()
+    public  IEnumerator SpeacialActionEnd()
     {
         if(m_bShield)
         {
