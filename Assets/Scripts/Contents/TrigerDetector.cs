@@ -21,7 +21,10 @@ public class TrigerDetector : MonoBehaviour
             m_Collider = GetComponentInChildren<Collider>();
         }
 
-        m_Collider.isTrigger = false;
+        if (m_Collider != null)
+        {
+            m_Collider.isTrigger = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

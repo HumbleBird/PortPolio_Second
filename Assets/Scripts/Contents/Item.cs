@@ -26,6 +26,7 @@ public class Item
 
     public bool m_bStackable { get; protected set; }
     public bool m_bEquipped { get; set; } = false;
+    public bool m_bIsUnarmed = false;
 
         // 아이템
     public static Item MakeItem(int id)
@@ -83,6 +84,10 @@ public class Weapon : Item
             Damage = data.m_iPhysical;
             DamageReduction = data.m_iDamageReduction;
         }
+    }
+
+    public Weapon() : base(ItemType.Weapon)
+    {
     }
 }
 

@@ -15,10 +15,15 @@ public class UI_PlayerInfo : UI_Scene
         MPBar,
         STAMINABarBG,
         STAMINABar,
+
+        QuickSlotIcon,
+        SpellSlotIcon,
+        RightHandSlotIcon,
+        LeftHandSlotIcon
     }
 
-
     Player _player;
+    Dictionary<string, Sprite> m_dicSprite = new Dictionary<string, Sprite>();
 
     public override bool Init()
     {
@@ -26,6 +31,12 @@ public class UI_PlayerInfo : UI_Scene
             return false;
 
         BindImage(typeof(Images));
+
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Art/Textures/UI/Item/Weapons");
+        foreach (var sprite in sprites)
+        {
+            m_dicSprite.Add(sprite.name, sprite);
+        }
 
         return true;
     }
@@ -36,13 +47,45 @@ public class UI_PlayerInfo : UI_Scene
 
         _player = Managers.Object.myPlayer;
 
+        // HP, MP, Stemina
         Image HpBariamge = GetImage((int)Images.HPBar);
         HpBariamge.fillAmount = _player.m_Stat.m_iHp / (float)_player.m_Stat.m_iMaxHp;
         Image StaminaBariamge = GetImage((int)Images.STAMINABar);
         StaminaBariamge.fillAmount = _player.m_Stat.m_fStemina / (float)_player.m_Stat.m_fMaxStemina;
         Image MpBariamge = GetImage((int)Images.MPBar);
         MpBariamge.fillAmount = _player.m_Stat.m_iMp / (float)_player.m_Stat.m_iMaxMp;
+    }
 
+    public void RefreshItem()
+    {
+        _player = Managers.Object.myPlayer;
+
+        // Quick Slots
+        // 플레이어가 현재 장착한 무기의 아이콘을 여기에 업로드
+        Image rightWeaponIcon = GetImage((int)Images.RightHandSlotIcon);
+        Image LeftWeaponIcon = GetImage((int)Images.LeftHandSlotIcon);
+
+        if (_player.m_RightWeapon.Name == null)
+        {
+            rightWeaponIcon.sprite = null;
+            rightWeaponIcon.enabled = false;
+        }
+        else
+        {
+            rightWeaponIcon.sprite = m_dicSprite[_player.m_RightWeapon.Name];
+            rightWeaponIcon.enabled = true;
+        }
+
+        if (_player.m_LeftWeapon.Name == null)
+        {
+            LeftWeaponIcon.sprite = null;
+            LeftWeaponIcon.enabled = false;
+        }
+        else
+        {
+            LeftWeaponIcon.sprite = m_dicSprite[_player.m_LeftWeapon.Name];
+            LeftWeaponIcon.enabled = true;
+        }
     }
 
     public IEnumerator DownHP()

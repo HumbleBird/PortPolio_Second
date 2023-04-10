@@ -130,6 +130,18 @@ public partial class Player : Character
         }
     }
 
+    private void HandleQuickSlotsInput()
+    {
+        if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ChangeRightWeapon();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            ChangeLeftWeapon();
+        }
+    }
+
     void StaminaGraduallyFillingUp()
     {
         float statValue = 0f;
@@ -148,162 +160,30 @@ public partial class Player : Character
         SetStemina(newStemina);
     }
 
-    #region Item
-    public void EquipItem(Item equipItem)
+    public void CheckInteractableObject()
     {
-        if (equipItem == null)
-            return;
+        RaycastHit hit;
 
-        Item item = Managers.Inventory.Find(i =>
-        i.Id == equipItem.Id &&
-        i.InventorySlot == equipItem.InventorySlot);
-
-        if (item == null)
-            return;
-
-        // 아이템 해제
-        if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
+        Debug.DrawRay(transform.position, transform.forward, Color.red, 1f);
+        if(Physics.SphereCast(transform.position + Vector3.up, 0.3f, transform.forward, out hit, 1f, 1 << 13))
         {
-            // TODO Item Switch
-            Debug.Log("장비 창의 빈 칸이 없습니다. 장비 창의 아이템을 비워주세요.");
-            return;
-        }
-        else
-        {
-            item.m_bEquipped = equipItem.m_bEquipped;
-
-            if (item.eItemType == ItemType.Weapon)
+            // 필드 아이템
+            if(hit.collider.tag == "InteractablePickItem")
             {
-                LoadWeaponOnSlot((Weapon)item, false);
-            }
-        }
+                Interactable interactableObject = hit.collider.GetComponent<Interactable>();
 
-        RefreshAdditionalStat();
-    }
+                if(interactableObject != null)
+                {
+                    string interactableText = interactableObject.interactableText;
 
-    public void UnEquipItem(Item unEquipItem)
-    {
-        if (unEquipItem == null)
-            return;
-
-        // 해제하려는 아이템 인벤토리에서 리프레쉬
-        Item item = Managers.Inventory.Find(i =>
-                      i.m_bEquipped && i.InventorySlot == unEquipItem.InventorySlot &&
-                      i.eItemType == unEquipItem.eItemType);
-
-        item.m_bEquipped = false;
-        UnLoadWeaponOnSlot(false);
-    }
-
-    // 소모품 아이템
-    public void UseItem(Item item)
-    {
-        Debug.Log("아이템 사용");
-
-        // TODO 아이템 효과에 따라
-        // 대분류 : consumable (포션, 퀘스트 아이템 등)
-        // 분류 : potionEffect (포션 종류에 따라)
-        // 애니메이션, 사운드
-    }
-
-    public void BuyItem(Item item, int count)
-    {
-        // 조건
-        if (item.m_iPrice * count > m_iHaveMoeny)
-        {
-            Debug.Log("돈이 부족합니다.");
-            Managers.UI.ClosePopupUI();
-            return;
-        }
-
-        if (Managers.Inventory.GetEmptySlot() == null)
-        {
-            Debug.Log("인벤토리에 빈 공간이 없습니다.");
-            Managers.UI.ClosePopupUI();
-            return;
-        }
-
-        // 구입 성공!
-        m_iHaveMoeny -= item.m_iPrice * count;
-        item.Count = count;
-        Managers.Battle.AddItemtoPlayer(this, item);
-        Managers.UI.ClosePopupUI();
-        Managers.UIBattle.RefreshUI<UI_Shop>();
-        Debug.Log("아이템 구입");
-
-        // 아이템 정보를 받아옴
-        // 가격은 아이템에서 뽑아오고
-        // 수량은 정해진 한도 내에서
-        // 구매하면 판매 수량 깍고, 플레이어 소지 돈 감소, 인벤
-    }
-    #endregion
-
-    #region Weapon
-
-    void WeaponInit()
-    {
-        ItemSoket[] weaponHolderSlots = GetComponentsInChildren<ItemSoket>();
-        foreach (ItemSoket weaponslot in weaponHolderSlots)
-        {
-            if (weaponslot.isLeftHandSlot)
-            {
-                m_leftHandSlot = weaponslot;
-            }
-            else if (weaponslot.isRightHandSlot)
-            {
-                m_RightHandSlot = weaponslot;
+                    if(Input.GetKeyDown(KeyCode.E))
+                    {
+                        interactableObject.Interact(this);
+                    }
+                }
             }
         }
     }
-
-    public void LoadWeaponOnSlot(Weapon weaponItem, bool isLeft)
-    {
-        if(isLeft)
-        {
-            m_leftHandSlot.LoadWeaponModel(weaponItem);
-        }
-        else
-        {
-            m_RightHandSlot.LoadWeaponModel(weaponItem);
-        }
-
-        m_fWeaponDamage = weaponItem.Damage;
-        m_Stat.m_iOriginalAtk = (int)m_fWeaponDamage;
-
-        switch (weaponItem.eWeaponType)
-        {
-            case WeaponType.Daggers:
-                m_cAttack = new Blow();
-                m_cAttack.m_eWeaponType = WeaponType.Daggers;
-                break;
-            case WeaponType.StraightSwordsGreatswords:
-                m_cAttack = new Blow();
-                m_cAttack.m_eWeaponType = WeaponType.StraightSwordsGreatswords;
-                break;
-            case WeaponType.Shield:
-                break;
-        }
-
-        m_cAttack.m_cGo = this;
-    }
-
-    public void UnLoadWeaponOnSlot(bool isLeft)
-    {
-        if(isLeft)
-        {
-            m_leftHandSlot.UnloadWeapon();
-        }
-        else
-        {
-            m_RightHandSlot.UnloadWeapon();
-        }
-
-        m_fWeaponDamage = 0;
-        m_Stat.m_iOriginalAtk = 0;
-        m_cAttack = null;
-    }
-
-    #endregion
 
     #region PlayerAction
     public void RollAndBackStep()

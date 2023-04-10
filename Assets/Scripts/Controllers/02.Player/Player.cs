@@ -25,9 +25,6 @@ public partial class Player : Character
     public override float m_TotalAttack { get { return m_fWeaponDamage; } }
     public override float m_TotalDefence { get { return m_fArmorDefence; } }
 
-    public ItemSoket m_leftHandSlot { get; private set; }
-    public ItemSoket m_RightHandSlot { get; private set; }
-
     #endregion
 
     protected override void Init()
@@ -36,19 +33,36 @@ public partial class Player : Character
         gameObject.layer = (int)Layer.Player;
 
         base.Init();
+        m_UnarmedWeapon = new Weapon();
+        m_UnarmedWeapon.m_sPrefabPath = "Item/Weapon/Unarmed";
+        m_UnarmedWeapon.m_bIsUnarmed = true;
 
         WeaponInit();
 
-        Weapon weapon1 = Item.MakeItem(5) as Weapon;
-        Managers.Battle.RewardPlayer(this, weapon1);
+        Weapon weapon = Item.MakeItem(5) as Weapon;
 
+        m_WeaponInRightHandSlots[0] = weapon;
+        m_WeaponInLeftHandSlots[0] = weapon;
+
+        Weapon weapon2 = Item.MakeItem(4) as Weapon;
+
+        m_WeaponInRightHandSlots[1] = weapon2;
+        m_WeaponInLeftHandSlots[1] = weapon2;
+
+        m_LeftWeapon = m_UnarmedWeapon;
+        m_RightWeapon = m_UnarmedWeapon;
+
+        m_iCurrentRightWeaponIndex = -1;
+        m_iCurrentLeftWeaponIndex = -1;
     }
 
     protected override void Update()
     {
         base.Update();
         HandleFalling();
+        HandleQuickSlotsInput();
         StaminaGraduallyFillingUp();
+        CheckInteractableObject();
     }
 
     protected override void UpdateIdle()
