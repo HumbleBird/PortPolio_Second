@@ -1,0 +1,11 @@
+Model Information:
+* title:	Curved Dagger
+* source:	https://sketchfab.com/3d-models/curved-dagger-63a3bf30b5e84d838f38693758e41c2e
+* author:	Blenderolokos (https://sketchfab.com/Blenderolokos)
+
+Model License:
+* license type:	CC-BY-SA-4.0 (http://creativecommons.org/licenses/by-sa/4.0/)
+* requirements:	Author must be credited. Modified versions must have the same license. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Curved Dagger" (https://sketchfab.com/3d-models/curved-dagger-63a3bf30b5e84d838f38693758e41c2e) by Blenderolokos (https://sketchfab.com/Blenderolokos) licensed under CC-BY-SA-4.0 (http://creativecommons.org/licenses/by-sa/4.0/)

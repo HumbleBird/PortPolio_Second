@@ -23,7 +23,6 @@ public class UI_PlayerInfo : UI_Scene
     }
 
     Player _player;
-    Dictionary<string, Sprite> m_dicSprite = new Dictionary<string, Sprite>();
 
     public override bool Init()
     {
@@ -31,12 +30,6 @@ public class UI_PlayerInfo : UI_Scene
             return false;
 
         BindImage(typeof(Images));
-
-        Sprite[] sprites = Resources.LoadAll<Sprite>("Art/Textures/UI/Item/Weapons");
-        foreach (var sprite in sprites)
-        {
-            m_dicSprite.Add(sprite.name, sprite);
-        }
 
         return true;
     }
@@ -72,7 +65,7 @@ public class UI_PlayerInfo : UI_Scene
         }
         else
         {
-            rightWeaponIcon.sprite = m_dicSprite[_player.m_RightWeapon.Name];
+            rightWeaponIcon.sprite = Managers.Resource.Load<Sprite>(_player.m_RightWeapon.iconPath);
             rightWeaponIcon.enabled = true;
         }
 
@@ -83,7 +76,7 @@ public class UI_PlayerInfo : UI_Scene
         }
         else
         {
-            LeftWeaponIcon.sprite = m_dicSprite[_player.m_LeftWeapon.Name];
+            LeftWeaponIcon.sprite = Managers.Resource.Load<Sprite>(_player.m_LeftWeapon.iconPath);
             LeftWeaponIcon.enabled = true;
         }
     }

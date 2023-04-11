@@ -7,6 +7,7 @@ using static Define;
 public partial class Player : Character
 {
 	protected bool m_bNextAttack = false;
+    public UI_Interact UIInteract = null;
 
     public override void AttackEvent(int id)
     {
@@ -164,23 +165,42 @@ public partial class Player : Character
     {
         RaycastHit hit;
 
-        Debug.DrawRay(transform.position, transform.forward, Color.red, 1f);
+        Debug.DrawRay(transform.position + Vector3.up, transform.forward, Color.red, 1f);
         if(Physics.SphereCast(transform.position + Vector3.up, 0.3f, transform.forward, out hit, 1f, 1 << 13))
         {
-            // 필드 아이템
-            if(hit.collider.tag == "InteractablePickItem")
+            Interactable interactable = hit.collider.GetComponent<Interactable>();
+
+            if (interactable != null)
             {
-                Interactable interactableObject = hit.collider.GetComponent<Interactable>();
-
-                if(interactableObject != null)
+                if (UIInteract == null)
                 {
-                    string interactableText = interactableObject.interactableText;
-
-                    if(Input.GetKeyDown(KeyCode.E))
-                    {
-                        interactableObject.Interact(this);
-                    }
+                    UIInteract = Managers.UI.ShowPopupUI<UI_Interact>();
+                    UIInteract.m_InteratableText.text = interactable.interactableText;
                 }
+
+                // 상호작용
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    interactable.Interact(this);
+                    Managers.UI.ClosePopupUI();
+                    UIInteract = null;
+                }
+            }
+        }
+        else
+        {
+            // 거리가 멀어지면 닫기
+            if (UIInteract != null)
+            {
+                Managers.UI.ClosePopupUI();
+                UIInteract = null;
+            }
+
+            // 추가 적인 UI Popup이 있을 시 수동으로 꺼주기
+            if (UIInteract != null && Input.GetKeyDown(KeyCode.E))
+            {
+                Managers.UI.ClosePopupUI();
+                UIInteract = null;
             }
         }
     }

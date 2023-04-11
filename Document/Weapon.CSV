@@ -2,8 +2,9 @@ Idx,Name,WeaponType,Physical,Damage Reduction
 아이디,이름,무기 타입,물리,피해 감소율 (%)
 1,Dagger,1,65,0
 2,Parrying Dagger,1,60,0
-3,Rotten Ghru Dagger,1,64,0
-4,Katana,2,99,0
+3,Bandit's Knife,1,64,0
+4,Shortsword,2,99,0
 5,Broadsword,2,117,0
 6,Broken Straight Sword,2,70,0
-7,Crude Shield,25,95,100
+7,Uchigatana,5,95,0
+8,East-West Shield,24,65,100

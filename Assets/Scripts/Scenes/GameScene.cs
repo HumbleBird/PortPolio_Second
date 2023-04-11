@@ -18,20 +18,10 @@ public class GameScene : BaseScene
 
         // 프리팹 로드 && 처음 지정 위치에 몬스터 스폰
         Managers.Battle.Init();
-
-        // 캐릭터
-        //GameObject go = Managers.Battle.Spawn(ObjectType.Player, 1, 0, true);
-        //Managers.Battle.CheckPointLoad(go);
         
         // UI
         Managers.UI.ShowSceneUI<UI_GameScene>();
         Managers.UIBattle.Init();
-
-        // Sound
-        Managers.Sound.Play("Sounds/Bgm/Game/Dungeon", 0, Sound.Bgm);
-
-        // 기타
-        //StartCoroutine(Managers.InputKey.Update());
 
 #if DEBUG
         ClearLog();

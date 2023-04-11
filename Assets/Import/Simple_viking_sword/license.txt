@@ -1,0 +1,11 @@
+Model Information:
+* title:	Simple viking sword
+* source:	https://sketchfab.com/3d-models/simple-viking-sword-b98720ad8618485e8be6969364b7fcd0
+* author:	Vicotr (https://sketchfab.com/Vicotr)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Simple viking sword" (https://sketchfab.com/3d-models/simple-viking-sword-b98720ad8618485e8be6969364b7fcd0) by Vicotr (https://sketchfab.com/Vicotr) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

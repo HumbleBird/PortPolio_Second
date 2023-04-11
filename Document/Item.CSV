@@ -1,13 +1,15 @@
-Idx,Name,ItemType,Icon,#Prefab,#Dec,,,,,,,
-아이디,이름,타입,아이콘,프리팹,설명,,,종류,경로,번호,,
-1,Dagger,1,Art/Textures/UI/Item/Dagger,,가장 기본적인 론델검,,,무기,Art/Textures/UI/Item/,1,,무기 경로
-2,Parrying Dagger,1,Art/Textures/UI/Item/Parrying Dagger,,,,,아머,Art/Textures/UI/Item/,2,,아이템 경로
-3,Rotten Ghru Dagger,1,Art/Textures/UI/Item/Rotten Ghru Dagger,,,,,소비,Art/Textures/UI/Item/,3,,소비템 경로
-4,Katana,1,Art/Textures/UI/Item/Shortsword,Item/Weapon/Katana,동양의 오래된 검,,,,,,,
-5,Broadsword,1,Art/Textures/UI/Item/Broadsword,Item/Weapon/Broadsword,날카롭다,,,,,,,
-6,Broken Straight Sword,1,Art/Textures/UI/Item/Broken Straight Sword,,,,,,,,,
-101,Catarina Helm,2,Art/Textures/UI/Item/Catarina Helm,Item/Shield/Crude Shield,낡은 방패,,,,,,,
-102,Catarina Armor,2,Art/Textures/UI/Item/Catarina Armor,,,,,,,,,
-103,Catarina Gauntlets,2,Art/Textures/UI/Item/Catarina Gauntlets,,,,,,,,,
-104,Catarina Leggings,2,Art/Textures/UI/Item/Catarina Leggings,,,,,,,,,
-201,Estus Flask,3,Art/Textures/UI/Item/Estus Flask,,,,,,,,,
+Idx,Name,ItemType,Icon,#Prefab,#Dec,,,,
+아이디,이름,타입,아이콘,프리팹,설명,,,,UI
+1,Dagger,1,Art/Textures/UI/Item/Weapons/Dagger,Item/Weapons/Dagger,Standard small dagger.,,,1,Art/Textures/UI/Item/Weapons/
+2,Parrying Dagger,1,Art/Textures/UI/Item/Weapons/Parrying Dagger,Item/Weapons/Parrying Dagger,Dagger with a greatly curved guard.,,,2,Art/Textures/UI/Item/Armors/
+3,Bandit's Knife,1,Art/Textures/UI/Item/Weapons/Bandit's Knife,Item/Weapons/Bandit's Knife,"A crude, half-rotten dagger.",,,3,Art/Textures/UI/Item/Consumabls/
+4,Shortsword,1,Art/Textures/UI/Item/Weapons/Shortsword,Item/Weapons/Shortsword,Small straight sword excelling in thrusting attacks.,,,,Prefabs
+5,Broadsword,1,Art/Textures/UI/Item/Weapons/Broadsword,Item/Weapons/Broadsword,A straight sword with a broad blade designed for slashing.,,,1,Item/Weapons/
+6,Broken Straight Sword,1,Art/Textures/UI/Item/Weapons/Broken Straight Sword,Item/Weapons/Broken Straight Sword,A straight sword with a broken blade.,,,2,Item/Armors/
+7,Uchigatana,1,Art/Textures/UI/Item/Weapons/Uchigatana,Item/Weapons/Uchigatana,A unique katana characterized by the fine craftsmanship of an eastern land where it was forged.,,,3,Item/Consumabls/
+8,East-West Shield,1,Art/Textures/UI/Item/Weapons/East-West Shield,Item/Weapons/East-West Shield,wooden shield decorated with the ancient symbol of the two-headed eagle. Close to a small shield in size.,,,,
+101,Catarina Helm,2,Art/Textures/UI/Item/Armors/Catarina Helm,Item/Armors/Catarina Helm,Distinctively shaped helm worn by the Knights of Catarina.,,,,
+102,Catarina Armor,2,Art/Textures/UI/Item/Armors/Catarina Armor,Item/Armors/Catarina Armor,Distinctively shaped armor worn by the Knights of Catarina.,,,,
+103,Catarina Gauntlets,2,Art/Textures/UI/Item/Armors/Catarina Gauntlets,Item/Armors/Catarina Gauntlets,Distinctively shaped gauntlets worn by the Knights of Catarina.,,,,
+104,Catarina Leggings,2,Art/Textures/UI/Item/Armors/Catarina Leggings,Item/Armors/Catarina Leggings,Distinctively shaped leggings worn by the Knights of Catarina.,,,,
+201,Estus Flask,3,Art/Textures/UI/Item/Consumabls/Estus Flask,Item/Consumabls/Estus Flask,Estus Flask Usage,,,,
