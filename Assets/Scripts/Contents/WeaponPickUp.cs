@@ -25,6 +25,7 @@ public class WeaponPickUp : Interactable
         // UI
         UI_Interact UIInteract = Managers.UI.ShowPopupUI<UI_Interact>();
         UIInteract.SetInfo(item.Name, item.iconPath);
+        player.UIInteractPost = UIInteract;
 
         // Player Animation
         player.PlayAnimation("Pick Up Item");

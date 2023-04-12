@@ -52,9 +52,7 @@ public partial class MyPlayer : Player
         base.Update();
 		InputHandler();
 
-		// 카메라를 향해 캐릭터 이동 방향 결정
-		Camera camera = Managers.Camera.m_Camera;
-		m_MovementDirection = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
+
 	}
 
 	protected override void UpdateIdle()
@@ -178,6 +176,29 @@ public partial class MyPlayer : Player
 
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
+		}
+	}
+
+	public void HandleJumping()
+	{
+		if (m_bWaiting)
+			return;
+
+		// 점프는 달리는 도중에 눌러줘야합니다
+		// 스페이스를 꾹 눌러서 달리는 도중에 다시 바로 스페이스를 눌러주면 점프해요.
+		if (Input.GetKey(KeyCode.Space))
+		{
+			if (m_MovementDirection != Vector3.zero)
+			{
+				m_MovementDirection = m_Camera.transform.forward * vertical;
+				m_MovementDirection += m_Camera.transform.forward * horizontal;
+				PlayAnimation("Jump");
+				m_MovementDirection.y = 0;
+				Quaternion jumpRotation = Quaternion.LookRotation(m_MovementDirection);
+				transform.rotation = jumpRotation;
+
+
+			}
 		}
 	}
 }

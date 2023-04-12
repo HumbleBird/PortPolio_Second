@@ -25,6 +25,8 @@ public partial class Player : Character
     public override float m_TotalAttack { get { return m_fWeaponDamage; } }
     public override float m_TotalDefence { get { return m_fArmorDefence; } }
 
+    protected Camera m_Camera;
+
     #endregion
 
     protected override void Init()
@@ -34,7 +36,7 @@ public partial class Player : Character
 
         base.Init();
         m_UnarmedWeapon = new Weapon();
-        m_UnarmedWeapon.m_sPrefabPath = "Item/Weapon/Unarmed";
+        m_UnarmedWeapon.m_sPrefabPath = "Item/Weapons/Unarmed";
         m_UnarmedWeapon.m_bIsUnarmed = true;
 
         WeaponInit();
@@ -54,11 +56,16 @@ public partial class Player : Character
 
         m_iCurrentRightWeaponIndex = -1;
         m_iCurrentLeftWeaponIndex = -1;
+
+        m_Camera = Managers.Camera.m_Camera;
     }
 
     protected override void Update()
     {
         base.Update();
+
+
+
         HandleFalling();
         HandleQuickSlotsInput();
         StaminaGraduallyFillingUp();
@@ -93,6 +100,9 @@ public partial class Player : Character
         }
 
         // 이동 및 회전
+        // 카메라를 향해 캐릭터 이동 방향 결정
+        m_MovementDirection = Quaternion.AngleAxis(m_Camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
+
         transform.position += Time.deltaTime * m_Stat.m_fMoveSpeed * m_MovementDirection;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
 

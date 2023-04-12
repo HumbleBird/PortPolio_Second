@@ -8,6 +8,7 @@ public partial class Player : Character
 {
 	protected bool m_bNextAttack = false;
     public UI_Interact UIInteract = null;
+    public UI_Interact UIInteractPost = null;
 
     public override void AttackEvent(int id)
     {
@@ -181,29 +182,31 @@ public partial class Player : Character
                 // 상호작용
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    interactable.Interact(this);
                     Managers.UI.ClosePopupUI();
+                    interactable.Interact(this);
                     UIInteract = null;
                 }
             }
         }
         else
         {
-            // 거리가 멀어지면 닫기
+            // 상호작용 오브젝트와의 처음 접촉 시 뜨는 팝업 창이 거리가 멀어지면 닫음
             if (UIInteract != null)
             {
                 Managers.UI.ClosePopupUI();
                 UIInteract = null;
             }
 
-            // 추가 적인 UI Popup이 있을 시 수동으로 꺼주기
-            if (UIInteract != null && Input.GetKeyDown(KeyCode.E))
+            // 상호작용 오브젝트와 상호작용 후 뜨는 후속 팝업창을 수동으로 꺼줌
+            if (UIInteractPost != null && Input.GetKeyDown(KeyCode.E))
             {
                 Managers.UI.ClosePopupUI();
-                UIInteract = null;
+                UIInteractPost = null;
             }
         }
     }
+
+
 
     #region PlayerAction
     public void RollAndBackStep()

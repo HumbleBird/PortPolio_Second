@@ -37,6 +37,5 @@ public class UI_Interact : UI_Popup
 		Image image = GetImage((int)Images.ItemImage);
 		image.sprite = Managers.Resource.Load<Sprite>(iconPath);
 		image.enabled = true;
-		Debug.Break();
 	}
 }

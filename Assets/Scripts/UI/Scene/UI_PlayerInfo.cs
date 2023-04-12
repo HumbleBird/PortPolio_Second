@@ -19,7 +19,9 @@ public class UI_PlayerInfo : UI_Scene
         QuickSlotIcon,
         SpellSlotIcon,
         RightHandSlotIcon,
-        LeftHandSlotIcon
+        LeftHandSlotIcon,
+
+
     }
 
     Player _player;

@@ -133,6 +133,7 @@ public class Define
         Walk,
         Run,
         Falling,
+        Jump
     }
 
     public enum ActionState
