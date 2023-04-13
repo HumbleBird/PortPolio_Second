@@ -117,10 +117,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 102
+  eObjectType: 0
   eActionState: 0
   eMoveState: 0
-  m_GoAttackItem: {fileID: 0}
-  m_bWaiting: 0
+  m_LockOnTransform: {fileID: 0}
   m_goTarget: {fileID: 0}
   waypoints: []
 --- !u!195 &-4576959098864413043
@@ -3341,7 +3341,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8863675383424779956}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}

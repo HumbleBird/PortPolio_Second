@@ -13,8 +13,6 @@ public partial class MyPlayer : Player
 {
 	float mouseX;
 	float mouseY;
-	float vertical;
-	float horizontal;
 
 	Dictionary<KeyCode, Action> OptionKeyDic; // 단발성
 
@@ -51,7 +49,7 @@ public partial class MyPlayer : Player
     {
         base.Update();
 		InputHandler();
-
+		
 
 	}
 
@@ -73,6 +71,8 @@ public partial class MyPlayer : Player
 			SetMoveState(MoveState.Run);
 		else if (Input.GetKeyUp(KeyCode.LeftShift))
 			SetMoveState(MoveState.Walk);
+
+
 	}
 
     protected override void UpdateSkill()
@@ -107,6 +107,9 @@ public partial class MyPlayer : Player
 		//GetKeyAction
 		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Roll]))
 			RollAndBackStep();
+
+		if (Input.GetKeyDown(KeyCode.V))
+			HandleJumping();
 	}
 
 	void InputHandler()
@@ -179,27 +182,6 @@ public partial class MyPlayer : Player
 		}
 	}
 
-	public void HandleJumping()
-	{
-		if (m_bWaiting)
-			return;
 
-		// 점프는 달리는 도중에 눌러줘야합니다
-		// 스페이스를 꾹 눌러서 달리는 도중에 다시 바로 스페이스를 눌러주면 점프해요.
-		if (Input.GetKey(KeyCode.Space))
-		{
-			if (m_MovementDirection != Vector3.zero)
-			{
-				m_MovementDirection = m_Camera.transform.forward * vertical;
-				m_MovementDirection += m_Camera.transform.forward * horizontal;
-				PlayAnimation("Jump");
-				m_MovementDirection.y = 0;
-				Quaternion jumpRotation = Quaternion.LookRotation(m_MovementDirection);
-				transform.rotation = jumpRotation;
-
-
-			}
-		}
-	}
 }
 

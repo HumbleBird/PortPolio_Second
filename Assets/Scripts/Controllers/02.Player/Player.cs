@@ -27,6 +27,8 @@ public partial class Player : Character
 
     protected Camera m_Camera;
 
+    protected float vertical;
+    protected float horizontal;
     #endregion
 
     protected override void Init()
@@ -63,7 +65,6 @@ public partial class Player : Character
     protected override void Update()
     {
         base.Update();
-
 
 
         HandleFalling();

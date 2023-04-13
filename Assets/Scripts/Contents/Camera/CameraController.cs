@@ -84,6 +84,23 @@ public partial class CameraController : MonoBehaviour
         }
         else
         {
+            float velocity = 0;
+
+            Vector3 dir = m_trCurrentLockOnTarget.position - transform.position;
+            dir.Normalize();
+            dir.y = 0;
+
+            Quaternion targetRotation = Quaternion.LookRotation(dir);
+            transform.rotation = targetRotation;
+
+            dir = m_trCurrentLockOnTarget.position - cameraPivotTranform.position;
+            dir.Normalize();
+
+            targetRotation = Quaternion.LookRotation(dir);
+            Vector3 eulerAngle = targetRotation.eulerAngles;
+            eulerAngle.y = 0;
+            cameraPivotTranform.localEulerAngles = eulerAngle;
+
         }
     }
 
