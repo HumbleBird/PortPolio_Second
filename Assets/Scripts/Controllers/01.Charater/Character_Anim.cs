@@ -32,7 +32,7 @@ public partial class Character : Base
         }
     }
 
-    void MoveAnim()
+    protected virtual void MoveAnim()
     {
         switch (eMoveState)
         {
@@ -44,6 +44,9 @@ public partial class Character : Base
                 break;
             case MoveState.Run:
                 PlayAnimation("Run");
+                break;
+            case MoveState.Sprint:
+                PlayAnimation("Sprint");
                 break;
             case MoveState.Falling:
                 PlayAnimation("Falling Idle");

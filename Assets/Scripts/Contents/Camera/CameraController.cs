@@ -39,11 +39,11 @@ public partial class CameraController : MonoBehaviour
 
     public float maximunLockOnDistance = 30f;
 
-    public List<Character> m_ListAvilableTarget = new List<Character>();
+    public List<Character> m_ListAvailableTarget = new List<Character>();
     public Transform m_trNearestLockOnTarget;
     public Transform m_trCurrentLockOnTarget;
-
-    public bool m_bLockOnFlag = false;
+    public Transform m_trleftLockTarget;
+    public Transform m_trRightLockTarget;
 
     private void Start()
     {
@@ -65,7 +65,7 @@ public partial class CameraController : MonoBehaviour
 
     public void HandleCameraRotation(float delta, float mouseXInput, float mouseYInput)
     {
-        if (!m_bLockOnFlag && m_trCurrentLockOnTarget == null)
+        if (Managers.Object.myPlayer.m_bLockOnFlag == false && m_trCurrentLockOnTarget == null)
         {
             lookAngle += (mouseXInput * lookSpeed) / delta;
             pivotAngle -= (mouseYInput * pivotSpeed) / delta;
@@ -128,30 +128,15 @@ public partial class CameraController : MonoBehaviour
         cameraTransform.localPosition = cameraTransformPosition;
     }
 
-    public void HandleLockOn()
-    {
-        if (!m_bLockOnFlag)
-        {
-            ClearLockOnTargets();
-            LockOn();
-            if(m_trNearestLockOnTarget != null)
-            {
-                m_trCurrentLockOnTarget = m_trNearestLockOnTarget;
-                m_bLockOnFlag = true;
-            }
-        }
-        else if (m_bLockOnFlag)
-        {
-            m_bLockOnFlag = false;
-            ClearLockOnTargets();
-        }
-    }
 
-    public void LockOn()
+
+    public void HandleLockOn()
     {
         GameObject player = Managers.Object.myPlayer.gameObject;
 
         float shortDistance = Mathf.Infinity;
+        float shortDistanceOfLeftTarget = Mathf.Infinity;
+        float shortDistanceOfRightTarget = Mathf.Infinity;
 
         Collider[] colliders = Physics.OverlapSphere(player.transform.position, 26);//, (int)Layer.Monster);
 
@@ -169,26 +154,45 @@ public partial class CameraController : MonoBehaviour
                     && viewableAngle > -50 && viewableAngle < 50
                     && distanceFromTarget <= maximunLockOnDistance)
                 {
-                    m_ListAvilableTarget.Add(character);
+                    m_ListAvailableTarget.Add(character);
                 }
             }
         }
 
-        for (int i = 0; i < m_ListAvilableTarget.Count; i++)
+        for (int i = 0; i < m_ListAvailableTarget.Count; i++)
         {
-            float distanceFromTarget = Vector3.Distance(player.transform.position, m_ListAvilableTarget[i].transform.position);
+            float distanceFromTarget = Vector3.Distance(player.transform.position, m_ListAvailableTarget[i].transform.position);
 
             if (distanceFromTarget < shortDistance)
             {
                 shortDistance = distanceFromTarget;
-                m_trNearestLockOnTarget = m_ListAvilableTarget[i].m_LockOnTransform;
+                m_trNearestLockOnTarget = m_ListAvailableTarget[i].m_LockOnTransform;
+            }
+
+            if(Managers.Object.myPlayer.m_bLockOnFlag)
+            {
+                Vector3 relativeEnemyPosition = m_trCurrentLockOnTarget.InverseTransformPoint(m_ListAvailableTarget[i].transform.position);
+                var distanceFromLeftTarget = m_trCurrentLockOnTarget.transform.position.x - m_ListAvailableTarget[i].transform.position.x;
+                var distanceFromRightTarget = m_trCurrentLockOnTarget.transform.position.x + m_ListAvailableTarget[i].transform.position.x;
+            
+                if(relativeEnemyPosition.x > 0.00 && distanceFromLeftTarget < shortDistanceOfLeftTarget)
+                {
+                    shortDistanceOfLeftTarget = distanceFromLeftTarget;
+                    m_trleftLockTarget = m_ListAvailableTarget[i].m_LockOnTransform;
+                }
+
+                if(relativeEnemyPosition.x < 0.00 && distanceFromRightTarget < shortDistanceOfRightTarget)
+                {
+                    shortDistanceOfRightTarget = distanceFromRightTarget;
+                    m_trRightLockTarget = m_ListAvailableTarget[i].m_LockOnTransform;
+                }
             }
         }
     }
 
     public void ClearLockOnTargets()
     {
-        m_ListAvilableTarget.Clear();
+        m_ListAvailableTarget.Clear();
         m_trCurrentLockOnTarget = null;
         m_trNearestLockOnTarget = null;
     }

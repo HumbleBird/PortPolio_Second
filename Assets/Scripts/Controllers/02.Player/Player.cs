@@ -26,6 +26,7 @@ public partial class Player : Character
     public override float m_TotalDefence { get { return m_fArmorDefence; } }
 
     protected Camera m_Camera;
+    protected CameraController m_CameraController;
 
     protected float vertical;
     protected float horizontal;
@@ -60,6 +61,7 @@ public partial class Player : Character
         m_iCurrentLeftWeaponIndex = -1;
 
         m_Camera = Managers.Camera.m_Camera;
+        m_CameraController = m_Camera.GetComponentInParent<CameraController>();
     }
 
     protected override void Update()
@@ -71,6 +73,7 @@ public partial class Player : Character
         HandleQuickSlotsInput();
         StaminaGraduallyFillingUp();
         CheckInteractableObject();
+        HandleLockOnInput();
     }
 
     protected override void UpdateIdle()

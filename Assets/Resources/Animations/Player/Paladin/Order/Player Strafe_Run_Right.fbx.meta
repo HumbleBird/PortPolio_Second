@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: eee8dd88164410d4e8edcd4f48b70afe
+guid: 8c25e982420005e46a1389f8aed36332
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: sword and shield strafe_R
+    second: Player Strafe_Run_Right
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: sword and shield strafe_R
+      name: Player Strafe_Run_Right
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 34
+      lastFrame: 21
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -132,6 +132,7 @@ public class Define
         None,
         Walk,
         Run,
+        Sprint,
         Falling,
         Jump
     }

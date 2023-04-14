@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: sword and shield run_F
+    second: Player Run_Front
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,7 +36,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: sword and shield run_F
+      name: Player Run_Front
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0

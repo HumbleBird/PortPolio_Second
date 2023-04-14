@@ -10,6 +10,9 @@ public partial class Player : Character
     public UI_Interact UIInteract = null;
     public UI_Interact UIInteractPost = null;
 
+    public bool m_bLockOnFlag = false;
+    protected bool m_bLockOnInput = true;
+
     public override void AttackEvent(int id)
     {
         base.AttackEvent(id);
@@ -160,6 +163,42 @@ public partial class Player : Character
             Quaternion jumpRotation = Quaternion.LookRotation(m_MovementDirection);
             transform.rotation = jumpRotation;
 
+        }
+    }
+
+    public void HandleLockOnInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && !m_bLockOnFlag)
+        {
+            m_CameraController.HandleLockOn();
+            if (m_CameraController.m_trNearestLockOnTarget != null)
+            {
+                m_CameraController.m_trCurrentLockOnTarget = m_CameraController.m_trNearestLockOnTarget;
+                m_bLockOnFlag = true;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Q) && m_bLockOnFlag)
+        {
+            m_bLockOnFlag = false;
+            m_CameraController.ClearLockOnTargets();
+        }
+
+        if(m_bLockOnFlag && Input.GetKeyDown(KeyCode.R)) // 좌측 키 Right_Stick_Left_Input
+        {
+            m_CameraController.HandleLockOn();
+            if(m_CameraController.m_trleftLockTarget != null)
+            {
+                m_CameraController.m_trCurrentLockOnTarget = m_CameraController.m_trleftLockTarget;
+            }
+        }
+
+        if(m_bLockOnFlag && Input.GetKeyDown(KeyCode.T)) // 우측 키 Right_Stick_Left_Input
+        {
+            m_CameraController.HandleLockOn();
+            if(m_CameraController.m_trRightLockTarget != null)
+            {
+                m_CameraController.m_trCurrentLockOnTarget = m_CameraController.m_trRightLockTarget;
+            }
         }
     }
 

@@ -26,4 +26,32 @@ public partial class Player : Character
                 break;
         }
     }
+
+    protected override void MoveAnim()
+    {
+        if(m_bLockOnFlag)
+        {
+
+        }
+        else
+        {
+            switch (eMoveState)
+            {
+                case MoveState.None:
+                    PlayAnimation("Empty");
+                    break;
+                case MoveState.Walk:
+                    PlayAnimation("Walk");
+                    break;
+                case MoveState.Run:
+                    PlayAnimation("Run");
+                    break;
+                case MoveState.Falling:
+                    PlayAnimation("Falling Idle");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
