@@ -49,33 +49,9 @@ public partial class MyPlayer : Player
     {
         base.Update();
 		InputHandler();
-		
-
 	}
 
-	protected override void UpdateIdle()
-    {
-        base.UpdateIdle();
-
-		IdleAndMoveInput();
-	}
-
-    protected override void UpdateMove()
-    {
-		base.UpdateMove();
-
-		IdleAndMoveInput();
-
-		// 이동 상태 결정 : 걷기, 뛰기
-		if (Input.GetKey(KeyCode.LeftShift))
-			SetMoveState(MoveState.Run);
-		else if (Input.GetKeyUp(KeyCode.LeftShift))
-			SetMoveState(MoveState.Walk);
-
-
-	}
-
-    protected override void UpdateSkill()
+	protected override void UpdateSkill()
 	{
 		base.UpdateSkill();
 
@@ -86,47 +62,76 @@ public partial class MyPlayer : Player
 		}
 	}
 
-	void IdleAndMoveInput()
-	{
-		if (m_bWaiting)
-			return;
 
-		//GetInputAttack
-		if (m_bCanAttack == true && m_Stat.m_fStemina != 0 && m_cAttack != null)
-		{
-			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
-			{
-				m_cAttack.NormalAction();
-			}
-			else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.SpecialAction]))
-			{
-				m_cAttack.SpecialAction();
-			}
-		}
-
-		//GetKeyAction
-		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Roll]))
-			RollAndBackStep();
-
-		if (Input.GetKeyDown(KeyCode.V))
-			HandleJumping();
-	}
-
-	void InputHandler()
+	void HandleMoveInput()
     {
-		// Move
-		vertical = Input.GetAxis("Vertical");
-		horizontal = Input.GetAxis("Horizontal");
+		m_fVertical = Input.GetAxis("Vertical");
+		m_fHorizontal = Input.GetAxis("Horizontal");
 
 		mouseX = Input.GetAxis("Mouse X");
 		mouseY = Input.GetAxis("Mouse Y");
 
-		m_MovementDirection = new Vector3(horizontal, 0, vertical);
+		m_fMoveAmount = Mathf.Clamp01(Mathf.Abs(m_fHorizontal) + Mathf.Abs(m_fVertical));
+
+		m_MovementDirection = new Vector3(m_fHorizontal, 0, m_fVertical);
+	}
+
+	void InputHandler()
+    {
+		// Input Move 
+		HandleMoveInput();
+
+		// Move State Set
+		if (eState == CreatureState.Move)
+        {
+			// 마우스 키패드일때
+			// Lock On Targeting 하지 않을 시
+			// Walk - Left Alt + Move Key
+			// Run - Move Key
+			// Sprint - Space Key 누르고면서 Move Key
+
+			// 약식으로 다음으로 처리한다.
+			// Walk - Left Alt + Move Key
+			// Run - Move Key
+			// Sprint - Shift + Move Key
+
+			// 이동 상태 결정 대쉬/걷기/뛰기
+			if (Input.GetKey(KeyCode.LeftShift)) 
+				SetMoveState(MoveState.Sprint);
+			else if (Input.GetKey(KeyCode.LeftAlt))
+				SetMoveState(MoveState.Walk);
+			else
+				SetMoveState(MoveState.Run); 
+
+			// 점프
+			if (Input.GetKeyDown(KeyCode.V))
+				HandleJumping();
+
+			// 구르기 및 백스템
+			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Roll]))
+				RollAndBackStep();
+		}
+
+		// Attack
+		if(eState == CreatureState.Move || eState == CreatureState.Idle)
+        {
+			if (m_bCanAttack == true && m_Stat.m_fStemina != 0 && m_cAttack != null)
+			{
+				if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
+				{
+					m_cAttack.NormalAction();
+				}
+				else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.SpecialAction]))
+				{
+					m_cAttack.SpecialAction();
+				}
+			}
+		}
 
 		// Option
 		InputOptionKey();
 
-		//GetInputAttack
+		// Lock On
 		if (Input.GetKeyDown(KeyCode.P)) //원래는 Q
 			Managers.Camera.HandleLockOn();
 	}

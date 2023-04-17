@@ -28,8 +28,10 @@ public partial class Player : Character
     protected Camera m_Camera;
     protected CameraController m_CameraController;
 
-    protected float vertical;
-    protected float horizontal;
+    protected float m_fVertical;
+    protected float m_fHorizontal;
+    protected float m_fMoveAmount;
+    protected bool m_bSprint;
     #endregion
 
     protected override void Init()
@@ -101,6 +103,15 @@ public partial class Player : Character
         if (Physics.Raycast(transform.position, transform.forward, 0.4f))
         {
             m_MovementDirection = Vector3.zero;
+        }
+
+        if(m_bLockOnFlag)
+        {
+            UpdateAnimatorValues(m_fVertical, m_fHorizontal, m_bSprint);
+        }
+        else
+        {
+            UpdateAnimatorValues(m_fMoveAmount, 0, m_bSprint);
         }
 
         // 이동 및 회전

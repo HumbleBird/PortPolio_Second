@@ -154,16 +154,12 @@ public partial class Player : Character
 
         // 점프는 달리는 도중에 눌러줘야합니다
         // 스페이스를 꾹 눌러서 달리는 도중에 다시 바로 스페이스를 눌러주면 점프해요.
-        if (m_MovementDirection != Vector3.zero)
-        {
-            m_MovementDirection = m_Camera.transform.forward * vertical;
-            m_MovementDirection += m_Camera.transform.forward * horizontal;
-            PlayAnimation("Jump");
-            m_MovementDirection.y = 0;
-            Quaternion jumpRotation = Quaternion.LookRotation(m_MovementDirection);
-            transform.rotation = jumpRotation;
-
-        }
+        m_MovementDirection = m_Camera.transform.forward * m_fVertical;
+        m_MovementDirection += m_Camera.transform.forward * m_fHorizontal;
+        PlayAnimation("Jump");
+        m_MovementDirection.y = 0;
+        Quaternion jumpRotation = Quaternion.LookRotation(m_MovementDirection);
+        transform.rotation = jumpRotation;
     }
 
     public void HandleLockOnInput()
@@ -267,6 +263,9 @@ public partial class Player : Character
     #region PlayerAction
     public void RollAndBackStep()
     {
+        if (m_bWaiting)
+            return;
+
         string animName = null;
         if (eState == CreatureState.Idle)
         {
