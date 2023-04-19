@@ -8,20 +8,11 @@ using static Define;
 
 public partial class Player : Character
 {
-    public ItemSoket m_leftHandSlot { get; private set; }
-    public ItemSoket m_RightHandSlot { get; private set; }
-
-    public Weapon m_LeftWeapon; // 현재 장착 아이템들 중 들고 있는 왼손 무기
-    public Weapon m_RightWeapon; // 현재 장착 아이템들 중 들고 있는 오른손 무기
-    public Weapon m_UnarmedWeapon; // 퀵 슬롯 중 빈 칸
-
-    public Weapon[] m_WeaponInRightHandSlots = new Weapon[2]; // 오른손 장비 장착 가능한 슬롯
-    public Weapon[] m_WeaponInLeftHandSlots = new Weapon[2]; // 왼손 장비 장착 가능한 슬롯
-
-    public int m_iCurrentRightWeaponIndex = -1;
-    public int m_iCurrentLeftWeaponIndex = -1;
-
     #region Item
+
+    // 아이템 장착, 인벤토리에서 아이템(장비, 소모성 아이템, 장신구 등)을 클릭하여
+    // 장비창에 장착 시킴.
+    // 현재는 왼쪽의 빈칸부터 채워 넣음.
     public void EquipItem(Item equipItem)
     {
         if (equipItem == null)
@@ -34,32 +25,42 @@ public partial class Player : Character
         if (item == null)
             return;
 
+        int? slot = Managers.Equipment.GetEmptySlot();
+        if (slot == null)
+            return;
+
+        // TODO Item Switch
+
         // 아이템 해제
         if (Managers.UIBattle.AreTheSlotsForThatItemFull(item) && item.m_bEquipped == false)
         {
-            // TODO Item Switch
             Debug.Log("장비 창의 빈 칸이 없습니다. 장비 창의 아이템을 비워주세요.");
             return;
         }
+        // 아이템 장착
         else
         {
             item.m_bEquipped = equipItem.m_bEquipped;
 
-            if (item.eItemType == ItemType.Weapon)
-            {
-                LoadWeaponOnSlot((Weapon)item, false);
-            }
+            Managers.Equipment.Add((int)slot, item);
+
+            //if (item.eItemType == ItemType.Weapon)
+            //{
+            //    LoadWeaponOnSlot((Weapon)item, false);
+            //}
         }
 
-        RefreshAdditionalStat();
+        RefreshAdditionalStat(); // TODO
+        Managers.UIBattle.RefreshUI<UI_Equipment>();
     }
 
+    // 장착 아이템 해제
+    // 장착된 아이템을 장착 해제 시킨다.
     public void UnEquipItem(Item unEquipItem)
     {
         if (unEquipItem == null)
             return;
 
-        // 해제하려는 아이템 인벤토리에서 리프레쉬
         Item item = Managers.Inventory.Find(i =>
                       i.m_bEquipped && i.InventorySlot == unEquipItem.InventorySlot &&
                       i.eItemType == unEquipItem.eItemType);
@@ -68,7 +69,8 @@ public partial class Player : Character
         UnLoadWeaponOnSlot(false);
     }
 
-    // 소모품 아이템
+    // 아이템 사용
+    // 소모성 아이템(포션, 투척 무기, 길 찾기 등)을 사용한다.
     public void UseItem(Item item)
     {
         Debug.Log("아이템 사용");
@@ -79,6 +81,8 @@ public partial class Player : Character
         // 애니메이션, 사운드
     }
 
+    // 아이템 구매
+    // 상점에서 소울(돈)을 지불하여 아이템을 구매한다.
     public void BuyItem(Item item, int count)
     {
         // 조건
@@ -89,6 +93,7 @@ public partial class Player : Character
             return;
         }
 
+        // TODO DELETE
         if (Managers.Inventory.GetEmptySlot() == null)
         {
             Debug.Log("인벤토리에 빈 공간이 없습니다.");
@@ -103,16 +108,12 @@ public partial class Player : Character
         Managers.UI.ClosePopupUI();
         Managers.UIBattle.RefreshUI<UI_Shop>();
         Debug.Log("아이템 구입");
-
-        // 아이템 정보를 받아옴
-        // 가격은 아이템에서 뽑아오고
-        // 수량은 정해진 한도 내에서
-        // 구매하면 판매 수량 깍고, 플레이어 소지 돈 감소, 인벤
     }
     #endregion
 
     #region Weapon
 
+    // 플레이어의 양 손에 있는 슬롯 정보를 가져온다.
     void WeaponInit()
     {
         ItemSoket[] weaponHolderSlots = GetComponentsInChildren<ItemSoket>();
@@ -129,6 +130,8 @@ public partial class Player : Character
         }
     }
 
+    // 아이템 로드
+    // 아이템 정보를 받아 아이템 프리팹을 로드 시킨다.
     public void LoadWeaponOnSlot(Weapon weaponItem, bool isLeft)
     {
         if (isLeft)
@@ -139,27 +142,10 @@ public partial class Player : Character
         {
             m_RightHandSlot.LoadWeaponModel(weaponItem);
         }
-
-        m_fWeaponDamage = weaponItem.Damage;
-        m_Stat.m_iOriginalAtk = (int)m_fWeaponDamage;
-
-        switch (weaponItem.eWeaponType)
-        {
-            case WeaponType.Daggers:
-                m_cAttack = new Blow();
-                m_cAttack.m_eWeaponType = WeaponType.Daggers;
-                break;
-            case WeaponType.StraightSwordsGreatswords:
-                m_cAttack = new Blow();
-                m_cAttack.m_eWeaponType = WeaponType.StraightSwordsGreatswords;
-                break;
-            case WeaponType.Shield:
-                break;
-        }
-
-        m_cAttack.m_cGo = this;
     }
 
+    // 아이템 로드 해제
+    // 현재 로드한 아이템을 슬롯에서 해제
     public void UnLoadWeaponOnSlot(bool isLeft)
     {
         if (isLeft)
@@ -170,76 +156,160 @@ public partial class Player : Character
         {
             m_RightHandSlot.UnloadWeapon();
         }
-
-        m_fWeaponDamage = 0;
-        m_Stat.m_iOriginalAtk = 0;
-        m_cAttack = null;
     }
 
-    public void ChangeRightWeapon()
+    // 아이템 체인지
+    // 장비창에 저장되어 있는 아이템에 한해 아이템을 교체 시킨다.
+    public void ChangeHandWeapon(bool isLeft)
     {
-        m_iCurrentRightWeaponIndex = m_iCurrentRightWeaponIndex + 1;
+        int index = 0;
+        Weapon[] weaponhandslots;
 
-        if (m_iCurrentRightWeaponIndex == 0 && m_WeaponInRightHandSlots[0] != null)
+        if(isLeft)
         {
-            m_RightWeapon = m_WeaponInRightHandSlots[m_iCurrentRightWeaponIndex];
-            LoadWeaponOnSlot(m_WeaponInRightHandSlots[m_iCurrentRightWeaponIndex], false);
-        }
-        else if (m_iCurrentRightWeaponIndex == 0 && m_WeaponInRightHandSlots[0] == null)
-        {
-            m_iCurrentRightWeaponIndex++;
-        }
-        else if (m_iCurrentRightWeaponIndex == 1 && m_WeaponInRightHandSlots[1] != null)
-        {
-            m_RightWeapon = m_WeaponInRightHandSlots[m_iCurrentRightWeaponIndex];
-            LoadWeaponOnSlot(m_WeaponInRightHandSlots[m_iCurrentRightWeaponIndex], false);
+            index = m_iCurrentLeftWeaponIndex;
+            weaponhandslots = Managers.Equipment.m_ListWeaponInLeftHandSlots;
         }
         else
-        {
-            m_iCurrentRightWeaponIndex++;
+        { 
+            index = m_iCurrentRightWeaponIndex;
+            weaponhandslots = Managers.Equipment.m_ListWeaponInRightHandSlots;
         }
 
-        if (m_iCurrentRightWeaponIndex > m_WeaponInRightHandSlots.Length - 1)
+        index++;
+
+        // i번 칸의 아이템이 없을 경우 i + 1번칸 검사
+        for (int i = 0; i < 3; i++)
         {
-            m_iCurrentRightWeaponIndex = -1;
-            m_RightWeapon = m_UnarmedWeapon;
+            if (index == i && weaponhandslots[i] != null)
+            {
+                if (isLeft)
+                {
+                    // 방패
+                    m_LeftWeapon = weaponhandslots[index];
+                }
+                else
+                {
+                    // 무기
+                    m_RightWeapon = weaponhandslots[index];
+
+                    // 무기 타입에 따른 공격 모션 변경
+                    SetAttackType(m_RightWeapon);
+
+                    // 데미지 더해주기.
+                    m_fWeaponDamage = m_RightWeapon.Damage;
+                    m_Stat.m_iOriginalAtk = (int)m_fWeaponDamage;
+                }
+
+                LoadWeaponOnSlot(weaponhandslots[index], isLeft);
+
+                break;
+            }
+            else if (index == i && weaponhandslots[i] == null)
+            {
+                index++;
+            }
+        }
+
+        // 아무것도 들지 않음
+        if (index > weaponhandslots.Length - 1)
+        {
+            index = -1;
+
+            if (isLeft)
+            {
+                m_LeftWeapon = m_UnarmedWeapon;
+            }
+            else
+            {
+                m_RightWeapon = m_UnarmedWeapon;
+
+                m_fWeaponDamage = 0;
+                m_Stat.m_iOriginalAtk = 0;
+                m_cAttack = null;
+            }
+
             LoadWeaponOnSlot(m_UnarmedWeapon, false);
         }
 
-        Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshItem();
-    }
-
-    public void ChangeLeftWeapon()
-    {
-        m_iCurrentLeftWeaponIndex = m_iCurrentLeftWeaponIndex + 1;
-
-        if (m_iCurrentLeftWeaponIndex == 0 && m_WeaponInLeftHandSlots[0] != null)
+        if (isLeft)
         {
-            m_LeftWeapon = m_WeaponInLeftHandSlots[m_iCurrentLeftWeaponIndex];
-            LoadWeaponOnSlot(m_WeaponInLeftHandSlots[m_iCurrentLeftWeaponIndex], true);
-        }
-        else if (m_iCurrentLeftWeaponIndex == 0 && m_WeaponInLeftHandSlots[0] == null)
-        {
-            m_iCurrentLeftWeaponIndex++;
-        }
-        else if (m_iCurrentLeftWeaponIndex == 1 && m_WeaponInLeftHandSlots[1] != null)
-        {
-            m_LeftWeapon = m_WeaponInLeftHandSlots[m_iCurrentLeftWeaponIndex];
-            LoadWeaponOnSlot(m_WeaponInLeftHandSlots[m_iCurrentLeftWeaponIndex], true);
+            m_iCurrentLeftWeaponIndex = index;
+            Managers.Equipment.m_ListWeaponInLeftHandSlots  = weaponhandslots;
         }
         else
         {
-            m_iCurrentLeftWeaponIndex++;
-        }
-
-        if (m_iCurrentLeftWeaponIndex > m_WeaponInLeftHandSlots.Length - 1)
-        {
-            m_iCurrentLeftWeaponIndex = -1;
-            m_LeftWeapon = m_UnarmedWeapon;
-            LoadWeaponOnSlot(m_UnarmedWeapon, true);
+            m_iCurrentRightWeaponIndex = index;
+            Managers.Equipment.m_ListWeaponInRightHandSlots = weaponhandslots;
         }
 
         Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshItem();
+    }
+
+    // 장착한 아이템에 따른 공격 매커니즘 변화
+    private void SetAttackType(Weapon weapon)
+    {
+        switch (weapon.eWeaponType)
+        {
+            case WeaponType.Daggers:
+                m_cAttack = new Blow();
+                m_cAttack.m_eWeaponType = WeaponType.Daggers;
+                break;
+            case WeaponType.StraightSwordsGreatswords:
+                m_cAttack = new Blow();
+                m_cAttack.m_eWeaponType = WeaponType.StraightSwordsGreatswords;
+                break;
+            case WeaponType.Greatswords:
+                break;
+            case WeaponType.UltraGreatswords:
+                break;
+            case WeaponType.CurvedSword:
+                break;
+            case WeaponType.Katanas:
+                break;
+            case WeaponType.CurvedGreatswords:
+                break;
+            case WeaponType.PiercingSwords:
+                break;
+            case WeaponType.Axes:
+                break;
+            case WeaponType.Greataxes:
+                break;
+            case WeaponType.Hammers:
+                break;
+            case WeaponType.GreatHammers:
+                break;
+            case WeaponType.FistAndClaws:
+                break;
+            case WeaponType.SpearsAndPikes:
+                break;
+            case WeaponType.Halberds:
+                break;
+            case WeaponType.Reapers:
+                break;
+            case WeaponType.Whips:
+                break;
+            case WeaponType.Bows:
+                break;
+            case WeaponType.Greatbows:
+                break;
+            case WeaponType.Crossbows:
+                break;
+            case WeaponType.Staves:
+                break;
+            case WeaponType.Flames:
+                break;
+            case WeaponType.Talismans:
+                break;
+            case WeaponType.SacredChimes:
+                break;
+            case WeaponType.Shield:
+                break;
+            default:
+                break;
+        }
+
+        m_cAttack.m_cGo = this;
     }
     #endregion
 }

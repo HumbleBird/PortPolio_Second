@@ -7,31 +7,50 @@ using static Define;
 public partial class Player : Character
 {
     #region Variable
+
     protected Vector3 m_MovementDirection;
 
     public int m_iHaveMoeny { get; private set; } = 10000;
 
-    float m_fRotationSpeed = 10f;
+    protected float m_fVertical;
+    protected float m_fHorizontal;
+    protected float m_fMoveAmount;
+    private float m_fRotationSpeed = 10f;
 
-    //Battle
-    System.Diagnostics.Stopwatch m_FallingWatch =     new System.Diagnostics.Stopwatch();
-    System.Diagnostics.Stopwatch m_AttackCheckWatch = new System.Diagnostics.Stopwatch();
+    protected bool m_bSprint;
+    public bool m_bLockOnFlag = false;
+    protected bool m_bLockOnInput = true;
 
-    float m_fMiddleAttackTime = 0;
-    float m_fEndAttackTime = 0;
+    protected Camera m_Camera;
+    protected CameraController m_CameraController;
+
+    protected bool m_bNextAttack = false;
+
+    // Interact
+    public UI_Interact UIInteract = null;
+    public UI_Interact UIInteractPost = null;
+
+    public ItemSoket m_leftHandSlot { get; private set; } // 왼손 장착 소켓
+    public ItemSoket m_RightHandSlot { get; private set; } // 오른손 장착 소켓
+
+    public Weapon m_LeftWeapon; // 현재 장착 아이템들 중 들고 있는 왼손 무기
+    public Weapon m_RightWeapon; // 현재 장착 아이템들 중 들고 있는 오른손 무기
+    public Weapon m_UnarmedWeapon; // 퀵 슬롯 중 빈 칸
+
+    public int m_iCurrentRightWeaponIndex = -1;
+    public int m_iCurrentLeftWeaponIndex = -1;
 
     float m_fWeaponDamage;
     float m_fArmorDefence;
     public override float m_TotalAttack { get { return m_fWeaponDamage; } }
     public override float m_TotalDefence { get { return m_fArmorDefence; } }
 
-    protected Camera m_Camera;
-    protected CameraController m_CameraController;
+    // Attack
+    System.Diagnostics.Stopwatch m_FallingWatch = new System.Diagnostics.Stopwatch();
+    System.Diagnostics.Stopwatch m_AttackCheckWatch = new System.Diagnostics.Stopwatch();
 
-    protected float m_fVertical;
-    protected float m_fHorizontal;
-    protected float m_fMoveAmount;
-    protected bool m_bSprint;
+    float m_fMiddleAttackTime = 0;
+    float m_fEndAttackTime = 0;
     #endregion
 
     protected override void Init()
@@ -40,21 +59,22 @@ public partial class Player : Character
         gameObject.layer = (int)Layer.Player;
 
         base.Init();
+
         m_UnarmedWeapon = new Weapon();
         m_UnarmedWeapon.m_sPrefabPath = "Item/Weapons/Unarmed";
         m_UnarmedWeapon.m_bIsUnarmed = true;
 
         WeaponInit();
 
-        Weapon weapon = Item.MakeItem(5) as Weapon;
+        {
+            // TODO DELETE
+            Weapon weapon = Item.MakeItem(5) as Weapon;
 
-        m_WeaponInRightHandSlots[0] = weapon;
-        m_WeaponInLeftHandSlots[0] = weapon;
+            Weapon weapon2 = Item.MakeItem(4) as Weapon;
 
-        Weapon weapon2 = Item.MakeItem(4) as Weapon;
-
-        m_WeaponInRightHandSlots[1] = weapon2;
-        m_WeaponInLeftHandSlots[1] = weapon2;
+            Managers.Battle.RewardPlayer(this, weapon);
+            Managers.Battle.RewardPlayer(this, weapon2);
+        }
 
         m_LeftWeapon = m_UnarmedWeapon;
         m_RightWeapon = m_UnarmedWeapon;
@@ -68,34 +88,40 @@ public partial class Player : Character
 
     protected override void Update()
     {
-        base.Update();
+        HandleRotation();
 
+        base.Update();
 
         HandleFalling();
         HandleQuickSlotsInput();
+        HandleLockOnInput();
+
         StaminaGraduallyFillingUp();
         CheckInteractableObject();
-        HandleLockOnInput();
     }
 
+    #region UpdateState
     protected override void UpdateIdle()
     {
         base.UpdateIdle();
 
+        if (m_bWaiting)
+            return;
+
         if (m_MovementDirection != Vector3.zero)
         {
-            if (m_bWaiting)
-                return;
-
             SetMoveState(MoveState.Walk);
             eState = CreatureState.Move;
             return;
         }
+        else
+            UpdateAnimatorValues(0, 0, false);
     }
 
-    // 걷기, 달리기 등
     protected override void UpdateMove()
     {
+        base.UpdateMove();
+
         if (m_bWaiting)
             return;
 
@@ -105,7 +131,8 @@ public partial class Player : Character
             m_MovementDirection = Vector3.zero;
         }
 
-        if(m_bLockOnFlag)
+        // Lock On에 따른 애니메이션 조정
+        if(m_bLockOnFlag && m_bSprint == false)
         {
             UpdateAnimatorValues(m_fVertical, m_fHorizontal, m_bSprint);
         }
@@ -115,14 +142,14 @@ public partial class Player : Character
         }
 
         // 이동 및 회전
-        // 카메라를 향해 캐릭터 이동 방향 결정
         m_MovementDirection = Quaternion.AngleAxis(m_Camera.transform.rotation.eulerAngles.y, Vector3.up) * m_MovementDirection;
 
-        transform.position += Time.deltaTime * m_Stat.m_fMoveSpeed * m_MovementDirection;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_MovementDirection), m_fRotationSpeed * Time.deltaTime);
-
         if (m_MovementDirection == Vector3.zero)
+        {
             eState = CreatureState.Idle;
+        }
+
+        transform.position += Time.deltaTime * m_Stat.m_fMoveSpeed * m_MovementDirection;
     }
 
     protected override void UpdateSkill()
@@ -149,6 +176,7 @@ public partial class Player : Character
                 eState = CreatureState.Idle;
                 return;
             }
+
             // 다음 콤보 공격이 가능한 시간대
             else if(m_AttackCheckWatch.Elapsed.Seconds >= m_fMiddleAttackTime)
             {
@@ -160,10 +188,8 @@ public partial class Player : Character
                     Managers.Battle.EventDelegateAttack += m_cAttack.NormalAction;
 
                     m_AttackCheckWatch.Reset();
-                    //m_AttackCheckWatch.Start();
 
                     // 2콤보 이상부터 기존 데미지 1%씩 증가 => 2타 = 1타 데미지 * 0.01%, 3타 데미지 = 2타 데미지 * 0.01%
-                    // 플레이어 한정
                     m_fWeaponDamage = m_fWeaponDamage * 0.01f;
                     AttackEvent(m_cAttack.m_AttackInfo.m_iNextNum);
                     m_bNextAttack = false;
@@ -183,4 +209,18 @@ public partial class Player : Character
 
         Managers.Battle.CheckPointLoad(gameObject);
     }
+
+    public override void SetMoveState(MoveState state)
+    {
+        base.SetMoveState(state);
+
+        if (eMoveState == MoveState.Sprint)
+            m_bSprint = true;
+        else
+            m_bSprint = false;
+    }
+
+    #endregion
+
+
 }

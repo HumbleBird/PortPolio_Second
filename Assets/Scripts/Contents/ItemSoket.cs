@@ -15,6 +15,7 @@ public class ItemSoket : MonoBehaviour
         parentOverride = transform;
     }
 
+    // ÀåÂø ÇØÁ¦
     public void UnloadWeapon()
     {
         if(currentWeaponModel != null)
@@ -23,6 +24,7 @@ public class ItemSoket : MonoBehaviour
         }
     }
 
+    // ÀåÂø ÇØÁ¦ ¹× ¸ðµ¨ »èÁ¦
     public void UnloadWeaponAndDestroy()
     {
         if (currentWeaponModel != null)
@@ -31,6 +33,7 @@ public class ItemSoket : MonoBehaviour
         }
     }
 
+    // ¸ðµ¨ ÀåÂø
     public void LoadWeaponModel(Weapon WeaponItem)
     {
         UnloadWeaponAndDestroy();
@@ -41,7 +44,7 @@ public class ItemSoket : MonoBehaviour
             return;
         }
 
-        GameObject model = Managers.Resource.Instantiate(WeaponItem.m_sPrefabPath) as GameObject;
+        GameObject model = Managers.Resource.Instantiate(WeaponItem.m_sPrefabPath);
         if(model != null)
         {
             if(parentOverride != null)

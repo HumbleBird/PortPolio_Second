@@ -15,6 +15,7 @@ public class Managers : MonoBehaviour
     ZoneManager _zone = new ZoneManager();
     InputBindingManager _inputkey = new InputBindingManager();
     InventoryManager _inventory = new InventoryManager();
+    EquipmentManager _equipment = new EquipmentManager();
     CameraManager _camera = new CameraManager();
 
     public static ObjectManager Object { get { return Instance._object; } }
@@ -23,6 +24,7 @@ public class Managers : MonoBehaviour
     public static ZoneManager Zone { get { return Instance._zone; } }
     public static InputBindingManager InputKey { get { return Instance._inputkey; } }
     public static InventoryManager Inventory { get { return Instance._inventory; } }
+    public static EquipmentManager Equipment { get { return Instance._equipment; } }
     public static CameraManager Camera { get { return Instance._camera; } }
     #endregion
 

@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 9159798383857245318}
   - component: {fileID: 1375731520726749893}
   - component: {fileID: 6469745486797968139}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Doorway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &670082867048226091
 Transform:
@@ -111,12 +111,12 @@ GameObject:
   - component: {fileID: 1556746002516319476}
   - component: {fileID: 5180963354770925904}
   - component: {fileID: 3525132000430666713}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hall.X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3897453624703375412
 Transform:
@@ -211,12 +211,12 @@ GameObject:
   - component: {fileID: 2874374939153802635}
   - component: {fileID: 481590688212186993}
   - component: {fileID: 2874421610709446285}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Room.T
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1958470904269565851
 Transform:
@@ -311,12 +311,12 @@ GameObject:
   - component: {fileID: 5462577738639598375}
   - component: {fileID: 2481934103656491145}
   - component: {fileID: 8334902149697753272}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Room.I
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &552510740606772731
 Transform:
@@ -411,12 +411,12 @@ GameObject:
   - component: {fileID: 4072366050137262207}
   - component: {fileID: 779425817644966882}
   - component: {fileID: 6499592144240108793}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: StairsL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &213262454746743946
 Transform:
@@ -509,14 +509,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4878148618252573368}
   - component: {fileID: 2404024140416176795}
-  - component: {fileID: 2319156558082308058}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Dungeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 0
 --- !u!4 &4878148618252573368
 Transform:
   m_ObjectHideFlags: 0
@@ -557,18 +556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5a2a4ab56bf724faae15359b0ee526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2319156558082308058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5258369272248369154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a822f8a409de04042937413ac4002ccb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5378399979439127378
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,12 +568,12 @@ GameObject:
   - component: {fileID: 5309633286499751537}
   - component: {fileID: 4935054708483510405}
   - component: {fileID: 1115366611414420699}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HallI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7068720526841027136
 Transform:
@@ -681,12 +668,12 @@ GameObject:
   - component: {fileID: 6928468806881095522}
   - component: {fileID: 1370233748927071937}
   - component: {fileID: 1944266981783037195}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hall.T
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5359283500040968187
 Transform:
@@ -781,12 +768,12 @@ GameObject:
   - component: {fileID: 614695434393366074}
   - component: {fileID: 5948723513680113257}
   - component: {fileID: 7401367399110448097}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Room.X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &543813527802440821
 Transform:
@@ -881,12 +868,12 @@ GameObject:
   - component: {fileID: 783980838529281744}
   - component: {fileID: 5483074919239038091}
   - component: {fileID: 5768518102647419216}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4937250721676820376
 Transform:
@@ -980,12 +967,12 @@ GameObject:
   - component: {fileID: 8037096989942634844}
   - component: {fileID: 7924949968706343083}
   - component: {fileID: 1385126538037048948}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hall.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8426987809019564877
 Transform:
@@ -1080,12 +1067,12 @@ GameObject:
   - component: {fileID: 2617047882383742004}
   - component: {fileID: 3024211358580285027}
   - component: {fileID: 3478331107466837925}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RoomCap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8879423836489415059
 Transform:
@@ -1180,12 +1167,12 @@ GameObject:
   - component: {fileID: 3346985726098723544}
   - component: {fileID: 3853961358538510332}
   - component: {fileID: 6078239271393722149}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Room.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7654851858256695780
 Transform:
@@ -1280,12 +1267,12 @@ GameObject:
   - component: {fileID: 759112029883499496}
   - component: {fileID: 2120924554161329977}
   - component: {fileID: 8888898569597607978}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hallsingle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6331163184870717196
 Transform:

@@ -72,15 +72,16 @@ public partial class Player : Character
 
     public override void UpdateAnimation()
     {
-        base.UpdateAnimation();
-
         switch (eState)
         {
             case CreatureState.Idle:
+                PlayAnimation("Stand");
                 break;
             case CreatureState.Move:
                 break;
             case CreatureState.Skill:
+                if (eMoveState == MoveState.Run)
+                    PlayAnimation("Run");
                 break;
             case CreatureState.Dead:
                 int deadId = UnityEngine.Random.Range(0, 2);

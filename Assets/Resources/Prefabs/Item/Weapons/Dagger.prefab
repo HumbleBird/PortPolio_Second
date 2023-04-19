@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 9025334838364058307}
   - component: {fileID: 8859832128710697399}
   - component: {fileID: 5740682676032930022}
+  - component: {fileID: 4900286408318709535}
   m_Layer: 0
   m_Name: Blade-material
   m_TagString: Untagged
@@ -229,6 +230,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4900286408318709535
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147797459945471951}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 19de0e4014be1a94e8a8f379c50dac5c, type: 2}
 --- !u!1 &1515813701483935425
 GameObject:
   m_ObjectHideFlags: 0

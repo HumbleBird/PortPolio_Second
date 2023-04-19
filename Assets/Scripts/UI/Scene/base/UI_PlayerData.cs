@@ -49,6 +49,7 @@ public class UI_PlayerData : UI_Base
         ItemDiscoveryValueText,
         AttunementSlotsValueText,
     }
+
     Player _player;
     public override bool Init()
     {
@@ -66,6 +67,8 @@ public class UI_PlayerData : UI_Base
     public override void RefreshUI()
     {
         base.RefreshUI();
+        if(_player == null)
+            _player = Managers.Object.myPlayer;
 
 
         // 캐릭터 데이터

@@ -16,7 +16,8 @@ public partial class CameraController : MonoBehaviour
     public Transform cameraPivotTranform;
     private Transform myTranform;
     private Vector3 cameraTransformPosition;
-    private LayerMask ignoreLayers;
+    public LayerMask ignoreLayers;
+    public LayerMask enviromentLayer;
     private Vector3 cameraFollwVelocity = Vector3.zero;
 
     public float lookSpeed = 0.1f;
@@ -34,8 +35,8 @@ public partial class CameraController : MonoBehaviour
     public float cameraSphereRadius = 0.2f;
     public float cameraCollisionOffSet = 0.2f;
     public float minimumCollisionOffSet = 0.2f;
-
-    #endregion
+    public float m_fLockedPivotPosition = 2.25f;
+    public float m_fUnlockedPivotPosition = 1.65f;
 
     public float maximunLockOnDistance = 30f;
 
@@ -45,6 +46,8 @@ public partial class CameraController : MonoBehaviour
     public Transform m_trleftLockTarget;
     public Transform m_trRightLockTarget;
 
+    #endregion
+
     private void Start()
     {
         Application.targetFrameRate = 60;
@@ -53,6 +56,7 @@ public partial class CameraController : MonoBehaviour
         defaultPosition = cameraTransform.localPosition.z;
         targetTransform =  Managers.Object.myPlayer.gameObject.transform;
         ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10 | 1 << 12);
+        enviromentLayer = LayerMask.NameToLayer("Obstacle");
     }
 
     public void FollwTarget(float delta)
@@ -128,8 +132,6 @@ public partial class CameraController : MonoBehaviour
         cameraTransform.localPosition = cameraTransformPosition;
     }
 
-
-
     public void HandleLockOn()
     {
         GameObject player = Managers.Object.myPlayer.gameObject;
@@ -149,12 +151,25 @@ public partial class CameraController : MonoBehaviour
                 Vector3 lockTargetDirection = character.transform.position - player.transform.position;
                 float distanceFromTarget = Vector3.Distance(player.transform.position, character.transform.position);
                 float viewableAngle = Vector3.Angle(lockTargetDirection, Managers.Camera.m_Camera.transform.forward);
+                RaycastHit hit;
 
                 if (character.transform.root != player.transform.root
                     && viewableAngle > -50 && viewableAngle < 50
                     && distanceFromTarget <= maximunLockOnDistance)
                 {
-                    m_ListAvailableTarget.Add(character);
+                    if(Physics.Linecast(Managers.Object.myPlayer.m_LockOnTransform.position, character.m_LockOnTransform.position, out hit))
+                    {
+                        Debug.DrawLine(Managers.Object.myPlayer.m_LockOnTransform.position, character.m_LockOnTransform.position);
+
+                        if(hit.transform.gameObject.layer == enviromentLayer)
+                        {
+
+                        }
+                        else
+                        {
+                            m_ListAvailableTarget.Add(character);
+                        }
+                    }
                 }
             }
         }
@@ -195,5 +210,21 @@ public partial class CameraController : MonoBehaviour
         m_ListAvailableTarget.Clear();
         m_trCurrentLockOnTarget = null;
         m_trNearestLockOnTarget = null;
+    }
+
+    public void SetCameraHeight()
+    {
+        Vector3 velocity = Vector3.zero;
+        Vector3 newLockedPosition = new Vector3(0, m_fLockedPivotPosition);
+        Vector3 newUnLockedPosition = new Vector3(0, m_fUnlockedPivotPosition);
+
+        if(m_trCurrentLockOnTarget != null)
+        {
+            cameraPivotTranform.transform.localPosition = Vector3.SmoothDamp(cameraPivotTranform.transform.localPosition, newLockedPosition, ref velocity, Time.deltaTime);
+        }
+        else
+        {
+            cameraPivotTranform.transform.localPosition = Vector3.SmoothDamp(cameraPivotTranform.transform.localPosition, newUnLockedPosition, ref velocity, Time.deltaTime);
+        }
     }
 }

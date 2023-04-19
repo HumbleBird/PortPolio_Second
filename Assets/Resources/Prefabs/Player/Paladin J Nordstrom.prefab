@@ -1935,6 +1935,7 @@ MonoBehaviour:
   eMoveState: 0
   m_LockOnTransform: {fileID: 2465022720768298769}
   m_goTarget: {fileID: 0}
+  m_bLockOnFlag: 0
   UIInteract: {fileID: 0}
   UIInteractPost: {fileID: 0}
   m_iCurrentRightWeaponIndex: -1
@@ -1968,7 +1969,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 2c291dc785f62b946afc33152735d06f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

@@ -27,9 +27,9 @@ public partial class MyPlayer : Player
 
 		OptionKeyDic = new Dictionary<KeyCode, Action>
 		{
-			{ Managers.InputKey._binding.Bindings[UserAction.UI_Setting], () => {    Managers.UIBattle.ShowAndCloseUI<UI_SettingKey>(); }},
-			{ Managers.InputKey._binding.Bindings[UserAction.UI_Inventory], () => {  Managers.UIBattle.ShowAndCloseUI<UI_Inven>(); }},
-			{ Managers.InputKey._binding.Bindings[UserAction.UI_Equipment], () => {  Managers.UIBattle.ShowAndCloseUI<UI_Equipment>(); }},
+			{ Managers.InputKey._binding.Bindings[UserAction.OpenMenu], () => {    Managers.UIBattle.ShowAndCloseUI<UI_SettingKey>(); }},
+			{ KeyCode.I, () => {  Managers.UIBattle.ShowAndCloseUI<UI_Inven>(); }},
+			{ KeyCode.O, () => {  Managers.UIBattle.ShowAndCloseUI<UI_Equipment>(); }},
 		};
 	}
 
@@ -56,7 +56,7 @@ public partial class MyPlayer : Player
 		base.UpdateSkill();
 
 		// 일반 공격
-		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
+		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_RightHand]))
 		{
 			m_bNextAttack = true;
 		}
@@ -108,7 +108,7 @@ public partial class MyPlayer : Player
 				HandleJumping();
 
 			// 구르기 및 백스템
-			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Roll]))
+			if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Dash_BackStep_Roll]))
 				RollAndBackStep();
 		}
 
@@ -117,11 +117,11 @@ public partial class MyPlayer : Player
         {
 			if (m_bCanAttack == true && m_Stat.m_fStemina != 0 && m_cAttack != null)
 			{
-				if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.NormalAction]))
+				if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_RightHand]))
 				{
 					m_cAttack.NormalAction();
 				}
-				else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.SpecialAction]))
+				else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_LeftHand]))
 				{
 					m_cAttack.SpecialAction();
 				}
@@ -130,10 +130,6 @@ public partial class MyPlayer : Player
 
 		// Option
 		InputOptionKey();
-
-		// Lock On
-		if (Input.GetKeyDown(KeyCode.P)) //원래는 Q
-			Managers.Camera.HandleLockOn();
 	}
 
 	public void InputOptionKey()

@@ -40,6 +40,10 @@ public partial class Character : Base
                 eMoveState = MoveState.Run;
                 m_Stat.m_fMoveSpeed = m_Stat.m_fRunSpeed;
                 break;
+            case MoveState.Sprint:
+                eMoveState = MoveState.Sprint;
+                m_Stat.m_fMoveSpeed = m_Stat.m_fDashSpeed;
+                break;
             case MoveState.Falling:
                 eMoveState = MoveState.Falling;
                 m_Stat.m_fMoveSpeed = 0;

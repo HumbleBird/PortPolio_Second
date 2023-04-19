@@ -91,17 +91,54 @@ namespace Rito.InputBindings
         /// <summary> 초기 상태로 설정 </summary>
         public void ResetAll()
         {
-            Bind(UserAction.NormalAction,  KeyCode.Mouse0);
-            Bind(UserAction.SpecialAction, KeyCode.Mouse1);
+            // Move,  
+            Bind(UserAction.Walk, KeyCode.LeftAlt);
+            Bind(UserAction.Run_Forward, KeyCode.W);
+            Bind(UserAction.Run_Backward, KeyCode.S);
+            Bind(UserAction.Run_Left, KeyCode.A);
+            Bind(UserAction.Run_Right, KeyCode.D);
+            Bind(UserAction.Dash_BackStep_Roll, KeyCode.Space);
+            Bind(UserAction.Jump, KeyCode.Space);
 
-            //Bind(UserAction.Jump,         KeyCode.Space);
-            Bind(UserAction.Roll,         KeyCode.Space);
+            // Camera
+            //Bind(UserAction.TiltCameraUp, KeyCode.);
+            //Bind(UserAction.TiltCameraDown, KeyCode.);
+            Bind(UserAction.TiltCameraLeft_ChangeTargetLeft, KeyCode.R);
+            Bind(UserAction.TiltCameraRight_ChangeTargetRight, KeyCode.T);
+            Bind(UserAction.CameraReset_LockOn, KeyCode.Q);
 
-            Bind(UserAction.UI_Inventory, KeyCode.I);
-            Bind(UserAction.UI_Equipment, KeyCode.U);
-            Bind(UserAction.UI_Status,    KeyCode.P);
-            Bind(UserAction.UI_Skill,     KeyCode.K);
-            Bind(UserAction.UI_Setting,   KeyCode.Escape);
+            // Switch Equipment
+            Bind(UserAction.SwitchSpells,          KeyCode.UpArrow);
+            Bind(UserAction.SwitchQuickItems,      KeyCode.DownArrow);
+            Bind(UserAction.SwitchRightHandWeapon, KeyCode.RightArrow);
+            Bind(UserAction.switchLeftHandWeapon,  KeyCode.LeftArrow);
+
+            // Attack
+            Bind(UserAction.Attack_RightHand, KeyCode.Mouse0); //Left Lick
+            //Bind(UserAction.StrongAttack_RightHand, KeyCode.Mouse0 + KeyCode.LeftShift); // Shitf + Left Click
+            Bind(UserAction.Attack_LeftHand, KeyCode.Mouse1); //Right Lick
+            //Bind(UserAction.StrongAttack_LeftHand, KeyCode.Mouse1 + KeyCode.LeftShift); // Shitf + Right Click
+            Bind(UserAction.UseItem, KeyCode.R);
+            Bind(UserAction.Interact, KeyCode.E);
+            Bind(UserAction.TwoHandWeapon, KeyCode.F);
+
+            // Key Bindings
+            Bind(UserAction.OpenMenu, KeyCode.Escape);
+            Bind(UserAction.OpenGestureMenu, KeyCode.G);
+            //Bind(UserAction.MoveCurser_Up,    KeyCode.UpArrow);
+            //Bind(UserAction.MoveCurser_Down,  KeyCode.DownArrow);
+            //Bind(UserAction.MoveCurser_Right, KeyCode.RightArrow);
+            //Bind(UserAction.MoveCurser_Left,  KeyCode.LeftArrow);
+            //Bind(UserAction.Confirm, KeyCode.E);
+            //Bind(UserAction.Cancel, KeyCode.Q);
+            //Bind(UserAction.SwitchTab_Left, KeyCode.LeftShift + KeyCode.LeftArrow);
+            //Bind(UserAction.SwitchTab_Right, KeyCode.LeftShift + KeyCode.RightArrow);
+            //Bind(UserAction.Function1, KeyCode.R);
+
+
+
+
+
         }
 
         /// <summary> 바인딩 등록 또는 변경

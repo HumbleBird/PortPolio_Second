@@ -148,20 +148,49 @@ public class Define
 
     public enum UserAction
     {
-        //Battle
-        NormalAction,
-        SpecialAction,
+        // Move
+        Walk,
+        Run_Forward,
+        Run_Backward,
+        Run_Left,
+        Run_Right,
+        Dash_BackStep_Roll,
+        Jump,
 
-        //Action
-        //Jump,
-        Roll,
+        // Camera
+        TiltCameraUp,
+        TiltCameraDown,
+        TiltCameraLeft_ChangeTargetLeft,
+        TiltCameraRight_ChangeTargetRight,
+        CameraReset_LockOn,
 
-        // UI
-        UI_Inventory,
-        UI_Equipment,
-        UI_Status,
-        UI_Skill,
-        UI_Setting
+        // Switch Equipment
+        SwitchSpells,
+        SwitchQuickItems,
+        SwitchRightHandWeapon,
+        switchLeftHandWeapon,
+
+        // Attack
+        Attack_RightHand,
+        StrongAttack_RightHand,
+        Attack_LeftHand,
+        StrongAttack_LeftHand,
+        UseItem,
+        Interact,
+        TwoHandWeapon,
+
+        // Key Bindings
+        OpenMenu,
+        OpenGestureMenu,
+        MoveCurser_Up,
+        MoveCurser_Down,
+        MoveCurser_Right,
+        MoveCurser_Left,
+        Confirm,
+        Cancel,
+        SwitchTab_Left,
+        SwitchTab_Right,
+        Function1,
     }
 
     #endregion

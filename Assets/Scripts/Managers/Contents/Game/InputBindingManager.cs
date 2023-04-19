@@ -19,7 +19,8 @@ namespace Rito.InputBindings
         {
             None,
             Mouse,
-            Keyboard
+            Keyboard,
+            JoyStick
         }
 
         #endregion

@@ -21,7 +21,7 @@ public class Stat
     public float m_fMoveSpeed    { get; set; }
     public float m_fWalkSpeed    { get; set; } 
     public float m_fRunSpeed     { get; set; }
-    public float m_fAttackSpeed  { get; set; }
+    public float m_fDashSpeed     { get; set; }
 
     public void Init()
     {
@@ -38,5 +38,7 @@ public class Stat
         m_fMoveSpeed = 0;
         m_fWalkSpeed = m_tStatInfo.m_fWalkSpeed;
         m_fRunSpeed = m_tStatInfo.m_fRunSpeed;
+        m_fDashSpeed = 7;
     }
 }
+

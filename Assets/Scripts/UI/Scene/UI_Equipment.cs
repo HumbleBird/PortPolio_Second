@@ -32,15 +32,15 @@ public class UI_Equipment : UI_Base
     int[] EquipmentInventoryCount = { 3, 2, 3, 2, 4, 1, 4, 10 };
 
     #region Grid
-    List<UI_Equipment_Item> AllGrid = new List<UI_Equipment_Item>();
-    List<UI_Equipment_Item> WeaponGrid = new List<UI_Equipment_Item>();
+    List<UI_Equipment_Item> AllGrid             = new List<UI_Equipment_Item>();
+    List<UI_Equipment_Item> WeaponGrid          = new List<UI_Equipment_Item>();
     List<UI_Equipment_Item> RightProjectileGrid = new List<UI_Equipment_Item>();
-    List<UI_Equipment_Item> ShieldGrid = new List<UI_Equipment_Item>();
-    List<UI_Equipment_Item> LeftProjectileGrid = new List<UI_Equipment_Item>();
-    List<UI_Equipment_Item> ArmorGrid = new List<UI_Equipment_Item>();
-    List<UI_Equipment_Item> SpeicialGrid = new List<UI_Equipment_Item>();
-    List<UI_Equipment_Item> RingGrid = new List<UI_Equipment_Item>();
-    List<UI_Equipment_Item> ItemGrid = new List<UI_Equipment_Item>();
+    List<UI_Equipment_Item> ShieldGrid          = new List<UI_Equipment_Item>();
+    List<UI_Equipment_Item> LeftProjectileGrid  = new List<UI_Equipment_Item>();
+    List<UI_Equipment_Item> ArmorGrid           = new List<UI_Equipment_Item>();
+    List<UI_Equipment_Item> SpeicialGrid        = new List<UI_Equipment_Item>();
+    List<UI_Equipment_Item> RingGrid            = new List<UI_Equipment_Item>();
+    List<UI_Equipment_Item> ItemGrid            = new List<UI_Equipment_Item>();
     #endregion
 
     public override bool Init()
@@ -64,7 +64,8 @@ public class UI_Equipment : UI_Base
         return true;
     }
 
-    public void CreateEquipmentInventory(int count, int enumIndex)
+    // 각 종류별 List에 있는 장비 아이템 칸 생성
+    private void CreateEquipmentInventory(int count, int enumIndex)
     {
         GameObject gridPannel = GetObject(enumIndex);
         foreach (Transform child in gridPannel.transform)
@@ -115,7 +116,7 @@ public class UI_Equipment : UI_Base
         base.RefreshUI();
 
         // 장비칸에 아이템 넣기
-        foreach (Item item in Managers.Inventory.m_Items)
+        foreach (Item item in Managers.Equipment.m_ListAllItems)
         {
             // 아이템 해제
             if (item.m_bEquipped == false)
@@ -169,6 +170,11 @@ public class UI_Equipment : UI_Base
             }
         }
 
+        ShowItemInfo();
+    }
+
+    private void ShowItemInfo()
+    {
         // 처음 장비창을 열었다면
         if (m_bStartClick == false)
         {
