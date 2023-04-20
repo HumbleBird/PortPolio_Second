@@ -5,8 +5,10 @@ using UnityEngine;
 public class ItemSoket : MonoBehaviour
 {
     public Transform parentOverride;
+    public Weapon CurrentWeapon;
     public bool isLeftHandSlot;
     public bool isRightHandSlot;
+    public bool isBackSlot;
 
     public GameObject currentWeaponModel;
 

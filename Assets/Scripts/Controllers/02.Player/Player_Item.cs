@@ -25,7 +25,7 @@ public partial class Player : Character
         if (item == null)
             return;
 
-        int? slot = Managers.Equipment.GetEmptySlot();
+        int? slot = Managers.Equipment.GetEmptySlot(item);
         if (slot == null)
             return;
 
@@ -127,6 +127,10 @@ public partial class Player : Character
             {
                 m_RightHandSlot = weaponslot;
             }
+            else if (weaponslot.isBackSlot)
+            {
+                m_BackSlot = weaponslot;
+            }
         }
     }
 
@@ -136,11 +140,48 @@ public partial class Player : Character
     {
         if (isLeft)
         {
+            m_leftHandSlot.CurrentWeapon = weaponItem;
             m_leftHandSlot.LoadWeaponModel(weaponItem);
+
+            #region Handle Left Weapon Idle Animation
+            if (weaponItem != null && weaponItem != m_UnarmedWeapon)
+            {
+                PlayAnimation(weaponItem.m_sLeft_Hand_Idle);
+            }
+            else
+            {
+                PlayAnimation("Left Arm Empty");
+            }
+            #endregion
         }
         else
         {
+            if(m_bTwoHandFlag)
+            {
+                m_BackSlot.LoadWeaponModel(m_leftHandSlot.CurrentWeapon);
+                m_leftHandSlot.UnloadWeaponAndDestroy();
+                PlayAnimation(weaponItem.m_sTwo_Hand_Idle);
+            }
+            else
+            {
+                #region Handle Right Weapon Idle Animation
+                PlayAnimation("Both Arm Empty");
+
+                m_BackSlot.UnloadWeaponAndDestroy();
+                if (weaponItem != null && weaponItem != m_UnarmedWeapon)
+                {
+                    PlayAnimation(weaponItem.m_sRight_Hand_Idle);
+                }
+                else
+                {
+                    PlayAnimation("Right Arm Empty");
+                }
+                #endregion
+            }
+
+            m_RightHandSlot.CurrentWeapon = weaponItem;
             m_RightHandSlot.LoadWeaponModel(weaponItem);
+
         }
     }
 
@@ -243,6 +284,8 @@ public partial class Player : Character
             Managers.Equipment.m_ListWeaponInRightHandSlots = weaponhandslots;
         }
 
+        // UI
+
         Managers.UIBattle.UIGameScene.UIPlayerInfo.RefreshItem();
     }
 
@@ -253,11 +296,9 @@ public partial class Player : Character
         {
             case WeaponType.Daggers:
                 m_cAttack = new Blow();
-                m_cAttack.m_eWeaponType = WeaponType.Daggers;
                 break;
             case WeaponType.StraightSwordsGreatswords:
                 m_cAttack = new Blow();
-                m_cAttack.m_eWeaponType = WeaponType.StraightSwordsGreatswords;
                 break;
             case WeaponType.Greatswords:
                 break;
@@ -309,6 +350,7 @@ public partial class Player : Character
                 break;
         }
 
+        m_cAttack.m_eWeaponType = weapon.eWeaponType;
         m_cAttack.m_cGo = this;
     }
     #endregion

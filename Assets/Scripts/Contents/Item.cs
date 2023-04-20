@@ -70,6 +70,12 @@ public class Weapon : Item
     public int Damage { get; private set; }
     public int DamageReduction { get; private set; }
 
+    // Animation
+    public string m_sRight_Hand_Idle = "Player Right Arm Idle";
+    public string m_sLeft_Hand_Idle = "Player Left Arm Idle";
+    public string m_sTwo_Hand_Idle = "Player Great Sword Idle";
+
+
     public Weapon(int id) : base(ItemType.Weapon)
     {
         Table_Item_Weapon.Info data = Managers.Table.m_Item_Weapon.Get(id);

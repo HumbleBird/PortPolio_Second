@@ -115,9 +115,9 @@ namespace Rito.InputBindings
 
             // Attack
             Bind(UserAction.Attack_RightHand, KeyCode.Mouse0); //Left Lick
-            //Bind(UserAction.StrongAttack_RightHand, KeyCode.Mouse0 + KeyCode.LeftShift); // Shitf + Left Click
+            Bind(UserAction.StrongAttack_RightHand, KeyCode.K); // KeyCode.Mouse0 + KeyCode.LeftShift); // Shitf + Left Click
             Bind(UserAction.Attack_LeftHand, KeyCode.Mouse1); //Right Lick
-            //Bind(UserAction.StrongAttack_LeftHand, KeyCode.Mouse1 + KeyCode.LeftShift); // Shitf + Right Click
+            Bind(UserAction.StrongAttack_LeftHand, KeyCode.L); // KeyCode.Mouse1 + KeyCode.LeftShift); // Shitf + Right Click
             Bind(UserAction.UseItem, KeyCode.R);
             Bind(UserAction.Interact, KeyCode.E);
             Bind(UserAction.TwoHandWeapon, KeyCode.F);

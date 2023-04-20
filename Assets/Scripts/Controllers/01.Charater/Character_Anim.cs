@@ -76,7 +76,8 @@ public partial class Character : Base
 
         m_sCurrentAnimationName = animName;
 
-        m_Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)layer);
+        //m_Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)layer);
+        m_Animator.CrossFade(animName, m_fNormalizeTransitionDuration);
     }
 
     private AnimationLayers SetLayer(string animName)

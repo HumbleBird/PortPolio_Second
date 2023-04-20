@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Define;
 
 public class EquipmentManager
 {
@@ -14,16 +15,20 @@ public class EquipmentManager
     {
         switch (item.eItemType)
         {
-            case Define.ItemType.None:
+            case ItemType.None:
                 break;
-            case Define.ItemType.Weapon:
-                m_ListWeaponInRightHandSlots[index] = (Weapon)item;
+            case ItemType.Weapon:
+                Weapon weapon = (Weapon)item;
+                if(weapon.eWeaponType != WeaponType.Shield)
+                    m_ListWeaponInRightHandSlots[index] = (Weapon)item;
+                else
+                    m_ListWeaponInLeftHandSlots[index] = (Weapon)item;
                 break;
-            case Define.ItemType.Armor:
+            case ItemType.Armor:
                 break;
-            case Define.ItemType.Consumable:
+            case ItemType.Consumable:
                 break;
-            case Define.ItemType.Order:
+            case ItemType.Order:
                 break;
             default:
                 break;
@@ -36,16 +41,20 @@ public class EquipmentManager
     {
         switch (item.eItemType)
         {
-            case Define.ItemType.None:
+            case ItemType.None:
                 break;
-            case Define.ItemType.Weapon:
-                m_ListWeaponInRightHandSlots[index] = null;
+            case ItemType.Weapon:
+                Weapon weapon = (Weapon)item;
+                if (weapon.eWeaponType != WeaponType.Shield)
+                    m_ListWeaponInRightHandSlots[index] = null;
+                else
+                    m_ListWeaponInLeftHandSlots[index] = null;
                 break;
-            case Define.ItemType.Armor:
+            case ItemType.Armor:
                 break;
-            case Define.ItemType.Consumable:
+            case ItemType.Consumable:
                 break;
-            case Define.ItemType.Order:
+            case ItemType.Order:
                 break;
             default:
                 break;
@@ -54,23 +63,39 @@ public class EquipmentManager
         m_ListAllItems.Remove(item);
     }
 
-    public Item Find(Func<Item, bool> condition)
+    public int? GetEmptySlot(Item item)
     {
-        foreach (Item item in m_ListWeaponInRightHandSlots)
+        switch (item.eItemType)
         {
-            if (condition.Invoke(item))
-                return item;
-        }
-
-        return null;
-    }
-
-    public int? GetEmptySlot()
-    {
-        for (int slot = 0; slot < 3; slot++)
-        {
-            if (m_ListWeaponInRightHandSlots[slot] == null)
-                return slot;
+            case ItemType.None:
+                break;
+            case ItemType.Weapon:
+                Weapon weapon = (Weapon)item;
+                if (weapon.eWeaponType != WeaponType.Shield)
+                {
+                    for (int slot = 0; slot < 3; slot++)
+                    {
+                        if (m_ListWeaponInRightHandSlots[slot] == null)
+                            return slot;
+                    }
+                }
+                else
+                {
+                    for (int slot = 0; slot < 3; slot++)
+                    {
+                        if (m_ListWeaponInLeftHandSlots[slot] == null)
+                            return slot;
+                    }
+                }
+                break;
+            case ItemType.Armor:
+                break;
+            case ItemType.Consumable:
+                break;
+            case ItemType.Order:
+                break;
+            default:
+                break;
         }
 
         return null;

@@ -17,9 +17,10 @@ public partial class Player : Character
     protected float m_fMoveAmount;
     private float m_fRotationSpeed = 10f;
 
-    protected bool m_bSprint;
+    public bool m_bSprint;
     public bool m_bLockOnFlag = false;
-    protected bool m_bLockOnInput = true;
+    public bool m_bLockOnInput = true;
+    public bool m_bTwoHandFlag;
 
     protected Camera m_Camera;
     protected CameraController m_CameraController;
@@ -32,9 +33,11 @@ public partial class Player : Character
 
     public ItemSoket m_leftHandSlot { get; private set; } // 왼손 장착 소켓
     public ItemSoket m_RightHandSlot { get; private set; } // 오른손 장착 소켓
+    public ItemSoket m_BackSlot { get; private set; } // 등 뒤 소켓, 양손 무기으로 변경할 시 왼손에 있는 무기를 뒤로 보냄
 
     public Weapon m_LeftWeapon; // 현재 장착 아이템들 중 들고 있는 왼손 무기
     public Weapon m_RightWeapon; // 현재 장착 아이템들 중 들고 있는 오른손 무기
+    
     public Weapon m_UnarmedWeapon; // 퀵 슬롯 중 빈 칸
 
     public int m_iCurrentRightWeaponIndex = -1;
@@ -71,9 +74,11 @@ public partial class Player : Character
             Weapon weapon = Item.MakeItem(5) as Weapon;
 
             Weapon weapon2 = Item.MakeItem(4) as Weapon;
+            Weapon shield = Item.MakeItem(8) as Weapon;
 
             Managers.Battle.RewardPlayer(this, weapon);
             Managers.Battle.RewardPlayer(this, weapon2);
+            Managers.Battle.RewardPlayer(this, shield);
         }
 
         m_LeftWeapon = m_UnarmedWeapon;
@@ -95,6 +100,7 @@ public partial class Player : Character
         HandleFalling();
         HandleQuickSlotsInput();
         HandleLockOnInput();
+        HandleTwoHandInput();
 
         StaminaGraduallyFillingUp();
         CheckInteractableObject();

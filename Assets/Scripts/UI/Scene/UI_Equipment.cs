@@ -123,7 +123,13 @@ public class UI_Equipment : UI_Base
             {
                 // 이 아이템이 등록 된 칸을 찾아서 아이템 해제하기
                 if (item.eItemType == ItemType.Weapon)
-                    ItemInGridUnEquipItem(WeaponGrid, item);
+                {
+                    Weapon weaponItem = (Weapon)item;
+                    if(weaponItem.eWeaponType != WeaponType.Shield) // 오른손 무기
+                        ItemInGridUnEquipItem(WeaponGrid, item);
+                    else
+                        ItemInGridUnEquipItem(ShieldGrid, item);
+                }
                 else if (item.eItemType == ItemType.Armor)
                     ItemInGridUnEquipItem(ArmorGrid, item);
                 else if (item.eItemType == ItemType.Consumable)
@@ -135,7 +141,14 @@ public class UI_Equipment : UI_Base
             // 아이템 장착
             if (item.eItemType == ItemType.Weapon)
             {
-                foreach (UI_Equipment_Item itemInGrid in WeaponGrid)
+                Weapon weaponItem = (Weapon)item;
+                List<UI_Equipment_Item> list;
+                if (weaponItem.eWeaponType != WeaponType.Shield) // 오른손 무기
+                    list = WeaponGrid;
+                else // 왼손 무기 (방패)
+                    list = ShieldGrid;
+
+                foreach (UI_Equipment_Item itemInGrid in list)
                 {
                     if (itemInGrid.m_bEquipped == false && item.EquipmentSlot == -1)
                     {
@@ -218,7 +231,14 @@ public class UI_Equipment : UI_Base
     {
         if (item.eItemType == ItemType.Weapon)
         {
-            UI_Equipment_Item equipped = WeaponGrid.FirstOrDefault(i => i.m_bEquipped == false);
+            Weapon weaponItem = (Weapon)item;
+            List<UI_Equipment_Item> list;
+            if (weaponItem.eWeaponType != WeaponType.Shield) // 오른손 무기
+                list = WeaponGrid;
+            else // 왼손 무기 (방패)
+                list = ShieldGrid;
+
+            UI_Equipment_Item equipped = list.FirstOrDefault(i => i.m_bEquipped == false);
             // 비워진 슬롯이 없다. 장비 창이 꽉 찼다
             if (equipped == false)
                 return true;

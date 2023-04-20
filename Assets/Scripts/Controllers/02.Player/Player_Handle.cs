@@ -210,4 +210,28 @@ public partial class Player : Character
 
         m_CameraController.SetCameraHeight();
     }
+
+    // 오른손 무기를 중점으로 두 손 무기로 변형
+    public void HandleTwoHandInput()
+    {
+        if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.TwoHandWeapon]))
+        {
+            m_bTwoHandFlag = !m_bTwoHandFlag;
+
+            if (m_bTwoHandFlag)
+            {
+                // Enable Two Handing
+                LoadWeaponOnSlot(m_RightWeapon, false);
+
+            }
+            else
+            {
+                // Disable Two Handing
+                LoadWeaponOnSlot(m_RightWeapon, false);
+                LoadWeaponOnSlot(m_LeftWeapon, true);
+
+            }
+        }
+
+    }
 }

@@ -40,7 +40,7 @@ public class Define
     }
     #endregion
 
-    #region Battle
+    #region Multy
 
     public enum Team
     {
@@ -78,6 +78,7 @@ public class Define
         PiercingSwords,
         Axes,
         Greataxes,
+
         Hammers,
         GreatHammers,
         FistAndClaws,
@@ -88,6 +89,7 @@ public class Define
         Bows,
         Greatbows,
         Crossbows,
+
         Staves,
         Flames,
         Talismans,
