@@ -64,31 +64,23 @@ public partial class Character : Base
         if (eActionState == ActionState.Shield)
             hitAnimName = HitMotion.ShieldHit.ToString();
 
-        PlayAnimation(hitAnimName);
+        PlayAnimation(hitAnimName, true);
     }
 
-    public void PlayAnimation(string animName)
+    public void PlayAnimation(string animName, bool Interacting = false)
     {
         if (animName == null)
             return;
 
-        AnimationLayers layer = SetLayer(animName);
-
         m_sCurrentAnimationName = animName;
 
-        //m_Animator.CrossFade(animName, m_fNormalizeTransitionDuration, (int)layer);
+        if(Interacting)
+        {
+            float time = Managers.Object.myPlayer.GetAnimationTime(m_sCurrentAnimationName);
+            Stop(time);
+        }
+
         m_Animator.CrossFade(animName, m_fNormalizeTransitionDuration);
-    }
-
-    private AnimationLayers SetLayer(string animName)
-    {
-        // TODO
-        AnimationLayers animLayer = AnimationLayers.BaseLayer;
-
-        if (animName == "Shield")
-            animLayer = AnimationLayers.UpperLayer;
-
-        return animLayer;
     }
 
     public float GetAnimationTime(string animName, float time = 1f)

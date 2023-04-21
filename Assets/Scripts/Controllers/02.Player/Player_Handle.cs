@@ -60,7 +60,6 @@ public partial class Player : Character
 
     }
 
-
     public void HandleFalling()
     {
         Vector3 origin = transform.position;
@@ -102,10 +101,8 @@ public partial class Player : Character
             if (eMoveState == MoveState.Falling)
             {
                 Debug.Log("you are flying the time : " + m_FallingWatch.Elapsed.TotalSeconds);
-                PlayAnimation("Falling To Landing");
+                PlayAnimation("Falling To Landing", true);
                 eMoveState = MoveState.None;
-                float time = GetAnimationTime("Falling To Landing");
-                StartCoroutine(WaitToState(time, CreatureState.Idle));
                 m_FallingWatch.Stop();
 
                 if (m_FallingWatch.Elapsed.TotalSeconds >= 0.5)
@@ -209,6 +206,58 @@ public partial class Player : Character
         }
 
         m_CameraController.SetCameraHeight();
+    }
+
+    public void HandleWeaponCombo(Weapon weapon)
+    {
+        if(m_bComboFlag)
+        {
+            if (m_sLastAttack == weapon.m_sLight_Attack_1)
+            {
+                PlayAnimation(weapon.m_sLight_Attack_2);
+            }
+        }
+    }
+
+    // Attack
+    public void HandleLightAttack(Weapon weapon)
+    {
+        string attackName = null;
+        if (m_bTwoHandFlag)
+        {
+            attackName = weapon.m_sTwo_Hand_Idle;
+        }
+        else
+        {
+            attackName = weapon.m_sLight_Attack_1;
+        }
+
+        m_sLastAttack = attackName;
+
+        // 애니메이션 실행
+        PlayAnimation(attackName);
+
+        eState = CreatureState.Skill;
+
+        // 스테미너 감소
+        float newStemina = m_Stat.m_fStemina - 10;
+        SetStemina(newStemina);
+    }
+
+    public void HandleHeavyAttack(Weapon weapon)
+    {
+        string attackName = null;
+        attackName = weapon.m_sHeavy_Attack_1;
+        m_sLastAttack = attackName;
+
+        // 애니메이션 실행
+        PlayAnimation(attackName);
+
+        eState = CreatureState.Skill;
+
+        // 스테미너 감소
+        float newStemina = m_Stat.m_fStemina - 10;
+        SetStemina(newStemina);
     }
 
     // 오른손 무기를 중점으로 두 손 무기로 변형

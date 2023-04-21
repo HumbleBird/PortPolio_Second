@@ -10,7 +10,6 @@ public abstract  partial class Character : Base
     public Character m_goTarget = null;
     protected bool  m_bCanAttack = true;
 
-
     public virtual float m_TotalAttack { get { return m_Stat.m_iAtk; } }
     public virtual float m_TotalDefence { get { return m_Stat.m_iDef; } }
 

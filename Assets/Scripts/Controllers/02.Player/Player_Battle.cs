@@ -6,17 +6,6 @@ using static Define;
 
 public partial class Player : Character
 {
-    public override void AttackEvent(int id)
-    {
-        base.AttackEvent(id);
-
-		eState = CreatureState.Skill;
-
-		// 스테미너 감소
-		float newStemina = m_Stat.m_fStemina - 10;
-		SetStemina(newStemina);
-	}
-
     public void RefreshAdditionalStat()
     {
         m_fWeaponDamage = 0;

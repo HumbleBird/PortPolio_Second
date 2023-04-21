@@ -28,9 +28,7 @@ public class WeaponPickUp : Interactable
         player.UIInteractPost = UIInteract;
 
         // Player Animation
-        player.PlayAnimation("Pick Up Item");
-        float time = Managers.Object.myPlayer.GetAnimationTime("Pick Up Item");
-        player.Stop(time);
+        player.PlayAnimation("Pick Up Item", true);
 
         Destroy(gameObject);
     }

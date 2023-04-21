@@ -58,7 +58,7 @@ public partial class MyPlayer : Player
 		// 일반 공격
 		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_RightHand]))
 		{
-			m_bNextAttack = true;
+			m_bComboFlag = true;
 		}
 	}
 
@@ -119,11 +119,11 @@ public partial class MyPlayer : Player
 			{
 				if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_RightHand]))
 				{
-					m_cAttack.NormalAction();
+					HandleLightAttack(m_RightWeapon);
 				}
 				else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_LeftHand]))
 				{
-					m_cAttack.SpecialAction();
+					HandleHeavyAttack(m_RightWeapon);
 				}
 			}
 		}

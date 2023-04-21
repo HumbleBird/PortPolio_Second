@@ -71,10 +71,13 @@ public class Weapon : Item
     public int DamageReduction { get; private set; }
 
     // Animation
+    public string m_sLight_Attack_1 = "Straight Swords Light Attack 1";
+    public string m_sLight_Attack_2 = "Straight Swords Light Attack 2";
+    public string m_sHeavy_Attack_1 = "Straight Swords Heavy Attack 1";
+    public string m_sHeavy_Attack_2 = "Straight Swords Heavy Attack 2";
     public string m_sRight_Hand_Idle = "Player Right Arm Idle";
     public string m_sLeft_Hand_Idle = "Player Left Arm Idle";
     public string m_sTwo_Hand_Idle = "Player Great Sword Idle";
-
 
     public Weapon(int id) : base(ItemType.Weapon)
     {

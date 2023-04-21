@@ -17,15 +17,16 @@ public partial class Player : Character
     protected float m_fMoveAmount;
     private float m_fRotationSpeed = 10f;
 
+    public string m_sLastAttack;
+
     public bool m_bSprint;
+    public bool m_bComboFlag = false;
     public bool m_bLockOnFlag = false;
     public bool m_bLockOnInput = true;
     public bool m_bTwoHandFlag;
 
     protected Camera m_Camera;
     protected CameraController m_CameraController;
-
-    protected bool m_bNextAttack = false;
 
     // Interact
     public UI_Interact UIInteract = null;
@@ -177,7 +178,7 @@ public partial class Player : Character
             if(m_AttackCheckWatch.Elapsed.Seconds >= m_fEndAttackTime)
             {
                 m_bCanAttack = true;
-                m_bNextAttack = false;
+                m_bComboFlag = false;
                 m_AttackCheckWatch.Reset();
                 eState = CreatureState.Idle;
                 return;
@@ -187,7 +188,7 @@ public partial class Player : Character
             else if(m_AttackCheckWatch.Elapsed.Seconds >= m_fMiddleAttackTime)
             {
                 // 다음 콤보 공격
-                if (m_bNextAttack == true && m_Stat.m_fStemina != 0 && m_cAttack.m_AttackInfo.m_iNextNum != 0)
+                if (m_bComboFlag == true && m_Stat.m_fStemina != 0 && m_cAttack.m_AttackInfo.m_iNextNum != 0)
                 {
                     Managers.Battle.ExecuteEventDelegateAttackEnd();
                     Managers.Battle.ClearAllEvnetDelegate();
@@ -198,7 +199,7 @@ public partial class Player : Character
                     // 2콤보 이상부터 기존 데미지 1%씩 증가 => 2타 = 1타 데미지 * 0.01%, 3타 데미지 = 2타 데미지 * 0.01%
                     m_fWeaponDamage = m_fWeaponDamage * 0.01f;
                     AttackEvent(m_cAttack.m_AttackInfo.m_iNextNum);
-                    m_bNextAttack = false;
+                    m_bComboFlag = false;
                 }
             }
         }
