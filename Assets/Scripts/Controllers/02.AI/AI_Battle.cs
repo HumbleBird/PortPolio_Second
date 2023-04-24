@@ -10,8 +10,7 @@ public abstract partial class AI : Character
     {
         base.UpdateSkill();
 
-        if (m_bCanAttack == true)
-            StartCoroutine(ThinkAttackPattern());
+        //StartCoroutine(ThinkAttackPattern());
     }
 
     IEnumerator ThinkAttackPattern()
@@ -42,7 +41,6 @@ public abstract partial class AI : Character
                 // 완전히 시야 밖으로 나갔다면
                 if (dis > m_iNotChasePlayerRange)
                 {
-                    m_bCanAttack = true;
                     AIMoveInit();
                     eState = CreatureState.Move;
                 }

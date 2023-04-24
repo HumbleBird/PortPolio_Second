@@ -19,6 +19,9 @@ public partial class Player : Character
 
     public string m_sLastAttack;
 
+    // Animator Flag
+    public bool canDoCombo;
+
     public bool m_bSprint;
     public bool m_bComboFlag = false;
     public bool m_bLockOnFlag = false;
@@ -94,10 +97,11 @@ public partial class Player : Character
 
     protected override void Update()
     {
-        HandleRotation();
-
         base.Update();
 
+        canDoCombo = m_Animator.GetBool("canDoCombo");
+
+        HandleRotation();
         HandleFalling();
         HandleQuickSlotsInput();
         HandleLockOnInput();
@@ -159,7 +163,7 @@ public partial class Player : Character
         transform.position += Time.deltaTime * m_Stat.m_fMoveSpeed * m_MovementDirection;
     }
 
-    protected override void UpdateSkill()
+    protected void AttackTimeCheck()
     {
         base.UpdateSkill();
 
@@ -169,15 +173,14 @@ public partial class Player : Character
         if (m_AttackCheckWatch.Elapsed.Seconds == 0)
         {
             m_AttackCheckWatch.Start();
-            m_fMiddleAttackTime = GetAnimationTime(m_cAttack.m_AttackInfo.m_sName, 0.6f);
-            m_fEndAttackTime = GetAnimationTime(m_cAttack.m_AttackInfo.m_sName);
+            m_fMiddleAttackTime = GetAnimationTime(m_sCurrentAnimationName, 0.6f);
+            m_fEndAttackTime = GetAnimationTime(m_sCurrentAnimationName);
         }
         else
         {
             // 공격이 끝났다면
             if(m_AttackCheckWatch.Elapsed.Seconds >= m_fEndAttackTime)
             {
-                m_bCanAttack = true;
                 m_bComboFlag = false;
                 m_AttackCheckWatch.Reset();
                 eState = CreatureState.Idle;
@@ -188,18 +191,11 @@ public partial class Player : Character
             else if(m_AttackCheckWatch.Elapsed.Seconds >= m_fMiddleAttackTime)
             {
                 // 다음 콤보 공격
-                if (m_bComboFlag == true && m_Stat.m_fStemina != 0 && m_cAttack.m_AttackInfo.m_iNextNum != 0)
+                if (m_bComboFlag == false && m_Stat.m_fStemina != 0) // && m_cAttack.m_AttackInfo.m_iNextNum != 0)
                 {
-                    Managers.Battle.ExecuteEventDelegateAttackEnd();
-                    Managers.Battle.ClearAllEvnetDelegate();
-                    Managers.Battle.EventDelegateAttack += m_cAttack.NormalAction;
-
                     m_AttackCheckWatch.Reset();
 
-                    // 2콤보 이상부터 기존 데미지 1%씩 증가 => 2타 = 1타 데미지 * 0.01%, 3타 데미지 = 2타 데미지 * 0.01%
-                    m_fWeaponDamage = m_fWeaponDamage * 0.01f;
-                    AttackEvent(m_cAttack.m_AttackInfo.m_iNextNum);
-                    m_bComboFlag = false;
+                    m_bComboFlag = true;
                 }
             }
         }

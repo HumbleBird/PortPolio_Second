@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - NPC
   - InteractablePickItem
+  - Hittable
   layers:
   - Default
   - TransparentFX

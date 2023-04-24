@@ -212,6 +212,8 @@ public partial class Player : Character
     {
         if(m_bComboFlag)
         {
+            m_Animator.SetBool("canDoCombo", false);
+
             if (m_sLastAttack == weapon.m_sLight_Attack_1)
             {
                 PlayAnimation(weapon.m_sLight_Attack_2);

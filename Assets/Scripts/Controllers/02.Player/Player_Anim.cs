@@ -91,4 +91,14 @@ public partial class Player : Character
                 break;
         }
     }
+
+    public void EnableCombo()
+    {
+        m_Animator.SetBool("canDoCombo", true);
+    }
+
+    public void DisableCombo()
+    {
+        m_Animator.SetBool("canDoCombo", false);
+    }
 }

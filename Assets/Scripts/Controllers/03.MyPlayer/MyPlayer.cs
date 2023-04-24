@@ -51,18 +51,6 @@ public partial class MyPlayer : Player
 		InputHandler();
 	}
 
-	protected override void UpdateSkill()
-	{
-		base.UpdateSkill();
-
-		// 일반 공격
-		if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_RightHand]))
-		{
-			m_bComboFlag = true;
-		}
-	}
-
-
 	void HandleMoveInput()
     {
 		m_fVertical = Input.GetAxis("Vertical");
@@ -112,14 +100,23 @@ public partial class MyPlayer : Player
 				RollAndBackStep();
 		}
 
-		// Attack
-		if(eState == CreatureState.Move || eState == CreatureState.Idle)
+		if(eState != CreatureState.Dead)
         {
-			if (m_bCanAttack == true && m_Stat.m_fStemina != 0 && m_cAttack != null)
+			// Attack
+			if (m_Stat.m_fStemina != 0 && m_cAttack != null)
 			{
 				if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_RightHand]))
-				{
-					HandleLightAttack(m_RightWeapon);
+                {
+					if (canDoCombo)
+					{
+						m_bComboFlag = true;
+						HandleWeaponCombo(m_RightWeapon);
+						m_bComboFlag = false;
+					}
+					else
+                    {
+						HandleLightAttack(m_RightWeapon);
+					}
 				}
 				else if (Input.GetKeyDown(Managers.InputKey._binding.Bindings[UserAction.Attack_LeftHand]))
 				{

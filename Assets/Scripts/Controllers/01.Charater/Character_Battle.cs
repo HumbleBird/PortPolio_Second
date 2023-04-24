@@ -8,7 +8,6 @@ public abstract  partial class Character : Base
 {
     public Attack m_cAttack;
     public Character m_goTarget = null;
-    protected bool  m_bCanAttack = true;
 
     public virtual float m_TotalAttack { get { return m_Stat.m_iAtk; } }
     public virtual float m_TotalDefence { get { return m_Stat.m_iDef; } }
@@ -22,8 +21,6 @@ public abstract  partial class Character : Base
             Debug.LogError($"해당하는 {id}의 스킬이 없습니다.");
             return;
         }
-
-        m_bCanAttack = false;
 
         // 애니메이션 실행
         PlayAnimation(m_cAttack.m_AttackInfo.m_sName);
@@ -70,6 +67,33 @@ public abstract  partial class Character : Base
         }
     }
 
+    public virtual void HitEvent(float dmg, bool isAnimation = true)
+    {
+        // 특수 동작으로 인한 데미지 처리
+        if (eActionState == ActionState.Invincible || eState == CreatureState.Dead)
+            return;
+
+        // 데미지 공식 = (무기 데미지 - 적 방어력) / 피해 감소율
+        dmg = Mathf.Max(0, dmg - m_TotalDefence);
+        int NewHp = (int)(m_Stat.m_iHp - dmg);
+        SetHp(NewHp);
+
+        // 등록된 공격 피격 효과 (슬로우, 넉백 등)
+        Managers.Battle.ExecuteEventDelegateHitEffect();
+
+        // 애니메이션
+        if (m_Stat.m_iHp > 0)
+        {
+            if (isAnimation)
+            {
+                HitAnimation();
+
+                // 히트 후 Idle로
+                float time = GetAnimationTime(m_sCurrentAnimationName);
+                WaitToState(time, CreatureState.Idle);
+            }
+        }
+    }
     // 공격 끝
     protected virtual void AttackEnd()
     {

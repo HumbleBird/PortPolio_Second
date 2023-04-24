@@ -63,7 +63,7 @@ public class ItemSoket : MonoBehaviour
             model.transform.localRotation = Quaternion.identity;
         }
 
-        Util.GetOrAddComponent<TrigerDetector>(model);
+        Util.GetOrAddComponent<DamageCollider>(model);
         currentWeaponModel = model;
     }
 }
