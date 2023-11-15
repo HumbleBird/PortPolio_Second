@@ -51,6 +51,19 @@ public class InventoryManager
         return null;
     }
 
+    public List<Item> FindItems(Func<Item, bool> condition)
+    {
+        List<Item> items = new List<Item>();
+
+        foreach (Item item in m_Items)
+        {
+            if (condition.Invoke(item))
+                items.Add(item);
+        }
+
+        return items;
+    }
+
     public void Clear()
     {
         //m_dicItem.Clear();

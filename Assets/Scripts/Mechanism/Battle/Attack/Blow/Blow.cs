@@ -36,16 +36,16 @@ public class Blow : Attack
 
         // 일반 무기의 경우(단검, 검) - 일반 공격
         DamageCollider td = m_cGo.GetComponentInChildren<DamageCollider>();
-        if(td != null)
-            td.Attack();
+        //if(td != null)
+        //    td.Attack();
     }
 
     public override void SpecialAction()
     {
         // 일반 무기의 경우(단검, 검) - 일반 공격
         DamageCollider td = m_cGo.GetComponentInChildren<DamageCollider>();
-        if (td != null)
-            td.Attack();
+        //if (td != null)
+        //    td.Attack();
     }
 
 }
